@@ -13,7 +13,7 @@ tags:
 # Load Libraries
 
 ```{r load-libraries-quiet, include = F}
-my.pkgs <- c("leaflet", "widgetframe", "htmlwidgets", "magrittr")
+my.pkgs <- c("leaflet", "widgetframe", "htmlwidgets", "magrittr", "sigma")
 lapply(my.pkgs, function(x) suppressPackageStartupMessages(library(x, character.only = T)))
 ```
 
@@ -34,4 +34,11 @@ m <- leaflet() %>%
   # move the center to Evansville
   setView(-87.569908, 37.975712, zoom = 15)
 frameWidget(m)
+```
+
+# Sigma JS
+
+```{r sigma-widget}
+data <- system.file("examples/ediaspora.gexf.xml", package = "sigma")
+sigma(data)
 ```
