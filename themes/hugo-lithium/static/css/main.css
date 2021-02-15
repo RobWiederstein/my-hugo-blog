@@ -24,9 +24,9 @@ h6 {
 a {
   outline: none;
 }
-
 code {
-  background-color: rgba(0, 0, 0, 0.02);
+      background-color: #f2f2f2;
+      padding: 2px;
 }
 
 .wrapper {
@@ -128,15 +128,15 @@ code {
 .article-content a {
   text-decoration: none;
   color: inherit;
-  border-bottom: 3px solid #CBF8DF;
-  box-shadow: inset 0 -4px 0 #CBF8DF;
+  border-bottom: 2px solid #b3c1ff;
+  /* box-shadow: inset 0 -4px 0 #b3c1ff; */
   background: transparent;
   transition: background 150ms ease;
 }
 
 .article-content a:hover,
 .article-content a:focus {
-  background: #CBF8DF;
+  background: #b3c1ff;
 }
 
 .article-content hr {
