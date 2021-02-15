@@ -1,0 +1,36 @@
+---
+title: Insert htmlwidget DT
+author: Rob Wiederstein
+date: '2021-02-15'
+slug: insert_htmlwidget
+categories:
+  - R
+tags:
+  - htmlwidget
+  - DT
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="{{< blogdown/postref >}}index_files/pymjs/pym.v1.js"></script>
+<script src="{{< blogdown/postref >}}index_files/widgetframe-binding/widgetframe.js"></script>
+
+
+<div id="load-libraries" class="section level1">
+<h1>Load Libraries</h1>
+<pre class="r"><code>my.pkgs &lt;- c(&quot;leaflet&quot;, &quot;widgetframe&quot;, &quot;htmlwidgets&quot;, &quot;magrittr&quot;)
+lapply(my.pkgs, function(x) suppressPackageStartupMessages(library(x, character.only = T)))</code></pre>
+</div>
+<div id="plot-the-map" class="section level1">
+<h1>Plot the map</h1>
+<pre class="r"><code># https://bhaskarvk.github.io/widgetframe/
+#wrap widget in &lt;iframe&gt; tags
+m &lt;- leaflet() %&gt;% 
+  addTiles() %&gt;% 
+  fitBounds(0, 40, 10, 50) %&gt;%
+  # move the center to Evansville
+  setView(-87.569908, 37.975712, zoom = 15)
+frameWidget(m)</code></pre>
+<div id="htmlwidget-1" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"url":"index_files/figure-html//widgets/widget_leaflet-widget.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+</div>

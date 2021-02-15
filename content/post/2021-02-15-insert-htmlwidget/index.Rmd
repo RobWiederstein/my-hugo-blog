@@ -1,0 +1,37 @@
+---
+title: Insert htmlwidget DT
+author: Rob Wiederstein
+date: '2021-02-15'
+slug: insert_htmlwidget
+categories:
+  - R
+tags:
+  - htmlwidget
+  - DT
+---
+
+# Load Libraries
+
+```{r load-libraries-quiet, include = F}
+my.pkgs <- c("leaflet", "widgetframe", "htmlwidgets", "magrittr")
+lapply(my.pkgs, function(x) suppressPackageStartupMessages(library(x, character.only = T)))
+```
+
+```{r load-libraries, eval=F}
+my.pkgs <- c("leaflet", "widgetframe", "htmlwidgets", "magrittr")
+lapply(my.pkgs, function(x) suppressPackageStartupMessages(library(x, character.only = T)))
+```
+
+# Plot the map
+
+
+```{r leaflet-widget}
+# https://bhaskarvk.github.io/widgetframe/
+#wrap widget in <iframe> tags
+m <- leaflet() %>% 
+  addTiles() %>% 
+  fitBounds(0, 40, 10, 50) %>%
+  # move the center to Evansville
+  setView(-87.569908, 37.975712, zoom = 15)
+frameWidget(m)
+```
