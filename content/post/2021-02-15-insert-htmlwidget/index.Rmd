@@ -14,7 +14,7 @@ There were two main reasons for moving to `blogdown`.  First, I needed a bloggin
 
 The second reason was that `blogdown` offered the promise of embedding html widgets into a post.  The `htmlwidgets` package is so important in that it prevents me from having to learn java.  Don't get me wrong, java is important, but I can barely get around in `R` and want to stay focused on working with data, not learning new computer languages. This proved to be difficult, because there were no less than four hugo-themes that I tried, but kept having problems with the display in a webpage.  It was frustrating to say the least.
 
-Not being able to embed dynamic tables into a website is a dealbreaker for me. Yes, my writing is more dependent, for example, on plots.  But a dynamic table in the modern internet world just seems to be a necessity for readers.  That's why I've started this article by using the `DT` package in placing the `mtcars` dataset into a table
+Not being able to embed dynamic tables into a website is a dealbreaker for me. Yes, my writing is more dependent, for example, on plots.  But a dynamic table in the modern internet world just seems to be a necessity for readers.  That's why I've started this article by using the `DT` package in placing the `mtcars` dataset into a table.  It worked!
 
 Also, find other examples of html embeds below.
 
@@ -29,7 +29,7 @@ lapply(my.pkgs, function(x) suppressPackageStartupMessages(library(x, character.
 
 ```{r load-libraries, eval=F}
 my.pkgs <- c("leaflet", "widgetframe", "htmlwidgets", 
-             "magrittr", "sigma", "DT")
+             "magrittr", "sigma", "DT", "ggplot2", "plotly")
 lapply(my.pkgs, function(x) suppressPackageStartupMessages(library(x, character.only = T)))
 ```
 
