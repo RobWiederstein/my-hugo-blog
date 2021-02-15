@@ -1,5 +1,5 @@
 ---
-title: Insert htmlwidget DT
+title: Insert HTML Widgets in Blogdown
 author: Rob Wiederstein
 date: '2021-02-15'
 slug: insert_htmlwidget
@@ -10,20 +10,29 @@ tags:
   - DT
 ---
 
+
 # Load Libraries
 
 ```{r load-libraries-quiet, include = F}
-my.pkgs <- c("leaflet", "widgetframe", "htmlwidgets", "magrittr", "sigma")
+my.pkgs <- c("leaflet", "widgetframe", "htmlwidgets", 
+             "magrittr", "sigma", "DT")
 lapply(my.pkgs, function(x) suppressPackageStartupMessages(library(x, character.only = T)))
 ```
 
 ```{r load-libraries, eval=F}
-my.pkgs <- c("leaflet", "widgetframe", "htmlwidgets", "magrittr")
+my.pkgs <- c("leaflet", "widgetframe", "htmlwidgets", 
+             "magrittr", "sigma", "DT")
 lapply(my.pkgs, function(x) suppressPackageStartupMessages(library(x, character.only = T)))
 ```
 
-# Plot the map
+# Insert Data Tables or DT Widget
 
+```{r data-tables-widget}
+# see https://rstudio.github.io/DT/
+DT::datatable(iris)
+```
+
+# Insert Leaflet Widget
 
 ```{r leaflet-widget}
 # https://bhaskarvk.github.io/widgetframe/
@@ -42,3 +51,9 @@ frameWidget(m)
 data <- system.file("examples/ediaspora.gexf.xml", package = "sigma")
 sigma(data)
 ```
+
+# Insert Plotly Widget
+
+
+
+
