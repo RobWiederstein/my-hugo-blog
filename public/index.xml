@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rob Wiederstein -- a blog about data</title>
+    <link>/</link>
+    <description>Recent content on Rob Wiederstein -- a blog about data</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 15 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>example</title>
+      <link>/example/</link>
+      <pubDate>Mon, 15 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/example/</guid>
+      <description>Hello World!</description>
+    </item>
+    
+    <item>
+      <title>Insert HTML Widgets in Blogdown</title>
+      <link>/2021/02/15/insert_htmlwidget/</link>
+      <pubDate>Mon, 15 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/2021/02/15/insert_htmlwidget/</guid>
+      <description>There were two main reasons for moving to blogdown. First, I needed a blogging platform that moved seemlessly between R code and its output. It had to be easy to show the connection between the code that was used and its effect on the data. Put the two side-by-side and people can understand what happened. It’s how I learn off the console.</description>
+    </item>
+    
+    <item>
+      <title>Try Syntax Highlighting</title>
+      <link>/2021/02/14/try-syntax-highlighting/</link>
+      <pubDate>Sun, 14 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/2021/02/14/try-syntax-highlighting/</guid>
+      <description>  a &amp;lt;- 1:10 paste(&amp;quot;-dog&amp;quot;, a, sep =&amp;quot;&amp;quot;) ## [1] &amp;quot;-dog1&amp;quot; &amp;quot;-dog2&amp;quot; &amp;quot;-dog3&amp;quot; &amp;quot;-dog4&amp;quot; &amp;quot;-dog5&amp;quot; &amp;quot;-dog6&amp;quot; &amp;quot;-dog7&amp;quot; &amp;quot;-dog8&amp;quot; ## [9] &amp;quot;-dog9&amp;quot; &amp;quot;-dog10&amp;quot; plot(mtcars$mpg, mtcars$hp, main = &amp;quot;Example Plot&amp;quot;) </description>
+    </item>
+    
+    <item>
+      <title>Hello R Markdown</title>
+      <link>/2020/12/01/hello-r-markdown/</link>
+      <pubDate>Tue, 01 Dec 2020 21:13:14 -0500</pubDate>
+      
+      <guid>/2020/12/01/hello-r-markdown/</guid>
+      <description>R Markdown This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
+You can embed an R code chunk like this:
+summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.</description>
+    </item>
+    
+    <item>
+      <title>A Plain Markdown Post</title>
+      <link>/2016/12/30/a-plain-markdown-post/</link>
+      <pubDate>Fri, 30 Dec 2016 21:49:57 -0700</pubDate>
+      
+      <guid>/2016/12/30/a-plain-markdown-post/</guid>
+      <description>This is a post written in plain Markdown (*.md) instead of R Markdown (*.Rmd). The major differences are:
+ You cannot run any R code in a plain Markdown document, whereas in an R Markdown document, you can embed R code chunks (```{r}); A plain Markdown post is rendered through Blackfriday, and an R Markdown document is compiled by rmarkdown and Pandoc.  There are many differences in syntax between Blackfriday&amp;rsquo;s Markdown and Pandoc&amp;rsquo;s Markdown.</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
+      
+      <guid>/about/</guid>
+      <description>I’m a dad, a retired judge, a guitar player, a former state representative, an amateur programmer and statistician. Out of fear that some may take my posts too seriously, I describe myself as someone who does mostly exploratory analysis and visualization&amp;ndash;although I have ventured into predictive analytics and modeling from time to time.
+The death of analytical/investigative reporting at the regional and local level often leads me into controversial areas like public policy.</description>
+    </item>
+    
+    <item>
+      <title>Lorem Ipsum</title>
+      <link>/2015/01/01/lorem-ipsum/</link>
+      <pubDate>Thu, 01 Jan 2015 13:09:13 -0600</pubDate>
+      
+      <guid>/2015/01/01/lorem-ipsum/</guid>
+      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</description>
+    </item>
+    
+  </channel>
+</rss>
