@@ -1,4 +1,4 @@
-baseurl: /
+baseurl: https://keen-noether-7d2e44.netlify.app/
 languageCode: en-us
 title: Rob Wiederstein -- a blog about data
 theme: hugo-lithium
@@ -25,7 +25,7 @@ menu:
 params:
   MathJaxCDN: //cdnjs.cloudflare.com/ajax/libs
   MathJaxVersion: 2.7.5
-  description: A website built through Hugo and blogdown.
+  description: A website about data, analysis, and public policy.
   favicon: favicon.ico
   highlightjsCDN: //cdnjs.cloudflare.com/ajax/libs
   highlightjsLang:
