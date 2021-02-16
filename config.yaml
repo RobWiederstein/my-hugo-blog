@@ -1,4 +1,4 @@
-baseurl: https://keen-noether-7d2e44.netlify.app
+baseurl: https://keen-noether-7d2e44.netlify.app/
 languageCode: en-us
 title: Rob Wiederstein -- a blog about data
 theme: hugo-lithium
@@ -38,3 +38,4 @@ params:
     height: 50
     url: logo.png
     width: 50
+canonifyURLs: true
