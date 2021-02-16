@@ -2,53 +2,53 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Rob Wiederstein -- a blog about data</title>
-    <link>/tags/</link>
+    <link>https://keen-noether-7d2e44.netlify.app/tags/</link>
     <description>Recent content in Tags on Rob Wiederstein -- a blog about data</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 15 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>DT</title>
-      <link>/tags/dt/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/tags/dt/</link>
       <pubDate>Mon, 15 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>/tags/dt/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/tags/dt/</guid>
       <description></description>
     </item>
     
     <item>
       <title>htmlwidget</title>
-      <link>/tags/htmlwidget/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/tags/htmlwidget/</link>
       <pubDate>Mon, 15 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>/tags/htmlwidget/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/tags/htmlwidget/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R Markdown</title>
-      <link>/tags/r-markdown/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/tags/r-markdown/</link>
       <pubDate>Sun, 14 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>/tags/r-markdown/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/tags/r-markdown/</guid>
       <description></description>
     </item>
     
     <item>
       <title>plot</title>
-      <link>/tags/plot/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/tags/plot/</link>
       <pubDate>Tue, 01 Dec 2020 21:13:14 -0500</pubDate>
       
-      <guid>/tags/plot/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/tags/plot/</guid>
       <description></description>
     </item>
     
     <item>
       <title>regression</title>
-      <link>/tags/regression/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/tags/regression/</link>
       <pubDate>Tue, 01 Dec 2020 21:13:14 -0500</pubDate>
       
-      <guid>/tags/regression/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/tags/regression/</guid>
       <description></description>
     </item>
     
