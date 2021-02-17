@@ -1,7 +1,7 @@
 ---
 title: "Datasets"
 date: "2021-02-14"
-layout: "simple-static"
+layouts: "simple-static"
 ---
 
 Airlines & Airports

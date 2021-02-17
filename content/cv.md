@@ -1,7 +1,7 @@
 ---
 title: "CV"
 date: 2021-02-16
-layout: "simple-static"
+layouts: "simple-static"
 ---
 
 Presentations:

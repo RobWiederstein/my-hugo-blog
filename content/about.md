@@ -1,7 +1,7 @@
 ---
 title: "About"
 date: "2016-05-05T21:48:51-07:00"
-layout: "simple-static"
+layouts: "simple-static"
 ---
 
 I’m a dad, a retired judge, a guitar player, a former state representative, an amateur programmer and statistician. Out of fear that some may take my posts too seriously, I describe myself as someone who does mostly exploratory analysis and visualization--although I have ventured into predictive analytics and modeling from time to time.
