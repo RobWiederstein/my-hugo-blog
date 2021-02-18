@@ -1,0 +1,42 @@
+/*@font-face {
+  font-family: 'Merriweather';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Merriweather'), local('Merriweather-Regular'),
+       url('../fonts/merriweather-v13-latin-regular.woff2') format('woff2'),
+       url('../fonts/merriweather-v13-latin-regular.woff') format('woff');
+}
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Lato Regular'), local('Lato-Regular'),
+       url('../fonts/lato-v11-latin-regular.woff2') format('woff2'),
+       url('../fonts/lato-v11-latin-regular.woff') format('woff');
+}
+body {
+  font-family: 'Merriweather', serif;
+}
+h1, h2, h3, h4, h5, h6, .nav, .article-duration, .archive-item-link, .footer {
+  font-family: 'Lato', sans-serif;
+}
+*/
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&family=Playfair+Display&family=Roboto+Slab&display=swap');
+body {
+      font-family: 'Roboto Slab', 'Merriweather', 'Playfair Display', serif;
+
+}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Open+Sans&family=Roboto&display=swap');
+h1, h2, h3, h4, h5, h6, .nav, .article-duration, .archive-item-link, .footer {
+  font-family: 'Roboto', 'Open Sans', 'Noto Sans JP', sans-serif;
+}
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&family=Roboto+Mono:wght@300&family=Space+Mono&display=swap');
+tt, code, kbd, samp {
+    font-family: 'IBM Plex Mono', 'Roboto monospace', monospace;
+    font-weight: 200;
+}
+
+/*font-family:  monospace;
+font-family: 'Roboto Mono', monospace;
+font-family: 'Space Mono', monospace;
+*/
