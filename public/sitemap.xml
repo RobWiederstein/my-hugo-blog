@@ -13,21 +13,6 @@
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/categories/</loc>
-    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/dt/</loc>
-    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/htmlwidget/</loc>
-    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://keen-noether-7d2e44.netlify.app/2021/02/15/insert_htmlwidget/</loc>
     <lastmod>2021-02-15T00:00:00+00:00</lastmod>
   </url>
@@ -38,27 +23,12 @@
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/categories/r/</loc>
-    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://keen-noether-7d2e44.netlify.app/</loc>
     <lastmod>2021-02-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/</loc>
-    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://keen-noether-7d2e44.netlify.app/datasets/</loc>
-    <lastmod>2021-02-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/r-markdown/</loc>
     <lastmod>2021-02-14T00:00:00+00:00</lastmod>
   </url>
   
@@ -69,16 +39,6 @@
   
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/2020/12/01/hello-r-markdown/</loc>
-    <lastmod>2020-12-01T21:13:14-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/plot/</loc>
-    <lastmod>2020-12-01T21:13:14-05:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/regression/</loc>
     <lastmod>2020-12-01T21:13:14-05:00</lastmod>
   </url>
   
@@ -95,6 +55,10 @@
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/2015/01/01/lorem-ipsum/</loc>
     <lastmod>2015-01-01T13:09:13-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/series/</loc>
   </url>
   
 </urlset>

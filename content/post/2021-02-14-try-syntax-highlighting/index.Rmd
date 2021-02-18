@@ -7,7 +7,7 @@ categories:
   - R
 tags:
   - R Markdown
-description: Text about this post
+description: Any blog aboud coding must use syntax highlighting.
 images:
 - stairwell.jpg
 ---
