@@ -39,3 +39,11 @@ params:
     url: logo.png
     width: 50
 canonifyURLs: false
+#og: tags
+params:
+  description: Text about my cool site
+  images:
+  - site-feature-image.jpg
+  title: My cool site
+taxonomies:
+  series: series
