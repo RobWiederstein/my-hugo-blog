@@ -40,7 +40,7 @@ params:
     width: 50
 #og: tags
   images:
-    - img/site/site-profile-fb-1200-630px.jpg
+    - image/site/site-profile-fb-1200-630px.jpg
   title: My cool site
 taxonomies:
   series: series
