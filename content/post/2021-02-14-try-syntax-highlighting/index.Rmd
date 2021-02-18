@@ -7,6 +7,9 @@ categories:
   - R
 tags:
   - R Markdown
+description: Text about this post
+images:
+- stairwell.jpg
 ---
 
 ```{r example-syntax-highting}
@@ -17,5 +20,3 @@ paste("-dog", a, sep ="")
 ```{r plot-speed}
 plot(mtcars$mpg, mtcars$hp, main = "Example Plot")
 ```
-
-
