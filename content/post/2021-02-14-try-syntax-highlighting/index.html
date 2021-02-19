@@ -1,5 +1,5 @@
 ---
-title: Try Syntax Highlighting
+title: Code Highlighting in Rmarkdown
 author: Rob Wiederstein
 date: '2021-02-14'
 slug: try-syntax-highlighting
@@ -7,7 +7,7 @@ categories:
   - R
 tags:
   - R Markdown
-description: Any blog about coding must use syntax highlighting.
+description: A blog post on coding must use code highlighting to make it easier on readers to grasp key concepts.
 images:
   - 2021/02/14/try-syntax-highlighting/stairwell.jpg
 output:
@@ -28,8 +28,11 @@ output:
 <h1>Example 1</h1>
 <pre class="r"><code># Dr Seuss
 a &lt;- 1:2
-paste(a, &quot;fish&quot;, sep =&quot;_&quot;)</code></pre>
-<pre><code>## [1] &quot;1_fish&quot; &quot;2_fish&quot;</code></pre>
+fish.number &lt;- paste(a, &quot;fish&quot;, sep =&quot;_&quot;)
+b &lt;- c(&quot;red&quot;, &quot;blue&quot;)
+fish.color &lt;- paste(b, &quot;fish&quot;, sep = &quot;_&quot;)
+print(c(fish.number, fish.color))</code></pre>
+<pre><code>## [1] &quot;1_fish&quot;    &quot;2_fish&quot;    &quot;red_fish&quot;  &quot;blue_fish&quot;</code></pre>
 </div>
 <div id="example-2" class="section level1">
 <h1>Example 2</h1>
@@ -39,9 +42,9 @@ p &lt;- p + geom_point()
 p &lt;- p + ggtitle(&quot;Mtcars&quot;)
 p</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:plot-mtcars"></span>
-<img src="{{< blogdown/postref >}}index_files/figure-html/plot-mtcars-1.svg" alt="A plot constructed using ggplot2." width="576" />
+<img src="{{< blogdown/postref >}}index_files/figure-html/plot-mtcars-1.svg" alt="A plot constructed with `ggplot2`." width="576" />
 <p class="caption">
-Figure 1: A plot constructed using ggplot2.
+Figure 1: A plot constructed with <code>ggplot2</code>.
 </p>
 </div>
 </div>

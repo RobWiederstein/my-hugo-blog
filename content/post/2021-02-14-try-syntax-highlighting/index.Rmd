@@ -1,5 +1,5 @@
 ---
-title: Try Syntax Highlighting
+title: Code Highlighting in Rmarkdown
 author: Rob Wiederstein
 date: '2021-02-14'
 slug: try-syntax-highlighting
@@ -7,7 +7,7 @@ categories:
   - R
 tags:
   - R Markdown
-description: Any blog about coding must use syntax highlighting.
+description: A blog post on coding must use code highlighting to make it easier on readers to grasp key concepts.
 images:
   - 2021/02/14/try-syntax-highlighting/stairwell.jpg
 output:
@@ -24,12 +24,15 @@ library(ggplot2)
 ```{r example-syntax-highting}
 # Dr Seuss
 a <- 1:2
-paste(a, "fish", sep ="_")
+fish.number <- paste(a, "fish", sep ="_")
+b <- c("red", "blue")
+fish.color <- paste(b, "fish", sep = "_")
+print(c(fish.number, fish.color))
 ```
 
 # Example 2
 
-```{r plot-mtcars, fig.align="center", fig.cap="A plot constructed using ggplot2."}
+```{r plot-mtcars, fig.align="center", fig.cap="A plot constructed with `ggplot2`."}
 data(mtcars)
 p <- ggplot(mtcars, aes(hp,mpg, group = factor(cyl), color = factor(cyl)))
 p <- p + geom_point()
