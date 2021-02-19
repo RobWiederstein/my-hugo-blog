@@ -44,5 +44,5 @@ params:
   title: My cool site
 taxonomies:
   series: series
-canonifyURLs: false
+canonifyURLs: true
 
