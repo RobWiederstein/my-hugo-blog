@@ -9,15 +9,24 @@ tags:
   - R Markdown
 description: Any blog aboud coding must use syntax highlighting.
 images:
-  - content/post/2021-02-14-try-syntax-highlighting/stairwell.jpg
+  - stairwell.jpg
 ---
 
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
-<pre class="r"><code>a &lt;- 1:10
-paste(&quot;-dog&quot;, a, sep =&quot;&quot;)</code></pre>
-<pre><code>##  [1] &quot;-dog1&quot;  &quot;-dog2&quot;  &quot;-dog3&quot;  &quot;-dog4&quot;  &quot;-dog5&quot;  &quot;-dog6&quot;  &quot;-dog7&quot;  &quot;-dog8&quot; 
-##  [9] &quot;-dog9&quot;  &quot;-dog10&quot;</code></pre>
-<pre class="r"><code>plot(mtcars$mpg, mtcars$hp, main = &quot;Example Plot&quot;)</code></pre>
+<div id="example-1" class="section level1">
+<h1>Example 1</h1>
+<pre class="r"><code>a &lt;- 1:2
+paste(a, &quot;fish&quot;, sep =&quot;_&quot;)</code></pre>
+<pre><code>## [1] &quot;1_fish&quot; &quot;2_fish&quot;</code></pre>
+</div>
+<div id="example-2" class="section level1">
+<h1>Example 2</h1>
+<pre class="r"><code>data(mtcars)
+p &lt;- ggplot(mtcars, aes(hp,mpg, group = factor(cyl), color = factor(cyl)))
+p &lt;- p + geom_point()
+p &lt;- p + ggtitle(&quot;Mtcars&quot;)
+p</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/plot-speed-1.png" width="672" /></p>
+</div>

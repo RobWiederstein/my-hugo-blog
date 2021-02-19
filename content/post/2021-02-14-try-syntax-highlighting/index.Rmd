@@ -12,11 +12,23 @@ images:
   - stairwell.jpg
 ---
 
-```{r example-syntax-highting}
-a <- 1:10
-paste("-dog", a, sep ="")
+```{r load-libraries, include=F}
+library(ggplot2)
 ```
 
+# Example 1
+
+```{r example-syntax-highting}
+a <- 1:2
+paste(a, "fish", sep ="_")
+```
+
+# Example 2
+
 ```{r plot-speed}
-plot(mtcars$mpg, mtcars$hp, main = "Example Plot")
+data(mtcars)
+p <- ggplot(mtcars, aes(hp,mpg, group = factor(cyl), color = factor(cyl)))
+p <- p + geom_point()
+p <- p + ggtitle("Mtcars")
+p
 ```

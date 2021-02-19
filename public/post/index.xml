@@ -22,7 +22,7 @@
       <pubDate>Sun, 14 Feb 2021 00:00:00 +0000</pubDate>
       
       <guid>https://keen-noether-7d2e44.netlify.app/2021/02/14/try-syntax-highlighting/</guid>
-      <description>  a &amp;lt;- 1:10 paste(&amp;quot;-dog&amp;quot;, a, sep =&amp;quot;&amp;quot;) ## [1] &amp;quot;-dog1&amp;quot; &amp;quot;-dog2&amp;quot; &amp;quot;-dog3&amp;quot; &amp;quot;-dog4&amp;quot; &amp;quot;-dog5&amp;quot; &amp;quot;-dog6&amp;quot; &amp;quot;-dog7&amp;quot; &amp;quot;-dog8&amp;quot; ## [9] &amp;quot;-dog9&amp;quot; &amp;quot;-dog10&amp;quot; plot(mtcars$mpg, mtcars$hp, main = &amp;quot;Example Plot&amp;quot;) </description>
+      <description>  Example 1 a &amp;lt;- 1:2 paste(a, &amp;quot;fish&amp;quot;, sep =&amp;quot;_&amp;quot;) ## [1] &amp;quot;1_fish&amp;quot; &amp;quot;2_fish&amp;quot;  Example 2 data(mtcars) p &amp;lt;- ggplot(mtcars, aes(hp,mpg, group = factor(cyl), color = factor(cyl))) p &amp;lt;- p + geom_point() p &amp;lt;- p + ggtitle(&amp;quot;Mtcars&amp;quot;) p  </description>
     </item>
     
     <item>
