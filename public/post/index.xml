@@ -20,6 +20,16 @@ hugo config .Site.Params Variable A bunch of code here  {{ $_hugo_config := { &a
     </item>
     
     <item>
+      <title>Ten Tips to Working with Go Templates</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/02/19/ten-tips-to-working-with-go-templates/</link>
+      <pubDate>Fri, 19 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/19/ten-tips-to-working-with-go-templates/</guid>
+      <description>Introduction hugo templates are based on the go language, but are derived from the go template library. It is simple and relies on only basic logic. go templates are html documents whose variables and functions are accessible via {{-}}.
+Variable # predefined variable {{ .Title }} # custom variable {{ $address }} Function # general syntax # {{ FUNCTION ARG1 ARG2 .. }} {{ add 1 2 }} Dot Notation # Access Page Parameter &amp;quot;bar&amp;quot;&amp;quot; defined in page front matter.</description>
+    </item>
+    
+    <item>
       <title>Insert HTML Widgets in Blogdown</title>
       <link>https://keen-noether-7d2e44.netlify.app/2021/02/15/insert_htmlwidget/</link>
       <pubDate>Mon, 15 Feb 2021 00:00:00 +0000</pubDate>
@@ -38,13 +48,12 @@ hugo config .Site.Params Variable A bunch of code here  {{ $_hugo_config := { &a
     </item>
     
     <item>
-      <title>Ten Things to Remember with Blogdown</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/02/11/ten-things-to-remember-with-blogdown/</link>
+      <title>Ten Tips to Working with Blogdown</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/02/11/ten-tips-to-working-with-blogdown/</link>
       <pubDate>Thu, 11 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/11/ten-things-to-remember-with-blogdown/</guid>
-      <description>Transitioning to hugo is difficult. Blogdown offers the promise of an easy and quick workflow for blogging, however, that is not the case. If you’re not ready for some hard work, then you should probably stay with Wordpress or Squarespace. On the otherhand, if you want to understand the principles that underly much of webpage creation, then stick with blogdown and hugo.
-It’s virtually impossible to give a comprehensive scaffold of how to accomplish that and, even if you could, your time would be better spent reading Yihui Xie, Amber Thomas, Alison Presmanes Hill’s book on blogdown.</description>
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/11/ten-tips-to-working-with-blogdown/</guid>
+      <description>Introduction Ten Tips Best Resources   Introduction Transitioning to hugo is difficult. Blogdown offers the promise of an easy and quick workflow for blogging, however, that is not the case. If you’re not ready for some hard work, then you should probably stay with Wordpress or Squarespace. On the otherhand, if you want to understand the principles that underly much of webpage creation, then stick with blogdown and hugo.</description>
     </item>
     
     <item>

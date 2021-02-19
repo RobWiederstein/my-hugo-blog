@@ -1,5 +1,5 @@
 ---
-title: Ten Things to Remember with Blogdown
+title: Ten Tips to Working with Blogdown
 author: Rob Wiederstein
 date: '2021-02-11'
 slug: []
@@ -33,9 +33,13 @@ images:
   - 2021/02/11/ten-things-to-remember-with-blogdown/hugo-blogdown-1200-630px.jpg
 ---
 
+# Introduction
+
 Transitioning to `hugo` is difficult.  `Blogdown` offers the promise of an easy and quick workflow for blogging, however, that is not the case.  If you're not ready for some hard work, then you should probably stay with Wordpress or Squarespace.  On the otherhand, if you want to understand the principles that underly much of webpage creation, then stick with `blogdown` and `hugo`.
 
 It's virtually impossible to give a comprehensive scaffold of how to accomplish that and, even if you could, your time would be better spent reading Yihui Xie, Amber Thomas, Alison Presmanes Hill's [book](https://bookdown.org/yihui/blogdown/) on blogdown.  So here's 10 things you have to remember to for this transition to hugo go well:
+
+# Ten Tips
 
 1. Use `blogdown::serve_site()` to serve your site.  Do not use `hugo serve` from the command line.  The reason is because `blogdown` knows what to do with files that have the `.Rmd` extension whereas `hugo` does not. Also, for those used to working with `.Rmd` and constantly pushing the "knit" button, don't do that either.
 
@@ -56,3 +60,16 @@ It's virtually impossible to give a comprehensive scaffold of how to accomplish 
 9.  Do not change layouts in the theme directory.  Instead, copy the layouts to the `layout` folder in the root directory and add the word "custom" in the filename.
 
 10. Expanding on **9**, you customize a theme by overriding theme layouts and static assets in your top-level project directories.
+
+# Best Resources
+
+
+- [blogdown: Creating Websites with R Markdown](https://bookdown.org/yihui/blogdown/)
+
+- [Hugo Documentation](https://gohugo.io/documentation/)
+
+- [Hugo Community Forum](https://discourse.gohugo.io)
+
+
+
+    
