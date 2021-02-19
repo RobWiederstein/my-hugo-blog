@@ -40,9 +40,8 @@ params:
     width: 50
 #og: tags
   images:
-    - image/site/site-profile-fb-1200-630px.jpg
+    - images/site/site-cover-fb-1200-630px.jpg
   title: My cool site
 taxonomies:
   series: series
 canonifyURLs: true
-

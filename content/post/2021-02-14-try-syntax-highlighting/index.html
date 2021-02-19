@@ -7,17 +7,27 @@ categories:
   - R
 tags:
   - R Markdown
-description: Any blog aboud coding must use syntax highlighting.
+description: Any blog about coding must use syntax highlighting.
 images:
   - stairwell.jpg
+output:
+  blogdown::html_page:
+    toc: true
 ---
 
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#example-1">Example 1</a></li>
+<li><a href="#example-2">Example 2</a></li>
+</ul>
+</div>
 
 <div id="example-1" class="section level1">
 <h1>Example 1</h1>
-<pre class="r"><code>a &lt;- 1:2
+<pre class="r"><code># Dr Seuss
+a &lt;- 1:2
 paste(a, &quot;fish&quot;, sep =&quot;_&quot;)</code></pre>
 <pre><code>## [1] &quot;1_fish&quot; &quot;2_fish&quot;</code></pre>
 </div>
@@ -28,5 +38,5 @@ p &lt;- ggplot(mtcars, aes(hp,mpg, group = factor(cyl), color = factor(cyl)))
 p &lt;- p + geom_point()
 p &lt;- p + ggtitle(&quot;Mtcars&quot;)
 p</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/plot-speed-1.png" width="672" /></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/plot-mtcars-1.png" width="672" /></p>
 </div>

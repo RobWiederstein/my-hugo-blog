@@ -7,9 +7,12 @@ categories:
   - R
 tags:
   - R Markdown
-description: Any blog aboud coding must use syntax highlighting.
+description: Any blog about coding must use syntax highlighting.
 images:
   - stairwell.jpg
+output:
+  blogdown::html_page:
+    toc: true
 ---
 
 ```{r load-libraries, include=F}
@@ -19,13 +22,14 @@ library(ggplot2)
 # Example 1
 
 ```{r example-syntax-highting}
+# Dr Seuss
 a <- 1:2
 paste(a, "fish", sep ="_")
 ```
 
 # Example 2
 
-```{r plot-speed}
+```{r plot-mtcars}
 data(mtcars)
 p <- ggplot(mtcars, aes(hp,mpg, group = factor(cyl), color = factor(cyl)))
 p <- p + geom_point()
