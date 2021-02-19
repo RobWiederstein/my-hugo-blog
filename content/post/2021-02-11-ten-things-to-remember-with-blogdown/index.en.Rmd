@@ -1,0 +1,56 @@
+---
+title: Ten Things to Remember with Blogdown
+author: Rob Wiederstein
+date: '2021-02-11'
+slug: []
+categories:
+  - R
+  - hugo
+tags:
+  - blogdown
+  - hugo-theme
+lastmod: '2021-02-11T15:00:25-06:00'
+keywords: []
+description: ''
+comment: no
+toc: no
+autoCollapseToc: no
+postMetaInFooter: no
+hiddenFromHomePage: no
+contentCopyright: no
+reward: no
+mathjax: no
+mathjaxEnableSingleDollar: no
+mathjaxEnableAutoNumber: no
+hideHeaderAndFooter: no
+flowchartDiagrams:
+  enable: no
+  options: ''
+sequenceDiagrams:
+  enable: no
+  options: ''
+---
+
+Transitioning to `hugo` is difficult.  `Blogdown` offers the promise of an easy and quick workflow for blogging, however, that is not the case.  If you're not ready for some hard work, then you should probably stay with Wordpress or Squarespace.  On the otherhand, if you want to understand the principles that underly much of webpage creation, then stick with `blogdown` and `hugo`.
+
+It's virtually impossible to give a comprehensive scaffold of how to accomplish that and, even if you could, your time would be better spent reading Yihui Xie, Amber Thomas, Alison Presmanes Hill's [book](https://bookdown.org/yihui/blogdown/) on blogdown.  So here's 10 things you have to remember to for this transition to hugo go well:
+
+1. Use `blogdown::serve_site()` to serve your site.  Do not use `hugo serve` from the command line.  The reason is because `blogdown` knows what to do with files that have the `.Rmd` extension whereas `hugo` does not. Also, for those used to working with `.Rmd` and constantly pushing the "knit" button, don't do that either.
+
+2.  You have to learn the directory structure to `hugo`.  Sorry, but you knew that was coming and it is not especially complex.  See the documentation [here](https://gohugo.io/getting-started/directory-structure/).
+
+3. The `themes` folder is where your chosen theme resides.  It provides the formatting for your site.  You can find a theme on github by using the tag `hugo-theme`.  Choose the simplest template to accomplish your objective and one that has a lot of stars or forks. Xie recommends only looking for repos that have been updated within the past year.  Investigate widely, choose wisely.
+
+4. The `config` file in the root directory is probably where you'll start.  It is formatted either in `.yaml`, `toml` or `json`.  Review the file extremely carefully so you have a knowledge of the options that can be configured.
+
+5. You can find help in the usual places:  StackOverflow and Github.  Xie asked in the book to post help questions to StackOverflow rather than open an issue on Github. Remember to use the tag `[blogdown]` when searching on StackOverflow.  Also, `hugo` has a community [forum](https://discourse.gohugo.io) too.
+
+6.  Images just about drove me crazy.  There's lots of posts telling to put the image in the `static` directory.  What many of those posts forget is that `hugo` drops the `static` when it creates the site.  So my path was eternally wrong. (I'm talking about coding not salvation.)  Here's the [post](https://discourse.gohugo.io/t/image-path/1721) that finally made the point clear.
+
+7.  Set the global defaults. At the very least, author and markdown option should be set with `options(blogdown.ext = '.Rmd', blogdown.author = 'John Doe')`. Details can be found in the blogdown book.
+
+8. If you are using Rstudio, find the `Addins` menu and use the "add post" feature.
+
+9.  Do not change layouts in the theme directory.  Instead, copy the layouts to the `layout` folder in the root directory and add the word "custom" in the filename.
+
+10. Expanding on **9**, you customize a theme by overriding theme layouts and static assets in your top-level project directories.

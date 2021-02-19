@@ -1,0 +1,53 @@
+---
+title: Ten Things to Remember with Blogdown
+author: Rob Wiederstein
+date: '2021-02-11'
+slug: []
+categories:
+  - R
+  - hugo
+tags:
+  - blogdown
+  - hugo-theme
+lastmod: '2021-02-11T15:00:25-06:00'
+keywords: []
+description: ''
+comment: no
+toc: no
+autoCollapseToc: no
+postMetaInFooter: no
+hiddenFromHomePage: no
+contentCopyright: no
+reward: no
+mathjax: no
+mathjaxEnableSingleDollar: no
+mathjaxEnableAutoNumber: no
+hideHeaderAndFooter: no
+flowchartDiagrams:
+  enable: no
+  options: ''
+sequenceDiagrams:
+  enable: no
+  options: ''
+---
+
+<script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+
+</div>
+
+<p>Transitioning to <code>hugo</code> is difficult. <code>Blogdown</code> offers the promise of an easy and quick workflow for blogging, however, that is not the case. If you’re not ready for some hard work, then you should probably stay with Wordpress or Squarespace. On the otherhand, if you want to understand the principles that underly much of webpage creation, then stick with <code>blogdown</code> and <code>hugo</code>.</p>
+<p>It’s virtually impossible to give a comprehensive scaffold of how to accomplish that and, even if you could, your time would be better spent reading Yihui Xie, Amber Thomas, Alison Presmanes Hill’s <a href="https://bookdown.org/yihui/blogdown/">book</a> on blogdown. So here’s 10 things you have to remember to for this transition to hugo go well:</p>
+<ol style="list-style-type: decimal">
+<li><p>Use <code>blogdown::serve_site()</code> to serve your site. Do not use <code>hugo serve</code> from the command line. The reason is because <code>blogdown</code> knows what to do with files that have the <code>.Rmd</code> extension whereas <code>hugo</code> does not. Also, for those used to working with <code>.Rmd</code> and constantly pushing the “knit” button, don’t do that either.</p></li>
+<li><p>You have to learn the directory structure to <code>hugo</code>. Sorry, but you knew that was coming and it is not especially complex. See the documentation <a href="https://gohugo.io/getting-started/directory-structure/">here</a>.</p></li>
+<li><p>The <code>themes</code> folder is where your chosen theme resides. It provides the formatting for your site. You can find a theme on github by using the tag <code>hugo-theme</code>. Choose the simplest template to accomplish your objective and one that has a lot of stars or forks. Xie recommends only looking for repos that have been updated within the past year. Investigate widely, choose wisely.</p></li>
+<li><p>The <code>config</code> file in the root directory is probably where you’ll start. It is formatted either in <code>.yaml</code>, <code>toml</code> or <code>json</code>. Review the file extremely carefully so you have a knowledge of the options that can be configured.</p></li>
+<li><p>You can find help in the usual places: StackOverflow and Github. Xie asked in the book to post help questions to StackOverflow rather than open an issue on Github. Remember to use the tag <code>[blogdown]</code> when searching on StackOverflow. Also, <code>hugo</code> has a community <a href="https://discourse.gohugo.io">forum</a> too.</p></li>
+<li><p>Images just about drove me crazy. There’s lots of posts telling to put the image in the <code>static</code> directory. What many of those posts forget is that <code>hugo</code> drops the <code>static</code> when it creates the site. So my path was eternally wrong. (I’m talking about coding not salvation.) Here’s the <a href="https://discourse.gohugo.io/t/image-path/1721">post</a> that finally made the point clear.</p></li>
+<li><p>Set the global defaults. At the very least, author and markdown option should be set with <code>options(blogdown.ext = '.Rmd', blogdown.author = 'John Doe')</code>. Details can be found in the blogdown book.</p></li>
+<li><p>If you are using Rstudio, find the <code>Addins</code> menu and use the “add post” feature.</p></li>
+<li><p>Do not change layouts in the theme directory. Instead, copy the layouts to the <code>layout</code> folder in the root directory and add the word “custom” in the filename.</p></li>
+<li><p>Expanding on <strong>9</strong>, you customize a theme by overriding theme layouts and static assets in your top-level project directories.</p></li>
+</ol>
