@@ -51,7 +51,7 @@
       <pubDate>Sun, 14 Feb 2021 00:00:00 +0000</pubDate>
       
       <guid>https://keen-noether-7d2e44.netlify.app/2021/02/14/try-syntax-highlighting/</guid>
-      <description>   Example 1 Example 2   Example 1 # Dr Seuss a &amp;lt;- 1:2 paste(a, &amp;quot;fish&amp;quot;, sep =&amp;quot;_&amp;quot;) ## [1] &amp;quot;1_fish&amp;quot; &amp;quot;2_fish&amp;quot;  Example 2 data(mtcars) p &amp;lt;- ggplot(mtcars, aes(hp,mpg, group = factor(cyl), color = factor(cyl))) p &amp;lt;- p + geom_point() p &amp;lt;- p + ggtitle(&amp;quot;Mtcars&amp;quot;) p  </description>
+      <description>   Example 1 Example 2   Example 1 # Dr Seuss a &amp;lt;- 1:2 paste(a, &amp;quot;fish&amp;quot;, sep =&amp;quot;_&amp;quot;) ## [1] &amp;quot;1_fish&amp;quot; &amp;quot;2_fish&amp;quot;  Example 2 data(mtcars) p &amp;lt;- ggplot(mtcars, aes(hp,mpg, group = factor(cyl), color = factor(cyl))) p &amp;lt;- p + geom_point() p &amp;lt;- p + ggtitle(&amp;quot;Mtcars&amp;quot;) p  Figure 1: A plot constructed using ggplot2.   </description>
     </item>
     
     <item>
