@@ -9,7 +9,7 @@ tags:
   - R Markdown
 description: Any blog about coding must use syntax highlighting.
 images:
-  - stairwell.jpg
+  - 2021/02/14/try-syntax-highlighting/stairwell.jpg
 output:
   blogdown::html_page:
     toc: true
