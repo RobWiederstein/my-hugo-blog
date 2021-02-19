@@ -29,7 +29,7 @@ paste(a, "fish", sep ="_")
 
 # Example 2
 
-```{r plot-mtcars}
+```{r plot-mtcars, fig.align="center", fig.cap="A plot constructed using ggplot2."}
 data(mtcars)
 p <- ggplot(mtcars, aes(hp,mpg, group = factor(cyl), color = factor(cyl)))
 p <- p + geom_point()
