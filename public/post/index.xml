@@ -6,7 +6,19 @@
     <description>Recent content in Posts on Rob Wiederstein -- a blog about data</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HUGO Variables</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/02/19/hugo-variables/</link>
+      <pubDate>Fri, 19 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/19/hugo-variables/</guid>
+      <description>hugo has three kinds of variables: (1) resident or &amp;ldquo;built-in&amp;rdquo; global variables, (2) defined global variables in the config file and (3) page variables.
+Site Variables List To see the configuration settings for hugo run:
+hugo config .Site.Params Variable A bunch of code here  {{ $_hugo_config := { &amp;quot;version&amp;quot;: 1 } }}
+ hugo-variables If you&amp;#39;ve ever wondered exactly how Shiny&amp;#39;s reactive graph works, I have new &amp;quot;Mastering Shiny&amp;quot; book chapter up: https://t.</description>
+    </item>
+    
     <item>
       <title>Insert HTML Widgets in Blogdown</title>
       <link>https://keen-noether-7d2e44.netlify.app/2021/02/15/insert_htmlwidget/</link>
@@ -17,12 +29,22 @@
     </item>
     
     <item>
-      <title>Try Syntax Highlighting</title>
+      <title>Code Highlighting in Rmarkdown</title>
       <link>https://keen-noether-7d2e44.netlify.app/2021/02/14/try-syntax-highlighting/</link>
       <pubDate>Sun, 14 Feb 2021 00:00:00 +0000</pubDate>
       
       <guid>https://keen-noether-7d2e44.netlify.app/2021/02/14/try-syntax-highlighting/</guid>
-      <description>   Example 1 Example 2   Example 1 # Dr Seuss a &amp;lt;- 1:2 paste(a, &amp;quot;fish&amp;quot;, sep =&amp;quot;_&amp;quot;) ## [1] &amp;quot;1_fish&amp;quot; &amp;quot;2_fish&amp;quot;  Example 2 data(mtcars) p &amp;lt;- ggplot(mtcars, aes(hp,mpg, group = factor(cyl), color = factor(cyl))) p &amp;lt;- p + geom_point() p &amp;lt;- p + ggtitle(&amp;quot;Mtcars&amp;quot;) p  Figure 1: A plot constructed using ggplot2.   </description>
+      <description>Example 1 Example 2   Example 1 # Dr Seuss a &amp;lt;- 1:2 fish.number &amp;lt;- paste(a, &amp;quot;fish&amp;quot;, sep =&amp;quot;_&amp;quot;) b &amp;lt;- c(&amp;quot;red&amp;quot;, &amp;quot;blue&amp;quot;) fish.color &amp;lt;- paste(b, &amp;quot;fish&amp;quot;, sep = &amp;quot;_&amp;quot;) print(c(fish.number, fish.color)) ## [1] &amp;quot;1_fish&amp;quot; &amp;quot;2_fish&amp;quot; &amp;quot;red_fish&amp;quot; &amp;quot;blue_fish&amp;quot;  Example 2 data(mtcars) p &amp;lt;- ggplot(mtcars, aes(hp,mpg, group = factor(cyl), color = factor(cyl))) p &amp;lt;- p + geom_point() p &amp;lt;- p + ggtitle(&amp;quot;Mtcars&amp;quot;) p  Figure 1: A plot constructed with ggplot2.</description>
+    </item>
+    
+    <item>
+      <title>Ten Things to Remember with Blogdown</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/02/11/ten-things-to-remember-with-blogdown/</link>
+      <pubDate>Thu, 11 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/11/ten-things-to-remember-with-blogdown/</guid>
+      <description>Transitioning to hugo is difficult. Blogdown offers the promise of an easy and quick workflow for blogging, however, that is not the case. If you’re not ready for some hard work, then you should probably stay with Wordpress or Squarespace. On the otherhand, if you want to understand the principles that underly much of webpage creation, then stick with blogdown and hugo.
+It’s virtually impossible to give a comprehensive scaffold of how to accomplish that and, even if you could, your time would be better spent reading Yihui Xie, Amber Thomas, Alison Presmanes Hill’s book on blogdown.</description>
     </item>
     
     <item>

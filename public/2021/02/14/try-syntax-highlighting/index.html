@@ -6,8 +6,8 @@
 <meta name="generator" content="Hugo 0.80.0" />
 
 
-<title>Try Syntax Highlighting - Rob Wiederstein -- a blog about data</title>
-<meta property="og:title" content="Try Syntax Highlighting - Rob Wiederstein -- a blog about data">
+<title>Code Highlighting in Rmarkdown - Rob Wiederstein -- a blog about data</title>
+<meta property="og:title" content="Code Highlighting in Rmarkdown - Rob Wiederstein -- a blog about data">
 
 
   <link href='https://keen-noether-7d2e44.netlify.app/favicon.ico' rel='icon' type='image/x-icon'/>
@@ -15,7 +15,7 @@
 
 
   
-  <meta property="description" content="Any blog about coding must use syntax highlighting.">
+  <meta property="description" content="A blog post on coding must use code highlighting to make it easier on readers to grasp key concepts.">
   
 
 
@@ -44,8 +44,8 @@
 
 <script src="https://kit.fontawesome.com/4205ca38a3.js" crossorigin="anonymous"></script>
 
-<meta property="og:title" content="Try Syntax Highlighting" />
-<meta property="og:description" content="Any blog about coding must use syntax highlighting." />
+<meta property="og:title" content="Code Highlighting in Rmarkdown" />
+<meta property="og:description" content="A blog post on coding must use code highlighting to make it easier on readers to grasp key concepts." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://keen-noether-7d2e44.netlify.app/2021/02/14/try-syntax-highlighting/" />
 <meta property="og:image" content="https://keen-noether-7d2e44.netlify.app/2021/02/14/try-syntax-highlighting/stairwell.jpg" />
@@ -56,8 +56,8 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://keen-noether-7d2e44.netlify.app/2021/02/14/try-syntax-highlighting/stairwell.jpg"/>
 
-<meta name="twitter:title" content="Try Syntax Highlighting"/>
-<meta name="twitter:description" content="Any blog about coding must use syntax highlighting."/>
+<meta name="twitter:title" content="Code Highlighting in Rmarkdown"/>
+<meta name="twitter:description" content="A blog post on coding must use code highlighting to make it easier on readers to grasp key concepts."/>
 
 
 
@@ -96,7 +96,7 @@
     <span class="article-duration">1 min read</span>
     
 
-    <h1 class="article-title">Try Syntax Highlighting</h1>
+    <h1 class="article-title">Code Highlighting in Rmarkdown</h1>
 
     
     <span class="article-date">2021-02-14</span>
@@ -117,8 +117,11 @@
 <h1>Example 1</h1>
 <pre class="r"><code># Dr Seuss
 a &lt;- 1:2
-paste(a, &quot;fish&quot;, sep =&quot;_&quot;)</code></pre>
-<pre><code>## [1] &quot;1_fish&quot; &quot;2_fish&quot;</code></pre>
+fish.number &lt;- paste(a, &quot;fish&quot;, sep =&quot;_&quot;)
+b &lt;- c(&quot;red&quot;, &quot;blue&quot;)
+fish.color &lt;- paste(b, &quot;fish&quot;, sep = &quot;_&quot;)
+print(c(fish.number, fish.color))</code></pre>
+<pre><code>## [1] &quot;1_fish&quot;    &quot;2_fish&quot;    &quot;red_fish&quot;  &quot;blue_fish&quot;</code></pre>
 </div>
 <div id="example-2" class="section level1">
 <h1>Example 2</h1>
@@ -128,9 +131,9 @@ p &lt;- p + geom_point()
 p &lt;- p + ggtitle(&quot;Mtcars&quot;)
 p</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:plot-mtcars"></span>
-<img src="https://keen-noether-7d2e44.netlify.app/2021/02/14/try-syntax-highlighting/index_files/figure-html/plot-mtcars-1.svg" alt="A plot constructed using ggplot2." width="576" />
+<img src="https://keen-noether-7d2e44.netlify.app/2021/02/14/try-syntax-highlighting/index_files/figure-html/plot-mtcars-1.svg" alt="A plot constructed with `ggplot2`." width="576" />
 <p class="caption">
-Figure 1: A plot constructed using ggplot2.
+Figure 1: A plot constructed with <code>ggplot2</code>.
 </p>
 </div>
 </div>

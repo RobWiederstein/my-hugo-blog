@@ -3,6 +3,21 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/19/hugo-variables/</loc>
+    <lastmod>2021-02-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/post/</loc>
+    <lastmod>2021-02-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/</loc>
+    <lastmod>2021-02-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://keen-noether-7d2e44.netlify.app/cv/</loc>
     <lastmod>2021-02-16T00:00:00+00:00</lastmod>
   </url>
@@ -18,13 +33,8 @@
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/post/</loc>
-    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/</loc>
-    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/14/try-syntax-highlighting/</loc>
+    <lastmod>2021-02-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -33,8 +43,8 @@
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/14/try-syntax-highlighting/</loc>
-    <lastmod>2021-02-14T00:00:00+00:00</lastmod>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/11/ten-things-to-remember-with-blogdown/</loc>
+    <lastmod>2021-02-11T15:00:25-06:00</lastmod>
   </url>
   
   <url>

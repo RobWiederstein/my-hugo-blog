@@ -29,6 +29,8 @@ flowchartDiagrams:
 sequenceDiagrams:
   enable: no
   options: ''
+images:
+  - 2021/02/11/ten-things-to-remember-with-blogdown/hugo-blogdown-1200-630px.jpg
 ---
 
 Transitioning to `hugo` is difficult.  `Blogdown` offers the promise of an easy and quick workflow for blogging, however, that is not the case.  If you're not ready for some hard work, then you should probably stay with Wordpress or Squarespace.  On the otherhand, if you want to understand the principles that underly much of webpage creation, then stick with `blogdown` and `hugo`.
