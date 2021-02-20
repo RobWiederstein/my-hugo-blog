@@ -8,8 +8,8 @@ categories:
 tags:
   - htmlwidget
   - DT
-images
-  - 2021/02/insert_htmlwidget/leaflet-widget-embed-1200-630.jpg
+images:
+  - 2021/02/15/insert_htmlwidget/leaflet-widget-embed-1200-630.jpg
 ---
 
 There were two main reasons for moving to `blogdown`.  First, I needed a blogging platform that moved seemlessly between `R` code and its output.  It had to be easy to show the connection between the code that was used and its effect on the data. Put the two side-by-side and  people can understand what happened.  It's how I learn off the console.  
