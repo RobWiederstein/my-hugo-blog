@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Rob Wiederstein -- a blog about data</title>
+    <title>Posts on Rob Wiederstein - a blog about coding, data and public policy</title>
     <link>https://keen-noether-7d2e44.netlify.app/post/</link>
-    <description>Recent content in Posts on Rob Wiederstein -- a blog about data</description>
+    <description>Recent content in Posts on Rob Wiederstein - a blog about coding, data and public policy</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 19 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/post/index.xml" rel="self" type="application/rss+xml" />
