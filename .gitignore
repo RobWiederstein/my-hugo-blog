@@ -48,3 +48,4 @@ vignettes/*.pdf
 # data output files for hugo & blogdown
 /blogdown/
 /public/
+public/
