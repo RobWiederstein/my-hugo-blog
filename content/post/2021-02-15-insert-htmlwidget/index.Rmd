@@ -10,7 +10,7 @@ tags:
   - DT
 images:
   - 2021/02/15/insert_htmlwidget/leaflet-widget-embed-1200-630.jpg
-description: "Blogdown & Hugo allow for the insertion of html widgets like leaflet. This is a huge time saver!"
+description: "Blogdown & Hugo allow for the insertion of html widgets like leaflet. This is a huge time saver because one doesn't need to learn java and can instead stay within the `R` environment."
 ---
 
 There were two main reasons for moving to `blogdown`.  First, I needed a blogging platform that moved seemlessly between `R` code and its output.  It had to be easy to show the connection between the code that was used and its effect on the data. Put the two side-by-side and  people can understand what happened.  It's how I learn off the console.  
