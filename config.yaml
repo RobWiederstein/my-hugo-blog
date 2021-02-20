@@ -43,6 +43,7 @@ params:
   images:
     - images/site/site-cover-fb-1200-630px.jpg
   title: Rob Wiederstein -- a blog about data
+  site_name: Rob Wiederstein | a blog about data
 taxonomies:
   series: series
 canonifyURLs: true
