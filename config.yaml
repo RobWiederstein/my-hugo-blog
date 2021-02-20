@@ -1,6 +1,7 @@
 baseurl: https://keen-noether-7d2e44.netlify.app/
 languageCode: en-us
 title: Rob Wiederstein -- a blog about data
+site_name: Rob Wiederstein -- a blog about data
 theme: hugo-lithium
 googleAnalytics: ''
 disqusShortname: ''
