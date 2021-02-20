@@ -366,3 +366,13 @@ code {
 .fa-linkedin {
   color: #00a0dc;
 }
+/* image formatting */
+img[src*="#profile"] {
+   width: 33%;
+   float: left;
+   padding-left: 0;
+   padding-top: 15px;
+   padding-right: 15px;
+   padding-bottom: 15px;
+   border-radius: 100%;
+}

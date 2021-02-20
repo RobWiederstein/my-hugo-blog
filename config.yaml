@@ -64,6 +64,7 @@ markup:
     smartypants: true
     smartypantsQuotesNBSP: false
     taskLists: true
+    unsafe: true
   highlight:
     anchorLineNos: false
     codeFences: true
@@ -72,11 +73,11 @@ markup:
     lineAnchors: ""
     lineNoStart: 1
     lineNos: false
-    lineNumbersInTable: true
+    lineNumbersInTable: false
     noClasses: true
-    style: monokai
+    style: github
     tabWidth: 4
   tableOfContents:
     endLevel: 3
     ordered: false
-    startLevel: 2
+    startLevel: 1
