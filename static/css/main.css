@@ -376,3 +376,13 @@ img[src*="#profile"] {
    padding-bottom: 15px;
    border-radius: 100%;
 }
+
+/* 404 */
+.not-found {
+      padding: 20px;
+      align-items: center;
+
+}
+.not-found-img {
+      
+}
