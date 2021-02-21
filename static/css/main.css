@@ -379,10 +379,10 @@ img[src*="#profile"] {
 
 /* 404 */
 .not-found {
-      padding: 20px;
-      align-items: center;
-
+    padding: 20px;
+    margin: auto;
+    text-align: center;
 }
 .not-found-img {
-      
+
 }
