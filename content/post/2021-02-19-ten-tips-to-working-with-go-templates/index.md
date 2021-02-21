@@ -47,7 +47,7 @@ Another important symbol is `$`.  The root context of a template file is stored 
 
 ## Assignments
 
-Variables are assigned values or declared throught the use of `:=`.
+Variables are assigned values or declared through the use of `:=`.
 ```go
 {{ $city := "A string" }}
 ```
@@ -190,3 +190,7 @@ Hugo searches for the layout to use for a given page in a well defined order, st
 -   kind
 -   declared in frontmatter: `layout:  "single"`
 -   type in frontmatter: `type:  "post"`
+
+# `_index.md`
+
+It has a special role in Hugo. It allows you to add front matter and content to your list templates. 
