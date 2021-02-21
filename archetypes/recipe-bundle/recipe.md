@@ -12,3 +12,13 @@ image:
   - image/food.jpg
 summary: ''
 ---
+
+![food](image/food.jpg)
+
+# Ingredients
+
+# Directions
+
+# Notes
+
+# Nutrition
