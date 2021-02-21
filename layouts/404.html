@@ -1,0 +1,12 @@
+{{ partial "header.html" . }}
+{{ define "main"}}
+    <main id="main">
+      <div>
+            <img src="/image/site/404-terminal-sick.svg" alt = "404" />
+            </div>
+      <div>
+       <h1 id="title"><a href="{{ "/" | relURL }}">Sorry, page not found.</a></h1>
+      </div>
+    </main>
+{{ end }}
+{{ partial "footer.html" . }}

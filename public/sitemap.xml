@@ -3,62 +3,67 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/19/hugo-variables/</loc>
+    <loc>http://localhost:1313/recipe/apple-strudel-swirl/</loc>
     <lastmod>2021-02-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/post/</loc>
+    <loc>http://localhost:1313/recipe/</loc>
     <lastmod>2021-02-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/</loc>
+    <loc>http://localhost:1313/</loc>
     <lastmod>2021-02-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/19/ten-tips-to-working-with-go-templates/</loc>
-    <lastmod>2021-02-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/cv/</loc>
+    <loc>http://localhost:1313/cv/</loc>
     <lastmod>2021-02-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/gallery/</loc>
+    <loc>http://localhost:1313/gallery/</loc>
     <lastmod>2021-02-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/15/insert_htmlwidget/</loc>
-    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/14/try-syntax-highlighting/</loc>
+    <loc>http://localhost:1313/recipe/bbq-pork-ribs/</loc>
     <lastmod>2021-02-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/datasets/</loc>
+    <loc>http://localhost:1313/2021/02/14/try-syntax-highlighting/</loc>
     <lastmod>2021-02-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/11/ten-tips-to-working-with-blogdown/</loc>
+    <loc>http://localhost:1313/datasets/</loc>
+    <lastmod>2021-02-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/post/</loc>
+    <lastmod>2021-02-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/recipe/ranch-pasta-salad/</loc>
+    <lastmod>2021-02-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/2021/02/11/ten-tips-to-working-with-blogdown/</loc>
     <lastmod>2021-02-11T15:00:25-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/about/</loc>
+    <loc>http://localhost:1313/about/</loc>
     <lastmod>2016-05-05T21:48:51-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/series/</loc>
+    <loc>http://localhost:1313/series/</loc>
   </url>
   
 </urlset>

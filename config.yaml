@@ -23,7 +23,10 @@ menu:
       url: /datasets/
     - name: Gallery
       url: /gallery/
+    - name: Recipes
+      url: /recipe/
 params:
+  author: Rob Wiederstein
   MathJaxCDN: //cdnjs.cloudflare.com/ajax/libs
   MathJaxVersion: 2.7.5
   description: A website about data, analysis, and public policy.

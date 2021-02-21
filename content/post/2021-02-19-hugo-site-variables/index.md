@@ -7,6 +7,7 @@ categories:
   - hugo
   - go
 tags: []
+draft: true
 ---
 
 `hugo` has three kinds of variables:  (1) resident or "built-in" global variables, (2) defined global variables in the `config` file and (3) page variables.
