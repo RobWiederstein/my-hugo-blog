@@ -16,13 +16,13 @@ summary: 'This is a great meal for whenever.  I use kale, broccoli, spinach or a
 ![food](image/food.jpg)
 
 # Ingredients
-2 c. greens of your choice
-10 large eggs, cracked and scrambled
-2 c. shredded cheese
-4 oz. jar red pimento
-1 medium onion diced
-1 tsp. garlic salt
-1 tsp. black pepper
+-   2 c. greens of your choice (spinach, broccoli, kale, etc.)
+-   10 large eggs, cracked and scrambled
+-   2 c. shredded cheese
+-   4 oz. jar red pimento
+-   1 medium onion diced
+-   1 tsp. garlic salt
+-   1 tsp. black pepper
 
 # Directions
 
@@ -35,4 +35,3 @@ Check for doneness in the center.  If runny, cook for additional time.
 # Nutrition
 
 Great source of protein and the greens add iron.
-

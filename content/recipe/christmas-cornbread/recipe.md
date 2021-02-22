@@ -9,11 +9,10 @@ draft: false
 layout: layouts/recipe/single.html
 vegetarian: true
 image:
-  - image/food.jpg
+  - content/recipe/christmas-cornbread/image/cornbread.jpg
 summary: 'You do not have to wait to Christmas to eat this red and green cornbread.  The colors make it a festive treat for any occasion.'
 ---
-
-![food](image/food.jpg)
+![cornbread](/content/recipe/christmas-cornbread/image/cornbread.jpg)
 
 # Ingredients
 

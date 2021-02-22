@@ -1,11 +1,16 @@
 {{ partial "header.html" . }}
 
 <main class="content" role="main">
-
+      <h1>Recipes</h1>
+      <img src="/images/site/rob-kitchen-fb-1200-630.jpg" style="width: -webkit-fill-available;"/>
+      <p>
+            Since the pandemic began in 2020, I have had to relearn to cook.  You will notice some common themes in my cooking:  my ingredients are from Walmart; to the extent that there is any "meat", it is usually meat alternatives or shellfish; the dishes are ones that my family enjoys; and preparation is almost always under 30 minutes. The specific amounts of seasonings are frequently omitted. My spouse is more taste/smell senstive than I am, so typically the dishes are less spicy, salty, etc. than I would fix for myself.  Enjoy.
+      </p>
       {{ if .Content }}
       <article class="article">
+
             {{ if .Title }}
-            <h1 class="article-title">{{ .Title }}</h1>
+            <h2 class="article-title">{{ .Title }}</h2>
             {{ end }}
             <div class="article-content">
                   {{ .Content }}
