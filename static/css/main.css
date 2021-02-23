@@ -383,6 +383,26 @@ img[src*="#profile"] {
     margin: auto;
     text-align: center;
 }
-.not-found-img {
 
+/* figures */
+
+figure {
+    display: inline-block;
+    margin-bottom: 20px; /* adjust as needed */
+}
+figure img {
+    vertical-align: top;
+}
+figure figcaption {
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.4;
+}
+figure hr {
+    width: 90%;
+    margin: 10px auto;
+    height: 1px;
+    overflow: hidden;
+    border: none;
+    background: #e5e5e5;
 }
