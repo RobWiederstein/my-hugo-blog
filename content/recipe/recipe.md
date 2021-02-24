@@ -9,6 +9,16 @@ draft: false
 layout: layouts/recipe/single.html
 vegetarian: true
 image:
-  -
+  - image/food.jpg
+summary: ''
 ---
-Get some pasta and cook it.
+
+![food](image/food.jpg)
+
+# Ingredients
+
+# Directions
+
+# Notes
+
+# Nutrition

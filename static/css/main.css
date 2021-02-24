@@ -389,7 +389,10 @@ img[src*="#profile"] {
 figure {
     display: inline-block;
     margin-bottom: 20px; /* adjust as needed */
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
 }
+
 figure img {
     vertical-align: top;
 }
@@ -397,6 +400,8 @@ figure figcaption {
     text-align: center;
     font-size: 18px;
     line-height: 1.4;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 figure hr {
     width: 90%;

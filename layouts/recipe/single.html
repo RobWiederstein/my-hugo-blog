@@ -16,10 +16,13 @@
 
             <div class="article-content">
                   <figure>
-                  <img src="{{ .Params.Image }}" style="width: -webkit-fill-available;" />
-                  <figcaption>{{ .Summary }}</figcaption>
+                  <img src="{{ .Params.Image }}" style="width: 100%"/>
+                  <figcaption>{{ .Params.Caption }}</figcaption>
                   <hr style="width: 90%;margin: 10px;"/>
                   </figure>
+                  <p>
+                        {{ .Summary }}
+                  </p>
                   {{ .Content }}
             </div>
       </article>

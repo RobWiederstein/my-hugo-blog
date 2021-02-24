@@ -1,5 +1,5 @@
 ---
-title: 'Christmas Cornbread'
+title: 'Confetti Cornbread'
 date: '2021-02-11'
 cook: 'Rob Wiederstein'
 source: 'web'
@@ -10,7 +10,7 @@ layout: layouts/recipe/single.html
 vegetarian: true
 image:
   - /recipe/christmas-cornbread/cornbread.jpg
-summary: 'You do not have to wait to Christmas to eat this red and green cornbread.  The colors make it a festive treat for any occasion.'
+summary: 'You do not have to wait to break open a pinata to eat this red and green cornbread.  The colors make it a festive treat for any occasion.'
 ---
 
 # Ingredients
