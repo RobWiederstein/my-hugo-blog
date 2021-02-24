@@ -169,7 +169,7 @@ code {
 
 .archive-title {
   font-size: 32px;
-  margin-top: 60px;
+  margin-top: 30px;
 }
 
 .archive-item {
@@ -383,6 +383,63 @@ img[src*="#profile"] {
     margin: auto;
     text-align: center;
 }
-.not-found-img {
 
+/* figures */
+
+figure {
+    display: inline-block;
+    margin-bottom: 20px; /* adjust as needed */
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+figure img {
+    vertical-align: top;
+}
+figure figcaption {
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.4;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+figure hr {
+    width: 90%;
+    margin: 10px auto;
+    height: 1px;
+    overflow: hidden;
+    border: none;
+    background: #e5e5e5;
+}
+
+/* collapsible lists w/ buttons */
+
+main > div + h2 {
+  border-top: 2px solid;
+}
+
+h2 button {
+  all: inherit;
+  border: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  /*padding: 0.5em 0;*/
+}
+
+h2 button:focus svg {
+  outline: 2px solid;
+}
+
+button svg {
+  height: 1em;
+  margin-left: 0.5em;
+}
+
+[aria-expanded="true"] .vert {
+  display: none;
+}
+
+[aria-expanded] rect {
+  fill: currentColor;
 }
