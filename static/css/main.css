@@ -169,7 +169,7 @@ code {
 
 .archive-title {
   font-size: 32px;
-  margin-top: 60px;
+  margin-top: 30px;
 }
 
 .archive-item {
@@ -410,4 +410,36 @@ figure hr {
     overflow: hidden;
     border: none;
     background: #e5e5e5;
+}
+
+/* collapsible lists w/ buttons */
+
+main > div + h2 {
+  border-top: 2px solid;
+}
+
+h2 button {
+  all: inherit;
+  border: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  /*padding: 0.5em 0;*/
+}
+
+h2 button:focus svg {
+  outline: 2px solid;
+}
+
+button svg {
+  height: 1em;
+  margin-left: 0.5em;
+}
+
+[aria-expanded="true"] .vert {
+  display: none;
+}
+
+[aria-expanded] rect {
+  fill: currentColor;
 }

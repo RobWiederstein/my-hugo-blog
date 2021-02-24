@@ -1,21 +1,21 @@
 ---
-title: 'Ranch Pasta Salad'
-date: '2021-02-11'
-cook: 'Rob Wiederstein'
-source: 'neighbor'
-meal:  'dinner'
-time: "20"
-draft: false
+title:
+date:
+cook:
+source:
+meal:  [breakfast, lunch, dinner, dessert, salad, appetizer, drink]
+time:
+draft: true
 layout: layouts/recipe/single.html
-vegetarian: true
+vegetarian:
 image:
   - image/food.jpg
-summary: ''
+caption:
+summary:
 ---
 
-![food](image/food.jpg)
-
 # Ingredients
+-    ingredient
 
 # Directions
 

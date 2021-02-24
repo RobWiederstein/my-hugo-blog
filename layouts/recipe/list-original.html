@@ -23,25 +23,15 @@
                   {{ $pages = .Site.RegularPages }}
                   {{ end }}
                   {{ range (where $pages "Section" "recipe").GroupByParam "meal" }}
-                  <h2 class="archive-title">
-                        <button aria-expanded="false">
-                              {{ .Key }}
-                              <svg aria-hidden="true" focusable="false" viewBox="0 0 10 10">
-                                    <rect class="vert" height="8" width="2" y="1" x="4" />
-                                    <rect height="2" width="8" y="4" x="1" />
-                              </svg>
-                        </button>
-                  </h2>
-                  <div hidden>
-                        {{ range .Pages.ByParam "time"}}
-                              <article class="archive-item">
-                                    <a href="{{ .RelPermalink }}" class="archive-item-link">{{ .Title }}</a>
-                                    <span class="archive-item-date">
-                                          {{ print .Params.Time " min."}}
-                                    </span>
-                              </article>
-                        {{ end }}
-                  </div>
+                  <h2 class="archive-title">{{ .Key }}</h2>
+                  {{ range .Pages }}
+                  <article class="archive-item">
+                        <a href="{{ .RelPermalink }}" class="archive-item-link">{{ .Title }}</a>
+                        <span class="archive-item-date">
+                              {{ .Date.Format "2006-01-02" }}
+                        </span>
+                  </article>
+                  {{ end }}
             {{ end }}
       </div>
 
