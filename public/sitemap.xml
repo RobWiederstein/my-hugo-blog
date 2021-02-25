@@ -3,77 +3,81 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/post/</loc>
+    <loc>http://localhost:1313/post/</loc>
     <lastmod>2021-02-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/</loc>
+    <loc>http://localhost:1313/recipe/</loc>
     <lastmod>2021-02-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/23/social-network-analysis-of-astronauts/</loc>
+    <loc>http://localhost:1313/</loc>
     <lastmod>2021-02-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/kitchen-sink-soup/recipe/</loc>
+    <loc>http://localhost:1313/2021/02/23/social-network-analysis-of-astronauts/</loc>
+    <lastmod>2021-02-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/recipe/tortellini-butternut/recipe/</loc>
+    <lastmod>2021-02-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/recipe/kitchen-sink-soup/recipe/</loc>
     <lastmod>2021-02-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/</loc>
-    <lastmod>2021-02-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/aloo-matar/recipe/</loc>
+    <loc>http://localhost:1313/recipe/aloo-matar/recipe/</loc>
     <lastmod>2021-02-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/cv/</loc>
+    <loc>http://localhost:1313/cv/</loc>
     <lastmod>2021-02-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/gallery/</loc>
+    <loc>http://localhost:1313/gallery/</loc>
     <lastmod>2021-02-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/15/insert_htmlwidget/</loc>
+    <loc>http://localhost:1313/2021/02/15/insert_htmlwidget/</loc>
     <lastmod>2021-02-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/datasets/</loc>
+    <loc>http://localhost:1313/datasets/</loc>
     <lastmod>2021-02-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/christmas-cornbread/recipe/</loc>
+    <loc>http://localhost:1313/recipe/christmas-cornbread/recipe/</loc>
     <lastmod>2021-02-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/recipe/</loc>
+    <loc>http://localhost:1313/recipe/waldorf-salad/recipe/</loc>
     <lastmod>2021-02-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/waldorf-salad/recipe/</loc>
-    <lastmod>2021-02-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/about/</loc>
+    <loc>http://localhost:1313/about/</loc>
     <lastmod>2016-05-05T21:48:51-07:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/series/</loc>
+    <loc>http://localhost:1313/1/01/01/astronauts/</loc>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/series/</loc>
   </url>
   
 </urlset>
