@@ -2,53 +2,77 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Rob Wiederstein - a blog about coding, data and public policy</title>
-    <link>http://localhost:1313/</link>
+    <link>https://keen-noether-7d2e44.netlify.app/</link>
     <description>Recent content on Rob Wiederstein - a blog about coding, data and public policy</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 26 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Social Network Analysis of Astronauts</title>
-      <link>http://localhost:1313/2021/02/23/social-network-analysis-of-astronauts/</link>
-      <pubDate>Tue, 23 Feb 2021 00:00:00 +0000</pubDate>
+      <title>Hello World Three</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/02/26/hello-world-three/</link>
+      <pubDate>Fri, 26 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/2021/02/23/social-network-analysis-of-astronauts/</guid>
-      <description>summary</description>
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/26/hello-world-three/</guid>
+      <description>Custom image Acknowledgements References Reproducibility   ## This imaged will be saved in the /post/*_files/ directory Use echo = FALSE if ## you want to hide the code for making the plot plot(1:10, 10:1) Custom image The easiest option is to use the Insert Image RStudio addin to add an external image.  Acknowledgements  References  Reproducibility ─ Session info ─────────────────────────────────────────────────────────────────────────────────────────────────────── setting value version R version 3.</description>
+    </item>
+    
+    <item>
+      <title>Hello World Two</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/02/26/hello-world-two/</link>
+      <pubDate>Fri, 26 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/26/hello-world-two/</guid>
+      <description>R image Custom image Acknowledgements References Reproducibility   Did this work?
+And what about this?
+Typical location to start editing since the bibliography chunk is hidden. Make sure that you selected R Markdown (.Rmd) as the format option of the post when using the New Post addin.
+R image ## This imaged will be saved in the /post/*_files/ directory Use echo = FALSE if ## you want to hide the code for making the plot plot(1:10, 10:1)  Custom image The easiest option is to use the Insert Image RStudio addin to add an external image.</description>
+    </item>
+    
+    <item>
+      <title>Hello World One</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/02/25/hello-world-one/</link>
+      <pubDate>Thu, 25 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/25/hello-world-one/</guid>
+      <description>Post content R image Custom image Acknowledgements References Reproducibility   Did this work?
+And what about this?
+Post content Typical location to start editing since the bibliography chunk is hidden. Make sure that you selected R Markdown (.Rmd) as the format option of the post when using the New Post addin.
+ R image ## This imaged will be saved in the /post/*_files/ directory ## Use echo = FALSE if you want to hide the code for making the plot plot(1:10, 10:1)  Custom image The easiest option is to use the Insert Image RStudio addin to add an external image.</description>
     </item>
     
     <item>
       <title>Tortellini and Butternut Squash</title>
-      <link>http://localhost:1313/recipe/tortellini-butternut/recipe/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/tortellini-butternut/recipe/</link>
       <pubDate>Tue, 23 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/recipe/tortellini-butternut/recipe/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/tortellini-butternut/recipe/</guid>
       <description>This vegetarian dish can be made quickly with frozen tortellini and butternut squash.</description>
     </item>
     
     <item>
       <title>Kitchen-Sink Vegetable Soup</title>
-      <link>http://localhost:1313/recipe/kitchen-sink-soup/recipe/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/kitchen-sink-soup/recipe/</link>
       <pubDate>Sun, 21 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/recipe/kitchen-sink-soup/recipe/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/kitchen-sink-soup/recipe/</guid>
       <description>This is called Kitchen-Sink Vegetable soup because everything is in it, including the kitchen sink.  Before going to the grocery store for the week, I clear out the vegetable bin. The wine is for me not the soup.</description>
     </item>
     
     <item>
       <title>Aloo Matar (Potato &amp; Peas)</title>
-      <link>http://localhost:1313/recipe/aloo-matar/recipe/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/aloo-matar/recipe/</link>
       <pubDate>Thu, 18 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/recipe/aloo-matar/recipe/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/aloo-matar/recipe/</guid>
       <description>It is hard to get excited when you are having potatoes and peas.  That&amp;rsquo;s why you should always say you are fixing aloo matar, a classic Indian dish.</description>
     </item>
     
     <item>
       <title>CV</title>
-      <link>http://localhost:1313/cv/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/cv/</link>
       <pubDate>Tue, 16 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/cv/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/cv/</guid>
       <description>Presentations:   Recollections from 18 Years of Judging (Henderson Rotary Club, Early Learning Ctr., Sept. 29, 2016).
   The Role of the Constitution, Campaign Finance, and the Presidential Race of 2016 (Henderson Community College, Henderson, Ky., Sept. 21, 2016).
   Center for Youth Justice and Services: Making Our Community Safer One Kid at a Time (Co-presenter, Alternatives to Detention Conference, Embassy Suites, Louisville, Ky., Aug. 26, 2016).</description>
@@ -56,66 +80,57 @@
     
     <item>
       <title>Gallery</title>
-      <link>http://localhost:1313/gallery/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/gallery/</link>
       <pubDate>Tue, 16 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/gallery/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/gallery/</guid>
       <description>Coming soon.</description>
     </item>
     
     <item>
       <title>Insert HTML Widgets in Blogdown</title>
-      <link>http://localhost:1313/2021/02/15/insert_htmlwidget/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/02/15/insert_htmlwidget/</link>
       <pubDate>Mon, 15 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/2021/02/15/insert_htmlwidget/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/15/insert_htmlwidget/</guid>
       <description>Load Libraries Insert Data Tables or DT Widget Insert Leaflet Widget Insert Sigma JS Insert Plotly Widget   There were two main reasons for moving to blogdown. First, I needed a blogging platform that moved seemlessly between R code and its output. It had to be easy to show the connection between the code that was used and its effect on the data.</description>
     </item>
     
     <item>
       <title>Datasets</title>
-      <link>http://localhost:1313/datasets/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/datasets/</link>
       <pubDate>Sun, 14 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/datasets/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/datasets/</guid>
       <description>Airlines &amp;amp; Airports  Bureau of Transportation &amp;amp; Statistics.  Cruise Ships  Sample Cruise Ship Data.  Economics  Bureau of Economic Analysis. Federal Reserve Economic Data. Aswath Damodaran&amp;rsquo;s Data Sets. Organization of Economic Cooperation &amp;amp; Development.  Education  National Center for Education Statistics. Kentucky Department of Education. Kentucky Graduation Project Data.  Energy  Kentucky Coal Facts. US Energy Information Administration. Global Powerplant Database.  General  Socrata Open Data Resources.</description>
     </item>
     
     <item>
       <title>Confetti Cornbread</title>
-      <link>http://localhost:1313/recipe/christmas-cornbread/recipe/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/christmas-cornbread/recipe/</link>
       <pubDate>Thu, 11 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/recipe/christmas-cornbread/recipe/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/christmas-cornbread/recipe/</guid>
       <description>You do not have to wait to break open a pinata to eat this red and green cornbread.  The colors make it a festive treat for any occasion.</description>
     </item>
     
     <item>
       <title>Waldorf Salad Redux</title>
-      <link>http://localhost:1313/recipe/waldorf-salad/recipe/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/waldorf-salad/recipe/</link>
       <pubDate>Thu, 11 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/recipe/waldorf-salad/recipe/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/waldorf-salad/recipe/</guid>
       <description>This is a family favorite that, unbelievalby, used to made with mayonnaise.  We buy a lot of apples that go uneaten so toward the end of the week, I often make this to get rid of the leftover apples.</description>
     </item>
     
     <item>
       <title>About</title>
-      <link>http://localhost:1313/about/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/about/</link>
       <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
       
-      <guid>http://localhost:1313/about/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/about/</guid>
       <description>I’m a dad, a retired judge, a guitar player, a former state representative, an amateur programmer and statistician. Out of fear that some may take my posts too seriously, I describe myself as someone who does mostly exploratory analysis and visualization&amp;ndash;although I have ventured into predictive analytics and modeling from time to time. I&amp;rsquo;ve even participated in a couple of kaggle contests and submitted an R notebook.
 The death of analytical/investigative reporting at the regional and local level is something that concerns me.</description>
-    </item>
-    
-    <item>
-      <title>Astronauts</title>
-      <link>http://localhost:1313/1/01/01/astronauts/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/1/01/01/astronauts/</guid>
-      <description>This is an analysis of about astronauts</description>
     </item>
     
   </channel>

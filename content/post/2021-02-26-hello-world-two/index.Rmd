@@ -1,0 +1,74 @@
+---
+title: Hello World Two
+author: Rob Wiederstein
+date: '2021-02-26'
+slug: hello-world-two
+categories:
+  - R
+tags:
+  - igraph
+draft: no
+image: ~
+caption: ~
+summary: ~
+---
+
+**Did this work?**
+
+**And what about this?**
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+library('devtools') # for session_info()
+```
+
+```{r set-chunk-options, include = F}
+##Do not break chunk line
+##Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=F
+)
+
+```
+
+Typical location to start editing since the bibliography chunk is hidden. Make sure that you selected `R Markdown (.Rmd)` as the _format_ option of the post when using the `New Post` addin.
+
+## R image
+
+
+```{r 'plot', echo = TRUE, fig.width = 6, fig.height = 6, eval = FALSE}
+## This imaged will be saved in the /post/*_files/ directory
+## Use echo = FALSE if you want to hide the code for making the plot
+plot(1:10, 10:1)
+```
+## Custom image
+
+The easiest option is to use the  _Insert Image_ RStudio addin to add an external image.
+
+
+## Acknowledgements
+
+
+## References
+
+
+## Reproducibility
+
+```{r reproducibility, echo = FALSE}
+## Reproducibility info
+options(width = 120)
+session_info()
+```
