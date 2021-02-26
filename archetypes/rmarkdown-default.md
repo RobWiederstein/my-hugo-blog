@@ -46,30 +46,53 @@ knitr::opts_chunk$set(
 ```
 
 ```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
 library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
 ```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+```
+
 ## R image
 
 
-```{r plot-mtcars, echo=F}
+```{r plot-mtcars, echo=F, fig.cap = "A plot with 538 layout theme and color blind palette."}
 data(mtcars)
 mtcars$cyl <- factor(mtcars$cyl)
 p <- ggplot(mtcars, aes(mpg, hp, group = cyl, colour = cyl))
+p <- p + scale_color_manual(values = cbPalette)
 p <- p + geom_point(size = 2)
 p <- p + ggtitle("mtcars")
 p
-
 ```
+
 ## Custom image
 
 The easiest option is to use the  _Insert Image_ RStudio addin to add an external image.
 
+## Overview
+
+(Describe the problem.)
+
+## Background
+
+(Who else has worked on this problem?  What did they find?)
+
+## Data and model
+
+(What data did you use, where did you get it?)
+
+## Results
+
+## Conclusion
 
 ## Acknowledgements
 
+(Get bibliographic stuff from "archetype hill".)
 
 ## References
-
 
 ## Reproducibility
 
