@@ -1,16 +1,19 @@
 ---
-title: 'Get-your-greens Casserole'
-date: '2021-02-11'
+title: 'Spinach Breakfast Casserole'
 cook: 'Rob Wiederstein'
-source: 'web'
-meal:  'breakfast'
-time: "20"
-draft: true
+date: '2021-02-11'
 layout: layouts/recipe/single.html
-vegetarian: true
+draft: false
 image:
   - image/food.jpg
+caption:
 summary: 'This is a great meal for whenever.  I use kale, broccoli, spinach or asparagus depending on what I have on hand. I keep chopped spinach and broccoli in the freezer for this meal.'
+categories:
+  - recipe
+  - breakfast
+source: 'web'
+time: "20"
+meal: breakfast
 ---
 
 ![food](image/food.jpg)

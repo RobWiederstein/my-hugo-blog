@@ -1,16 +1,15 @@
 ---
-title: Kitchen-Sink Vegetable Soup
-date: 2021-02-21
+title: Vegetable Medley Soup
 cook: Rob Wiederstein
-source: Rob Wiederstein
-meal:  'dinner'
-time: 30
-draft: false
+date: 2021-02-21
 layout: layouts/recipe/single.html
-vegetarian: true
+draft: false
 image: /recipe/kitchen-sink-soup/vegetables.jpg
 caption: Vegetables, wine and the kitchen sink.
-summary: This is called Kitchen-Sink Vegetable soup because everything is in it, including the kitchen sink.  Before going to the grocery store for the week, I clear out the vegetable bin. The wine is for me not the soup.
+summary: This is called Vegetable Medley Soup because everything is in it, including the kitchen sink.  Before going to the grocery store for the week, I clear out the vegetable bin. The wine is for me not the soup.
+source: Rob Wiederstein
+time: 30
+meal:  'dinner'
 ---
 
 ## Ingredients

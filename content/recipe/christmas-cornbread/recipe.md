@@ -1,16 +1,22 @@
 ---
 title: 'Confetti Cornbread'
-date: '2021-02-11'
 cook: 'Rob Wiederstein'
-source: 'web'
-meal:  'dinner'
-time: '40'
-draft: false
+date: '2021-02-11'
 layout: layouts/recipe/single.html
-vegetarian: true
+draft: false
 image:
   - /recipe/christmas-cornbread/cornbread.jpg
+caption: 'Christmas Cornbread'
 summary: 'You do not have to wait to break open a pinata to eat this red and green cornbread.  The colors make it a festive treat for any occasion.'
+categories:
+  - recipe
+  - dinner
+tags:
+  - vegetarian
+  - Southern
+source: 'web'
+time: '40'
+meal: dinner
 ---
 
 # Ingredients

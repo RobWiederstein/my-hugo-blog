@@ -1,17 +1,21 @@
 ---
 title: Beluga Chili with Tots
-date: 2021-02-11
 cook: Rob Wiederstein
-source: unknown
-meal:  dinner
-time: 20
-draft: true
+date: 2021-02-11
 layout: layouts/recipe/single.html
-vegetarian: true
+draft: false
 image:
   - image/food.jpg
 caption:
 summary: The beluga lentils texture rivals that of ground beef.  Definitely, give this recipe a try for your non-vegetarian friends. (Just put a bunch of cheese and hot sauce with it and they'll never know the difference.)
+categories:
+  - recipe
+  - dinner
+tags:
+  - vegetarian
+source: unknown
+time: 20
+meal: dinner
 ---
 
 # Ingredients

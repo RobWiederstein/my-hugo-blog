@@ -2,23 +2,47 @@
 
 <main class="content" role="main">
 
-  <article class="article">
-    {{ if eq .Section "post" }}
-    <span class="article-duration">{{ .ReadingTime }} min read</span>
-    {{ end }}
+      <article class="article">
+            {{ if eq .Section "post" }}
+            <span class="article-duration">{{ .ReadingTime }} min read</span>
+            {{ end }}
 
-    <h1 class="article-title">{{ .Title }}</h1>
+            <h1 class="article-title">{{ .Title }}</h1>
 
-    {{ if eq .Section "post" }}
-    <span class="article-date">{{ .Date.Format "2006-01-02" }}</span>
-    {{ end }}
+            {{ if eq .Section "post" }}
+            <span class="article-date">{{ .Params.Author }} | {{ .Date.Format "2006-01-02" }}</span></br>
+            {{ end }}
+            <!--add in-->
+            {{ if eq .Section "post" }}
+            <span class="article-date">
 
-    <div class="article-content">
-      {{ .Content }}
-    </div>
-  </article>
+                  {{ range $i := (slice "categories" "tags") }}
+                  {{ with ($.Param $i) }}
+                  {{ $i | title }}:
+                  {{ range $k := . }}
+                  <a href='{{ relURL (print "/" $i "/" $k | urlize) }}'>{{ $k }}</a>
+                  {{ end }}<br>
+                  {{ end }}
+                  {{ end }}<br>
+            </span>
+            <!--add in -->
+            {{ end }}
 
-  {{ partial "disqus.html" .}}
+            <div class="article-content">
+                  <figure>
+                        <img src="{{ .Params.Image }}" style="width: 100%" />
+                        <figcaption>{{ .Params.Caption }}</figcaption>
+                        <hr style="width: 90%;margin: 10px;" />
+                  </figure>
+                  <p>
+                        {{ .Summary }}
+                  </p>
+
+                  {{ .Content }}
+            </div>
+      </article>
+
+      {{ partial "disqus.html" .}}
 
 </main>
 

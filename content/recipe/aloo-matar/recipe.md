@@ -1,16 +1,22 @@
 ---
 title: Aloo Matar (Potato & Peas)
-date: 2021-02-18
 cook: Rob Wiederstein
-source: web
-meal:  dinner
-time: 30
-draft: false
+date: 2021-02-18
 layout: layouts/recipe/single.html
-vegetarian: true
-image:  image/food.jpg
+draft: false
+image:
+  - image/food.jpg
 caption:  Aloo Matar
 summary: It is hard to get excited when you are having potatoes and peas.  That's why you should always say you are fixing aloo matar, a classic Indian dish.
+categories:
+  - recipe
+  - dinner
+tags:
+  - vegetarian
+  - Indian
+source: web
+time: 30
+meal:  dinner
 ---
 
 ![food](image/food.jpg)

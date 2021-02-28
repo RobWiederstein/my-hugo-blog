@@ -1,28 +1,38 @@
 ---
 title: Italian Wedding Soup
-date: 2021-02-19
 cook: Rob Wiederstein
-source: web
-meal:  dinner
-time: 20
-draft: true
+date: 2021-02-19
 layout: layouts/recipe/single.html
-vegetarian: true
-image: image/food.jpg
+draft: false
+image:
+  - image/food.jpg
 caption: unknown
+categories:
+  - recipe
+  - dinner
+tags:
+  - vegetarian
+  - Italian
 summary: This soup is sooo simple and really fills people up.
+source: web
+time: 20
+meal:  dinner
 ---
 
 # Ingredients
 
 -   1 pkg. frozen meatballs (We use meatless and they're delicious.)
--   1 pkg fresh or frozen
+-   1 pkg fresh or frozen spinach
 -   1 cup small pasta (I use Israeli couscous)
--   1 tbs chicken buillion
--   6 cups water
+-   2 tbs chicken bouillon
+-   4 quarts water
 
 # Directions
 
+In a large stock pot, bring 4 quarts water to a boil.  Add chicken boillion, 1 pkg. frozen meatballs, and pasta.  Cook according to pasta package instructions.  Three to five minutes prior to pasta being done, add spinach.  Salt and pepper liberally.
+
 # Notes
+
+We always use a bunch of parmesan with this soup.
 
 # Nutrition

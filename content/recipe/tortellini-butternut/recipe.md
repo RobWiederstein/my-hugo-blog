@@ -1,16 +1,20 @@
 ---
 title: Tortellini and Butternut Squash
-date: 2021-02-23
 cook: Rob Wiederstein
+date: 2021-02-23
+layout: layouts/recipe/single.html
+draft: false
+image: /recipe/tortellini-butternut/tortellini-butternut.jpg
+caption:  Torellini Butternut Squash with basil pesto.
+summary: 'This vegetarian dish can be made quickly with frozen tortellini and butternut squash.'
+categories:
+  - recipe
+  - dinner
+tags:
+  - vegetarian
 source: Rob Wiederstein
 meal:  dinner
 time: 15
-draft: false
-layout: layouts/recipe/single.html
-vegetarian: true
-caption:  Torellini Butternut Squash with basil pesto.
-image: /recipe/tortellini-butternut/tortellini-butternut.jpg
-summary: 'This vegetarian dish can be made quickly with frozen tortellini and butternut squash.'
 ---
 
 # Ingredients

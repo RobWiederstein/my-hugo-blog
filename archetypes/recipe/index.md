@@ -1,17 +1,18 @@
 ---
 title:
-date:
 cook:
-source:
-meal:  [breakfast, lunch, dinner, dessert, salad, appetizer, drink]
-time:
-draft: true
+date:
 layout: layouts/recipe/single.html
-vegetarian:
+draft: true
 image:
   - image/food.jpg
 caption:
 summary:
+categories:  [recipe, breakfast, lunch, dinner, dessert, salad, appetizer, drink]
+tags: vegetarian
+source:
+time:
+meal:
 ---
 
 # Ingredients

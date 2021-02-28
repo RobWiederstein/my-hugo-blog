@@ -48,7 +48,8 @@ params:
     - images/site/site-cover-fb-1200-630px.jpg
   site_name: Rob Wiederstein | a blog about coding, data and public policy
 taxonomies:
-  series: series
+  category: categories
+  tag: tags
 canonifyURLs: true
 markup:
   goldmark:

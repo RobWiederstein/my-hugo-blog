@@ -1,16 +1,20 @@
 ---
 title: 'Waldorf Salad Redux'
-date: '2021-02-11'
 cook: 'Rob Wiederstein'
-source: 'unknown'
-meal:  'salad'
-time: "20"
-draft: false
+date: '2021-02-11'
 layout: layouts/recipe/single.html
-vegetarian: true
+draft: false
 image: image/food.jpg
 caption: Apples
-summary: 'This is a family favorite that, unbelievalby, used to made with mayonnaise.  We buy a lot of apples that go uneaten so toward the end of the week, I often make this to get rid of the leftover apples.'
+summary: 'This is a family favorite that, unbelievably, used to made with mayonnaise.  We buy a lot of apples that go uneaten. Toward the end of the week, I often make this to get rid of the leftover apples.'
+categories:
+  - recipe
+  - Salad
+tags:
+  -vegetarian
+source: 'unknown'
+time: "20"
+meal:  'salad'
 ---
 
 This is a family favorite that, unbelievalby, used to made with mayonnaise.  We buy a lot of apples that go uneaten so toward he end of the week, I often make this to get rid of the leftover apples.
