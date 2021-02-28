@@ -4,8 +4,7 @@ cook:  Rob Wiederstein
 date:  February 26, 2021
 layout: layouts/recipe/single.html
 draft: false
-image:
-  - images/drunken-raisins.jpg
+image:  /recipe/gin-and-raisins/drunken-raisins.jpg
 caption: Gin and raisins in a pyrex measuring cup.
 summary: In a New York Times article, Ms. Lucia DeClerk credit her 105 years of longevity to prayer and gin and raisins. "Eat nine raisins a day after sitting in the fridge for nine days."
 categories:
