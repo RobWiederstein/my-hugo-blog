@@ -1,7 +1,7 @@
 ---
 title: Drunken Raisins
 cook:  Rob Wiederstein
-date:  February 26, 2021
+date:  2021-02-26
 layout: layouts/recipe/single.html
 draft: false
 image:  /recipe/gin-and-raisins/drunken-raisins.jpg
