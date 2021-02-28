@@ -6,7 +6,7 @@ layout: layouts/recipe/single.html
 draft: false
 image: image/food.jpg
 caption: Apples
-summary: 'This is a family favorite that, unbelievably, used to made with mayonnaise.  We buy a lot of apples that go uneaten. Toward the end of the week, I often make this to get rid of the leftover apples.'
+summary: 'This is a family favorite that, unbelievably, used to be made with mayonnaise.  We buy a lot of apples that go uneaten. Toward the end of the week, I often make this to get rid of the leftover apples.'
 categories:
   - recipe
   - Salad
