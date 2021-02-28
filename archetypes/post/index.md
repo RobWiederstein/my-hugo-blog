@@ -1,14 +1,18 @@
 ---
-title: Hello World One
-author: Rob Wiederstein
-date: '2021-02-26'
-slug: hello-world-one
-categories: []
-tags: []
-draft: no
-image: ~
-caption: ~
-summary: ~
+title:
+author:
+date: 
+draft: false
+# tags/categories example: ["A Tag", "Another Tag"]`
+tags:
+categories:
+#   Markdown linking is allowed, e.g. `caption: "[Image credit](http://example.org)"`.
+# image path for social media
+image:
+#10 words or less
+caption:
+#default summary length in HUGO is 100 words
+summary:
 ---
 
 
@@ -48,7 +52,7 @@ library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
 
 ```{r define-color-palette, include = F, eval = T}
 # color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
-cbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
 ```
 
 ## R image
@@ -68,12 +72,27 @@ p
 
 The easiest option is to use the  _Insert Image_ RStudio addin to add an external image.
 
+## Overview
+
+(Describe the problem.)
+
+## Background
+
+(Who else has worked on this problem?  What did they find?)
+
+## Data and model
+
+(What data did you use, where did you get it?)
+
+## Results
+
+## Conclusion
 
 ## Acknowledgements
 
+(Get bibliographic stuff from "archetype hill".)
 
 ## References
-
 
 ## Reproducibility
 

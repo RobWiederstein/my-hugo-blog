@@ -2,6 +2,7 @@
 title:
 author:
 date:
+layout: layouts/post/single
 draft: false
 # tags/categories example: ["A Tag", "Another Tag"]`
 tags:
@@ -52,7 +53,7 @@ library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
 
 ```{r define-color-palette, include = F, eval = T}
 # color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
-cbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
 ```
 
 ## R image
@@ -93,6 +94,10 @@ The easiest option is to use the  _Insert Image_ RStudio addin to add an externa
 (Get bibliographic stuff from "archetype hill".)
 
 ## References
+
+## Disclaimer
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimd as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
 
 ## Reproducibility
 

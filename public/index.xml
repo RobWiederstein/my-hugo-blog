@@ -8,36 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Fri, 26 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Hello World Three</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/02/26/hello-world-three/</link>
-      <pubDate>Fri, 26 Feb 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/26/hello-world-three/</guid>
-      <description>Custom image Acknowledgements References Reproducibility   ## This imaged will be saved in the /post/*_files/ directory Use echo = FALSE if ## you want to hide the code for making the plot plot(1:10, 10:1) Custom image The easiest option is to use the Insert Image RStudio addin to add an external image.  Acknowledgements  References  Reproducibility ─ Session info ─────────────────────────────────────────────────────────────────────────────────────────────────────── setting value version R version 3.</description>
-    </item>
-    
-    <item>
-      <title>Hello World Two</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/02/26/hello-world-two/</link>
-      <pubDate>Fri, 26 Feb 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/26/hello-world-two/</guid>
-      <description>R image Custom image Acknowledgements References Reproducibility   Did this work?
-And what about this?
-Typical location to start editing since the bibliography chunk is hidden. Make sure that you selected R Markdown (.Rmd) as the format option of the post when using the New Post addin.
-R image ## This imaged will be saved in the /post/*_files/ directory Use echo = FALSE if ## you want to hide the code for making the plot plot(1:10, 10:1)  Custom image The easiest option is to use the Insert Image RStudio addin to add an external image.</description>
-    </item>
-    
-    <item>
       <title>Hello World One</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/02/25/hello-world-one/</link>
-      <pubDate>Thu, 25 Feb 2021 00:00:00 +0000</pubDate>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/02/26/hello-world-one/</link>
+      <pubDate>Fri, 26 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/25/hello-world-one/</guid>
-      <description>Post content R image Custom image Acknowledgements References Reproducibility   Did this work?
-And what about this?
-Post content Typical location to start editing since the bibliography chunk is hidden. Make sure that you selected R Markdown (.Rmd) as the format option of the post when using the New Post addin.
- R image ## This imaged will be saved in the /post/*_files/ directory ## Use echo = FALSE if you want to hide the code for making the plot plot(1:10, 10:1)  Custom image The easiest option is to use the Insert Image RStudio addin to add an external image.</description>
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/26/hello-world-one/</guid>
+      <description>R image Custom image Overview Background Data and model Results Conclusion Acknowledgements References Disclaimer Reproducibility   R image  Figure 1: A plot with 538 layout theme and color blind palette.   Custom image The easiest option is to use the Insert Image RStudio addin to add an external image.
+ Overview (Describe the problem.)
+ Background (Who else has worked on this problem? What did they find?</description>
     </item>
     
     <item>
