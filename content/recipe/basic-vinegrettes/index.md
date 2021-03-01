@@ -7,7 +7,7 @@ draft: false
 image:
   - image/food.jpg
 caption: Oil and vinegar.
-summary:  Vinegrettes aren't hard, but you need some basic ingredients and a little imagination to get started.  This post lists a few of my back ups for salads.
+summary:  Vinegrettes aren't hard, but you need some basic ingredients and a little imagination to get started.  This post lists a few of my backups for salads.
 categories:  ["recipe", "salad"]
 tags: ["vegetarian"]
 source:  Rob Wiederstein
@@ -24,7 +24,7 @@ meal:  "salad"
 
 ## Directions
 
-I have a little 2 cup tupperware shaker that I use.  For 2 to four servings, add 1/4 cup of oil, 2 tbs of vinegar, a tsp or two of sugar, and some herbs and spices.  Shake well.  You're done.
+I have a little 2 cup tupperware shaker that I use.  For two to four servings, add 1/4 cup of oil, 2 tbs of vinegar, a tsp or two of sugar, and some herbs and spices.  Shake well.  You're done.
 
 
 | Ingredients |  Traditional | Balsamic | Mediterranean  | Asian |  Dijon
