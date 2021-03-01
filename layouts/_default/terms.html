@@ -1,23 +1,21 @@
 {{ partial "header.html" . }}
+<main class="content" role="main">
 
-<body lang="en">
-      <section id="main">
-
-            <!-- <div>
-
+            <div class="archive">
+                  <article class="archive-item">
                   <ul>
 
                         {{ range .Pages }}
                         <li>
                               <a href="{{ .Permalink }}">{{ .Title }}</a>
-                              {{ .Params.wikipedia }}
                         </li>
                         {{ end }}
                   </ul>
+                  </article>
 
-            </div> -->
+            </div>
 
-            <ul>
+            <!-- <ul>
                   {{ range $taxonomyname, $taxonomy := .Site.Taxonomies }}
                   <li><a href="{{ "/" | relLangURL}}{{ $taxonomyname | urlize }}">{{ $taxonomyname }}</a>
                         <ul>
@@ -32,9 +30,10 @@
                         </ul>
                   </li>
                   {{ end }}
-            </ul>
+            </ul> -->
 
-      </section>
+
       <aside id="meta"> </aside>
+</main>
 
       {{ partial "footer.html" . }}
