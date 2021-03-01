@@ -11,9 +11,23 @@
             <h1 class="article-title">{{ .Title }}</h1>
 
             {{ if eq .Section "recipe" }}
-            <span class="article-date">{{ .Date.Format "2006-01-02" }}</span>
+            <span class="article-date">{{ .Params.Cook }} | {{ .Date.Format "2006-01-02" }}</span>
             {{ end }}
+            <!--add in-->
+            {{ if eq .Section "post" }}
+            <span class="article-date">
 
+                  {{ range $i := (slice "categories" "tags") }}
+                  {{ with ($.Param $i) }}
+                  {{ $i | title }}:
+                  {{ range $k := . }}
+                  <a href='{{ relURL (print "/" $i "/" $k | urlize) }}'>{{ $k }}</a>
+                  {{ end }}<br>
+                  {{ end }}
+                  {{ end }}<br>
+            </span>
+            <!--add in -->
+            {{ end }}
             <div class="article-content">
                   <figure>
                   <img src="{{ .Params.Image }}" style="width: 100%"/>
