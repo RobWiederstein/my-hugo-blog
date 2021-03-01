@@ -1,5 +1,5 @@
 ---
-title: Four Basic Vinegrettes
+title: Five Basic Vinegrettes
 cook:  Rob Wiederstein
 date:  2021-02-26
 layout: layouts/recipe/single.html
