@@ -6,10 +6,10 @@ date:  2021-03-01T10:03:13-06:00
 layout: layouts/recipe/single.html
 draft: false
 image:
-  - image/food.jpg
-caption: This Greek pasta salad is a family favorite. 
+  - /recipe/greek-pasta-salad/greek-pasta-salad.jpg
+caption: This Greek pasta salad is a family favorite.
 summary:
-categories: 
+categories:
   - recipe
   - salad
 tags: vegetarian
@@ -33,6 +33,6 @@ Bring 4 quarts water to boil.  Add pasta and salt to taste.  In large mixing bow
 
 # Notes
 
-My spouse is not a fan of feta or "stinky" cheese.  I substitute mozzarella pearls  which are the size of a small marble.  
+My spouse is not a fan of feta or "stinky" cheese.  I substitute mozzarella pearls  which are the size of a small marble.
 
 # Nutrition
