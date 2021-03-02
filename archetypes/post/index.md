@@ -1,7 +1,7 @@
 ---
-title:
-author:
-date: 
+title: {{ replace .Name "-" " " | title }}
+author: {{ .Site.Author }}
+date: {{ .Date }}
 draft: false
 # tags/categories example: ["A Tag", "Another Tag"]`
 tags:
