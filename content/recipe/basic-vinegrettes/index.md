@@ -4,10 +4,9 @@ cook:  Rob Wiederstein
 date:  2021-02-26
 layout: layouts/recipe/single.html
 draft: false
-image:
-  - image/food.jpg
-caption: Oil and vinegar.
-summary:  Vinegrettes aren't hard, but you need some basic ingredients and a little imagination to get started.  This post lists a few of my backups for salads.
+image: /recipe/basic-vinegrettes/basic-vinegrettes.jpg
+caption: All the viniagrette ingredients go into this shaker.
+summary:  Vinegrettes aren't hard, but you need some basic ingredients and a little imagination to get started.  This post lists a few of my mainstays for salads.
 categories:  ["recipe", "salad"]
 tags: ["vegetarian"]
 source:  Rob Wiederstein

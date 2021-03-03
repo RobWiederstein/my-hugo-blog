@@ -3,7 +3,7 @@ title:  "Brussel Sprout Hash with Eggs"
 cook:  Rob Wiederstein
 date:  2021-03-01T19:23:23-06:00
 layout: layouts/recipe/single.html
-draft: true
+draft: false
 image: /recipe/brussel-sprout-hash/brussel-sprout-hash.jpg
 caption: Brussel sprout hash with eggs.
 summary:  This is a meal for any time of day.  The yellow yolks contrast from the bright green brussel sprouts and a dash of cayenne pepper give it a culinary kick. This was the specialty of one of our favorite local restaurants.

@@ -3,14 +3,14 @@ title:  "Twice Baked Spaghetti"
 cook:  Rob Wiederstein
 date:  2021-03-02T19:54:06-06:00
 layout: layouts/recipe/single.html
-draft: true
+draft: false
 image: /recipe/twice-baked-spaghetti/twice-baked-spaghetti.jpg
 caption: Twice baked spaghetti
 summary:  My family usuall groans when this dish is served because it is delicious, but really high in calories.
 categories:  ["recipe", "dinner"]
 tags: vegetarian
 source: Unknown
-time: 20 minutes
+time: 20
 meal: dinner
 ---
 
