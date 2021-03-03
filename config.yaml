@@ -21,8 +21,8 @@ menu:
       url: /cv/
     - name: Datasets
       url: /datasets/
-    - name: Gallery
-      url: /gallery/
+    - name: Trips
+      url: /trip/
     - name: Recipes
       url: /recipe/
 params:
