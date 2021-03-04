@@ -2,29 +2,76 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>My Blog Posts on Rob Wiederstein - a blog about coding, data and public policy</title>
-    <link>https://keen-noether-7d2e44.netlify.app/post/</link>
+    <link>http://localhost:1313/post/</link>
     <description>Recent content in My Blog Posts on Rob Wiederstein - a blog about coding, data and public policy</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 27 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Hello World One</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/02/26/hello-world-one/</link>
-      <pubDate>Fri, 26 Feb 2021 00:00:00 +0000</pubDate>
+      <link>http://localhost:1313/2021/02/27/hello-world-one/</link>
+      <pubDate>Sat, 27 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/26/hello-world-one/</guid>
-      <description>R image Custom image Overview Background Data and model Results Conclusion Acknowledgements References Disclaimer Reproducibility   R image  Figure 1: A plot with 538 layout theme and color blind palette.   Custom image The easiest option is to use the Insert Image RStudio addin to add an external image.
- Overview (Describe the problem.)
- Background (Who else has worked on this problem? What did they find?</description>
+      <guid>http://localhost:1313/2021/02/27/hello-world-one/</guid>
+      <description>A story about a mercedes.</description>
+    </item>
+    
+    <item>
+      <title>Hello World Two</title>
+      <link>http://localhost:1313/2021/02/27/hello-world-two/</link>
+      <pubDate>Sat, 27 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/2021/02/27/hello-world-two/</guid>
+      <description>&lt;strong&gt;This is a post&lt;/strong&gt;.</description>
+    </item>
+    
+    <item>
+      <title>HUGO Variables</title>
+      <link>http://localhost:1313/2021/02/19/hugo-variables/</link>
+      <pubDate>Fri, 19 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/2021/02/19/hugo-variables/</guid>
+      <description>hugo has three kinds of variables: (1) resident or &amp;ldquo;built-in&amp;rdquo; global variables, (2) defined global variables in the config file and (3) page variables.
+Site Variables List To see the configuration settings for hugo run:
+hugo config .Site.Params Variable {{ .Site.Title }}
+A bunch of code here  {{ $_hugo_config := { &amp;quot;version&amp;quot;: 1 } }}
+ hugo-variables If you&amp;#39;ve ever wondered exactly how Shiny&amp;#39;s reactive graph works, I have new &amp;quot;Mastering Shiny&amp;quot; book chapter up: https://t.</description>
+    </item>
+    
+    <item>
+      <title>Ten Tips to Working with Go Templates</title>
+      <link>http://localhost:1313/2021/02/19/ten-tips-to-working-with-go-templates/</link>
+      <pubDate>Fri, 19 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/2021/02/19/ten-tips-to-working-with-go-templates/</guid>
+      <description>Introduction  Curly Brackets Capital Letters Commenting Dot Notation Dollar Notation Assignments   Variable  .RelPermalink .Pages .Content .Section .IsHome   Arrays  Arrays (slice) Associative arrays (maps) Subsetting or Indexing   Functions  Basic range where delim   Incorporation  Includes Partials   Lists Lookup Order for templates _index.md    Introduction hugo templates are based on the go language, but are derived from the go template library.</description>
     </item>
     
     <item>
       <title>Insert HTML Widgets in Blogdown</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/02/15/insert_htmlwidget/</link>
+      <link>http://localhost:1313/2021/02/15/insert_htmlwidget/</link>
       <pubDate>Mon, 15 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/15/insert_htmlwidget/</guid>
+      <guid>http://localhost:1313/2021/02/15/insert_htmlwidget/</guid>
       <description>Load Libraries Insert Data Tables or DT Widget Insert Leaflet Widget Insert Sigma JS Insert Plotly Widget   There were two main reasons for moving to blogdown. First, I needed a blogging platform that moved seemlessly between R code and its output. It had to be easy to show the connection between the code that was used and its effect on the data.</description>
+    </item>
+    
+    <item>
+      <title>Code Highlighting in Rmarkdown</title>
+      <link>http://localhost:1313/2021/02/14/try-syntax-highlighting/</link>
+      <pubDate>Sun, 14 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/2021/02/14/try-syntax-highlighting/</guid>
+      <description>Example 1 Example 2   Example 1 # Dr Seuss a &amp;lt;- 1:2 fish.number &amp;lt;- paste(a, &amp;quot;fish&amp;quot;, sep =&amp;quot;_&amp;quot;) b &amp;lt;- c(&amp;quot;red&amp;quot;, &amp;quot;blue&amp;quot;) fish.color &amp;lt;- paste(b, &amp;quot;fish&amp;quot;, sep = &amp;quot;_&amp;quot;) print(c(fish.number, fish.color)) ## [1] &amp;quot;1_fish&amp;quot; &amp;quot;2_fish&amp;quot; &amp;quot;red_fish&amp;quot; &amp;quot;blue_fish&amp;quot;  Example 2 data(mtcars) p &amp;lt;- ggplot(mtcars, aes(hp,mpg, group = factor(cyl), color = factor(cyl))) p &amp;lt;- p + geom_point() p &amp;lt;- p + ggtitle(&amp;quot;Mtcars&amp;quot;) p  Figure 1: A plot constructed with ggplot2.</description>
+    </item>
+    
+    <item>
+      <title>Ten Tips to Working with Blogdown</title>
+      <link>http://localhost:1313/2021/02/11/ten-tips-to-working-with-blogdown/</link>
+      <pubDate>Thu, 11 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/2021/02/11/ten-tips-to-working-with-blogdown/</guid>
+      <description>Introduction Ten Tips Best Resources   Introduction Transitioning to hugo is difficult. Blogdown offers the promise of an easy and quick workflow for blogging, however, that is not the case. If you’re not ready for some hard work, then you should probably stay with Wordpress or Squarespace. On the otherhand, if you want to understand the principles that underly much of webpage creation, then stick with blogdown and hugo.</description>
     </item>
     
   </channel>

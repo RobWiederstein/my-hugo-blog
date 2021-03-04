@@ -3,77 +3,299 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/26/hello-world-one/</loc>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2021-03-02T20:27:21-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/categories/</loc>
+    <lastmod>2021-03-02T20:27:21-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/categories/dessert/</loc>
+    <lastmod>2021-03-02T20:27:21-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/recipe/</loc>
+    <lastmod>2021-03-02T20:27:21-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/recipe/pumpkin-pudding/</loc>
+    <lastmod>2021-03-02T20:27:21-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/categories/recipe/</loc>
+    <lastmod>2021-03-02T20:27:21-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2021-03-02T20:27:21-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/tags/vegetarian/</loc>
+    <lastmod>2021-03-02T20:27:21-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/categories/dinner/</loc>
+    <lastmod>2021-03-02T19:54:06-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/recipe/twice-baked-spaghetti/</loc>
+    <lastmod>2021-03-02T19:54:06-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/categories/breakfast/</loc>
+    <lastmod>2021-03-01T19:23:23-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/recipe/brussel-sprout-hash/</loc>
+    <lastmod>2021-03-01T19:23:23-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/recipe/greek-pasta-salad/</loc>
+    <lastmod>2021-03-01T10:03:13-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/categories/salad/</loc>
+    <lastmod>2021-03-01T10:03:13-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/recipe/advocado-toast/</loc>
+    <lastmod>2021-03-01T06:38:58-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/categories/appetizer/</loc>
+    <lastmod>2021-03-01T06:38:58-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/categories/drink/</loc>
+    <lastmod>2021-03-01T06:38:58-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/categories/lunch/</loc>
+    <lastmod>2021-03-01T06:38:58-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/trip/</loc>
+    <lastmod>2021-03-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/trip/kansas/</loc>
+    <lastmod>2021-03-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/trip/luddington/luddington/</loc>
+    <lastmod>2021-03-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/trip/washington/</loc>
+    <lastmod>2021-03-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/tags/blogdown/</loc>
+    <lastmod>2021-02-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/categories/education/</loc>
+    <lastmod>2021-02-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/categories/go/</loc>
+    <lastmod>2021-02-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/2021/02/27/hello-world-one/</loc>
+    <lastmod>2021-02-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/2021/02/27/hello-world-two/</loc>
+    <lastmod>2021-02-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/tags/igraph/</loc>
+    <lastmod>2021-02-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/post/</loc>
+    <lastmod>2021-02-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/categories/r/</loc>
+    <lastmod>2021-02-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/tags/rmarkdown/</loc>
+    <lastmod>2021-02-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/recipe/gin-and-raisins/</loc>
     <lastmod>2021-02-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/post/</loc>
+    <loc>http://localhost:1313/recipe/basic-vinegrettes/</loc>
     <lastmod>2021-02-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/</loc>
-    <lastmod>2021-02-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/</loc>
+    <loc>http://localhost:1313/recipe/tortellini-butternut/recipe/</loc>
     <lastmod>2021-02-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/tortellini-butternut/recipe/</loc>
-    <lastmod>2021-02-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/kitchen-sink-soup/recipe/</loc>
+    <loc>http://localhost:1313/recipe/kitchen-sink-soup/recipe/</loc>
     <lastmod>2021-02-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/aloo-matar/recipe/</loc>
+    <loc>http://localhost:1313/categories/hugo/</loc>
+    <lastmod>2021-02-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/2021/02/19/hugo-variables/</loc>
+    <lastmod>2021-02-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/tags/italian/</loc>
+    <lastmod>2021-02-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/recipe/italian-wedding/recipe/</loc>
+    <lastmod>2021-02-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/2021/02/19/ten-tips-to-working-with-go-templates/</loc>
+    <lastmod>2021-02-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/recipe/aloo-matar/recipe/</loc>
     <lastmod>2021-02-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/cv/</loc>
+    <loc>http://localhost:1313/tags/indian/</loc>
+    <lastmod>2021-02-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/cv/</loc>
     <lastmod>2021-02-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/gallery/</loc>
+    <loc>http://localhost:1313/gallery/</loc>
     <lastmod>2021-02-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/15/insert_htmlwidget/</loc>
+    <loc>http://localhost:1313/tags/dt/</loc>
     <lastmod>2021-02-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/datasets/</loc>
+    <loc>http://localhost:1313/tags/htmlwidget/</loc>
+    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/2021/02/15/insert_htmlwidget/</loc>
+    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/2021/02/14/try-syntax-highlighting/</loc>
     <lastmod>2021-02-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/christmas-cornbread/recipe/</loc>
+    <loc>http://localhost:1313/datasets/</loc>
+    <lastmod>2021-02-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/tags/r-markdown/</loc>
+    <lastmod>2021-02-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/recipe/beluga-chili/recipe/</loc>
     <lastmod>2021-02-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/waldorf-salad/recipe/</loc>
+    <loc>http://localhost:1313/recipe/christmas-cornbread/recipe/</loc>
     <lastmod>2021-02-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/about/</loc>
+    <loc>http://localhost:1313/tags/hugo-theme/</loc>
+    <lastmod>2021-02-11T15:00:25-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/recipe/pistachio-pineapple/recipe/</loc>
+    <lastmod>2021-02-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/tags/southern/</loc>
+    <lastmod>2021-02-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/recipe/brocolli-casserole/recipe/</loc>
+    <lastmod>2021-02-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/2021/02/11/ten-tips-to-working-with-blogdown/</loc>
+    <lastmod>2021-02-11T15:00:25-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/recipe/waldorf-salad/recipe/</loc>
+    <lastmod>2021-02-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/about/</loc>
     <lastmod>2016-05-05T21:48:51-07:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/series/</loc>
   </url>
   
 </urlset>
