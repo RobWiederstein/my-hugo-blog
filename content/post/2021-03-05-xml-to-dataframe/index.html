@@ -1,0 +1,237 @@
+---
+title: How to Convert XML to Dataframe Using Xlm2
+author: Rob Wiederstein
+date: '2021-03-05'
+slug: xml-to-dataframe
+categories:
+  - R
+tags:
+  - xlm2
+layout: layouts/post/single
+draft: no
+image: ~
+caption: ~
+summary: Everytime I run into a file with an `.xml` extension, I cringe.  Though, admittedly, it's a file format that you have to be familiar with when it comes to sending and receiving data over the web. `R` has a package `xlm2` to assist in the conversion of nested data to tabular data.
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#background">Background</a>
+<ul>
+<li><a href="#definitions">Definitions</a></li>
+<li><a href="#example">Example</a></li>
+<li><a href="#structure">Structure</a></li>
+</ul></li>
+<li><a href="#xml-data">XML Data</a>
+<ul>
+<li><a href="#see-xml-data-structure">See XML Data Structure</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#acknowledgements">Acknowledgements</a></li>
+<li><a href="#references">References</a></li>
+<li><a href="#disclaimer">Disclaimer</a></li>
+<li><a href="#reproducibility">Reproducibility</a></li>
+</ul>
+</div>
+
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>The task here is to take an easy and short <code>xml</code> file and convert it to a dataframe. The <code>xlm2</code> package was specifically designed for the task and is the successor to the <code>xlm</code> package.</p>
+</div>
+<div id="background" class="section level2">
+<h2>Background</h2>
+<div id="definitions" class="section level3">
+<h3>Definitions</h3>
+<p>First, it’s important to get some defintions first. (W3schools has a really helpful set of <a href="https://www.w3schools.com/xml/default.asp">tutorials</a> on the topic.) A “node” in general and speaking in a broad way is an HTML element.</p>
+<p><strong>DOM (Document Object Model)</strong> - a tree structure that represents the HTML of the website, and every HTML element is a “node”.</p>
+<p><strong>Element Nodes</strong> - model the actual HTML elements in the document.</p>
+<p><strong>Attribute Nodes</strong> - model the various attributes in the different HTML elements. Attributes include id, class, title and style.</p>
+<p><strong>Text Nodes</strong> - model the text content inside the different HTML elements.</p>
+<p><strong>Root Node</strong> - the node on the very top of the document tree, usually called the document node.</p>
+<p><strong>Parent Node</strong> - a node that has children; represents an element that has at least one other element or text nested inside it.</p>
+<p><strong>Child Node</strong> - a node that has a parent; represents an element or text that is nested inside another element. For example, a <code>&lt;p&gt;</code> tag is often the child of a <code>&lt;div&gt;</code> tag.</p>
+</div>
+<div id="example" class="section level3">
+<h3>Example</h3>
+<div class="figure" style="text-align: center"><span id="fig:pressure"></span>
+<img src="wikipedia-dom-model.png" alt="See [DOM model](https://en.wikipedia.org/wiki/Document_Object_Model) on Wikipedia" width="65%" />
+<p class="caption">
+Figure 1: See <a href="https://en.wikipedia.org/wiki/Document_Object_Model">DOM model</a> on Wikipedia
+</p>
+</div>
+</div>
+<div id="structure" class="section level3">
+<h3>Structure</h3>
+<p>XML strucutred data looks like this:</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; #xml prologue
+&lt;root&gt;
+  &lt;child&gt;
+    &lt;subchild&gt;.....&lt;/subchild&gt;
+  &lt;/child&gt;
+&lt;/root&gt;</code></pre>
+</div>
+</div>
+<div id="xml-data" class="section level2">
+<h2>XML Data</h2>
+<p>All of the functions below are from the <code>xlm2</code> package and the help <a href="https://xml2.r-lib.org">page</a>.</p>
+<pre class="r"><code># get W3 data
+url &lt;- &quot;https://www.w3schools.com/xml/simple.xml&quot;
+# read list
+bkfst &lt;- read_xml(x = url)
+str(bkfst)</code></pre>
+<pre><code>List of 2
+ $ node:&lt;externalptr&gt; 
+ $ doc :&lt;externalptr&gt; 
+ - attr(*, &quot;class&quot;)= chr [1:2] &quot;xml_document&quot; &quot;xml_node&quot;</code></pre>
+<pre class="r"><code>xml_name(bkfst)</code></pre>
+<pre><code>[1] &quot;breakfast_menu&quot;</code></pre>
+<div id="see-xml-data-structure" class="section level3">
+<h3>See XML Data Structure</h3>
+<pre class="r"><code>xml_structure(bkfst)</code></pre>
+<pre><code>&lt;breakfast_menu&gt;
+  &lt;food&gt;
+    &lt;name&gt;
+      {text}
+    &lt;price&gt;
+      {text}
+    &lt;description&gt;
+      {text}
+    &lt;calories&gt;
+      {text}
+  &lt;food&gt;
+    &lt;name&gt;
+      {text}
+    &lt;price&gt;
+      {text}
+    &lt;description&gt;
+      {text}
+    &lt;calories&gt;
+      {text}
+  &lt;food&gt;
+    &lt;name&gt;
+      {text}
+    &lt;price&gt;
+      {text}
+    &lt;description&gt;
+      {text}
+    &lt;calories&gt;
+      {text}
+  &lt;food&gt;
+    &lt;name&gt;
+      {text}
+    &lt;price&gt;
+      {text}
+    &lt;description&gt;
+      {text}
+    &lt;calories&gt;
+      {text}
+  &lt;food&gt;
+    &lt;name&gt;
+      {text}
+    &lt;price&gt;
+      {text}
+    &lt;description&gt;
+      {text}
+    &lt;calories&gt;
+      {text}</code></pre>
+<pre class="r"><code># see text
+xml_text(bkfst)</code></pre>
+<pre><code>[1] &quot;Belgian Waffles$5.95Two of our famous Belgian Waffles with plenty of real maple syrup650Strawberry Belgian Waffles$7.95Light Belgian waffles covered with strawberries and whipped cream900Berry-Berry Belgian Waffles$8.95Light Belgian waffles covered with an assortment of fresh berries and whipped cream900French Toast$4.50Thick slices made from our homemade sourdough bread600Homestyle Breakfast$6.95Two eggs, bacon or sausage, toast, and our ever-popular hash browns950&quot;</code></pre>
+</div>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>Thank you. Come again.</p>
+</div>
+<div id="acknowledgements" class="section level2">
+<h2>Acknowledgements</h2>
+<p>(Get bibliographic stuff from “archetype hill”.)</p>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+</div>
+<div id="disclaimer" class="section level2">
+<h2>Disclaimer</h2>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimd as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level2">
+<h2>Reproducibility</h2>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value                       
+ version  R version 3.6.3 (2020-02-29)
+ os       macOS Catalina 10.15.7      
+ system   x86_64, darwin15.6.0        
+ ui       X11                         
+ language (EN)                        
+ collate  en_US.UTF-8                 
+ ctype    en_US.UTF-8                 
+ tz       America/Chicago             
+ date     2021-03-05                  
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version date       lib source                           
+ assertthat    0.2.1   2019-03-21 [1] CRAN (R 3.6.0)                   
+ blogdown      1.1.14  2021-02-27 [1] Github (rstudio/blogdown@b0fa6ed)
+ bookdown      0.21    2020-10-13 [1] CRAN (R 3.6.3)                   
+ bslib         0.2.4   2021-01-25 [1] CRAN (R 3.6.2)                   
+ cachem        1.0.3   2021-02-04 [1] CRAN (R 3.6.2)                   
+ callr         3.5.1   2020-10-13 [1] CRAN (R 3.6.2)                   
+ cli           2.3.0   2021-01-31 [1] CRAN (R 3.6.2)                   
+ codetools     0.2-18  2020-11-04 [1] CRAN (R 3.6.2)                   
+ colorspace    2.0-0   2020-11-11 [1] CRAN (R 3.6.2)                   
+ crayon        1.4.1   2021-02-08 [1] CRAN (R 3.6.2)                   
+ DBI           1.1.1   2021-01-15 [1] CRAN (R 3.6.2)                   
+ desc          1.2.0   2018-05-01 [1] CRAN (R 3.6.0)                   
+ devtools    * 2.3.2   2020-09-18 [1] CRAN (R 3.6.2)                   
+ digest        0.6.27  2020-10-24 [1] CRAN (R 3.6.2)                   
+ dplyr         1.0.4   2021-02-02 [1] CRAN (R 3.6.2)                   
+ ellipsis      0.3.1   2020-05-15 [1] CRAN (R 3.6.2)                   
+ evaluate      0.14    2019-05-28 [1] CRAN (R 3.6.0)                   
+ fastmap       1.1.0   2021-01-25 [1] CRAN (R 3.6.2)                   
+ fs            1.5.0   2020-07-31 [1] CRAN (R 3.6.2)                   
+ generics      0.1.0   2020-10-31 [1] CRAN (R 3.6.2)                   
+ ggplot2     * 3.3.3   2020-12-30 [1] CRAN (R 3.6.2)                   
+ ggthemes    * 4.2.4   2021-01-20 [1] CRAN (R 3.6.2)                   
+ glue          1.4.2   2020-08-27 [1] CRAN (R 3.6.2)                   
+ gtable        0.3.0   2019-03-25 [1] CRAN (R 3.6.0)                   
+ htmltools     0.5.1.1 2021-01-22 [1] CRAN (R 3.6.2)                   
+ jquerylib     0.1.3   2020-12-17 [1] CRAN (R 3.6.2)                   
+ jsonlite      1.7.2   2020-12-09 [1] CRAN (R 3.6.2)                   
+ knitr         1.31    2021-01-27 [1] CRAN (R 3.6.2)                   
+ lifecycle     0.2.0   2020-03-06 [1] CRAN (R 3.6.0)                   
+ magrittr      2.0.1   2020-11-17 [1] CRAN (R 3.6.2)                   
+ memoise       2.0.0   2021-01-26 [1] CRAN (R 3.6.2)                   
+ munsell       0.5.0   2018-06-12 [1] CRAN (R 3.6.0)                   
+ pillar        1.4.7   2020-11-20 [1] CRAN (R 3.6.2)                   
+ pkgbuild      1.2.0   2020-12-15 [1] CRAN (R 3.6.2)                   
+ pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 3.6.0)                   
+ pkgload       1.1.0   2020-05-29 [1] CRAN (R 3.6.2)                   
+ prettyunits   1.1.1   2020-01-24 [1] CRAN (R 3.6.0)                   
+ processx      3.4.5   2020-11-30 [1] CRAN (R 3.6.2)                   
+ ps            1.5.0   2020-12-05 [1] CRAN (R 3.6.2)                   
+ purrr         0.3.4   2020-04-17 [1] CRAN (R 3.6.2)                   
+ R6            2.5.0   2020-10-28 [1] CRAN (R 3.6.2)                   
+ remotes       2.2.0   2020-07-21 [1] CRAN (R 3.6.2)                   
+ rlang         0.4.10  2020-12-30 [1] CRAN (R 3.6.2)                   
+ rmarkdown     2.7     2021-02-19 [1] CRAN (R 3.6.3)                   
+ rprojroot     2.0.2   2020-11-15 [1] CRAN (R 3.6.2)                   
+ sass          0.3.1   2021-01-24 [1] CRAN (R 3.6.2)                   
+ scales        1.1.1   2020-05-11 [1] CRAN (R 3.6.2)                   
+ sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.6.0)                   
+ stringi       1.5.3   2020-09-09 [1] CRAN (R 3.6.2)                   
+ stringr       1.4.0   2019-02-10 [1] CRAN (R 3.6.0)                   
+ testthat      3.0.1   2020-12-17 [1] CRAN (R 3.6.2)                   
+ tibble        3.0.6   2021-01-29 [1] CRAN (R 3.6.2)                   
+ tidyselect    1.1.0   2020-05-11 [1] CRAN (R 3.6.2)                   
+ usethis     * 2.0.1   2021-02-10 [1] CRAN (R 3.6.2)                   
+ vctrs         0.3.6   2020-12-17 [1] CRAN (R 3.6.2)                   
+ withr         2.4.1   2021-01-26 [1] CRAN (R 3.6.2)                   
+ xfun          0.21    2021-02-10 [1] CRAN (R 3.6.2)                   
+ xml2        * 1.3.2   2020-04-23 [1] CRAN (R 3.6.2)                   
+ yaml          2.2.1   2020-02-01 [1] CRAN (R 3.6.0)                   
+
+[1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library</code></pre>
+</div>

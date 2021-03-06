@@ -55,6 +55,7 @@ markup:
   goldmark:
     renderer:
       unsafe: true
+      hardWraps: true
   highlight:
     anchorLineNos: false
     codeFences: true

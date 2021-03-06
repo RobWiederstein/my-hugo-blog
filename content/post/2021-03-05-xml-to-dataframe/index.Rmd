@@ -1,0 +1,182 @@
+---
+title: How to Convert XML to Dataframe Using Xlm2
+author: Rob Wiederstein
+date: '2021-03-05'
+slug: xml-to-dataframe
+categories:
+  - R
+tags:
+  - xlm2
+layout: layouts/post/single
+draft: no
+image: ~
+caption: ~
+summary: Everytime I run into a file with an `.xml` extension, I cringe.  Though, admittedly, it's a file format that you have to be familiar with when it comes to sending and receiving data over the web. `R` has a package `xlm2` to assist in the conversion of nested data to tabular data.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+x <- c(
+      'devtools', #for session info
+      'ggthemes'
+)
+lapply(x, library, character.only = T)
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
+library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+## Overview
+
+The task here is to take an easy and short `xml` file and convert it to a dataframe.  The `xlm2` package was specifically designed for the task and is the successor to the `xlm` package.  
+
+## Background
+
+### Definitions
+
+First, it's important to get some defintions first. (W3schools has a really helpful set of [tutorials](https://www.w3schools.com/xml/default.asp) on the topic.)  A "node" in general and speaking in a broad way is an HTML element. 
+
+**DOM (Document Object Model)** - a tree structure that represents the HTML of the website, and every HTML element is a "node".
+
+**Element Nodes** - model the actual HTML elements in the document.
+
+**Attribute Nodes** - model the various attributes in the different HTML elements. Attributes include id, class, title and style.
+
+**Text Nodes** - model the text content inside the different HTML elements.
+
+**Root Node** - the node on the very top of the document tree, usually called the document node.
+
+**Parent Node** - a node that has children; represents an element that has at least one other element or text nested inside it.
+
+**Child Node** - a node that has a parent; represents an element or text that is nested inside another element. For example, a `<p>` tag is often the child of a `<div>` tag.
+
+
+```{r load-more-libraries, include = F}
+library(xml2)
+```
+
+### Example
+
+```{r pressure, echo=FALSE, fig.cap="See [DOM model](https://en.wikipedia.org/wiki/Document_Object_Model) on Wikipedia", out.width = '65%'}
+knitr::include_graphics("wikipedia-dom-model.png")
+```
+
+### Structure
+
+XML strucutred data looks like this:
+
+```
+<?xml version="1.0" encoding="UTF-8"?> #xml prologue
+<root>
+  <child>
+    <subchild>.....</subchild>
+  </child>
+</root>
+```
+
+### Xpath
+
+XPath is a syntax for defining and navigating parts of an XML document. They can be used across many languages. Xpath has over 200 functions according to W3schools.  See the W3 page for [xpath syntax](https://www.w3schools.com/xml/xpath_syntax.asp).
+
+## XML Data
+
+All of the functions below are from the `xlm2` package and the help [page](https://xml2.r-lib.org).
+
+```{r read-in-xml, echo = T}
+#get W3 data
+url <- "https://www.w3schools.com/xml/simple.xml"
+# read list
+bkfst <- read_xml(x = url)
+str(bkfst)
+```
+
+```{r xml-name, echo = T}
+xml_name(bkfst)
+```
+
+### See XML Data Structure
+
+```{r xml-structure, echo = T}
+xml_structure(bkfst)
+```
+
+
+```{r xml-text, echo = T}
+# see text
+xml_text(bkfst)
+```
+
+### Extract XML
+
+The real key is understanding how to define or set the "xpath" argument.
+
+
+```{r get-bkfst-name, echo = T}
+xml_find_all(bkfst, xpath = "//name")
+```
+
+```{r get-bkfst-price, echo = T}
+xml_text(xml_find_all(bkfst, xpath = "//name"))
+```
+
+### Build table
+
+```{r build-bkfst-table, echo = T}
+library(tibble)
+name <- xml_text(xml_find_all(bkfst, xpath = "//name"))
+price <- xml_text(xml_find_all(bkfst, xpath = "//price"))
+df <- tibble(name = name, price = price)
+df
+```
+
+
+## Conclusion
+
+If you can get a basic understanding of html web pages and xpath syntax, then you should be able to parse xml files efficiently with `xlm2`.  
+
+
+## Acknowledgements
+
+(Get bibliographic stuff from "archetype hill".)
+
+## References
+
+## Disclaimer
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimd as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+## Reproducibility
+
+```{r reproducibility, echo = FALSE}
+## Reproducibility info
+options(width = 120)
+session_info()
+```
