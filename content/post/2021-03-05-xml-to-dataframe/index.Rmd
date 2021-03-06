@@ -91,7 +91,7 @@ knitr::include_graphics("wikipedia-dom-model.png")
 
 ### Structure
 
-XML strucutred data looks like this:
+XML structured data looks like this:
 
 ```
 <?xml version="1.0" encoding="UTF-8"?> #xml prologue
@@ -113,7 +113,7 @@ All of the functions below are from the `xlm2` package and the help [page](https
 ```{r read-in-xml, echo = T}
 #get W3 data
 url <- "https://www.w3schools.com/xml/simple.xml"
-# read list
+# read breakfast menu
 bkfst <- read_xml(x = url)
 str(bkfst)
 ```
