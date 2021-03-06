@@ -24,10 +24,13 @@ summary: Everytime I run into a file with an `.xml` extension, I cringe.  Though
 <li><a href="#definitions">Definitions</a></li>
 <li><a href="#example">Example</a></li>
 <li><a href="#structure">Structure</a></li>
+<li><a href="#xpath">Xpath</a></li>
 </ul></li>
 <li><a href="#xml-data">XML Data</a>
 <ul>
 <li><a href="#see-xml-data-structure">See XML Data Structure</a></li>
+<li><a href="#extract-xml">Extract XML</a></li>
+<li><a href="#build-table">Build table</a></li>
 </ul></li>
 <li><a href="#conclusion">Conclusion</a></li>
 <li><a href="#acknowledgements">Acknowledgements</a></li>
@@ -65,7 +68,7 @@ Figure 1: See <a href="https://en.wikipedia.org/wiki/Document_Object_Model">DOM 
 </div>
 <div id="structure" class="section level3">
 <h3>Structure</h3>
-<p>XML strucutred data looks like this:</p>
+<p>XML structured data looks like this:</p>
 <pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt; #xml prologue
 &lt;root&gt;
   &lt;child&gt;
@@ -73,13 +76,17 @@ Figure 1: See <a href="https://en.wikipedia.org/wiki/Document_Object_Model">DOM 
   &lt;/child&gt;
 &lt;/root&gt;</code></pre>
 </div>
+<div id="xpath" class="section level3">
+<h3>Xpath</h3>
+<p>XPath is a syntax for defining and navigating parts of an XML document. They can be used across many languages. Xpath has over 200 functions according to W3schools. See the W3 page for <a href="https://www.w3schools.com/xml/xpath_syntax.asp">xpath syntax</a>.</p>
+</div>
 </div>
 <div id="xml-data" class="section level2">
 <h2>XML Data</h2>
 <p>All of the functions below are from the <code>xlm2</code> package and the help <a href="https://xml2.r-lib.org">page</a>.</p>
 <pre class="r"><code># get W3 data
 url &lt;- &quot;https://www.w3schools.com/xml/simple.xml&quot;
-# read list
+# read breakfast menu
 bkfst &lt;- read_xml(x = url)
 str(bkfst)</code></pre>
 <pre><code>List of 2
@@ -141,10 +148,41 @@ str(bkfst)</code></pre>
 xml_text(bkfst)</code></pre>
 <pre><code>[1] &quot;Belgian Waffles$5.95Two of our famous Belgian Waffles with plenty of real maple syrup650Strawberry Belgian Waffles$7.95Light Belgian waffles covered with strawberries and whipped cream900Berry-Berry Belgian Waffles$8.95Light Belgian waffles covered with an assortment of fresh berries and whipped cream900French Toast$4.50Thick slices made from our homemade sourdough bread600Homestyle Breakfast$6.95Two eggs, bacon or sausage, toast, and our ever-popular hash browns950&quot;</code></pre>
 </div>
+<div id="extract-xml" class="section level3">
+<h3>Extract XML</h3>
+<p>The real key is understanding how to define or set the “xpath” argument.</p>
+<pre class="r"><code>xml_find_all(bkfst, xpath = &quot;//name&quot;)</code></pre>
+<pre><code>{xml_nodeset (5)}
+[1] &lt;name&gt;Belgian Waffles&lt;/name&gt;
+[2] &lt;name&gt;Strawberry Belgian Waffles&lt;/name&gt;
+[3] &lt;name&gt;Berry-Berry Belgian Waffles&lt;/name&gt;
+[4] &lt;name&gt;French Toast&lt;/name&gt;
+[5] &lt;name&gt;Homestyle Breakfast&lt;/name&gt;</code></pre>
+<pre class="r"><code>xml_text(xml_find_all(bkfst, xpath = &quot;//name&quot;))</code></pre>
+<pre><code>[1] &quot;Belgian Waffles&quot;             &quot;Strawberry Belgian Waffles&quot; 
+[3] &quot;Berry-Berry Belgian Waffles&quot; &quot;French Toast&quot;               
+[5] &quot;Homestyle Breakfast&quot;        </code></pre>
+</div>
+<div id="build-table" class="section level3">
+<h3>Build table</h3>
+<pre class="r"><code>library(tibble)
+name &lt;- xml_text(xml_find_all(bkfst, xpath = &quot;//name&quot;))
+price &lt;- xml_text(xml_find_all(bkfst, xpath = &quot;//price&quot;))
+df &lt;- tibble(name = name, price = price)
+df</code></pre>
+<pre><code># A tibble: 5 x 2
+  name                        price
+  &lt;chr&gt;                       &lt;chr&gt;
+1 Belgian Waffles             $5.95
+2 Strawberry Belgian Waffles  $7.95
+3 Berry-Berry Belgian Waffles $8.95
+4 French Toast                $4.50
+5 Homestyle Breakfast         $6.95</code></pre>
+</div>
 </div>
 <div id="conclusion" class="section level2">
 <h2>Conclusion</h2>
-<p>Thank you. Come again.</p>
+<p>If you can get a basic understanding of html web pages and xpath syntax, then you should be able to parse xml files efficiently with <code>xlm2</code>.</p>
 </div>
 <div id="acknowledgements" class="section level2">
 <h2>Acknowledgements</h2>

@@ -2,185 +2,153 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Rob Wiederstein - a blog about coding, data and public policy</title>
-    <link>http://localhost:1313/</link>
+    <link>https://keen-noether-7d2e44.netlify.app/</link>
     <description>Recent content on Rob Wiederstein - a blog about coding, data and public policy</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Mar 2021 20:27:21 -0600</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 05 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How to Convert XML to Dataframe Using Xlm2</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/03/05/xml-to-dataframe/</link>
+      <pubDate>Fri, 05 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/03/05/xml-to-dataframe/</guid>
+      <description>Everytime I run into a file with an &lt;code&gt;.xml&lt;/code&gt; extension, I cringe.  Though, admittedly, it&amp;rsquo;s a file format that you have to be familiar with when it comes to sending and receiving data over the web. &lt;code&gt;R&lt;/code&gt; has a package &lt;code&gt;xlm2&lt;/code&gt; to assist in the conversion of nested data to tabular data.</description>
+    </item>
+    
     <item>
       <title>Pumpkin Pudding</title>
-      <link>http://localhost:1313/recipe/pumpkin-pudding/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/pumpkin-pudding/</link>
       <pubDate>Tue, 02 Mar 2021 20:27:21 -0600</pubDate>
       
-      <guid>http://localhost:1313/recipe/pumpkin-pudding/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/pumpkin-pudding/</guid>
       <description>I absolutely love pumpkin, but it&amp;rsquo;s a little boring by itself.  This recipe has fewer calories than either pumpkin pie or pumpkin bread.  Usually, fall is the perfect time for this but we eat it all year round.</description>
     </item>
     
     <item>
       <title>Twice Baked Spaghetti</title>
-      <link>http://localhost:1313/recipe/twice-baked-spaghetti/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/twice-baked-spaghetti/</link>
       <pubDate>Tue, 02 Mar 2021 19:54:06 -0600</pubDate>
       
-      <guid>http://localhost:1313/recipe/twice-baked-spaghetti/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/twice-baked-spaghetti/</guid>
       <description>My family usuall groans when this dish is served because it is delicious, but really high in calories.</description>
     </item>
     
     <item>
       <title>Brussel Sprout Hash with Eggs</title>
-      <link>http://localhost:1313/recipe/brussel-sprout-hash/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/brussel-sprout-hash/</link>
       <pubDate>Mon, 01 Mar 2021 19:23:23 -0600</pubDate>
       
-      <guid>http://localhost:1313/recipe/brussel-sprout-hash/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/brussel-sprout-hash/</guid>
       <description>This is a meal for any time of day.  The yellow yolks contrast from the bright green brussel sprouts and a dash of cayenne pepper give it a culinary kick. This was the specialty of one of our favorite local restaurants.</description>
     </item>
     
     <item>
       <title>Greek Pasta Salad</title>
-      <link>http://localhost:1313/recipe/greek-pasta-salad/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/greek-pasta-salad/</link>
       <pubDate>Mon, 01 Mar 2021 10:03:13 -0600</pubDate>
       
-      <guid>http://localhost:1313/recipe/greek-pasta-salad/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/greek-pasta-salad/</guid>
       <description>This Greek pasta salad is a favorite of my daughter&amp;rsquo;s with the poignant banana pepper rings.  It keeps well in the refriderator and we snack on it all week usually.</description>
     </item>
     
     <item>
-      <title>Advocado Toast</title>
-      <link>http://localhost:1313/recipe/advocado-toast/</link>
-      <pubDate>Mon, 01 Mar 2021 06:38:58 -0600</pubDate>
-      
-      <guid>http://localhost:1313/recipe/advocado-toast/</guid>
-      <description>Ingredients  ingredient  Directions Notes Nutrition </description>
-    </item>
-    
-    <item>
       <title>Trip to Kansas</title>
-      <link>http://localhost:1313/trip/kansas/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/trip/kansas/</link>
       <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/trip/kansas/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/trip/kansas/</guid>
       <description>Day 1 Visit a museum.
 Purple Flowers  </description>
     </item>
     
     <item>
-      <title>Trip to Luddington</title>
-      <link>http://localhost:1313/trip/luddington/luddington/</link>
-      <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/trip/luddington/luddington/</guid>
-      <description>Day 1 Swim
-Purple Flowers  </description>
-    </item>
-    
-    <item>
       <title>Washington</title>
-      <link>http://localhost:1313/trip/washington/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/trip/washington/</link>
       <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/trip/washington/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/trip/washington/</guid>
       <description>Washington D.C.                                  Day 1 Visit a museum.</description>
     </item>
     
     <item>
       <title>Hello World One</title>
-      <link>http://localhost:1313/2021/02/27/hello-world-one/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/02/27/hello-world-one/</link>
       <pubDate>Sat, 27 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/2021/02/27/hello-world-one/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/27/hello-world-one/</guid>
       <description>A story about a mercedes.</description>
     </item>
     
     <item>
       <title>Hello World Two</title>
-      <link>http://localhost:1313/2021/02/27/hello-world-two/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/02/27/hello-world-two/</link>
       <pubDate>Sat, 27 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/2021/02/27/hello-world-two/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/27/hello-world-two/</guid>
       <description>&lt;strong&gt;This is a post&lt;/strong&gt;.</description>
     </item>
     
     <item>
       <title>Drunken Raisins</title>
-      <link>http://localhost:1313/recipe/gin-and-raisins/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/gin-and-raisins/</link>
       <pubDate>Fri, 26 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/recipe/gin-and-raisins/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/gin-and-raisins/</guid>
       <description>In a New York Times article, Ms. Lucia DeClerk credit her 105 years of longevity to prayer and gin and raisins. &amp;ldquo;Eat nine raisins a day after sitting in the fridge for nine days.&amp;rdquo;</description>
     </item>
     
     <item>
       <title>Five Basic Viniagrettes</title>
-      <link>http://localhost:1313/recipe/basic-vinegrettes/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/basic-vinegrettes/</link>
       <pubDate>Fri, 26 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/recipe/basic-vinegrettes/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/basic-vinegrettes/</guid>
       <description>Vinegrettes aren&amp;rsquo;t hard, but you need some basic ingredients and a little imagination to get started.  This post lists a few of my mainstays for salads.</description>
     </item>
     
     <item>
       <title>Tortellini and Butternut Squash</title>
-      <link>http://localhost:1313/recipe/tortellini-butternut/recipe/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/tortellini-butternut/recipe/</link>
       <pubDate>Tue, 23 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/recipe/tortellini-butternut/recipe/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/tortellini-butternut/recipe/</guid>
       <description>This vegetarian dish can be made quickly with frozen tortellini and butternut squash.</description>
     </item>
     
     <item>
       <title>Vegetable Medley Soup</title>
-      <link>http://localhost:1313/recipe/kitchen-sink-soup/recipe/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/kitchen-sink-soup/recipe/</link>
       <pubDate>Sun, 21 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/recipe/kitchen-sink-soup/recipe/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/kitchen-sink-soup/recipe/</guid>
       <description>This is called Vegetable Medley Soup because everything is in it, including the kitchen sink.  Before going to the grocery store for the week, I clear out the vegetable bin. The wine is for me not the soup.</description>
     </item>
     
     <item>
-      <title>HUGO Variables</title>
-      <link>http://localhost:1313/2021/02/19/hugo-variables/</link>
-      <pubDate>Fri, 19 Feb 2021 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/2021/02/19/hugo-variables/</guid>
-      <description>hugo has three kinds of variables: (1) resident or &amp;ldquo;built-in&amp;rdquo; global variables, (2) defined global variables in the config file and (3) page variables.
-Site Variables List To see the configuration settings for hugo run:
-hugo config .Site.Params Variable {{ .Site.Title }}
-A bunch of code here  {{ $_hugo_config := { &amp;quot;version&amp;quot;: 1 } }}
- hugo-variables If you&amp;#39;ve ever wondered exactly how Shiny&amp;#39;s reactive graph works, I have new &amp;quot;Mastering Shiny&amp;quot; book chapter up: https://t.</description>
-    </item>
-    
-    <item>
       <title>Italian Wedding Soup</title>
-      <link>http://localhost:1313/recipe/italian-wedding/recipe/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/italian-wedding/recipe/</link>
       <pubDate>Fri, 19 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/recipe/italian-wedding/recipe/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/italian-wedding/recipe/</guid>
       <description>This soup is sooo simple and really fills people up.</description>
     </item>
     
     <item>
-      <title>Ten Tips to Working with Go Templates</title>
-      <link>http://localhost:1313/2021/02/19/ten-tips-to-working-with-go-templates/</link>
-      <pubDate>Fri, 19 Feb 2021 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/2021/02/19/ten-tips-to-working-with-go-templates/</guid>
-      <description>Introduction  Curly Brackets Capital Letters Commenting Dot Notation Dollar Notation Assignments   Variable  .RelPermalink .Pages .Content .Section .IsHome   Arrays  Arrays (slice) Associative arrays (maps) Subsetting or Indexing   Functions  Basic range where delim   Incorporation  Includes Partials   Lists Lookup Order for templates _index.md    Introduction hugo templates are based on the go language, but are derived from the go template library.</description>
-    </item>
-    
-    <item>
       <title>Aloo Matar (Potato &amp; Peas)</title>
-      <link>http://localhost:1313/recipe/aloo-matar/recipe/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/aloo-matar/recipe/</link>
       <pubDate>Thu, 18 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/recipe/aloo-matar/recipe/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/aloo-matar/recipe/</guid>
       <description>It is hard to get excited when you are having potatoes and peas.  That&amp;rsquo;s why you should always say you are fixing aloo matar, a classic Indian dish.</description>
     </item>
     
     <item>
       <title>CV</title>
-      <link>http://localhost:1313/cv/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/cv/</link>
       <pubDate>Tue, 16 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/cv/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/cv/</guid>
       <description>Presentations:   Recollections from 18 Years of Judging (Henderson Rotary Club, Early Learning Ctr., Sept. 29, 2016).
   The Role of the Constitution, Campaign Finance, and the Presidential Race of 2016 (Henderson Community College, Henderson, Ky., Sept. 21, 2016).
   Center for Youth Justice and Services: Making Our Community Safer One Kid at a Time (Co-presenter, Alternatives to Detention Conference, Embassy Suites, Louisville, Ky., Aug. 26, 2016).</description>
@@ -188,100 +156,82 @@ A bunch of code here  {{ $_hugo_config := { &amp;quot;version&amp;quot;: 1 } }}
     
     <item>
       <title>Gallery</title>
-      <link>http://localhost:1313/gallery/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/gallery/</link>
       <pubDate>Tue, 16 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/gallery/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/gallery/</guid>
       <description>Coming soon.</description>
     </item>
     
     <item>
       <title>Insert HTML Widgets in Blogdown</title>
-      <link>http://localhost:1313/2021/02/15/insert_htmlwidget/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/02/15/insert_htmlwidget/</link>
       <pubDate>Mon, 15 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/2021/02/15/insert_htmlwidget/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/15/insert_htmlwidget/</guid>
       <description>Load Libraries Insert Data Tables or DT Widget Insert Leaflet Widget Insert Sigma JS Insert Plotly Widget   There were two main reasons for moving to blogdown. First, I needed a blogging platform that moved seemlessly between R code and its output. It had to be easy to show the connection between the code that was used and its effect on the data.</description>
     </item>
     
     <item>
-      <title>Code Highlighting in Rmarkdown</title>
-      <link>http://localhost:1313/2021/02/14/try-syntax-highlighting/</link>
-      <pubDate>Sun, 14 Feb 2021 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/2021/02/14/try-syntax-highlighting/</guid>
-      <description>Example 1 Example 2   Example 1 # Dr Seuss a &amp;lt;- 1:2 fish.number &amp;lt;- paste(a, &amp;quot;fish&amp;quot;, sep =&amp;quot;_&amp;quot;) b &amp;lt;- c(&amp;quot;red&amp;quot;, &amp;quot;blue&amp;quot;) fish.color &amp;lt;- paste(b, &amp;quot;fish&amp;quot;, sep = &amp;quot;_&amp;quot;) print(c(fish.number, fish.color)) ## [1] &amp;quot;1_fish&amp;quot; &amp;quot;2_fish&amp;quot; &amp;quot;red_fish&amp;quot; &amp;quot;blue_fish&amp;quot;  Example 2 data(mtcars) p &amp;lt;- ggplot(mtcars, aes(hp,mpg, group = factor(cyl), color = factor(cyl))) p &amp;lt;- p + geom_point() p &amp;lt;- p + ggtitle(&amp;quot;Mtcars&amp;quot;) p  Figure 1: A plot constructed with ggplot2.</description>
-    </item>
-    
-    <item>
       <title>Datasets</title>
-      <link>http://localhost:1313/datasets/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/datasets/</link>
       <pubDate>Sun, 14 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/datasets/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/datasets/</guid>
       <description>Airlines &amp;amp; Airports  Bureau of Transportation &amp;amp; Statistics.  Cruise Ships  Sample Cruise Ship Data.  Economics  Bureau of Economic Analysis. Federal Reserve Economic Data. Aswath Damodaran&amp;rsquo;s Data Sets. Organization of Economic Cooperation &amp;amp; Development.  Education  National Center for Education Statistics. Kentucky Department of Education. Kentucky Graduation Project Data.  Energy  Kentucky Coal Facts. US Energy Information Administration. Global Powerplant Database.  General  Socrata Open Data Resources.</description>
     </item>
     
     <item>
       <title>Beluga Chili with Tots</title>
-      <link>http://localhost:1313/recipe/beluga-chili/recipe/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/beluga-chili/recipe/</link>
       <pubDate>Thu, 11 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/recipe/beluga-chili/recipe/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/beluga-chili/recipe/</guid>
       <description>The beluga lentils texture rivals that of ground beef.  Definitely, give this recipe a try for your non-vegetarian friends. (Just put a bunch of cheese and hot sauce with it and they&amp;rsquo;ll never know the difference.)</description>
     </item>
     
     <item>
       <title>Confetti Cornbread</title>
-      <link>http://localhost:1313/recipe/christmas-cornbread/recipe/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/christmas-cornbread/recipe/</link>
       <pubDate>Thu, 11 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/recipe/christmas-cornbread/recipe/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/christmas-cornbread/recipe/</guid>
       <description>You do not have to wait to break open a pinata to eat this red and green cornbread.  The colors make it a festive treat for any occasion.</description>
     </item>
     
     <item>
       <title>Pistachio Pineapple Salad</title>
-      <link>http://localhost:1313/recipe/pistachio-pineapple/recipe/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/pistachio-pineapple/recipe/</link>
       <pubDate>Thu, 11 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/recipe/pistachio-pineapple/recipe/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/pistachio-pineapple/recipe/</guid>
       <description>This dish was inspired by my spouse when visiting family as a child.  It was sweet, easy to make and all the kids loved it.</description>
     </item>
     
     <item>
       <title>Spinach Breakfast Casserole</title>
-      <link>http://localhost:1313/recipe/brocolli-casserole/recipe/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/brocolli-casserole/recipe/</link>
       <pubDate>Thu, 11 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/recipe/brocolli-casserole/recipe/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/brocolli-casserole/recipe/</guid>
       <description>This is a great meal for whenever.  I use kale, broccoli, spinach or asparagus depending on what I have on hand. I keep chopped spinach and broccoli in the freezer for this meal.</description>
     </item>
     
     <item>
-      <title>Ten Tips to Working with Blogdown</title>
-      <link>http://localhost:1313/2021/02/11/ten-tips-to-working-with-blogdown/</link>
-      <pubDate>Thu, 11 Feb 2021 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/2021/02/11/ten-tips-to-working-with-blogdown/</guid>
-      <description>Introduction Ten Tips Best Resources   Introduction Transitioning to hugo is difficult. Blogdown offers the promise of an easy and quick workflow for blogging, however, that is not the case. If you’re not ready for some hard work, then you should probably stay with Wordpress or Squarespace. On the otherhand, if you want to understand the principles that underly much of webpage creation, then stick with blogdown and hugo.</description>
-    </item>
-    
-    <item>
       <title>Waldorf Salad Redux</title>
-      <link>http://localhost:1313/recipe/waldorf-salad/recipe/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/waldorf-salad/recipe/</link>
       <pubDate>Thu, 11 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/recipe/waldorf-salad/recipe/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/waldorf-salad/recipe/</guid>
       <description>This is a family favorite that, unbelievably, used to be made with mayonnaise.  We buy a lot of apples that go uneaten. Toward the end of the week, I often make this to get rid of the leftover apples.</description>
     </item>
     
     <item>
       <title>About</title>
-      <link>http://localhost:1313/about/</link>
+      <link>https://keen-noether-7d2e44.netlify.app/about/</link>
       <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
       
-      <guid>http://localhost:1313/about/</guid>
+      <guid>https://keen-noether-7d2e44.netlify.app/about/</guid>
       <description>I’m a dad, a retired judge, a guitar player, a former state representative, an amateur programmer and statistician. Out of fear that some may take my posts too seriously, I describe myself as someone who does mostly exploratory analysis and visualization&amp;ndash;although I have ventured into predictive analytics and modeling from time to time. I&amp;rsquo;ve even participated in a couple of kaggle contests and submitted an R notebook.
 The death of analytical/investigative reporting at the regional and local level is something that concerns me.</description>
     </item>
