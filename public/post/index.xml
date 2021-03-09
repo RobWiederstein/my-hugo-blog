@@ -6,7 +6,25 @@
     <description>Recent content in My Blog Posts on Rob Wiederstein - a blog about coding, data and public policy</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 07 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Michigan Lighthouses</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/03/07/michigan-lighthouses/</link>
+      <pubDate>Sun, 07 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/03/07/michigan-lighthouses/</guid>
+      <description>This post uses the United States Coast Guard data to plot navigation aides.  Many observations were dropped for incomplete data, but those with a dwelling were colored differently.  Buoys were admitted too.</description>
+    </item>
+    
+    <item>
+      <title>My Hugo Archetype for R Blogdown</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/03/06/my-hugo-archetype-for-r-blogdown/</link>
+      <pubDate>Sat, 06 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/03/06/my-hugo-archetype-for-r-blogdown/</guid>
+      <description>By default, Hugo automatically takes the first 70 words of your content as its summary and stores it into the &lt;code&gt;.Summary&lt;/code&gt; page variable for use in your templates. You may customize the summary length by setting &lt;code&gt;summaryLength&lt;/code&gt; in your site configuration &lt;em&gt;or&lt;/em&gt; you can set it in the front matter.</description>
+    </item>
+    
     <item>
       <title>How to Convert XML to Dataframe Using Xlm2</title>
       <link>https://keen-noether-7d2e44.netlify.app/2021/03/05/xml-to-dataframe/</link>

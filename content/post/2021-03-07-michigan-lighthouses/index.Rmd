@@ -1,0 +1,184 @@
+---
+title: Lighthouses of the Great Lakes
+author: Rob Wiederstein
+date: '2021-03-07'
+slug: great-lakes-lighthouses
+categories:
+  - R
+tags:
+  - leaflet
+layout: layouts/post/single
+draft: no
+image: Big_Sable_Point_Lighthouse-2.jpg
+caption: Big Sable Point Lighthouse.  Photo by James Phelps from USA, CC BY 2.0 via Wikimedia Commons.  
+summary: This post uses the United States Coast Guard data to plot navigation aides.  Many observations were dropped for incomplete data, but those with a dwelling were colored differently.  Buoys were omitted too.
+---
+
+
+```{r load-packages, include = F}
+## see http://lcolladotor.github.io/2018/03/08/blogdown-archetype-template/#.YEOC-C2cZOR
+## Load frequently used packages for blog posts
+x <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'knitcitations',
+      'BiocStyle',
+      'blogdown'
+)
+lapply(x, library, character.only = T)
+
+## Load knitcitations with a clean bibliography
+cleanbib()
+cite_options(hyperlink = 'to.doc', citation_format = 'text', style = 'html')
+
+bib <- c(
+    'BiocStyle' = citation('BiocStyle'),
+    'blogdown' = citation('blogdown')[2],
+    'devtools' = citation('devtools'),
+    'knitcitations' = citation('knitcitations'),
+    'leaflet' = citation('leaflet')
+)
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
+library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+
+[@BiocStyle]
+
+## Overview
+
+This post seeks to identify prominent lighthouses and navigational aids along the coasts and waterways of the Great Lakes.  The U.S. Coast Guard's "Light List" is used for the descriptive analysis.
+
+## Background
+
+The U.S. Coast Guard maintains a "light list" which is published annually.  The light list is an inventory of navigation aides including all lights, sound signals, buoys, daybeacons, and other aids. The data is available in both `.pdf` and `.xml`.  The 2021 data  is for the ninth district known as the "Great Lakes and the St. Lawrence River above the St. Regis River".
+
+A code sheet is included within the annual light list report.  Of interest for this analysis is the "height" column.  It is defined for the Great Lakes as "height above water from the focal plane of the fixed light to low water datum, listed in feet and meters."
+
+"Range" is defined as the "nominal range of lighted aids to navigation, in nautical miles, listed by color for sector and passing lights. Nominal Range is not listed for ranges, directional lights, or private aids to navigation."
+
+"Structure" is defined as "the structural characteristic of the aid to navigation, including: dayboard (if any), description of fixed structure, color and type of buoy, height of structure above ground for major lights."
+
+Commercial vessels are required to  maintain on board a current copy of the U.S. Coast Guard Light List.
+
+```{r load-libraries, include = F}
+x <- c("tidyverse", "leaflet", "data.table", "tibble", "htmlwidgets", "leaflet.providers")
+lapply(x, library, character.only = T)
+```
+
+# Load the Data
+
+The USCG Light List contains in excess of 4500 navigational aids in District 9.  Much of the data is missing, particulary for aids like buoys in secondary channels.  For instance, there would seem to be little need to record the height and range of a channel buoy that is sitting at sea level.  Structures that contained the term "buoy" were eliminated from the dataset.
+
+```{r import-data, echo = T, cache=T}
+#datasets hosted in dropbox
+input <- "https://dl.dropbox.com/s/lpyt4bxerzpao1b/2021-03-01-uscg-dist-9-light-list-partial.csv?dl=0"
+df <- as_tibble(data.table::fread(input = input))
+df$dwelling <- factor(df$dwelling, labels = c("yes", "no"))
+```
+
+The final data set was winnowed to `r nrow(df)` observations. The most significant variable was the range that the navigational aid could be seen while on the water.  The range could be a proxy for the importance of the aid to boating traffic.  Another closely related variable was the "height" variable.  The higher a light was from the earth, the easier it was to be seen on the horizon.  Thus, height would seem to be a predictor of range.  The chart below shows the correlation between the two variables.
+
+
+```{r plot-range-height, messages = F, warnings = F, out.width="100%",fig.cap="Plot showing the connection between height and range."}
+p <- ggplot(df, aes(height, range, group = dwelling, color = dwelling))
+p <- p + geom_point()
+p <- p + ggtitle("USCG Nav. Aids -- Buoys Omitted")
+p <- p + geom_smooth()
+p <- p + scale_x_continuous(name = "height",
+                            limits = c(0, 200)
+                            )
+p <- p + scale_color_manual(values = cbPalette)
+p <- p + theme(axis.title = element_text()) + xlab('height (ft)') + ylab('range (nm)')
+p
+```
+
+# Leaflet Plot
+
+Latitude and longitude were furnished as part of the dataset.  To add greater detail and utility to the data, a spatial plot was generated.  Light aids where a "dwelling" was included in the structure variable were assigned a different color for the marker. Only twenty of the navigational aids had a dwelling attached. There were no dwellings attached to a light where its height was less than 50 feet.  Additionally, the size of the marker was set based on the range of the light.  The range of the lights was between 3 and 25 nautical miles. The median range was `r median(df$range)`.
+
+
+```{r convert-angle-to-degrees, fig.cap="Upper Lake Michigan"}
+dwellingCol <- colorFactor(palette = c("#FFC20A", "#0C7BDC"), df$dwelling)
+library(leaflet)
+m <- leaflet() %>%
+  #addProviderTiles(providers$CartoDB.Positron) %>%
+  addTiles()%>%
+  setView(lng = -86.83, lat = 44.641, zoom = 8) %>%
+  addCircleMarkers(lng = df$longitude,
+             lat = df$latitude,
+             color = dwellingCol(df$dwelling),
+             radius = df$range,
+             popup = paste("Aid name: ", df$aid_name, "<br>",
+                           "Structure: ", df$structure, "<br>",
+                           "Characteristic: ", df$characteristic, "<br>",
+                           "Height: ", df$height, "<br>",
+                           "Range: ", df$range, "<br>")
+             )
+
+m
+```
+
+
+# Conclusion
+
+The points plotted are from the USCG list and a large portion of the dataset was omitted due to incomplete data.  The residual show broad coverage across the Great Lakes with greater density in places where ports are located, narrow channels or prominent points of land.  Only twenty of the light aids are attached to a dwelling.
+
+
+## Acknowledgements
+
+This blog post was made possible thanks to:
+
+* `r Biocpkg('BiocStyle')` `r citep(bib[['BiocStyle']])`
+* `r CRANpkg('blogdown')` `r citep(bib[['blogdown']])`
+* `r CRANpkg('devtools')` `r citep(bib[['devtools']])`
+* `r CRANpkg('knitcitations')` `r citep(bib[['knitcitations']])`
+* `r CRANpkg('leaflet')`      `r citep(bib[['leaflet']])`
+
+
+## References
+
+```{r bibliography, results = 'asis', echo = FALSE, cache = FALSE}
+## Print bibliography
+bibliography(style = 'html')
+```
+
+## Disclaimer
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimd as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+## Reproducibility
+
+```{r reproducibility, echo = FALSE}
+## Reproducibility info
+options(width = 120)
+session_info()
+```

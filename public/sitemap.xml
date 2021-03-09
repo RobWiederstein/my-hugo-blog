@@ -4,32 +4,57 @@
   
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/</loc>
-    <lastmod>2021-03-05T00:00:00+00:00</lastmod>
+    <lastmod>2021-03-07T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/categories/</loc>
-    <lastmod>2021-03-05T00:00:00+00:00</lastmod>
+    <lastmod>2021-03-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/03/05/xml-to-dataframe/</loc>
-    <lastmod>2021-03-05T00:00:00+00:00</lastmod>
+    <loc>https://keen-noether-7d2e44.netlify.app/tags/leaflet/</loc>
+    <lastmod>2021-03-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/03/07/michigan-lighthouses/</loc>
+    <lastmod>2021-03-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/post/</loc>
-    <lastmod>2021-03-05T00:00:00+00:00</lastmod>
+    <lastmod>2021-03-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/categories/r/</loc>
-    <lastmod>2021-03-05T00:00:00+00:00</lastmod>
+    <lastmod>2021-03-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/tags/</loc>
+    <lastmod>2021-03-07T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/tags/blogdown/</loc>
+    <lastmod>2021-03-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/categories/hugo/</loc>
+    <lastmod>2021-03-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/03/06/my-hugo-archetype-for-r-blogdown/</loc>
+    <lastmod>2021-03-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/03/05/xml-to-dataframe/</loc>
     <lastmod>2021-03-05T00:00:00+00:00</lastmod>
   </url>
   
@@ -106,11 +131,6 @@
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/trip/washington/</loc>
     <lastmod>2021-03-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/blogdown/</loc>
-    <lastmod>2021-02-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>

@@ -1,17 +1,21 @@
 ---
-title:
-author:
-date:
-layout: layouts/post/single
-draft: false
-# tags/categories example: ["A Tag", "Another Tag"]`
-tags:
+title: My Hugo Archetype for R Blogdown
+author: Rob Wiederstein
+date: '2021-03-06'
+slug: my-hugo-archetype-for-r-blogdown
 categories:
-# image path for social media
-image:
-#10 words or less
-caption: 
-summary:  By default, Hugo automatically takes the first 70 words of your content as its summary and stores it into the `.Summary` page variable for use in your templates. You may customize the summary length by setting `summaryLength` in your site configuration *or* you can set it in the front matter.
+  - R
+  - hugo
+tags:
+  - blogdown
+layout: layouts/post/single
+draft: no
+image: ~
+caption: ~
+summary: By default, Hugo automatically takes the first 70 words of your content as
+  its summary and stores it into the `.Summary` page variable for use in your templates.
+  You may customize the summary length by setting `summaryLength` in your site configuration
+  *or* you can set it in the front matter.
 ---
 
 
@@ -68,6 +72,7 @@ library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
 # color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
 cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
 ```
+You can find the full code for the archetype at my [gist](https://gist.github.com/RobWiederstein/b153a853550f42c1378569b06efd49f7). Some of the code blocks were not included via `include=F` as a quick way to silence the packages loading.
 
 ## R image
 

@@ -9,8 +9,8 @@ tags:
   - xlm2
 layout: layouts/post/single
 draft: no
-image: ~
-caption: ~
+image: xml-lighthouse-data.png
+caption: A dataset that was only available in pdf or xml.
 summary: Everytime I run into a file with an `.xml` extension, I cringe.  Though, admittedly, it's a file format that you have to be familiar with when it comes to sending and receiving data over the web. `R` has a package `xlm2` to assist in the conversion of nested data to tabular data.
 ---
 
@@ -21,6 +21,7 @@ summary: Everytime I run into a file with an `.xml` extension, I cringe.  Though
 <li><a href="#overview">Overview</a></li>
 <li><a href="#background">Background</a>
 <ul>
+<li><a href="#sanity-checks">Sanity Checks</a></li>
 <li><a href="#definitions">Definitions</a></li>
 <li><a href="#example">Example</a></li>
 <li><a href="#structure">Structure</a></li>
@@ -32,6 +33,7 @@ summary: Everytime I run into a file with an `.xml` extension, I cringe.  Though
 <li><a href="#extract-xml">Extract XML</a></li>
 <li><a href="#build-table">Build table</a></li>
 </ul></li>
+<li><a href="#lists-and-xml">Lists and XML</a></li>
 <li><a href="#conclusion">Conclusion</a></li>
 <li><a href="#acknowledgements">Acknowledgements</a></li>
 <li><a href="#references">References</a></li>
@@ -42,10 +44,14 @@ summary: Everytime I run into a file with an `.xml` extension, I cringe.  Though
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p>The task here is to take an easy and short <code>xml</code> file and convert it to a dataframe. The <code>xlm2</code> package was specifically designed for the task and is the successor to the <code>xlm</code> package.</p>
+<p>The task here is to take an easy and short <code>xml</code> file and convert it to a dataframe. The <code>xml2</code> package was specifically designed for the task and is the successor to the <code>xml</code> package.</p>
 </div>
 <div id="background" class="section level2">
 <h2>Background</h2>
+<div id="sanity-checks" class="section level3">
+<h3>Sanity Checks</h3>
+<p>Let’s face it: you wouldn’t be on this page if you could’ve figured it out using W3schools or the <code>R</code> help menu. Let’s start with some super basic stuff. Have you opened the <code>.xml</code> file using a browser? Do that first and see if you can get a sense of how the data is organized. Second, open the xml file in a linter and see if it’s formatted correctly. (Here’s an <a href="https://xmllint.com">example</a>) I’ve lost a ton of time double checking code only to figure out that some <code>.json</code> was missing a “}”. Finally, open it in a good text editor and beautify the code. (I use Atom.) My last project, I “peeled” the outer layers of the onion to get at the data. It was hacky and lacked reproducibility, but it worked.</p>
+</div>
 <div id="definitions" class="section level3">
 <h3>Definitions</h3>
 <p>First, it’s important to get some defintions first. (W3schools has a really helpful set of <a href="https://www.w3schools.com/xml/default.asp">tutorials</a> on the topic.) A “node” in general and speaking in a broad way is an HTML element.</p>
@@ -179,6 +185,19 @@ df</code></pre>
 4 French Toast                $4.50
 5 Homestyle Breakfast         $6.95</code></pre>
 </div>
+</div>
+<div id="lists-and-xml" class="section level2">
+<h2>Lists and XML</h2>
+<p>Lists and xml are similar and easily converted within the <code>xml2</code> package.</p>
+<pre class="r"><code>document &lt;- list(root = list(parent = list(child = list(1))))
+xmlDoc &lt;- xml2::as_xml_document(document)
+xml2::xml_structure(xmlDoc)</code></pre>
+<pre><code>&lt;root&gt;
+  &lt;parent&gt;
+    &lt;child&gt;
+      {text}</code></pre>
+<pre><code>{xml_nodeset (1)}
+[1] &lt;child&gt;1&lt;/child&gt;</code></pre>
 </div>
 <div id="conclusion" class="section level2">
 <h2>Conclusion</h2>

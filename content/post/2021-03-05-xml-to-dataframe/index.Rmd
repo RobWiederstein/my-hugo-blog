@@ -9,8 +9,8 @@ tags:
   - xlm2
 layout: layouts/post/single
 draft: no
-image: ~
-caption: ~
+image: xml-lighthouse-data.png
+caption: A dataset that was only available in pdf or xml.
 summary: Everytime I run into a file with an `.xml` extension, I cringe.  Though, admittedly, it's a file format that you have to be familiar with when it comes to sending and receiving data over the web. `R` has a package `xlm2` to assist in the conversion of nested data to tabular data.
 ---
 
@@ -56,9 +56,13 @@ cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00",
 
 ## Overview
 
-The task here is to take an easy and short `xml` file and convert it to a dataframe.  The `xlm2` package was specifically designed for the task and is the successor to the `xlm` package.  
+The task here is to take an easy and short `xml` file and convert it to a dataframe.  The `xml2` package was specifically designed for the task and is the successor to the `xml` package.  
 
 ## Background
+
+### Sanity Checks
+
+Let's face it:  you wouldn't be on this page if you could've figured it out using W3schools or the `R` help menu. Let's start with some super basic stuff. Have you opened the `.xml` file using a browser?  Do that first and see if you can get a sense of how the data is organized.  Second, open the xml file in a linter and see if it's formatted correctly.  (Here's an [example](https://xmllint.com)) I've lost a ton of time double checking code only to figure out that some `.json` was missing a "}".  Finally, open it in a good text editor and beautify the code.  (I use Atom.)  My last project, I "peeled" the outer layers of the onion to get at the data.  It was hacky and lacked reproducibility, but it worked.
 
 ### Definitions
 
@@ -157,6 +161,19 @@ df <- tibble(name = name, price = price)
 df
 ```
 
+## Lists and XML
+
+Lists and xml are similar and easily converted within the `xml2` package.
+
+```{r create-nested-list, echo = T}
+document <- list(root = list(parent = list(child = list(1))))
+xmlDoc <- xml2::as_xml_document(document)
+xml2::xml_structure(xmlDoc)
+```
+
+```{r extract-one}
+xml_find_all(xmlDoc, xpath = ".//child")
+```
 
 ## Conclusion
 
