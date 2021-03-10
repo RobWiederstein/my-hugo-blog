@@ -6,7 +6,7 @@ layout: layouts/recipe/single.html
 draft: false
 image: olive-tapenade.jpg
 caption: Olive Tapenade with Whole Wheat Penne
-summary:  Growing up, my parents used to always let me have the olive out of their martini.  Those halcyon days of yore left me yearning for some olives.  If you're looking to break out of a dull meal selection, this is a wonderful choice.  Castelano and kalmcatta olives with zesty capers, lemon juice and garlic are a feast.
+summary:  Growing up, my parents used to always let me have the olive out of their martini.  Those halcyon days of yore left me yearning for some olives.  If you're looking to break out of a dull meal selection, this is a wonderful choice.  Castelvetrano and kalamata olives with zesty capers, lemon juice and garlic are a feast.
 categories:  [recipe, dinner]
 tags: vegetarian
 source: web
@@ -16,15 +16,15 @@ meal: dinner
 
 # Ingredients
 
-1 bunch curly parsley
-1 lemon
-4 cloves crushed garlic
-1 oz. capers
-6.5 oz. Greek Kalamata pitted black olives
-8.0 oz. Castelvetrano pitted green olives
-1 oz. olive oil
-1/2 cup shredded parmesan cheese
-16 oz. box whole wheat penne pasta
+-   1 bunch curly parsley
+-   1 lemon
+-   4 cloves crushed garlic
+-   1 oz. capers
+-   6.5 oz. Greek Kalamata pitted black olives
+-   8.0 oz. Castelvetrano pitted green olives
+-   1 oz. olive oil
+-   1/2 cup shredded parmesan cheese
+-   16 oz. box whole wheat penne pasta
 
 # Directions
 
