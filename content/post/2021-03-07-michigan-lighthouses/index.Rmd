@@ -9,35 +9,26 @@ tags:
   - leaflet
 layout: layouts/post/single
 draft: no
+bibliography: [packages.bib, ../blog.bib]
+csl: ../ieee-with-url.csl
+link-citations: true
+nocite: |
+  @R-base, @R-blogdown
 image: Big_Sable_Point_Lighthouse-2.jpg
 caption: Big Sable Point Lighthouse.  Photo by James Phelps from USA, CC BY 2.0 via Wikimedia Commons.  
 summary: This post uses the United States Coast Guard data to plot navigation aides.  Many observations were dropped for incomplete data, but those with a dwelling were colored differently.  Buoys were omitted too.
 ---
 
-
 ```{r load-packages, include = F}
-## see http://lcolladotor.github.io/2018/03/08/blogdown-archetype-template/#.YEOC-C2cZOR
+
 ## Load frequently used packages for blog posts
 x <- c(
       'devtools', #for session info
       'ggthemes', #for plots
-      'knitcitations',
-      'BiocStyle',
-      'blogdown'
+      'blogdown',
+      'knitr'
 )
 lapply(x, library, character.only = T)
-
-## Load knitcitations with a clean bibliography
-cleanbib()
-cite_options(hyperlink = 'to.doc', citation_format = 'text', style = 'html')
-
-bib <- c(
-    'BiocStyle' = citation('BiocStyle'),
-    'blogdown' = citation('blogdown')[2],
-    'devtools' = citation('devtools'),
-    'knitcitations' = citation('knitcitations'),
-    'leaflet' = citation('leaflet')
-)
 ```
 
 ```{r set-chunk-options, include = F}
@@ -71,7 +62,10 @@ cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00",
 ```
 
 
-[@BiocStyle]
+```{r}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib") 
+```
 
 ## Overview
 
@@ -79,9 +73,30 @@ This post seeks to identify prominent lighthouses and navigational aids along th
 
 ## Background
 
-The U.S. Coast Guard maintains a "light list" which is published annually.  The light list is an inventory of navigation aides including all lights, sound signals, buoys, daybeacons, and other aids. The data is available in both `.pdf` and `.xml`.  The 2021 data  is for the ninth district known as the "Great Lakes and the St. Lawrence River above the St. Regis River".
+### International Standards
 
-A code sheet is included within the annual light list report.  Of interest for this analysis is the "height" column.  It is defined for the Great Lakes as "height above water from the focal plane of the fixed light to low water datum, listed in feet and meters."
+The International Association of Lighthouse Authorities (IALA) endorsed two maritime buoyage systems in 1977. [@internationalassoc.lighthouseauthoritiesMaritimeBuoyageSystem2021] The systems, designated as "A" and "B", displaced a multitude of country-level systems. The Americas, including the U.S. and Canada, are in Region B.  The greatest difference between the two systems is that in Region B, red markers are on the right whereas in Region A, red makers are on the left.
+
+All navigational aids within IALA have four characteristics: shape, light, color and topmark. A "Lighthouse" is defined as "a tower, or substantial building or structure, erected at a designated geographical location to carry a signal light and provides a significant daymark. It provides a long or medium range light for  identification by night." 
+
+#### Shapes
+
+The standard buoy shapes are cylindrical (can), conical (nun), spherical, pillar and spindle.
+
+#### Color
+
+The colors are either "W" white, "R" red, "G" green, "Y" yellow, "O" orange or "Bu" blue. The default color is white.
+
+#### Light
+
+Navigational aids can be either lit or not.  When lit, the light can be continuous or flashing.  When flashing, the light is further described as isophase or occulting.  The time of the light cycle is often used for further identification.
+
+
+### U.S. Coast Guard Light List
+
+The U.S. Coast Guard  maintains a "light list" which is published annually.  The light list is an inventory of navigation aides including all lights, sound signals, buoys, day beacons, and other aids. The data is available in both `.pdf` and `.xml`.  The 2021 data  is for the ninth district known as the "Great Lakes and the St. Lawrence River above the St. Regis River". [@unitedstatescoastguardWeeklyLightLists2021]
+
+A code sheet is included within the annual light list report.  Of interest for this analysis is the "height" column.  "Height"  is defined for the Great Lakes as "height above water from the focal plane of the fixed light to low water datum, listed in feet and meters."
 
 "Range" is defined as the "nominal range of lighted aids to navigation, in nautical miles, listed by color for sector and passing lights. Nominal Range is not listed for ranges, directional lights, or private aids to navigation."
 
@@ -96,7 +111,7 @@ lapply(x, library, character.only = T)
 
 # Load the Data
 
-The USCG Light List contains in excess of 4500 navigational aids in District 9.  Much of the data is missing, particulary for aids like buoys in secondary channels.  For instance, there would seem to be little need to record the height and range of a channel buoy that is sitting at sea level.  Structures that contained the term "buoy" were eliminated from the dataset.
+The USCG Light List contains in excess of 4500 navigational aids in District 9.  Much of the data is missing, particularly for aids like buoys in secondary channels.  For instance, there would seem to be little need to record the height and range of a channel buoy that is sitting at sea level.  Structures that contained the term "buoy" were eliminated from the data set.
 
 ```{r import-data, echo = T, cache=T}
 #datasets hosted in dropbox
@@ -123,7 +138,7 @@ p
 
 # Leaflet Plot
 
-Latitude and longitude were furnished as part of the dataset.  To add greater detail and utility to the data, a spatial plot was generated.  Light aids where a "dwelling" was included in the structure variable were assigned a different color for the marker. Only twenty of the navigational aids had a dwelling attached. There were no dwellings attached to a light where its height was less than 50 feet.  Additionally, the size of the marker was set based on the range of the light.  The range of the lights was between 3 and 25 nautical miles. The median range was `r median(df$range)`.
+The `leaflet` package in `R` was used to map the navigational aids.  [@R-leaflet]Latitude and longitude were furnished as part of the data set.  To add greater detail and utility to the data, a spatial plot was generated.  Light aids where a "dwelling" was included in the structure variable were assigned a different color for the marker. Only twenty of the navigational aids had a dwelling attached. There were no dwellings attached to a light where its height was less than 50 feet.  Additionally, the size of the marker was set based on the range of the light.  The range of the lights was between 3 and 25 nautical miles. The median range was `r median(df$range)`.
 
 
 ```{r convert-angle-to-degrees, fig.cap="Upper Lake Michigan"}
@@ -150,30 +165,22 @@ m
 
 # Conclusion
 
-The points plotted are from the USCG list and a large portion of the dataset was omitted due to incomplete data.  The residual show broad coverage across the Great Lakes with greater density in places where ports are located, narrow channels or prominent points of land.  Only twenty of the light aids are attached to a dwelling.
+The points plotted are from the USCG list and a large portion of the data set was omitted due to incomplete data.  The residual show broad coverage across the Great Lakes with greater density in places where ports are located, narrow channels or prominent points of land.  Only twenty of the light aids are attached to a dwelling.
 
 
 ## Acknowledgements
 
 This blog post was made possible thanks to:
 
-* `r Biocpkg('BiocStyle')` `r citep(bib[['BiocStyle']])`
-* `r CRANpkg('blogdown')` `r citep(bib[['blogdown']])`
-* `r CRANpkg('devtools')` `r citep(bib[['devtools']])`
-* `r CRANpkg('knitcitations')` `r citep(bib[['knitcitations']])`
-* `r CRANpkg('leaflet')`      `r citep(bib[['leaflet']])`
-
 
 ## References
 
-```{r bibliography, results = 'asis', echo = FALSE, cache = FALSE}
-## Print bibliography
-bibliography(style = 'html')
-```
+<div id="refs"></div>
+
 
 ## Disclaimer
 
-The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimd as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
 
 ## Reproducibility
 
