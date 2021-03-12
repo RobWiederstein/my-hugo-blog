@@ -113,7 +113,12 @@ lapply(x, library, character.only = T)
 
 The USCG Light List contains in excess of 4500 navigational aids in District 9.  Much of the data is missing, particularly for aids like buoys in secondary channels.  For instance, there would seem to be little need to record the height and range of a channel buoy that is sitting at sea level.  Structures that contained the term "buoy" were eliminated from the data set.
 
-```{r import-data, echo = T, cache=T}
+```{r missingness-plot-full-data, fig.cap="Full USCG Light List--Great Lakes Region.", out.width="100%"}
+knitr::include_graphics(path="./missing-data.jpg")
+```
+
+
+```{r import-data, echo = F, cache=T}
 #datasets hosted in dropbox
 input <- "https://dl.dropbox.com/s/lpyt4bxerzpao1b/2021-03-01-uscg-dist-9-light-list-partial.csv?dl=0"
 df <- as_tibble(data.table::fread(input = input))

@@ -6,14 +6,41 @@
     <description>Recent content on Rob Wiederstein - a blog about coding, data and public policy</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 10 Mar 2021 16:25:54 -0600</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Michigan Lighthouses</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/03/07/michigan-lighthouses/</link>
+      <title>Butterscotch Apples</title>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/butterscotch-apples/</link>
+      <pubDate>Wed, 10 Mar 2021 16:25:54 -0600</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/butterscotch-apples/</guid>
+      <description>A fluffy, light and sweet taste is the result of the apples and butterscotch pudding.  It makes for a light dessert option and great dish to take to a gathering.</description>
+    </item>
+    
+    <item>
+      <title>Olive Tapenade with Penne </title>
+      <link>https://keen-noether-7d2e44.netlify.app/recipe/olive-tapenade/</link>
+      <pubDate>Wed, 10 Mar 2021 14:23:51 -0600</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/recipe/olive-tapenade/</guid>
+      <description>Growing up, my parents used to always let me have the olive out of their martini.  Those halcyon days of yore left me yearning for some olives.  If you&amp;rsquo;re looking to break out of a dull meal selection, this is a wonderful choice.  Castelvetrano and kalamata olives with zesty capers, lemon juice and garlic are a feast.</description>
+    </item>
+    
+    <item>
+      <title>Navigational Aid Characteristics in the Great Lakes</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/03/10/nav-aid-characteristics/</link>
+      <pubDate>Wed, 10 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/03/10/nav-aid-characteristics/</guid>
+      <description>There is a wide variety of navigational aids and they are classified according to an international system.</description>
+    </item>
+    
+    <item>
+      <title>Lighthouses of the Great Lakes</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/03/07/great-lakes-lighthouses/</link>
       <pubDate>Sun, 07 Mar 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/03/07/michigan-lighthouses/</guid>
-      <description>This post uses the United States Coast Guard data to plot navigation aides.  Many observations were dropped for incomplete data, but those with a dwelling were colored differently.  Buoys were admitted too.</description>
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/03/07/great-lakes-lighthouses/</guid>
+      <description>This post uses the United States Coast Guard data to plot navigation aides.  Many observations were dropped for incomplete data, but those with a dwelling were colored differently.  Buoys were omitted too.</description>
     </item>
     
     <item>

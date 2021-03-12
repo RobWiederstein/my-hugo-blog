@@ -2,41 +2,40 @@
 title:
 author:
 date:
-layout: layouts/post/single
-draft: false
+slug:
 # tags/categories example: ["A Tag", "Another Tag"]`
-tags:
 categories:
+tags:
+layout: layouts/post/single
+draft: no
+# bib style and .bib in content/post. packages.bib within content/post/my-post
+bibliography: [packages.bib, ../blog.bib]
+# style bib via https://citationstyles.org
+csl: ../ieee-with-url.csl
+#link inline reference to bib
+link-citations: true
+#include packages even if not referenced
+nocite: |
+  @R-base, @R-blogdown
 # image path for social media
 image:
 #10 words or less
-caption: 
+caption:
 summary:  By default, Hugo automatically takes the first 70 words of your content as its summary and stores it into the `.Summary` page variable for use in your templates. You may customize the summary length by setting `summaryLength` in your site configuration *or* you can set it in the front matter.
 ---
 
 
 ```{r load-packages, include = F}
-## see http://lcolladotor.github.io/2018/03/08/blogdown-archetype-template/#.YEOC-C2cZOR
 ## Load frequently used packages for blog posts
-x <- c(
+packages <- c(
       'devtools', #for session info
       'ggthemes', #for plots
-      'knitcitations',
-      'BiocStyle',
       'blogdown'
 )
-lapply(x, library, character.only = T)
-
-## Load knitcitations with a clean bibliography
-cleanbib()
-cite_options(hyperlink = 'to.doc', citation_format = 'text', style = 'html')
-
-bib <- c(
-    'BiocStyle' = citation('BiocStyle'),
-    'blogdown' = citation('blogdown')[2],
-    'devtools' = citation('devtools'),
-    'knitcitations' = citation('knitcitations')
-)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
 ```
 
 ```{r set-chunk-options, include = F}
@@ -69,6 +68,11 @@ library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
 cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
 ```
 
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
 ## R image
 
 
@@ -82,9 +86,6 @@ p <- p + ggtitle("mtcars")
 p
 ```
 
-## Custom image
-
-The easiest option is to use the  `r CRANpkg('blogdown')` _Insert Image_ RStudio addin to add an external image.
 
 ## Overview
 
@@ -106,18 +107,11 @@ The easiest option is to use the  `r CRANpkg('blogdown')` _Insert Image_ RStudio
 
 This blog post was made possible thanks to:
 
-* `r Biocpkg('BiocStyle')` `r citep(bib[['BiocStyle']])`
-* `r CRANpkg('blogdown')` `r citep(bib[['blogdown']])`
-* `r CRANpkg('devtools')` `r citep(bib[['devtools']])`
-* `r CRANpkg('knitcitations')` `r citep(bib[['knitcitations']])`
 
 
 ## References
 
-```{r bibliography, results = 'asis', echo = FALSE, cache = FALSE}
-## Print bibliography
-bibliography(style = 'html')
-```
+<div id="refs"></div>
 
 ## Disclaimer
 
