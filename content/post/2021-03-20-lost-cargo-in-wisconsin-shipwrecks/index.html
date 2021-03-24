@@ -1,0 +1,340 @@
+---
+title: Lost Cargo in Wisconsin Shipwrecks
+author: Rob Wiederstein
+date: '2021-03-20'
+slug: lost-cargo-in-wisconsin-shipwrecks
+categories:
+  - R
+tags:
+  - wordcloud
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-wordcloud, @R-tm, @R-wordcloud2, @R-kableExtra
+image: wordcloud.jpg
+caption: Lumber was the word that appeared with the greatest frequency.
+summary: The Wisconsin Historical Society created a database of shipwrecks in its waters.  The shipwrecks occurred between the years 1679 and 1981.  The total number of observations with location data was 615.  A text field was included describing the cargo of the ships.  A wordcloud of the most frequently used words is created from the text field.
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/htmlwidgets/htmlwidgets.js"></script>
+<link href="{{< blogdown/postref >}}index_files/wordcloud2/wordcloud.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/wordcloud2/wordcloud2-all.js"></script>
+<script src="{{< blogdown/postref >}}index_files/wordcloud2/hover.js"></script>
+<script src="{{< blogdown/postref >}}index_files/wordcloud2-binding/wordcloud2.js"></script>
+<script src="{{< blogdown/postref >}}index_files/kePrint/kePrint.js"></script>
+<link href="{{< blogdown/postref >}}index_files/lightable/lightable.css" rel="stylesheet" />
+
+<div id="TOC">
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#background">Background</a></li>
+<li><a href="#analysis">Analysis</a></li>
+<li><a href="#special-note">Special Note</a></li>
+<li><a href="#references">References</a></li>
+<li><a href="#disclaimer">Disclaimer</a></li>
+<li><a href="#reproducibility">Reproducibility</a></li>
+</ul>
+</div>
+
+<div class="figure" style="text-align: center"><span id="fig:plot-shipwreck-wordcloud"></span>
+<div id="htmlwidget-1" style="width:576px;height:460.8px;" class="wordcloud2 html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"word":["bound","lumber","chicago","wood","cargo","load","tons","light","none","milwaukee","bushels","coal","michigan","bay","iron","cords","feet","loaded","stone","barrels","passengers","ties","buffalo","cedar","ore","company","wisconsin","cars","consigned","time","hardwood","posts","railroad","wheat","corn","freight","ballast","deck","escanaba","salt","board","cord","merchandise","slabs","cordwood","fish","general","supplies","abandoned","crew","flour","full","green","harbor","new","poles","probably","racine","car","carried","carrying","maple","potatoes","sand","shingles","vessel","bark","empty","fruit","hay","hold","laden","lake","one","pick","pig","sturgeon","towing","valued","way","worth","years","york","cleveland","either","feed","gravel","hemlock","island","just","kewaunee","lath","loss","manitowoc","ohio","pier","provisions","sundries","telegraph","two","apples","automobiles","bolts","city","final","headed","including","large","later","menominee","mill","oconto","port","possibly","process","quantity","raft","river","says","shipped","steam","tan","train","washington","abandonment","accident","also","bags","banks","barge","barley","barrel","benton","brick","cargoes","christmas","clay","converted","docks","fire","goods","hundred","kissel","logs","ludington","manistee","marinette","mixed","nash","oats","oswego","owned","owner","plus","pounds","salvaged","schooner","shingle","south","staves","steel","sugar","taken","telephone","therefore","trade","travelling","traverse","trees","typically","unknown","used","varied","vegetables","advance","along","alpena","another","approximately","bars","bayfield","blocks","boxes","boyne","bricks","building","built","bulk","cabin","capacity","captain","carry","cheese","cider","copper","designed","destined","dock","dry","dynamite","early","engaged","fishing","five","hard","hauling","hides","household","john","joseph","kitchen","lighten","lighter","limestone","log","lost","mainly","manistees","many","miscellaneous","nails","nets","nine","normally","number","oak","often","oil","people","phoenix","picked","pine","plaster","pork","prior","red","report","rock","rocks","rollin","say","scows","several","ships","slab","soft","sources","spent","superior","supply","torch","trim","tug","twenty","unloaded","upper","vehicles","whiskey","whitefish","whitehall","wrecked","abound","actuality","add","added","aggregate","alabaster","alert","allegedly","allouez","already","although","america","american","amount","amsterdam","anthracite","apostles","armour","arthur","ashland","ashtabula","ayer","bad","badly","bag","baileys","baker","balance","balast","bales","bargernat","barges","barringer","baskets","basswood","batchelder","bathtubs","bayfieldrnpersistent","beans","beefand","big","bird","bituminous","black","blacksmiths","boards","boat","boilers","bond","box","boxed","broker","brothers","bumboat","bundles","burnham","bury","bushel","butler","butter","buttons","calf","camp","camps","canned","canvas","capable","capsized","carpenter","casings","castings","cement","chains","charlevoix","cheboygan","chicagornrna","christy","claimed","clear","cleared","coalbound","coalrncapacity","coffeehardware","coming","comstock","concerning","considerable","consorts","continental","contracting","cooperage","corncorn","county","covered","cow","crates","creek","crewmen","cribs","cubic","cut","dale","dan","daughter","davidson","dealers","december","decks","definitely","delivered","delivering","desold","detroit","diversrnthe","doak","dollars","door","doors","downbound","dropped","dulurth","duluthsuperior","dutchmans","east","eight","ella","ellison","ellisons","elm","emigrents","engine","engines","enroute","equipment","erie","evenson","ewing","exact","expected","expositor","extantrncoal","factor","factory","fairfield","fairport","farm","farmers","fifteen","fiftyfive","finished","fishermen","fishery","flax","following","forest","form","forty","foundry","francis","freightand","freighter","freightrnfinal","fuel","furniture","furs","garden","gas","gasoline","gates","gazette","generally","george","gilbert","glass","gold","good","goodell","goodssundries","grain","grand","grapes","grapesbound","griffin","grits","groceries","gross","guest","hair","handful","hanson","happened","hayes","heavily","help","helvetia","hibbard","hibbards","high","hildstrong","hitt","hog","hogs","holland","hooks","hoops","horn","horses","horsetail","hull","ida","illinois","immigrants","insured","items","iver","iwatson","jacksonport","jacksonports","jacobsville","james","joliet","jordon","joys","june","keeping","keller","kelly","kenosha","kirby","knees","lacrosse","last","lawson","leaking","least","leathem","leave","left","leland","lift","lightrnnormally","likely","list","livestock","loaderd","loading","loads","local","locals","lorain","louisiana","lumberrnlater","luttle","machine","malone","manistique","manufactured","masonville","materials","mauntee","maxwell","mchigan","mcneil","meal","members","mention","mercanhadise","merchandize","mess","michiganrn","michiganrnwhen","midland","milk","milwaukeewestern","miners","miskegon","miwaukee","moe","molasses","monistique","montreal","mosheks","mostly","motor","motors","mueller","muskegon","nathan","nearly","needles","never","ninety","noc","norma","normal","north","northern","norway","nothing","obtain","obviously","officers","oglebay","ontario","order","orernat","originally","others","otherwise","outboard","oxen","package","packages","pankratz","papers","partial","partially","particular","parts","passenger","peas","pelts","pensaukee","peshtigo","pestigo","pharmaceticals","pickets","pierport","pigeons","piled","pipes","plankinton","plattner","plumbing","point","poor","portage","post","preparing","press","presumably","previously","printing","products","property","proven","pulpwood","pump","purchased","pure","purposely","quarry","rail","rails","railway","ramsey","rated","record","refurbishing","removed","reports","resumption","return","reynolds","rigging","rnfull","rnselfunloading","road","rods","roffers","rubble","rumors","running","rye","sacks","sandstone","sandy","sashes","saved","saws","scheduled","scott","sea","season","seasoned","secret","seed","set","seven","sewing","sheboygan","sheep","shipper","shore","short","silver","since","sink","sinking","sixty","small","smith","smoking","somewhat","sons","space","speculated","squared","stationary","steambarge","steamer","steerage","stephenson","steward","stops","stores","street","stripped","strips","strongbox","sunk","tackle","tar","theodore","thomas","three","timber","times","tool","toronto","total","towed","toys","transferred","transport","traveling","travers","trip","tubesaluminum","turks","twentythree","twentytwo","unholy","uninsured","unrigged","veneer","verified","voyage","waiting","walender","ware","warrant","warren","weeks","weight","wells","went","west","wheatrnthe","wheels","white","wife","wilcox","wild","willis","windsor","winter","within","without","wooden","works","yacht","yards","year"],"freq":[113,104,65,59,51,42,42,41,38,36,31,30,29,27,26,25,24,23,22,18,18,18,17,17,17,16,15,14,14,14,13,13,13,13,12,12,11,11,11,11,10,10,10,10,9,9,9,9,8,8,8,8,8,8,8,8,8,8,7,7,7,7,7,7,7,7,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"fontFamily":"Segoe UI","fontWeight":"normal","color":"random-dark","minSize":0,"weightFactor":1.5929203539823,"backgroundColor":"white","gridSize":15,"minRotation":-0.785398163397448,"maxRotation":0.785398163397448,"shuffle":true,"rotateRatio":0.4,"shape":"circle","ellipticity":0.65,"figBase64":null,"hover":null},"evals":[],"jsHooks":{"render":[{"code":"function(el,x){\n                        console.log(123);\n                        if(!iii){\n                          window.location.reload();\n                          iii = False;\n\n                        }\n  }","data":null}]}}</script>
+<p class="caption">
+Figure 1: A wordcloud of the most frequently used words in the cargo description.
+</p>
+</div>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>The data for this project comes from <a href="wisconsinshipwrecks.org">wisconsinshipwrecks.org</a>. Once put into a “tidy” format, there were twenty-nine variables.<span class="citation"><a href="#ref-wisconsinhistoricalsocietyWisconsinShipwrecks2014" role="doc-biblioref">[1]</a></span> One of the more interesting–and probably difficult to construct for the researchers–was a field entitled <code>cargo_description</code>. I was unsure what to do with it, but there were so much narrative that provides a look into shipping in the late 1800s and early 1900s.</p>
+</div>
+<div id="background" class="section level2">
+<h2>Background</h2>
+<p>This post, <a href="https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a">How to Generate Word Clouds in R</a>, was successfully followed and resulted in the ouput above. It is rare for me to be able to duplicate the methodology of another post without any problems, but it occurred here. I ended up using the <code>wordcloud2</code> package to create the output which is a widget.</p>
+</div>
+<div id="analysis" class="section level2">
+<h2>Analysis</h2>
+<p>The different elements in the <code>cargo_description</code> file contained brief descriptions of the contents of each ship and many were either blank or “NA.” 76.42% of the observations contained some text. The <code>cargo_description</code> variable was arranged in descending order by the number of characters within the field. The five longest are displayed below:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+names
+</th>
+<th style="text-align:right;">
+sunk
+</th>
+<th style="text-align:left;">
+cargo_description
+</th>
+<th style="text-align:right;">
+length
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Manistee (1867)
+</td>
+<td style="text-align:right;">
+1883
+</td>
+<td style="text-align:left;">
+10,000 bushels of oats, 90 tons of mill feed, 1,254 barrels of flour, 9 tons of furniture and mercanhadise, a large quantity doors and sashes, and a handful of passengers who were transferred to the Dulurth before she left Bayfield.
+"“Persistent rumors concerning the Manistee’s”“other”" cargo abound, and warrant mention. On board there were allegedly 100 tons of pure copper bars, plus a large quantity of gold and silver in the ship’s strongbox. The weight of the copper, some locals speculated, was obviously a factor in the Manistee’s list - if that is what happened. This "“secret”" cargo was never definitely proven."" The Unholy Apostles by James Keller.
+</td>
+<td style="text-align:right;">
+668
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lakeland (1887)
+</td>
+<td style="text-align:right;">
+1924
+</td>
+<td style="text-align:left;">
+Nash, Kissel and one Rollin Motor car and a stationary steam engine. At the time of the sinking the exact number of vehicles was not clear. Reports varied from "“40 Nash and Kissel cars”" to 50 automobiles to "“her decks were full of new automobiles”". Other sources claimed that there was between 19 and 50 vehicles. In actuality, at least twenty-two 1925 Nash, Kissel and the one Rollin cars have been verified by divers.
+The freighter was capable of carrying 250 cars. Her gross carrying capacity was rated at 1,878.1 tons; 1,773.61 under deck and 94.49 tons within the cabin space on the upper deck.
+</td>
+<td style="text-align:right;">
+611
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Milwaukee (1903)
+</td>
+<td style="text-align:right;">
+1929
+</td>
+<td style="text-align:left;">
+Passengers and 25 loaded train cars. The train cars were loaded with the following: 2 train cars of lumber, 3 cars of barley, 7 cars of feed, 2 cars of peas, 1 car of grits, 1 car of corn, 3 cars of salt, 1 car of butter, 1 car of veneer, 2 cars of bathtubs, 1 car of cheese, and 1 car with 3 automobiles. The cargo was valued at $100,000 and the train cars themselves were valued at $63,500.
+</td>
+<td style="text-align:right;">
+395
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Phoenix (1845)
+</td>
+<td style="text-align:right;">
+1847
+</td>
+<td style="text-align:left;">
+When the Phoenix cleared Buffalo she had on board 23 officers and crewmen, 186 passengers (mainly immigrants from Holland), household goods, molasses, sugar, coffee,hardware and chains destined for Chicago. The Phoenix possibly could have added some American passengers at her scheduled stops at Cleveland and Detroit. Record keeping was poor and the ship’s papers were lost in the fire.
+</td>
+<td style="text-align:right;">
+389
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+George Hanson (1847)
+</td>
+<td style="text-align:right;">
+1857
+</td>
+<td style="text-align:left;">
+The vessel was either light with only stone ballast bound from Chicago to Dutchman’s Point (northern Illinois) for a cargo of wood or the George Hanson had already picked up a cargo of lumber from either Kenosha or Racine when she capsized.
+</td>
+<td style="text-align:right;">
+240
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="special-note" class="section level2">
+<h2>Special Note</h2>
+<p>The “Phoenix” bears the infamous record of most fatalities in the Wisconsin shipwrecks database. Total deaths in the shipwreck database are 823. To understand the magnitude the tradgedy, the chart below shows the number of <code>lives</code> lost by ship. According to a wikipedia <a href="https://en.wikipedia.org/wiki/SS_Phoenix_(1845)">article</a>, the number of lives lost on the Phoenix was estimated to be much higher than the 190 reported.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+names
+</th>
+<th style="text-align:right;">
+sunk
+</th>
+<th style="text-align:right;">
+lives
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Phoenix (1845)
+</td>
+<td style="text-align:right;">
+1847
+</td>
+<td style="text-align:right;">
+190
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Niagara (1845)
+</td>
+<td style="text-align:right;">
+1856
+</td>
+<td style="text-align:right;">
+60
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Vernon (1886)
+</td>
+<td style="text-align:right;">
+1887
+</td>
+<td style="text-align:right;">
+48
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Milwaukee (1903)
+</td>
+<td style="text-align:right;">
+1929
+</td>
+<td style="text-align:right;">
+46
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Toledo (1854)
+</td>
+<td style="text-align:right;">
+1856
+</td>
+<td style="text-align:right;">
+40
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-wisconsinhistoricalsocietyWisconsinShipwrecks2014" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">Wisconsin Historical Society, <span>“Wisconsin <span>Shipwrecks</span>.”</span> 2014 [Online]. Available: <a href="https://geodata.wisc.edu/catalog/35EC573E-282C-40DD-8512-CE14E033F989">https://geodata.wisc.edu/catalog/35EC573E-282C-40DD-8512-CE14E033F989</a></div>
+</div>
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2020 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+</div>
+<div id="ref-R-tm" class="csl-entry">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">I. Feinerer and K. Hornik, <em>Tm: Text mining package</em>. 2020 [Online]. Available: <a href="http://tm.r-forge.r-project.org/">http://tm.r-forge.r-project.org/</a></div>
+</div>
+<div id="ref-R-wordcloud" class="csl-entry">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">I. Fellows, <em>Wordcloud: Word clouds</em>. 2018 [Online]. Available: <a href="https://CRAN.R-project.org/package=wordcloud">https://CRAN.R-project.org/package=wordcloud</a></div>
+</div>
+<div id="ref-R-wordcloud2" class="csl-entry">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">D. Lang and G. Chien, <em>wordcloud2: Create word cloud by htmlwidget</em>. 2018 [Online]. Available: <a href="https://github.com/lchiffon/wordcloud2">https://github.com/lchiffon/wordcloud2</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level2">
+<h2>Disclaimer</h2>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level2">
+<h2>Reproducibility</h2>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value                       
+ version  R version 3.6.3 (2020-02-29)
+ os       macOS Catalina 10.15.7      
+ system   x86_64, darwin15.6.0        
+ ui       X11                         
+ language (EN)                        
+ collate  en_US.UTF-8                 
+ ctype    en_US.UTF-8                 
+ tz       America/Chicago             
+ date     2021-03-20                  
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version date       lib source        
+ assertthat    0.2.1   2019-03-21 [1] CRAN (R 3.6.0)
+ blogdown    * 1.2     2021-03-04 [1] CRAN (R 3.6.3)
+ bookdown      0.21    2020-10-13 [1] CRAN (R 3.6.3)
+ bslib         0.2.4   2021-01-25 [1] CRAN (R 3.6.2)
+ cachem        1.0.4   2021-02-13 [1] CRAN (R 3.6.2)
+ callr         3.5.1   2020-10-13 [1] CRAN (R 3.6.2)
+ cli           2.3.1   2021-02-23 [1] CRAN (R 3.6.3)
+ codetools     0.2-18  2020-11-04 [1] CRAN (R 3.6.2)
+ colorspace    2.0-0   2020-11-11 [1] CRAN (R 3.6.2)
+ crayon        1.4.1   2021-02-08 [1] CRAN (R 3.6.2)
+ DBI           1.1.1   2021-01-15 [1] CRAN (R 3.6.2)
+ desc          1.3.0   2021-03-05 [1] CRAN (R 3.6.3)
+ devtools    * 2.3.2   2020-09-18 [1] CRAN (R 3.6.2)
+ digest        0.6.27  2020-10-24 [1] CRAN (R 3.6.2)
+ dplyr         1.0.5   2021-03-05 [1] CRAN (R 3.6.3)
+ ellipsis      0.3.1   2020-05-15 [1] CRAN (R 3.6.2)
+ evaluate      0.14    2019-05-28 [1] CRAN (R 3.6.0)
+ fansi         0.4.2   2021-01-15 [1] CRAN (R 3.6.2)
+ farver        2.1.0   2021-02-28 [1] CRAN (R 3.6.3)
+ fastmap       1.1.0   2021-01-25 [1] CRAN (R 3.6.2)
+ fs            1.5.0   2020-07-31 [1] CRAN (R 3.6.2)
+ generics      0.1.0   2020-10-31 [1] CRAN (R 3.6.2)
+ ggplot2     * 3.3.3   2020-12-30 [1] CRAN (R 3.6.2)
+ ggthemes    * 4.2.4   2021-01-20 [1] CRAN (R 3.6.2)
+ glue          1.4.2   2020-08-27 [1] CRAN (R 3.6.2)
+ gtable        0.3.0   2019-03-25 [1] CRAN (R 3.6.0)
+ highr         0.8     2019-03-20 [1] CRAN (R 3.6.0)
+ htmltools     0.5.1.1 2021-01-22 [1] CRAN (R 3.6.2)
+ jquerylib     0.1.3   2020-12-17 [1] CRAN (R 3.6.2)
+ jsonlite      1.7.2   2020-12-09 [1] CRAN (R 3.6.2)
+ knitr         1.31    2021-01-27 [1] CRAN (R 3.6.2)
+ labeling      0.4.2   2020-10-20 [1] CRAN (R 3.6.2)
+ lifecycle     1.0.0   2021-02-15 [1] CRAN (R 3.6.2)
+ magrittr      2.0.1   2020-11-17 [1] CRAN (R 3.6.2)
+ memoise       2.0.0   2021-01-26 [1] CRAN (R 3.6.2)
+ munsell       0.5.0   2018-06-12 [1] CRAN (R 3.6.0)
+ pillar        1.5.1   2021-03-05 [1] CRAN (R 3.6.3)
+ pkgbuild      1.2.0   2020-12-15 [1] CRAN (R 3.6.2)
+ pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 3.6.0)
+ pkgload       1.2.0   2021-02-23 [1] CRAN (R 3.6.3)
+ prettyunits   1.1.1   2020-01-24 [1] CRAN (R 3.6.0)
+ processx      3.4.5   2020-11-30 [1] CRAN (R 3.6.2)
+ ps            1.6.0   2021-02-28 [1] CRAN (R 3.6.3)
+ purrr         0.3.4   2020-04-17 [1] CRAN (R 3.6.2)
+ R6            2.5.0   2020-10-28 [1] CRAN (R 3.6.2)
+ remotes       2.2.0   2020-07-21 [1] CRAN (R 3.6.2)
+ rlang         0.4.10  2020-12-30 [1] CRAN (R 3.6.2)
+ rmarkdown     2.7     2021-02-19 [1] CRAN (R 3.6.3)
+ rprojroot     2.0.2   2020-11-15 [1] CRAN (R 3.6.2)
+ sass          0.3.1   2021-01-24 [1] CRAN (R 3.6.2)
+ scales        1.1.1   2020-05-11 [1] CRAN (R 3.6.2)
+ sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.6.0)
+ stringi       1.5.3   2020-09-09 [1] CRAN (R 3.6.2)
+ stringr       1.4.0   2019-02-10 [1] CRAN (R 3.6.0)
+ testthat      3.0.2   2021-02-14 [1] CRAN (R 3.6.2)
+ tibble        3.1.0   2021-02-25 [1] CRAN (R 3.6.3)
+ tidyselect    1.1.0   2020-05-11 [1] CRAN (R 3.6.2)
+ usethis     * 2.0.1   2021-02-10 [1] CRAN (R 3.6.2)
+ utf8          1.1.4   2018-05-24 [1] CRAN (R 3.6.0)
+ vctrs         0.3.6   2020-12-17 [1] CRAN (R 3.6.2)
+ withr         2.4.1   2021-01-26 [1] CRAN (R 3.6.2)
+ xfun          0.21    2021-02-10 [1] CRAN (R 3.6.2)
+ yaml          2.2.1   2020-02-01 [1] CRAN (R 3.6.0)
+
+[1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library</code></pre>
+</div>

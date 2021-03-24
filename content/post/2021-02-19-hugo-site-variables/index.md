@@ -7,7 +7,10 @@ categories:
   - hugo
   - go
 tags: []
-draft: true
+draft: no
+image: hugo-logo.jpg
+caption: Hugo is the static web site generator paired with blogdown.
+summary: Inspecting a hugo website will reveal templates dependent on variables.  You have to have an understanding of what variables are available and under what circumstances.  Careful reading of hugo documentation is helpful, but here are a few tips.
 ---
 
 `hugo` has three kinds of variables:  (1) resident or "built-in" global variables, (2) defined global variables in the `config` file and (3) page variables.

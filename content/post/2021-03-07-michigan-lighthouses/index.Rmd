@@ -146,7 +146,7 @@ p
 The `leaflet` package in `R` was used to map the navigational aids.  [@R-leaflet]Latitude and longitude were furnished as part of the data set.  To add greater detail and utility to the data, a spatial plot was generated.  Light aids where a "dwelling" was included in the structure variable were assigned a different color for the marker. Only twenty of the navigational aids had a dwelling attached. There were no dwellings attached to a light where its height was less than 50 feet.  Additionally, the size of the marker was set based on the range of the light.  The range of the lights was between 3 and 25 nautical miles. The median range was `r median(df$range)`.
 
 
-```{r convert-angle-to-degrees, fig.cap="Upper Lake Michigan"}
+```{r leaflet-lighthouse-map, fig.cap="Upper Lake Michigan"}
 dwellingCol <- colorFactor(palette = c("#FFC20A", "#0C7BDC"), df$dwelling)
 library(leaflet)
 m <- leaflet() %>%

@@ -1,0 +1,22 @@
+---
+title: Shipwrecks of Wisconsin
+author: Rob Wiederstein
+date: '2021-03-19'
+slug: shipwrecks-of-wisconsin
+runtime: shiny
+draft: false
+categories:
+  - R
+tags:
+  - leaflet
+---
+
+
+```{r load-libraries, include = FALSE}
+
+library(shiny)
+library(widgetframe)
+
+```
+
+<iframe height="800" width="100%" frameborder="no" src="https://rob-wiederstein.shinyapps.io/shipwrecks_wisconsin/"> </iframe>

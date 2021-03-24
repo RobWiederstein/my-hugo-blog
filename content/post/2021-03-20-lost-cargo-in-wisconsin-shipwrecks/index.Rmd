@@ -1,0 +1,168 @@
+---
+title: Lost Cargo in Wisconsin Shipwrecks
+author: Rob Wiederstein
+date: '2021-03-20'
+slug: lost-cargo-in-wisconsin-shipwrecks
+categories:
+  - R
+tags:
+  - wordcloud
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-wordcloud, @R-tm, @R-wordcloud2, @R-kableExtra
+image: wordcloud.jpg
+caption: Lumber was the word that appeared with the greatest frequency.
+summary: The Wisconsin Historical Society created a database of shipwrecks in its waters.  The shipwrecks occurred between the years 1679 and 1981.  The total number of observations with location data was 615.  A text field was included describing the cargo of the ships.  A wordcloud of the most frequently used words is created from the text field.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown',
+      'magrittr',
+      'tibble',
+      'webshot'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
+library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+```{r build-wordcloud, include  = F}
+library(wordcloud)
+library(wordcloud2)
+library(tm)
+#import
+input <- "https://dl.dropbox.com/s/fexs231zcfrc5mv/2021-03-12-wi-historical-society-shipwrecks-full.csv?dl=0"
+#Create a vector containing only the text
+text <- input %>%
+        data.table::fread(select = c("names", "sunk", "cargo_description")) %>%
+        tibble()
+# Create a corpus
+docs <- Corpus(VectorSource(text$cargo_description))
+docs1 <- docs %>%
+        tm_map(removeNumbers) %>%
+        tm_map(removePunctuation) %>%
+        tm_map(stripWhitespace) %>%
+        tm_map(content_transformer(tolower)) %>%
+        tm_map(removeWords, stopwords("english"))
+#build matrix with frequency
+dtm <- TermDocumentMatrix(docs1)
+matrix <-as.matrix(dtm)
+words <- sort(rowSums(matrix), decreasing = T)
+df <- data.frame(word = names(words), freq = words)
+
+```
+
+```{r plot-shipwreck-wordcloud, echo=F, fig.align="center", fig.cap = "A wordcloud of the most frequently used words in the cargo description."}
+set.seed(1234)
+wordcloud2(data = df,
+           size = 1,
+           gridSize = 15,
+           fontWeight = "normal"
+           )
+```
+
+
+## Overview
+
+The data for this project comes from [wisconsinshipwrecks.org](wisconsinshipwrecks.org). Once put into a "tidy" format, there were twenty-nine variables.[@wisconsinhistoricalsocietyWisconsinShipwrecks2014]  One of the more interesting--and probably difficult to construct for the researchers--was a field entitled `cargo_description`.  I was unsure what to do with it, but there were so much narrative that provides a look into shipping in the late 1800s and early 1900s.  
+
+## Background
+
+This post, [How to Generate Word Clouds in R](https://towardsdatascience.com/create-a-word-cloud-with-r-bde3e7422e8a), was successfully followed and resulted in the ouput above.  It is rare for me to be able to duplicate the methodology of another post without any problems, but it occurred here.  I ended up using the `wordcloud2` package to create the output which is a widget.
+
+## Analysis
+
+The different elements in the `cargo_description` file contained brief descriptions of the contents of each ship and many were either blank or "NA".  `r paste0(round(text$cargo_description %>% na.omit() %>% length()/length(text$cargo_description) * 100, 2), "%")` of the observations contained some text. The `cargo_description` variable was arranged in descending order by the number of characters within the field.  The five longest are displayed below:
+
+```{r table-cargo-desc-top-5}
+library(dplyr)
+text$length <- nchar(text$cargo_description)
+text %>%
+        arrange(-length) %>%
+        slice_head(., n = 5) %>%
+        kableExtra::kbl()
+```
+## Special Note
+
+```{r ship-deaths}
+input <- "https://dl.dropbox.com/s/fexs231zcfrc5mv/2021-03-12-wi-historical-society-shipwrecks-full.csv?dl=0"
+#Create a vector containing only the text
+deaths <- input %>%
+        data.table::fread(select = c("names", "sunk", "lives")) %>%
+        tibble()
+deaths$lives <- as.integer(deaths$lives)
+
+```
+
+The "Phoenix" bears the infamous record of most fatalities in the Wisconsin shipwrecks database.  Total deaths in the shipwreck database are `r sum(deaths$lives, na.rm = T)`. To understand the magnitude the tradgedy, the chart below shows the number of  `lives` lost by ship. According to a wikipedia [article](https://en.wikipedia.org/wiki/SS_Phoenix_(1845)), the number of lives lost on the Phoenix was estimated to be much higher than the 190 reported.
+
+```{r table-ship-deaths, fig.align="center"}
+deaths %>%
+        arrange(-lives) %>%
+        slice_head(., n = 5) %>%
+        kableExtra::kbl() %>%
+        kableExtra::kable_styling(full_width = T)
+```
+
+## References
+
+<div id="refs"></div>
+
+## Disclaimer
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+## Reproducibility
+
+```{r reproducibility, echo = FALSE}
+## Reproducibility info
+options(width = 120)
+session_info()
+```

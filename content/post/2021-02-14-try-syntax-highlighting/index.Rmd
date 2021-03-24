@@ -7,14 +7,26 @@ categories:
   - R
 tags:
   - R Markdown
-description: A blog post on coding must use code highlighting to make it easier on readers to grasp key concepts.
-images:
-  - 2021/02/14/try-syntax-highlighting/stairwell.jpg
+caption: Like the handrails on a staircase, code highlighting makes it easier for readers to follow the path.
+image: stairwell.jpg
 draft: true
+summary: Code highlighting, when done well, is subtle.  It allows for readers to distinguish between key parts of the code like text and numbers.  The easier it is to read, the easier it is to find potential mistakes.
 ---
 
 ```{r load-libraries, include=F}
 library(ggplot2)
+```
+# Introduction
+The highlighting for the blog is set in its `.yaml` configuration file and it closely matches the [code](https://bookdown.org/yihui/blogdown/themes.html) in the `blogdown` book.
+
+```
+ highlightjsCDN: //cdnjs.cloudflare.com/ajax/libs
+  highlightjsLang:
+    - r
+    - yaml
+    - go
+  highlightjsTheme: github
+  highlightjsVersion: 9.12.0
 ```
 
 # Example 1

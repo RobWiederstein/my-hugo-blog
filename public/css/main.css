@@ -129,7 +129,7 @@ code {
   text-decoration: none;
   color: inherit;
   border-bottom: 2px solid #b3c1ff;
-  background: transparent;
+  /*background: transparent;*/
   transition: background 150ms ease;
 }
 

@@ -29,8 +29,7 @@ flowchartDiagrams:
 sequenceDiagrams:
   enable: no
   options: ''
-images:
-  - 2021/02/11/ten-things-to-remember-with-blogdown/hugo-blogdown-1200-630px.jpg
+image: hugo-blogdown-1200-630px.jpg
 draft: true
 ---
 
@@ -52,10 +51,10 @@ draft: true
 <div id="ten-tips" class="section level1">
 <h1>Ten Tips</h1>
 <ol style="list-style-type: decimal">
-<li><p>Use <code>blogdown::serve_site()</code> to serve your site. Do not use <code>hugo serve</code> from the command line. The reason is because <code>blogdown</code> knows what to do with files that have the <code>.Rmd</code> extension whereas <code>hugo</code> does not. Also, for those used to working with <code>.Rmd</code> and constantly pushing the “knit” button, don’t do that either.</p></li>
+<li><p>Use <code>blogdown::serve_site()</code> to serve your site. Do not use <code>hugo serve</code> from the command line. The reason is because <code>blogdown</code> knows what to do with files that have the <code>.Rmd</code> extension whereas <code>hugo</code> does not. Also, for those used to working with <code>.Rmd</code> and instinctively pushing the “knit” button, don’t do that either.</p></li>
 <li><p>You have to learn the directory structure to <code>hugo</code>. Sorry, but you knew that was coming and it is not especially complex. See the documentation <a href="https://gohugo.io/getting-started/directory-structure/">here</a>.</p></li>
-<li><p>The <code>themes</code> folder is where your chosen theme resides. It provides the formatting for your site. You can find a theme on github by using the tag <code>hugo-theme</code>. Choose the simplest template to accomplish your objective and one that has a lot of stars or forks. Xie recommends only looking for repos that have been updated within the past year. Investigate widely, choose wisely.</p></li>
-<li><p>The <code>config</code> file in the root directory is probably where you’ll start. It is formatted either in <code>.yaml</code>, <code>toml</code> or <code>json</code>. Review the file extremely carefully so you have a knowledge of the options that can be configured.</p></li>
+<li><p>The <code>themes</code> folder is where your chosen theme resides. It provides the formatting for your site. You can find a theme on github by using the tag <code>hugo-theme</code>. Choose the simplest template to accomplish your objective and one that has a lot of stars or forks. Xie recommends only looking for repos that have been updated within the past year. Investigate widely, choose wisely. (I went with the default after experimenting with about 10 different themes.)</p></li>
+<li><p>The <code>config</code> file in the root directory is probably where you’ll start. It is formatted either in <code>.yaml</code>, <code>.toml</code> or <code>.json</code>. Review the file extremely carefully so you have a knowledge of the options that can be configured.</p></li>
 <li><p>You can find help in the usual places: StackOverflow and Github. Xie asked in the book to post help questions to StackOverflow rather than open an issue on Github. Remember to use the tag <code>[blogdown]</code> when searching on StackOverflow. Also, <code>hugo</code> has a community <a href="https://discourse.gohugo.io">forum</a> too.</p></li>
 <li><p>Images just about drove me crazy. There’s lots of posts telling to put the image in the <code>static</code> directory. What many of those posts forget is that <code>hugo</code> drops the <code>static</code> when it creates the site. So my path was eternally wrong. (I’m talking about coding not salvation.) Here’s the <a href="https://discourse.gohugo.io/t/image-path/1721">post</a> that finally made the point clear.</p></li>
 <li><p>Set the global defaults. At the very least, author and markdown option should be set with <code>options(blogdown.ext = '.Rmd', blogdown.author = 'John Doe')</code>. Details can be found in the blogdown book.</p></li>
