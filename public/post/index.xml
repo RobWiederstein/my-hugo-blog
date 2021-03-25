@@ -13,7 +13,7 @@
       <pubDate>Sat, 20 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>https://keen-noether-7d2e44.netlify.app/2021/03/20/lost-cargo-in-wisconsin-shipwrecks/</guid>
-      <description>By default, Hugo automatically takes the first 70 words of your content as its summary and stores it into the &lt;code&gt;.Summary&lt;/code&gt; page variable for use in your templates. You may customize the summary length by setting &lt;code&gt;summaryLength&lt;/code&gt; in your site configuration &lt;em&gt;or&lt;/em&gt; you can set it in the front matter.</description>
+      <description>The Wisconsin Historical Society created a database of shipwrecks in its waters.  The shipwrecks occurred between the years 1679 and 1981.  The total number of observations with location data was 615.  A text field was included describing the cargo of the ships.  A wordcloud of the most frequently used words is created from the text field.</description>
     </item>
     
     <item>
@@ -62,21 +62,12 @@
     </item>
     
     <item>
-      <title>Hello World One</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/02/27/hello-world-one/</link>
-      <pubDate>Sat, 27 Feb 2021 00:00:00 +0000</pubDate>
+      <title>HUGO Variables</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/02/19/hugo-variables/</link>
+      <pubDate>Fri, 19 Feb 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/27/hello-world-one/</guid>
-      <description>A story about a mercedes.</description>
-    </item>
-    
-    <item>
-      <title>Hello World Two</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/02/27/hello-world-two/</link>
-      <pubDate>Sat, 27 Feb 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/27/hello-world-two/</guid>
-      <description>&lt;strong&gt;This is a post&lt;/strong&gt;.</description>
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/19/hugo-variables/</guid>
+      <description>Inspecting a hugo website will reveal templates dependent on variables.  You have to have an understanding of what variables are available and under what circumstances.  Careful reading of hugo documentation is helpful, but here are a few tips.</description>
     </item>
     
     <item>
@@ -85,7 +76,7 @@
       <pubDate>Mon, 15 Feb 2021 00:00:00 +0000</pubDate>
       
       <guid>https://keen-noether-7d2e44.netlify.app/2021/02/15/insert_htmlwidget/</guid>
-      <description>Load Libraries Insert Data Tables or DT Widget Insert Leaflet Widget Insert Sigma JS Insert Plotly Widget   There were two main reasons for moving to blogdown. First, I needed a blogging platform that moved seemlessly between R code and its output. It had to be easy to show the connection between the code that was used and its effect on the data.</description>
+      <description>Blogdown &amp;amp; Hugo allow for the insertion of html widgets like leaflet. This is a huge time saver because one doesn&amp;rsquo;t need to learn java and can instead stay within the &lt;code&gt;R&lt;/code&gt; environment.</description>
     </item>
     
   </channel>

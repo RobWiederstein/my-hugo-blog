@@ -164,36 +164,6 @@
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/categories/education/</loc>
-    <lastmod>2021-02-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/categories/go/</loc>
-    <lastmod>2021-02-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/27/hello-world-one/</loc>
-    <lastmod>2021-02-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/27/hello-world-two/</loc>
-    <lastmod>2021-02-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/igraph/</loc>
-    <lastmod>2021-02-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/rmarkdown/</loc>
-    <lastmod>2021-02-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://keen-noether-7d2e44.netlify.app/recipe/gin-and-raisins/</loc>
     <lastmod>2021-02-26T00:00:00+00:00</lastmod>
   </url>
@@ -211,6 +181,16 @@
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/recipe/kitchen-sink-soup/recipe/</loc>
     <lastmod>2021-02-21T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/categories/go/</loc>
+    <lastmod>2021-02-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/19/hugo-variables/</loc>
+    <lastmod>2021-02-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -255,6 +235,16 @@
   
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/2021/02/15/insert_htmlwidget/</loc>
+    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/tags/plotly/</loc>
+    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/tags/sigmajs/</loc>
     <lastmod>2021-02-15T00:00:00+00:00</lastmod>
   </url>
   

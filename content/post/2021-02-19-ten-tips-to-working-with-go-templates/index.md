@@ -1,14 +1,17 @@
 ---
-title: Ten Tips to Working with Go Templates
+title: Primer on Working with Go Templates
 author: Rob Wiederstein
 date: '2021-02-19'
-slug: ten-tips-to-working-with-go-templates
+slug: primer-on-working-with-go-templates
 categories:
   - go
   - hugo
 tags: []
-draft: true
+draft: no
 toc: yes
+image: go-logo.jpg
+caption: Go is the templating language behind HUGO.
+summary:  Knowing a little bit about the go templating language will help you understand the syntax of layout templates in HUGO.
 ---
 
 {{< table_of_contents >}}
@@ -16,7 +19,7 @@ toc: yes
 # Introduction
 
 `hugo` templates are based on the `go` language, but are derived from the go template library.  It is simple and relies on only basic logic.
-`go` templates are html documents whose variables and functions are accessible via `{{-}}`.
+`go` templates are html documents whose variables and functions are accessible via `{{-}}`. For purposes of the blog, the templates are contained in the `layout` folder.
 
 
 ## Curly Brackets
@@ -65,27 +68,6 @@ Global, pages, parameters, configured or set.
 {{ $city:= "Dallas"}}
 ```
 
-## .RelPermalink
-
-The relative permanent link for this page.
-
-## .Pages
-
-A collection of associated pages. This value will be nil within the context of regular content pages.
-
-## .Content
-
-The content itself, defined below the front matter.
-
-## .Section
-
-The section this content belongs to. Note: For nested sections, this is the first path element in the directory, for example, `/blog/funny/mypost/ => blog`.
-
-
-## .IsHome
-
-Check for whether the page is the home page.
-
 # Arrays
 
 ## Arrays  (slice)
@@ -113,7 +95,6 @@ Associative arrays are called "maps".
 //Tatooine
 ```
 
-
 # Functions
 
 ## Basic
@@ -135,7 +116,7 @@ Associative arrays are called "maps".
 
 ## `range`
 
-Iterates over a map, array, or slice. Go and Hugo templates make heavy use of range to iterate over a map, array or slice.
+Iterates over a map, array, or slice. Go and Hugo templates make heavy use of `range` to iterate over a map, array or slice.
 
 ## `where`
 
@@ -159,12 +140,6 @@ Loops through any array, slice, or map and returns a string of all the values se
 
 Templates in `hugo` are always in the `/layouts` folder.
 
-## Includes
-
-```go
-
-```
-
 ## Partials
 
 A partial is by definition only part of a template.  It must have a context for it to be relevant.  In other words, **Don't forget the "{{ . }}"**.
@@ -177,11 +152,6 @@ A partial is by definition only part of a template.  It must have a context for 
 # Lists
 
 `_index.md` adds front matter and content to list templates. You can keep one _index.md for your homepage and one in each of your content sections, taxonomies, and taxonomy terms.
-
-```go
-#
-_index.md
-```
 
 # Lookup Order for templates
 
