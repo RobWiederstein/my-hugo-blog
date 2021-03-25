@@ -17,6 +17,7 @@ nocite: |
 image: Big_Sable_Point_Lighthouse-2.jpg
 caption: Big Sable Point Lighthouse.  Photo by James Phelps from USA, CC BY 2.0 via Wikimedia Commons.  
 summary: This post uses the United States Coast Guard data to plot navigation aides.  Many observations were dropped for incomplete data, but those with a dwelling were colored differently.  Buoys were omitted too.
+repo: https://raw.githubusercontent.com/RobWiederstein/purple-bananas/main/content/post/2021-03-07-michigan-lighthouses/index.Rmd
 ---
 
 ```{r load-packages, include = F}

@@ -19,6 +19,7 @@ nocite: |
 image: wordcloud.jpg
 caption: Lumber was the word that appeared with the greatest frequency.
 summary: The Wisconsin Historical Society created a database of shipwrecks in its waters.  The shipwrecks occurred between the years 1679 and 1981.  The total number of observations with location data was 615.  A text field was included describing the cargo of the ships.  A wordcloud of the most frequently used words is created from the text field.
+repo: https://raw.githubusercontent.com/RobWiederstein/purple-bananas/main/content/post/2021-03-20-lost-cargo-in-wisconsin-shipwrecks/index.Rmd
 ---
 
 

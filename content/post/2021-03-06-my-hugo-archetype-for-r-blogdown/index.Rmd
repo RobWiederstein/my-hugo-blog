@@ -14,8 +14,8 @@ image: ~
 caption: ~
 summary: By default, Hugo automatically takes the first 70 words of your content as
   its summary and stores it into the `.Summary` page variable for use in your templates.
-  You may customize the summary length by setting `summaryLength` in your site configuration
-  *or* you can set it in the front matter.
+  You may customize the summary length by setting `summaryLength` in your site configuration **or** you can set it in the front matter.
+repo: https://raw.githubusercontent.com/RobWiederstein/purple-bananas/main/content/post/2021-03-06-my-hugo-archetype-for-r-blogdown/index.Rmd
 ---
 
 

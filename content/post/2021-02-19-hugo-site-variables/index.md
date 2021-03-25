@@ -11,6 +11,7 @@ draft: no
 image: hugo-logo.jpg
 caption: Hugo is the static web site generator paired with blogdown.
 summary: Inspecting a hugo website will reveal templates dependent on variables.  You have to have an understanding of what variables are available and under what circumstances.  Careful reading of hugo documentation is helpful, but here are a few tips.
+repo: https://raw.githubusercontent.com/RobWiederstein/purple-bananas/main/content/post/2021-02-19-hugo-site-variables/index.md
 ---
 
 `hugo` has lots of different kinds of variables but we'll focus on just three here:  (1) "built-in" site variables, (2) defined global variables in the `config` file and (3) page variables.

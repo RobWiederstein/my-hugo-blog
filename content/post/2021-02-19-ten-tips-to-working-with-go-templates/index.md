@@ -12,6 +12,7 @@ toc: yes
 image: go-logo.jpg
 caption: Go is the templating language behind HUGO.
 summary:  Knowing a little bit about the go templating language will help you understand the syntax of layout templates in HUGO.
+repo: https://raw.githubusercontent.com/RobWiederstein/purple-bananas/main/content/post/2021-02-19-ten-tips-to-working-with-go-templates/index.md
 ---
 
 {{< table_of_contents >}}
