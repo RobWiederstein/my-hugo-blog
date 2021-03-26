@@ -9,11 +9,11 @@ categories:
   - R
 tags:
   - leaflet
-image:
-caption:
+image: shipwreck.jpg
+caption: 
 repo: https://raw.githubusercontent.com/RobWiederstein/purple-bananas/main/content/post/2021-03-19-shipwrecks-of-wisconsin/index.Rmd
+summary: hello
 ---
-
 
 ```{r load-libraries, include = FALSE}
 
@@ -21,5 +21,7 @@ library(shiny)
 library(widgetframe)
 
 ```
+
+# Map
 
 <iframe height="800" width="100%" frameborder="no" src="https://rob-wiederstein.shinyapps.io/shipwrecks_wisconsin/"> </iframe>
