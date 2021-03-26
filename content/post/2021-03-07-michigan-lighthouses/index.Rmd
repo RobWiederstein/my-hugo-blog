@@ -14,8 +14,10 @@ csl: ../ieee-with-url.csl
 link-citations: true
 nocite: |
   @R-base, @R-blogdown
-image: Big_Sable_Point_Lighthouse-2.jpg
-caption: Big Sable Point Lighthouse.  Photo by James Phelps from USA, CC BY 2.0 via Wikimedia Commons.  
+header:
+   image: Big_Sable_Point_Lighthouse-2.jpg
+   alt: black and white lighthouse in Luddington State Park
+   caption: Big Sable Point Lighthouse.  Photo by James Phelps from USA, CC BY 2.0 via Wikimedia Commons.
 summary: This post uses the United States Coast Guard data to plot navigation aides.  Many observations were dropped for incomplete data, but those with a dwelling were colored differently.  Buoys were omitted too.
 repo: https://raw.githubusercontent.com/RobWiederstein/purple-bananas/main/content/post/2021-03-07-michigan-lighthouses/index.Rmd
 ---
@@ -65,7 +67,7 @@ cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00",
 
 ```{r}
 # write packages used to bib in current directory
-knitr::write_bib(.packages(), "./packages.bib") 
+knitr::write_bib(.packages(), "./packages.bib")
 ```
 
 ## Overview
@@ -78,7 +80,7 @@ This post seeks to identify prominent lighthouses and navigational aids along th
 
 The International Association of Lighthouse Authorities (IALA) endorsed two maritime buoyage systems in 1977. [@internationalassoc.lighthouseauthoritiesMaritimeBuoyageSystem2021] The systems, designated as "A" and "B", displaced a multitude of country-level systems. The Americas, including the U.S. and Canada, are in Region B.  The greatest difference between the two systems is that in Region B, red markers are on the right whereas in Region A, red makers are on the left.
 
-All navigational aids within IALA have four characteristics: shape, light, color and topmark. A "Lighthouse" is defined as "a tower, or substantial building or structure, erected at a designated geographical location to carry a signal light and provides a significant daymark. It provides a long or medium range light for  identification by night." 
+All navigational aids within IALA have four characteristics: shape, light, color and topmark. A "Lighthouse" is defined as "a tower, or substantial building or structure, erected at a designated geographical location to carry a signal light and provides a significant daymark. It provides a long or medium range light for  identification by night."
 
 #### Shapes
 

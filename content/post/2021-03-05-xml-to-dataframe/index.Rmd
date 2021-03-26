@@ -9,8 +9,10 @@ tags:
   - xlm2
 layout: layouts/post/single
 draft: no
-image: xml-lighthouse-data.png
-caption: A dataset that was only available in pdf or xml.
+header:
+   image: xml-lighthouse-data.png
+   alt: xml code screenshot
+   caption: A dataset that was only available in pdf or xml.
 summary: Everytime I run into a file with an `.xml` extension, I cringe.  Though, admittedly, it's a file format that you have to be familiar with when it comes to sending and receiving data over the web. `R` has a package `xlm2` to assist in the conversion of nested data to tabular data.
 repo: https://raw.githubusercontent.com/RobWiederstein/purple-bananas/main/content/post/2021-03-05-xml-to-dataframe/index.Rmd
 ---
@@ -57,7 +59,7 @@ cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00",
 
 ## Overview
 
-The task here is to take an easy and short `xml` file and convert it to a dataframe.  The `xml2` package was specifically designed for the task and is the successor to the `xml` package.  
+The task here is to take an easy and short `xml` file and convert it to a dataframe.  The `xml2` package was specifically designed for the task and is the successor to the `xml` package.
 
 ## Background
 
@@ -67,7 +69,7 @@ Let's face it:  you wouldn't be on this page if you could've figured it out usin
 
 ### Definitions
 
-First, it's important to get some defintions first. (W3schools has a really helpful set of [tutorials](https://www.w3schools.com/xml/default.asp) on the topic.)  A "node" in general and speaking in a broad way is an HTML element. 
+First, it's important to get some defintions first. (W3schools has a really helpful set of [tutorials](https://www.w3schools.com/xml/default.asp) on the topic.)  A "node" in general and speaking in a broad way is an HTML element.
 
 **DOM (Document Object Model)** - a tree structure that represents the HTML of the website, and every HTML element is a "node".
 
@@ -178,7 +180,7 @@ xml_find_all(xmlDoc, xpath = ".//child")
 
 ## Conclusion
 
-If you can get a basic understanding of html web pages and xpath syntax, then you should be able to parse xml files efficiently with `xlm2`.  
+If you can get a basic understanding of html web pages and xpath syntax, then you should be able to parse xml files efficiently with `xlm2`.
 
 
 ## Acknowledgements

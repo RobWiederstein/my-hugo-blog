@@ -15,8 +15,10 @@ csl: ../ieee-with-url.csl
 link-citations: yes
 nocite: |
   @R-base, @R-blogdown
-image: nautical-chart-1200x630.jpg
-caption: A sample nautical chart furnished courtesy of the U.S. Coast Guard.
+header:
+   image: nautical-chart-1200x630.jpg
+   alt: standard nautical chart with buoys
+   caption: A sample nautical chart from the U.S. Coastguard Navigation Aid booklet.
 summary: There is a wide variety of navigational aids and they are classified according to an international system.
 repo: https://raw.githubusercontent.com/RobWiederstein/purple-bananas/main/content/post/2021-03-10-navigational-aid-characteristics-in-the-great-lakes/index.Rmd
 ---
@@ -82,7 +84,7 @@ df <- as_tibble(data.table::fread(input = input))
 
 ### Background
 
-The full set of navigational aids from the U.S. Coast Guard's Light List for District 9 is `r nrow(df)` observations. District 9 is comprised of the Great Lakes and the St. Lawrence River above the St. Regis River.  A large portion of the observations contain missing values. The precise percentage of missing values in the "characteristic" variable was 
+The full set of navigational aids from the U.S. Coast Guard's Light List for District 9 is `r nrow(df)` observations. District 9 is comprised of the Great Lakes and the St. Lawrence River above the St. Regis River.  A large portion of the observations contain missing values. The precise percentage of missing values in the "characteristic" variable was
 `r paste(round((length(which(is.na(df$characteristic) == T)) / nrow(df)) * 100, 2), "%", sep = "")`.  The "characteristic" variable is a field that actually has three other variables within it.  Each cell contains 3 parts:  a description of the kind of light, like "flashing"; a color, very often red or green; and a period of time over which a light cycles, like "4s".  Examples include `Fl R 4s`, `Iso G 6s` and `Fl (2+1)G 6s`.
 
 ### Abbreviations
@@ -125,8 +127,8 @@ df.l <- df.l[-which(df.l$time == "W"), ]
 df.l$light <- fct_lump(df.l$light, n = 5)
 df.l$color <- fct_lump(df.l$color, n= 4)
 df.l$time <- fct_lump(df.l$time, n= 8)
-df.m <- 
-  df.l %>% 
+df.m <-
+  df.l %>%
   select(light, color, time) %>%
   na.omit() %>%
   group_by(light, color, time) %>%
@@ -152,10 +154,10 @@ p <- treemap(df.m,
             palette = cbPalette,
             bg.labels=c("white"),
             align.labels=list(
-              c("center", "center"), 
+              c("center", "center"),
               c("right", "bottom")
-            )  
-          )   
+            )
+          )
 ```
 
 ### Light
@@ -172,10 +174,10 @@ p <- treemap(df.m,
             palette = cbPalette,
             bg.labels=c("white"),
             align.labels=list(
-              c("center", "center"), 
+              c("center", "center"),
               c("right", "bottom")
-            )  
-          )   
+            )
+          )
 ```
 
 ### Time
@@ -192,10 +194,10 @@ p <- treemap(df.m,
             palette = cbPalette,
             bg.labels=c("white"),
             align.labels=list(
-              c("center", "center"), 
+              c("center", "center"),
               c("right", "bottom")
-            )  
-          )   
+            )
+          )
 ```
 
 ## Conclusion

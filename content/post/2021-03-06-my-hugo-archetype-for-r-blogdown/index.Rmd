@@ -10,37 +10,33 @@ tags:
   - blogdown
 layout: layouts/post/single
 draft: no
-image: ~
-caption: ~
-summary: By default, Hugo automatically takes the first 70 words of your content as
-  its summary and stores it into the `.Summary` page variable for use in your templates.
-  You may customize the summary length by setting `summaryLength` in your site configuration **or** you can set it in the front matter.
-repo: https://raw.githubusercontent.com/RobWiederstein/purple-bananas/main/content/post/2021-03-06-my-hugo-archetype-for-r-blogdown/index.Rmd
+# bib style and .bib in content/post. packages.bib within content/post/my-post
+bibliography: [packages.bib, ../blog.bib]
+# style bib via https://citationstyles.org
+csl: ../ieee-with-url.csl
+#link inline reference to bib
+link-citations: true
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+   image: archetypes.jpg
+   alt: archetype is another word for model
+   caption: Archetype is another word for model.  It's a model to follow in drafting a blog post.
+summary: An archetype is a model to follow in drafting a post.  A number of other synomyms also come to mind like form, template, outline, scaffold or layout.  An archetype is a model kept within the archetypes folder in hugo.  It's a smart way to bring consistency to your posts. Below is the archetype I use in rending an `R` analysis.
 ---
 
 
 ```{r load-packages, include = F}
-## see http://lcolladotor.github.io/2018/03/08/blogdown-archetype-template/#.YEOC-C2cZOR
 ## Load frequently used packages for blog posts
-x <- c(
+packages <- c(
       'devtools', #for session info
       'ggthemes', #for plots
-      'knitcitations',
-      'BiocStyle',
       'blogdown'
 )
-lapply(x, library, character.only = T)
-
-## Load knitcitations with a clean bibliography
-cleanbib()
-cite_options(hyperlink = 'to.doc', citation_format = 'text', style = 'html')
-
-bib <- c(
-    'BiocStyle' = citation('BiocStyle'),
-    'blogdown' = citation('blogdown')[2],
-    'devtools' = citation('devtools'),
-    'knitcitations' = citation('knitcitations')
-)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
 ```
 
 ```{r set-chunk-options, include = F}
@@ -72,7 +68,11 @@ library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
 # color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
 cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
 ```
-You can find the full code for the archetype at my [gist](https://gist.github.com/RobWiederstein/b153a853550f42c1378569b06efd49f7). Some of the code blocks were not included via `include=F` as a quick way to silence the packages loading.
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
 
 ## R image
 
@@ -87,11 +87,8 @@ p <- p + ggtitle("mtcars")
 p
 ```
 
-## Custom image
 
-The easiest option is to use the  `r CRANpkg('blogdown')` _Insert Image_ RStudio addin to add an external image.
-
-## Overview
+## [Overview](#overview)
 
 (Describe the problem.)
 
@@ -111,22 +108,23 @@ The easiest option is to use the  `r CRANpkg('blogdown')` _Insert Image_ RStudio
 
 This blog post was made possible thanks to:
 
-* `r Biocpkg('BiocStyle')` `r citep(bib[['BiocStyle']])`
-* `r CRANpkg('blogdown')` `r citep(bib[['blogdown']])`
-* `r CRANpkg('devtools')` `r citep(bib[['devtools']])`
-* `r CRANpkg('knitcitations')` `r citep(bib[['knitcitations']])`
-
-
 ## References
 
-```{r bibliography, results = 'asis', echo = FALSE, cache = FALSE}
-## Print bibliography
-bibliography(style = 'html')
+<div id="refs"></div>
+
+## Appendix -- Gist Embed
+
+```{r echo=FALSE}
+blogdown::shortcode('gist', 'RobWiederstein', 'b153a853550f42c1378569b06efd49f7')
 ```
+
+
 
 ## Disclaimer
 
-The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimd as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article. See [overview](#overview).
+
+
 
 ## Reproducibility
 
@@ -135,3 +133,4 @@ The views, analysis and conclusions presented within this paper represent the au
 options(width = 120)
 session_info()
 ```
+

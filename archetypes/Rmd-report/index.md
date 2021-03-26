@@ -16,11 +16,13 @@ csl: ../ieee-with-url.csl
 link-citations: true
 #include packages even if not referenced
 nocite: |
-  @R-base, @R-blogdown
+  @R-base, @R-blogdown, @R-tidyverse
 # image path for social media
-image:
-#10 words or less
-caption:
+header:
+   image:
+   alt:
+   caption: 
+repo:
 summary:  By default, Hugo automatically takes the first 70 words of your content as its summary and stores it into the `.Summary` page variable for use in your templates. You may customize the summary length by setting `summaryLength` in your site configuration *or* you can set it in the front matter.
 ---
 
@@ -73,7 +75,7 @@ cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00",
 knitr::write_bib(.packages(), "./packages.bib")
 ```
 
-## R image
+# [R image](#image)
 
 
 ```{r plot-mtcars, echo=F, fig.cap = "A plot with 538 layout theme and color blind palette."}
@@ -86,41 +88,38 @@ p <- p + ggtitle("mtcars")
 p
 ```
 
-
-## Overview
+# [Overview](#overview)
 
 (Describe the problem.)
 
-## Background
+# [Background](#background)
 
 (Who else has worked on this problem?  What did they find?)
 
-## Data and model
+# [Data and model](#data)
 
 (What data did you use, where did you get it?)
 
-## Results
+# [Results](#results)
 
-## Conclusion
+# [Conclusion](#conclusion)
 
-## Acknowledgements
+# [Acknowledgements](#acknowledge)
 
 This blog post was made possible thanks to:
 
-
-
-## References
+# [References](#reference)
 
 <div id="refs"></div>
 
-## Disclaimer
+# [Disclaimer](#disclaimer)
 
 The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
 
-## Reproducibility
+# [Reproducibility](#reproduce)
 
 ```{r reproducibility, echo = FALSE}
-## Reproducibility info
+# system & package info
 options(width = 120)
 session_info()
 ```

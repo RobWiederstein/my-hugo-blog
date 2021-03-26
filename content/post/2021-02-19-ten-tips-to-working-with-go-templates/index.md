@@ -9,8 +9,10 @@ categories:
 tags: []
 draft: no
 toc: yes
-image: go-logo.jpg
-caption: Go is the templating language behind HUGO.
+header:
+   image: go-logo.jpg
+   alt: go logo
+   caption: Go is the templating language behind HUGO. 
 summary:  Knowing a little bit about the go templating language will help you understand the syntax of layout templates in HUGO.
 repo: https://raw.githubusercontent.com/RobWiederstein/purple-bananas/main/content/post/2021-02-19-ten-tips-to-working-with-go-templates/index.md
 ---
@@ -164,4 +166,4 @@ Hugo searches for the layout to use for a given page in a well defined order, st
 
 # `_index.md`
 
-It has a special role in Hugo. It allows you to add front matter and content to your list templates. 
+It has a special role in Hugo. It allows you to add front matter and content to your list templates.

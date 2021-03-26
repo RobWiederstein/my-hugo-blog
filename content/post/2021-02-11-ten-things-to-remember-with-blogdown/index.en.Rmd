@@ -29,8 +29,10 @@ flowchartDiagrams:
 sequenceDiagrams:
   enable: no
   options: ''
-image: hugo-blogdown-1200-630px.jpg
-caption: Hugo is the preferred static site generator for blogdown.
+header:
+   image: hugo-blogdown-1200-630px.jpg
+   alt: hugo and blogdown logos
+   caption: Hugo is the preferred static site generator for blogdown.
 repo: https://raw.githubusercontent.com/RobWiederstein/purple-bananas/main/content/post/2021-02-11-ten-things-to-remember-with-blogdown/index.en.Rmd
 draft: true
 ---
@@ -61,7 +63,7 @@ It's virtually impossible to give a comprehensive scaffold of how to accomplish 
 
 9.  Do not change layouts in the theme directory.  Instead, copy the layouts to the `layout` folder in the root directory and add the word "custom" in the filename.
 
-10. Expanding on **9**, you customize a theme by overriding theme layouts and static assets in your top-level project directories. 
+10. Expanding on **9**, you customize a theme by overriding theme layouts and static assets in your top-level project directories.
 
 # Best Resources
 
