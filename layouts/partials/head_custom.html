@@ -10,10 +10,8 @@
 <!--add social icons via fontawesome-->
 <script src="https://kit.fontawesome.com/4205ca38a3.js" crossorigin="anonymous"></script>
 <!--add open graph tags-->
-{{ template "_internal/opengraph.html" . }}
+{{ partial "og-tags" . }}
 <!--add twitter cards-->
 {{ template "_internal/twitter_cards.html" . }}
 <!--add linkedin meta-->
 <meta name="author" content= "Rob Wiederstein" >
-
-<!--<meta name="description" content="{{if .IsHome}}{{ $.Site.Params.description }}{{else}}{{.Description}}{{end}}" />-->
