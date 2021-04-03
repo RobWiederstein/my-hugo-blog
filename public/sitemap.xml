@@ -4,32 +4,47 @@
   
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/</loc>
-    <lastmod>2021-03-20T00:00:00+00:00</lastmod>
+    <lastmod>2021-04-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/categories/</loc>
-    <lastmod>2021-03-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/03/20/lost-cargo-in-wisconsin-shipwrecks/</loc>
-    <lastmod>2021-03-20T00:00:00+00:00</lastmod>
+    <lastmod>2021-04-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/post/</loc>
-    <lastmod>2021-03-20T00:00:00+00:00</lastmod>
+    <lastmod>2021-04-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/categories/r/</loc>
-    <lastmod>2021-03-20T00:00:00+00:00</lastmod>
+    <lastmod>2021-04-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/04/01/us-immigration-policies-in-the-trump-administration/</loc>
+    <lastmod>2021-04-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/03/27/animal-ageing-and-longevity/</loc>
+    <lastmod>2021-03-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/tags/biology/</loc>
+    <lastmod>2021-03-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/tags/</loc>
+    <lastmod>2021-03-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/03/20/lost-cargo-in-wisconsin-shipwrecks/</loc>
     <lastmod>2021-03-20T00:00:00+00:00</lastmod>
   </url>
   
@@ -204,6 +219,11 @@
   </url>
   
   <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/19/primer-on-working-with-go-templates/</loc>
+    <lastmod>2021-02-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://keen-noether-7d2e44.netlify.app/recipe/aloo-matar/recipe/</loc>
     <lastmod>2021-02-18T00:00:00+00:00</lastmod>
   </url>
@@ -264,6 +284,11 @@
   </url>
   
   <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/tags/hugo-theme/</loc>
+    <lastmod>2021-02-11T15:00:25-06:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://keen-noether-7d2e44.netlify.app/recipe/pistachio-pineapple/recipe/</loc>
     <lastmod>2021-02-11T00:00:00+00:00</lastmod>
   </url>
@@ -276,6 +301,11 @@
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/recipe/brocolli-casserole/recipe/</loc>
     <lastmod>2021-02-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/11/ten-tips-to-working-with-blogdown/</loc>
+    <lastmod>2021-02-11T15:00:25-06:00</lastmod>
   </url>
   
   <url>

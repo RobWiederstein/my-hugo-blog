@@ -1,0 +1,500 @@
+---
+title: Animal Ageing and Longevity
+author: Rob Wiederstein
+date: '2021-03-27'
+slug: animal-ageing-and-longevity
+categories:
+  - R
+tags: 
+  - biology
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-forcats, @R-ggplot2
+header:
+  image: feature-greenland-shark.jpg
+  alt: greenland shark
+  caption: Greenland shark by Hemming 1952, wikimedia commons, CC BY-SA 4.0. Image cropped and rescaled.
+repo: ~
+summary: This post uses a data set on animal ageing and longevity. It is compiled and maintained by the Human Ageing and Genomics Resources ("HAGR") and is located at the  [senescence.info website](https://www.senescence.info) website.
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/kePrint/kePrint.js"></script>
+<link href="{{< blogdown/postref >}}index_files/lightable/lightable.css" rel="stylesheet" />
+
+<div id="TOC">
+<ul>
+<li><a href="#overview"><span>Overview</span></a></li>
+<li><a href="#background"><span>Background</span></a></li>
+<li><a href="#data-and-model"><span>Data and model</span></a>
+<ul>
+<li><a href="#missingness">Missingness</a></li>
+<li><a href="#outliers">Outliers</a></li>
+</ul></li>
+<li><a href="#results"><span>Results</span></a></li>
+<li><a href="#conclusion"><span>Conclusion</span></a></li>
+<li><a href="#acknowledgements"><span>Acknowledgements</span></a></li>
+<li><a href="#references"><span>References</span></a></li>
+<li><a href="#disclaimer"><span>Disclaimer</span></a></li>
+<li><a href="#reproducibility"><span>Reproducibility</span></a></li>
+</ul>
+</div>
+
+<div id="overview" class="section level1">
+<h1><a href="#overview">Overview</a></h1>
+<p>The post examines the maximum age of different species using <a href="https://genomics.senescence.info/species/index.html">AnAge: Database of Animal Ageing and Longevity</a>. Examples of the maximum age of some common species include:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+genus
+</th>
+<th style="text-align:left;">
+species
+</th>
+<th style="text-align:left;">
+common_name
+</th>
+<th style="text-align:right;">
+maximum_longevity_yrs
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Somniosus
+</td>
+<td style="text-align:left;">
+microcephalus
+</td>
+<td style="text-align:left;">
+Greenland shark
+</td>
+<td style="text-align:right;">
+392.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Balaena
+</td>
+<td style="text-align:left;">
+mysticetus
+</td>
+<td style="text-align:left;">
+Bowhead whale
+</td>
+<td style="text-align:right;">
+211.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Homo
+</td>
+<td style="text-align:left;">
+sapiens
+</td>
+<td style="text-align:left;">
+Human
+</td>
+<td style="text-align:right;">
+122.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Felis
+</td>
+<td style="text-align:left;">
+catus
+</td>
+<td style="text-align:left;">
+Domestic cat
+</td>
+<td style="text-align:right;">
+30.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Canis
+</td>
+<td style="text-align:left;">
+familiaris
+</td>
+<td style="text-align:left;">
+Domestic dog
+</td>
+<td style="text-align:right;">
+24.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Aratinga
+</td>
+<td style="text-align:left;">
+holochlora
+</td>
+<td style="text-align:left;">
+Green parakeet
+</td>
+<td style="text-align:right;">
+21.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mesocricetus
+</td>
+<td style="text-align:left;">
+auratus
+</td>
+<td style="text-align:left;">
+Golden hamster
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="background" class="section level1">
+<h1><a href="#background">Background</a></h1>
+<p>“Taxonomy” is the scientific study of naming and classifying organisms based on shared characteristics. Organisms are grouped by taxa and then grouped by taxonomic rank. In descending order of heirarchy, the ranks are domain, kingdom, phylum, class, order, family, genus, and species. These taxonomic classifications are used in the Animal Ageing and Longevity database.</p>
+<p>“Maximum lifespan potential” or MLSP is a common term used in the study of ageing. It is used to describe physiologically attainable lifespan by a given species" and is “generally equivalent to the lifespan of the oldest observed specimen of any particular species.”<span class="citation"><a href="#ref-speakmanCorrelationsPhysiologyLifespan2005" role="doc-biblioref">[1]</a></span> There is a wide variation in MSLP among species even when restricted to the same class. Among the class “mammalia,” shrews have a MLSP of 12-15 months where whales have a MLSP of two hundred years. Understanding the physiological, biochemical and molecular differences between, for example, the shrew and the whale can yield insight into the process of ageing.<span class="citation"><a href="#ref-speakmanCorrelationsPhysiologyLifespan2005" role="doc-biblioref">[1]</a></span></p>
+<p>Human Ageing Genomic Resources (HAGR) is a collection of databases and tools for studying the biology and genetics of ageing.<span class="citation"><a href="#ref-magalhaesHAGRHumanAgeing2005" role="doc-biblioref">[2]</a></span> There are six different databases, and only one is the subject of this post. “AnAge” database compiles biological data by species like maximum age and its emphasis is on vertabrates.<span class="citation"><a href="#ref-magalhaesDatabaseVertebrateLongevity2009" role="doc-biblioref">[3]</a></span> As of 2009, AnAge incorporated data from over 800 sources, from traditional books and journal articles to personal communications with the authors.<span class="citation"><a href="#ref-magalhaesDatabaseVertebrateLongevity2009" role="doc-biblioref">[3]</a></span> There are 4000+ observations and 31 variables.</p>
+<p>The quantitative data in AnAge, in particular the records from which maximum lifespan is taken, must meet predefined criteria in order to be included. Records based on a single or few observations are normally excluded.<span class="citation"><a href="#ref-magalhaesDatabaseVertebrateLongevity2009" role="doc-biblioref">[3]</a></span> For maximum lifespan value, the database includes the highest reported value and in some taxa tends to come from animals in captivity. <span class="citation"><a href="#ref-magalhaesDatabaseVertebrateLongevity2009" role="doc-biblioref">[3]</a></span>. One weakness in the dataset is small sample sizes in some taxa. The database has at least since 2009 identified observations as “huge,” “large,” “medium” and “small.” Humans were the only one classified as “huge.” <span class="citation"><a href="#ref-magalhaesDatabaseVertebrateLongevity2009" role="doc-biblioref">[3]</a></span></p>
+<p>Two factors associated with longevity are metabolism and developmental schedules. One study found, “after correcting for body mass and phylogeny, basal metabolic rate does not correlate with longevity in eutherians or birds.” <span class="citation"><a href="#ref-demagalhaesAnalysisRelationshipMetabolism2007" role="doc-biblioref">[4]</a></span> Although basal metabolic rate actually had a negative correlation with longevity for marsupials. <span class="citation"><a href="#ref-demagalhaesAnalysisRelationshipMetabolism2007" role="doc-biblioref">[4]</a></span>. This study did confirm another finding that age to maturity “is typically proportional to adult life span.”<span class="citation"><a href="#ref-demagalhaesAnalysisRelationshipMetabolism2007" role="doc-biblioref">[4]</a></span></p>
+</div>
+<div id="data-and-model" class="section level1">
+<h1><a href="#data">Data and model</a></h1>
+<div id="missingness" class="section level2">
+<h2>Missingness</h2>
+<p>Review of the imported data reveals that many fields have missing data. The first nine variables are an identifier and descriptive fields. The variable that is the subject of this post <code>maximum_longevity_yrs</code> is missing 10.48% of its values.</p>
+<div class="figure" style="text-align: center"><span id="fig:table-missing-values"></span>
+<img src="{{< blogdown/postref >}}index_files/figure-html/table-missing-values-1.svg" alt="Plot showing the percentage  of missing values.  Note the `maximum_longevity_yrs` value." width="100%" />
+<p class="caption">
+Figure 1: Plot showing the percentage of missing values. Note the <code>maximum_longevity_yrs</code> value.
+</p>
+</div>
+</div>
+<div id="outliers" class="section level2">
+<h2>Outliers</h2>
+<p>The dataset was filtered on three conditions: kingdom was limited to <code>Animalia</code>, phylum was limited to <code>Chordata</code> and data quality was limited to <code>acceptable</code> or <code>high</code>. The final number of observations was 3683 observations out of the original 4219. Finally, the classes were narrowed to 7, using the <code>forcats</code> package.<span class="citation"><a href="#ref-R-forcats" role="doc-biblioref">[5]</a></span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:boxplot-outliers"></span>
+<img src="{{< blogdown/postref >}}index_files/figure-html/boxplot-outliers-1.svg" alt="Note the extreme outliers among the different animal classes." width="100%" />
+<p class="caption">
+Figure 2: Note the extreme outliers among the different animal classes.
+</p>
+</div>
+</div>
+</div>
+<div id="results" class="section level1">
+<h1><a href="#results">Results</a></h1>
+<p>Overall, the top 10 species for maximum longevity were as follows:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+genus
+</th>
+<th style="text-align:left;">
+species
+</th>
+<th style="text-align:left;">
+common_name
+</th>
+<th style="text-align:right;">
+maximum_longevity_yrs
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Somniosus
+</td>
+<td style="text-align:left;">
+microcephalus
+</td>
+<td style="text-align:left;">
+Greenland shark
+</td>
+<td style="text-align:right;">
+392
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Balaena
+</td>
+<td style="text-align:left;">
+mysticetus
+</td>
+<td style="text-align:left;">
+Bowhead whale
+</td>
+<td style="text-align:right;">
+211
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sebastes
+</td>
+<td style="text-align:left;">
+aleutianus
+</td>
+<td style="text-align:left;">
+Rougheye rockfish
+</td>
+<td style="text-align:right;">
+205
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Chelonoidis
+</td>
+<td style="text-align:left;">
+nigra
+</td>
+<td style="text-align:left;">
+Galapagos tortoise
+</td>
+<td style="text-align:right;">
+177
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sebastes
+</td>
+<td style="text-align:left;">
+borealis
+</td>
+<td style="text-align:left;">
+Shortraker rockfish
+</td>
+<td style="text-align:right;">
+157
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Acipenser
+</td>
+<td style="text-align:left;">
+fulvescens
+</td>
+<td style="text-align:left;">
+Lake sturgeon
+</td>
+<td style="text-align:right;">
+152
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Aldabrachelys
+</td>
+<td style="text-align:left;">
+gigantea
+</td>
+<td style="text-align:left;">
+Aldabra tortoise
+</td>
+<td style="text-align:right;">
+152
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hoplostethus
+</td>
+<td style="text-align:left;">
+atlanticus
+</td>
+<td style="text-align:left;">
+Orange roughy
+</td>
+<td style="text-align:right;">
+149
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Allocyttus
+</td>
+<td style="text-align:left;">
+verrucosus
+</td>
+<td style="text-align:left;">
+Warty oreo
+</td>
+<td style="text-align:right;">
+140
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Terrapene
+</td>
+<td style="text-align:left;">
+carolina
+</td>
+<td style="text-align:left;">
+Eastern box turtle
+</td>
+<td style="text-align:right;">
+138
+</td>
+</tr>
+</tbody>
+</table>
+<p>The top five in maximum longevity by class were included in the chart below. After creating an “other” category, there were seven groups. The Greenland shark is certainly distinguished in the length of its lifespan.</p>
+<p><img src="animal_aging.svg" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+<p>The descriptive analysis of species and maximum longevity yields a diverse and interesting list of species. Much work regarding life expectancy has been done and comparisons among different species hold the promise of unlocking the secrets to ageing. Finding relevant correlates could improve prediction accuracy and target specific species for further study.</p>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>While cited in the bibliography, the author additionally thanks and acknowledges the important work of the <a href="https://genomics.senescence.info/about.html">Human Ageing Genomic Resources (HAGR)</a>.</p>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-speakmanCorrelationsPhysiologyLifespan2005" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">J. R. Speakman, <span>“Correlations between physiology and lifespan <span></span> two widely ignored problems with comparative studies,”</span> <em>Aging Cell</em>, vol. 4, no. 4, pp. 167–175, 2005, doi: <a href="https://doi.org/10.1111/j.1474-9726.2005.00162.x">10.1111/j.1474-9726.2005.00162.x</a>. [Online]. Available: <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1474-9726.2005.00162.x">https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1474-9726.2005.00162.x</a>. [Accessed: 29-Mar-2021]</div>
+</div>
+<div id="ref-magalhaesHAGRHumanAgeing2005" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">J. P. de Magalhaes, J. Costa, and O. Toussaint, <span>“<span>HAGR</span>: The <span>Human Ageing Genomic Resources</span>.”</span> Jan-2005 [Online]. Available: <a href="https://pubmed.ncbi.nlm.nih.gov/15608256/">https://pubmed.ncbi.nlm.nih.gov/15608256/</a>. [Accessed: 28-Mar-2021]</div>
+</div>
+<div id="ref-magalhaesDatabaseVertebrateLongevity2009" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">J. P. D. Magalhães and J. Costa, <span>“A database of vertebrate longevity records and their relation to other life-history traits,”</span> <em>Journal of Evolutionary Biology</em>, vol. 22, no. 8, pp. 1770–1774, 2009, doi: <a href="https://doi.org/10.1111/j.1420-9101.2009.01783.x">10.1111/j.1420-9101.2009.01783.x</a>. [Online]. Available: <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1420-9101.2009.01783.x">https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1420-9101.2009.01783.x</a>. [Accessed: 29-Mar-2021]</div>
+</div>
+<div id="ref-demagalhaesAnalysisRelationshipMetabolism2007" class="csl-entry">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">J. P. de Magalhães, J. Costa, and G. M. Church, <span>“An analysis of the relationship between metabolism, developmental schedules, and longevity using phylogenetic independent contrasts,”</span> <em>The Journals of Gerontology. Series A, Biological Sciences and Medical Sciences</em>, vol. 62, no. 2, pp. 149–160, Feb. 2007, doi: <a href="https://doi.org/10.1093/gerona/62.2.149">10.1093/gerona/62.2.149</a>. </div>
+</div>
+<div id="ref-R-forcats" class="csl-entry">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">H. Wickham, <em>Forcats: Tools for working with categorical variables (factors)</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=forcats">https://CRAN.R-project.org/package=forcats</a></div>
+</div>
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2020 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+</div>
+<div id="ref-R-ggplot2" class="csl-entry">
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline">H. Wickham <em>et al.</em>, <em>ggplot2: Create elegant data visualisations using the grammar of graphics</em>. 2020 [Online]. Available: <a href="https://CRAN.R-project.org/package=ggplot2">https://CRAN.R-project.org/package=ggplot2</a></div>
+</div>
+<div id="ref-R-tidyverse" class="csl-entry">
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">H. Wickham, <em>Tidyverse: Easily install and load the tidyverse</em>. 2019 [Online]. Available: <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value                       
+ version  R version 3.6.3 (2020-02-29)
+ os       macOS Catalina 10.15.7      
+ system   x86_64, darwin15.6.0        
+ ui       X11                         
+ language (EN)                        
+ collate  en_US.UTF-8                 
+ ctype    en_US.UTF-8                 
+ tz       America/Chicago             
+ date     2021-03-27                  
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version date       lib source        
+ Amelia        1.7.6   2019-11-25 [1] CRAN (R 3.6.0)
+ assertthat    0.2.1   2019-03-21 [1] CRAN (R 3.6.0)
+ blogdown    * 1.2     2021-03-04 [1] CRAN (R 3.6.3)
+ bookdown      0.21    2020-10-13 [1] CRAN (R 3.6.3)
+ bslib         0.2.4   2021-01-25 [1] CRAN (R 3.6.2)
+ cachem        1.0.4   2021-02-13 [1] CRAN (R 3.6.2)
+ callr         3.5.1   2020-10-13 [1] CRAN (R 3.6.2)
+ cli           2.3.1   2021-02-23 [1] CRAN (R 3.6.3)
+ codetools     0.2-18  2020-11-04 [1] CRAN (R 3.6.2)
+ colorspace    2.0-0   2020-11-11 [1] CRAN (R 3.6.2)
+ crayon        1.4.1   2021-02-08 [1] CRAN (R 3.6.2)
+ curl          4.3     2019-12-02 [1] CRAN (R 3.6.0)
+ data.table    1.13.6  2020-12-30 [1] CRAN (R 3.6.2)
+ DBI           1.1.1   2021-01-15 [1] CRAN (R 3.6.2)
+ desc          1.3.0   2021-03-05 [1] CRAN (R 3.6.3)
+ devtools    * 2.3.2   2020-09-18 [1] CRAN (R 3.6.2)
+ digest        0.6.27  2020-10-24 [1] CRAN (R 3.6.2)
+ dplyr         1.0.5   2021-03-05 [1] CRAN (R 3.6.3)
+ ellipsis      0.3.1   2020-05-15 [1] CRAN (R 3.6.2)
+ evaluate      0.14    2019-05-28 [1] CRAN (R 3.6.0)
+ fansi         0.4.2   2021-01-15 [1] CRAN (R 3.6.2)
+ farver        2.1.0   2021-02-28 [1] CRAN (R 3.6.3)
+ fastmap       1.1.0   2021-01-25 [1] CRAN (R 3.6.2)
+ forcats       0.5.1   2021-01-27 [1] CRAN (R 3.6.2)
+ foreign       0.8-75  2020-01-20 [1] CRAN (R 3.6.3)
+ fs            1.5.0   2020-07-31 [1] CRAN (R 3.6.2)
+ generics      0.1.0   2020-10-31 [1] CRAN (R 3.6.2)
+ ggplot2     * 3.3.3   2020-12-30 [1] CRAN (R 3.6.2)
+ ggthemes    * 4.2.4   2021-01-20 [1] CRAN (R 3.6.2)
+ glue          1.4.2   2020-08-27 [1] CRAN (R 3.6.2)
+ gtable        0.3.0   2019-03-25 [1] CRAN (R 3.6.0)
+ highr         0.8     2019-03-20 [1] CRAN (R 3.6.0)
+ htmltools     0.5.1.1 2021-01-22 [1] CRAN (R 3.6.2)
+ jpeg          0.1-8.1 2019-10-24 [1] CRAN (R 3.6.0)
+ jquerylib     0.1.3   2020-12-17 [1] CRAN (R 3.6.2)
+ jsonlite      1.7.2   2020-12-09 [1] CRAN (R 3.6.2)
+ knitr         1.31    2021-01-27 [1] CRAN (R 3.6.2)
+ labeling      0.4.2   2020-10-20 [1] CRAN (R 3.6.2)
+ lifecycle     1.0.0   2021-02-15 [1] CRAN (R 3.6.2)
+ magrittr    * 2.0.1   2020-11-17 [1] CRAN (R 3.6.2)
+ memoise       2.0.0   2021-01-26 [1] CRAN (R 3.6.2)
+ munsell       0.5.0   2018-06-12 [1] CRAN (R 3.6.0)
+ pillar        1.5.1   2021-03-05 [1] CRAN (R 3.6.3)
+ pkgbuild      1.2.0   2020-12-15 [1] CRAN (R 3.6.2)
+ pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 3.6.0)
+ pkgload       1.2.0   2021-02-23 [1] CRAN (R 3.6.3)
+ prettyunits   1.1.1   2020-01-24 [1] CRAN (R 3.6.0)
+ processx      3.4.5   2020-11-30 [1] CRAN (R 3.6.2)
+ ps            1.6.0   2021-02-28 [1] CRAN (R 3.6.3)
+ purrr         0.3.4   2020-04-17 [1] CRAN (R 3.6.2)
+ R6            2.5.0   2020-10-28 [1] CRAN (R 3.6.2)
+ Rcpp          1.0.6   2021-01-15 [1] CRAN (R 3.6.2)
+ remotes       2.2.0   2020-07-21 [1] CRAN (R 3.6.2)
+ rlang         0.4.10  2020-12-30 [1] CRAN (R 3.6.2)
+ rmarkdown     2.7     2021-02-19 [1] CRAN (R 3.6.3)
+ rprojroot     2.0.2   2020-11-15 [1] CRAN (R 3.6.2)
+ sass          0.3.1   2021-01-24 [1] CRAN (R 3.6.2)
+ scales        1.1.1   2020-05-11 [1] CRAN (R 3.6.2)
+ sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.6.0)
+ stringi       1.5.3   2020-09-09 [1] CRAN (R 3.6.2)
+ stringr       1.4.0   2019-02-10 [1] CRAN (R 3.6.0)
+ testthat      3.0.2   2021-02-14 [1] CRAN (R 3.6.2)
+ tibble        3.1.0   2021-02-25 [1] CRAN (R 3.6.3)
+ tidyselect    1.1.0   2020-05-11 [1] CRAN (R 3.6.2)
+ usethis     * 2.0.1   2021-02-10 [1] CRAN (R 3.6.2)
+ utf8          1.1.4   2018-05-24 [1] CRAN (R 3.6.0)
+ vctrs         0.3.6   2020-12-17 [1] CRAN (R 3.6.2)
+ withr         2.4.1   2021-01-26 [1] CRAN (R 3.6.2)
+ xfun          0.21    2021-02-10 [1] CRAN (R 3.6.2)
+ yaml          2.2.1   2020-02-01 [1] CRAN (R 3.6.0)
+
+[1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library</code></pre>
+</div>

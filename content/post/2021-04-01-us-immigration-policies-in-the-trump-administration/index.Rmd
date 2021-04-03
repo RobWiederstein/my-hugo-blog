@@ -1,0 +1,190 @@
+---
+title: US Immigration Policies in the Trump Administration
+author: Rob Wiederstein
+date: '2021-04-01'
+slug: us-immigration-policies-in-the-trump-administration
+categories:
+  - R
+tags: []
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: feature.jpg
+  alt: immigration sign
+  caption: Photo by Nick Youngson CC BY-SA 3.0 pix4free.org.  Image cropped and rescaled from original.
+repo: ~
+summary: This post presents a timeline of US immigration policy from the Immigration Policy Tracking Project and Professor Lucas Guttentag.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown',
+      'dplyr',
+      'ggplot2',
+      'lubridate',
+      'rvest'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
+library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+```{r load-data, include=F}
+file <- "~/Dropbox/public/datasets/2021-04-01-us-immigration-policies-guttentag.csv"
+df <- readr::read_csv(file = file)
+#date
+df$date_ann_1 <- gsub(",", "", df$date_ann)
+df$date_ann <- as.Date(df$date_ann_1, format = "%B %d %Y")
+df <- select(df, url:agencies)
+df <- tidyr::separate_rows(df, status, sep = "\\|")
+df <- dplyr::filter(df, status == "Final/Actual")
+df$action <- sapply(stringr::str_split(df$action, "\\|"), '[[', 1)
+df$action <- gsub("Information", "Info\\.", df$action)
+df$action <- gsub("Collection", "Coll\\.", df$action)
+df$action <- gsub("Presidential", "Pres\\.", df$action)
+unique(df$action)
+df$action <- forcats::fct_lump(df$action, n = 6)
+df$n <- 1
+```
+
+# [Overview](#overview)
+
+The post uses the data from the [Immigration Policy Tracking Project](https://immpolicytracking.org/home/), a project of Professor Lucas Guttentag, with the assistance of Stanford and Yale law students. The post explores the volume and type of changes in immigration policies of the U.S. during President Trump's administration.
+
+# [Background](#background)
+
+Beginning in January of 2017, Professor Guttentag began compiling the different changes in administration policy with regards to immigration.[@guttentagImmigrationPolicyTracking2021]  As of the date the data was scraped from the website, there have been 1064 changes. 
+
+# [Data and model](#data)
+
+The data for the project was scraped from the website using `rvest`. @R-rvest
+
+# [Results](#results)
+
+## Plot Policy Changes by Type
+
+```{r plot-imm-actions, out.width="100%"}
+library(lubridate)
+library(dplyr)
+df.1 <-
+        df %>%
+        mutate(month = month(date_ann), year = year(date_ann)) %>%
+        group_by(month, year) %>%
+        mutate(total = sum(n)) %>%
+        arrange(year, month)
+df.1 <- df %>% 
+        select(date_ann, action, n) %>%
+        group_by(month = floor_date(date_ann, unit = "month"), action) %>%
+        summarize(total = sum(n))
+library(magrittr)
+library(ggplot2)
+p <- ggplot(df.1, aes(x = month, y = total, group = action, fill = action))
+p <- p + geom_bar(stat = "identity")
+p <- p + scale_x_date(NULL, date_labels = "%b %y", breaks = "year")
+p <- p +scale_fill_brewer(palette="Accent")
+p <- p + ggtitle("U.S. Immigration Policy by Action")
+p <- p + labs(subtitle = "Jan. 2017 -- Jan. 2021",
+              caption = "Source: Immigration Policy Tracking Project")
+p <- p + ggthemes::theme_fivethirtyeight()
+p
+```
+
+## Plot Google Search Volume
+
+```{r plot-google-searches, out.width="100%"}
+input <- "https://dl.dropbox.com/s/gqgnzwxr9l11e8p/2020-04-02-google-search-immigration.csv?dl=0"
+df.i <- data.table::fread(input = input, skip = 2)
+colnames(df.i) <- c("date", "imm")
+df.i$date <- as.Date(df.i$date, format = "%m/%d/%y")
+df.i <-
+  df.i %>%
+  dplyr::filter(date > "2017-01-01" & date <"2021-01-01")
+#plot
+p <- ggplot(df.i, aes(x = date, y = imm, colour = "mention"))
+p <- p + geom_line(color = cbPalette[2])
+p <- p + scale_x_date(NULL, date_labels = "%b %y", breaks = "year")
+p <- p + ggtitle("Google Searches for 'Immigration'")
+p <- p + labs(subtitle = "Jan. 2017 -- Jan. 2021",
+              caption = "Source: https://trends.google.com/trends/?geo=US")
+p <- p + tidyquant::geom_ma(n = 4, colour = "black",
+                            linetype = "solid")
+p <- p + ggthemes::theme_fivethirtyeight()
+p
+```
+
+
+
+# [Conclusion](#conclusion)
+
+The Trump administration made a consistent effort after the first couple of months in office to change existing immigration policies.  The policy initiatives seemed to spike at and around the November, 2020, election for the presidency.  Without a longer timeline, it is difficult to say how the Trump administration differed from previous adminisrations at least in terms of the volume and types of changes.
+
+# [Acknowledgements](#acknowledge)
+
+The author wishes to acknowledge and thank the following people and organizations:
+
+-  Roman Cheplyaka for the [tip](https://ro-che.info/articles/2017-02-22-group_by_month_r) to group the time series data using `lubridate::floor_date` function; and
+
+-  the [Immigration Policy Tracking Project](https://immpolicytracking.org/home/).
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```

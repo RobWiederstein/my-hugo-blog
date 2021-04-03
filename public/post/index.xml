@@ -6,7 +6,25 @@
     <description>Recent content in My Blog Posts on Rob Wiederstein - a blog about coding, data and public policy</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 01 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>US Immigration Policies in the Trump Administration</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/04/01/us-immigration-policies-in-the-trump-administration/</link>
+      <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/04/01/us-immigration-policies-in-the-trump-administration/</guid>
+      <description>This post presents a timeline of US immigration policy from the Immigration Policy Tracking Project and Professor Lucas Guttentag.</description>
+    </item>
+    
+    <item>
+      <title>Animal Ageing and Longevity</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/03/27/animal-ageing-and-longevity/</link>
+      <pubDate>Sat, 27 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/03/27/animal-ageing-and-longevity/</guid>
+      <description>This post uses a data set on animal ageing and longevity. It is compiled and maintained by the Human Ageing and Genomics Resources (&amp;ldquo;HAGR&amp;rdquo;) and is located at the  &lt;a href=&#34;https://www.senescence.info&#34;&gt;senescence.info website&lt;/a&gt; website.</description>
+    </item>
+    
     <item>
       <title>Lost Cargo in Wisconsin Shipwrecks</title>
       <link>https://keen-noether-7d2e44.netlify.app/2021/03/20/lost-cargo-in-wisconsin-shipwrecks/</link>
@@ -22,7 +40,7 @@
       <pubDate>Fri, 19 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>https://keen-noether-7d2e44.netlify.app/2021/03/19/shipwrecks-of-wisconsin/</guid>
-      <description>   </description>
+      <description>hello</description>
     </item>
     
     <item>
@@ -49,7 +67,7 @@
       <pubDate>Sat, 06 Mar 2021 00:00:00 +0000</pubDate>
       
       <guid>https://keen-noether-7d2e44.netlify.app/2021/03/06/my-hugo-archetype-for-r-blogdown/</guid>
-      <description>By default, Hugo automatically takes the first 70 words of your content as its summary and stores it into the &lt;code&gt;.Summary&lt;/code&gt; page variable for use in your templates. You may customize the summary length by setting &lt;code&gt;summaryLength&lt;/code&gt; in your site configuration &lt;em&gt;or&lt;/em&gt; you can set it in the front matter.</description>
+      <description>An archetype is a model to follow in drafting a post.  A number of other synomyms also come to mind like form, template, outline, scaffold or layout.  An archetype is a model kept within the archetypes folder in hugo.  It&amp;rsquo;s a smart way to bring consistency to your posts. Below is the archetype I use in rending an &lt;code&gt;R&lt;/code&gt; analysis.</description>
     </item>
     
     <item>
@@ -71,12 +89,30 @@
     </item>
     
     <item>
+      <title>Primer on Working with Go Templates</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/02/19/primer-on-working-with-go-templates/</link>
+      <pubDate>Fri, 19 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/19/primer-on-working-with-go-templates/</guid>
+      <description>Knowing a little bit about the go templating language will help you understand the syntax of layout templates in HUGO.</description>
+    </item>
+    
+    <item>
       <title>Insert HTML Widgets in Blogdown</title>
       <link>https://keen-noether-7d2e44.netlify.app/2021/02/15/insert_htmlwidget/</link>
       <pubDate>Mon, 15 Feb 2021 00:00:00 +0000</pubDate>
       
       <guid>https://keen-noether-7d2e44.netlify.app/2021/02/15/insert_htmlwidget/</guid>
       <description>Blogdown &amp;amp; Hugo allow for the insertion of html widgets like leaflet. This is a huge time saver because one doesn&amp;rsquo;t need to learn java and can instead stay within the &lt;code&gt;R&lt;/code&gt; environment.</description>
+    </item>
+    
+    <item>
+      <title>Ten Tips to Working with Blogdown</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/02/11/ten-tips-to-working-with-blogdown/</link>
+      <pubDate>Thu, 11 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/02/11/ten-tips-to-working-with-blogdown/</guid>
+      <description>hello</description>
     </item>
     
   </channel>
