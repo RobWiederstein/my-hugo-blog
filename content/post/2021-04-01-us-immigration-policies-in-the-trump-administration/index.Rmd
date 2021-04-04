@@ -5,7 +5,9 @@ date: '2021-04-01'
 slug: us-immigration-policies-in-the-trump-administration
 categories:
   - R
-tags: []
+  - immigration
+tags:
+  - rvest
 layout: layouts/post/single
 draft: no
 bibliography:
@@ -19,10 +21,9 @@ header:
   image: feature.jpg
   alt: immigration sign
   caption: Photo by Nick Youngson CC BY-SA 3.0 pix4free.org.  Image cropped and rescaled from original.
-repo: ~
+repo: https://raw.githubusercontent.com/RobWiederstein/purple-bananas/main/content/post/2021-04-01-us-immigration-policies-in-the-trump-administration/index.Rmd
 summary: This post presents a timeline of US immigration policy from the Immigration Policy Tracking Project and Professor Lucas Guttentag.
 ---
-
 
 ```{r load-packages, include = F}
 ## Load frequently used packages for blog posts
@@ -33,7 +34,8 @@ packages <- c(
       'dplyr',
       'ggplot2',
       'lubridate',
-      'rvest'
+      'rvest',
+      'tidyquant'
 )
 lapply(packages, function(x) {
   if (!requireNamespace(x)) install.packages(x)
@@ -96,11 +98,11 @@ df$n <- 1
 
 # [Overview](#overview)
 
-The post uses the data from the [Immigration Policy Tracking Project](https://immpolicytracking.org/home/), a project of Professor Lucas Guttentag, with the assistance of Stanford and Yale law students. The post explores the volume and type of changes in immigration policies of the U.S. during President Trump's administration.
+The post uses the data from the [Immigration Policy Tracking Project](https://immpolicytracking.org/home/), a project of Professor Lucas Guttentag, with the assistance of Stanford and Yale law students. The post explores the volume and type of changes in immigration policies of the U.S. during President Trump's administration. It is informally known as the "Trump-tracker."
 
 # [Background](#background)
 
-Beginning in January of 2017, Professor Guttentag began compiling the different changes in administration policy with regards to immigration.[@guttentagImmigrationPolicyTracking2021]  As of the date the data was scraped from the website, there have been 1064 changes. 
+Beginning in January of 2017, Professor Guttentag began compiling the different changes in administration policy with regards to immigration.[@guttentagImmigrationPolicyTracking2021]  On April 1, 2021, the data was scraped from the website and there were 1064 changes during President Trump's tenure.
 
 # [Data and model](#data)
 
@@ -138,6 +140,12 @@ p
 
 ## Plot Google Search Volume
 
+The google search volume was downloaded for the term 'immigration' over a five year period. The highest value over the time period is assigned a value of 100.The google trend data is reported on a weekly basis.  A simple 4 interval moving average was superimposed to eliminate volatility using the `tidyquant` package.  @R-tidyquant
+
+Google trends found the highest value to have occurred in January, 2017, just after President Trump took office. It should be noted that other reasons for the surge in "immigration" searches, other than changes in U.S. policy and President Trump, might account for the interest on the internet.
+
+
+
 ```{r plot-google-searches, out.width="100%"}
 input <- "https://dl.dropbox.com/s/gqgnzwxr9l11e8p/2020-04-02-google-search-immigration.csv?dl=0"
 df.i <- data.table::fread(input = input, skip = 2)
@@ -159,11 +167,12 @@ p <- p + ggthemes::theme_fivethirtyeight()
 p
 ```
 
+The first surge in immigration search was in January, 2017 and may have been as a result of three sweeping executive orders President Trump issued.  The first executive order became known as the ["muslim ban"](https://www.cnn.com/2017/01/28/politics/donald-trump-executive-order-immigration-reaction/index.html) by its critics and created confustion as to who could be admitted to the U.S. The second order required the building of the Mexican border wall.  And finally, the third order expanded efforts to cut illegal immigration.  See story [here.](https://www.nytimes.com/2017/01/25/us/politics/refugees-immigrants-wall-trump.html)  The second surge occurred May of 2018 when two GOP sponsored [bills](https://www.usatoday.com/story/news/politics/2018/06/20/house-gop-disarray-ahead-key-immigration-votes/718039002/) were scheduled for a vote.
 
 
 # [Conclusion](#conclusion)
 
-The Trump administration made a consistent effort after the first couple of months in office to change existing immigration policies.  The policy initiatives seemed to spike at and around the November, 2020, election for the presidency.  Without a longer timeline, it is difficult to say how the Trump administration differed from previous adminisrations at least in terms of the volume and types of changes.
+The Trump administration made a consistent effort after the first couple of months in office to change existing immigration policies.  The policy initiatives seemed to spike at and around the November, 2020, election for the presidency.  Without a longer timeline, it is difficult to say how the Trump administration differed from previous adminisrations at least in terms of the volume and types of changes. Public interest in immigration appeared to have waned in the end of Trump's term when measured by internet searches.  Of course, the pandemic was the preeminent story for most of 2020 and may have subsumed the public's attention.
 
 # [Acknowledgements](#acknowledge)
 

@@ -5,7 +5,9 @@ date: '2021-04-01'
 slug: us-immigration-policies-in-the-trump-administration
 categories:
   - R
-tags: []
+  - immigration
+tags:
+  - rvest
 layout: layouts/post/single
 draft: no
 bibliography:
@@ -19,7 +21,7 @@ header:
   image: feature.jpg
   alt: immigration sign
   caption: Photo by Nick Youngson CC BY-SA 3.0 pix4free.org.  Image cropped and rescaled from original.
-repo: ~
+repo: https://raw.githubusercontent.com/RobWiederstein/purple-bananas/main/content/post/2021-04-01-us-immigration-policies-in-the-trump-administration/index.Rmd
 summary: This post presents a timeline of US immigration policy from the Immigration Policy Tracking Project and Professor Lucas Guttentag.
 ---
 
@@ -45,11 +47,11 @@ summary: This post presents a timeline of US immigration policy from the Immigra
 
 <div id="overview" class="section level1">
 <h1><a href="#overview">Overview</a></h1>
-<p>The post uses the data from the <a href="https://immpolicytracking.org/home/">Immigration Policy Tracking Project</a>, a project of Professor Lucas Guttentag, with the assistance of Stanford and Yale law students. The post explores the volume and type of changes in immigration policies of the U.S. during President Trump’s administration.</p>
+<p>The post uses the data from the <a href="https://immpolicytracking.org/home/">Immigration Policy Tracking Project</a>, a project of Professor Lucas Guttentag, with the assistance of Stanford and Yale law students. The post explores the volume and type of changes in immigration policies of the U.S. during President Trump’s administration. It is informally known as the “Trump-tracker.”</p>
 </div>
 <div id="background" class="section level1">
 <h1><a href="#background">Background</a></h1>
-<p>Beginning in January of 2017, Professor Guttentag began compiling the different changes in administration policy with regards to immigration.<span class="citation"><a href="#ref-guttentagImmigrationPolicyTracking2021" role="doc-biblioref">[1]</a></span> As of the date the data was scraped from the website, there have been 1064 changes.</p>
+<p>Beginning in January of 2017, Professor Guttentag began compiling the different changes in administration policy with regards to immigration.<span class="citation"><a href="#ref-guttentagImmigrationPolicyTracking2021" role="doc-biblioref">[1]</a></span> On April 1, 2021, the data was scraped from the website and there were 1064 changes during President Trump’s tenure.</p>
 </div>
 <div id="data-and-model" class="section level1">
 <h1><a href="#data">Data and model</a></h1>
@@ -63,12 +65,15 @@ summary: This post presents a timeline of US immigration policy from the Immigra
 </div>
 <div id="plot-google-search-volume" class="section level2">
 <h2>Plot Google Search Volume</h2>
+<p>The google search volume was downloaded for the term ‘immigration’ over a five year period. The highest value over the time period is assigned a value of 100.The google trend data is reported on a weekly basis. A simple 4 interval moving average was superimposed to eliminate volatility using the <code>tidyquant</code> package. <span class="citation"><a href="#ref-R-tidyquant" role="doc-biblioref">[3]</a></span></p>
+<p>Google trends found the highest value to have occurred in January, 2017, just after President Trump took office. It should be noted that other reasons for the surge in “immigration” searches, other than changes in U.S. policy and President Trump, might account for the interest on the internet.</p>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/plot-google-searches-1.svg" width="100%" style="display: block; margin: auto;" /></p>
+<p>The first surge in immigration search was in January, 2017 and may have been as a result of three sweeping executive orders President Trump issued. The first executive order became known as the <a href="https://www.cnn.com/2017/01/28/politics/donald-trump-executive-order-immigration-reaction/index.html">“muslim ban”</a> by its critics and created confustion as to who could be admitted to the U.S. The second order required the building of the Mexican border wall. And finally, the third order expanded efforts to cut illegal immigration. See story <a href="https://www.nytimes.com/2017/01/25/us/politics/refugees-immigrants-wall-trump.html">here.</a> The second surge occurred May of 2018 when two GOP sponsored <a href="https://www.usatoday.com/story/news/politics/2018/06/20/house-gop-disarray-ahead-key-immigration-votes/718039002/">bills</a> were scheduled for a vote.</p>
 </div>
 </div>
 <div id="conclusion" class="section level1">
 <h1><a href="#conclusion">Conclusion</a></h1>
-<p>The Trump administration made a consistent effort after the first couple of months in office to change existing immigration policies. The policy initiatives seemed to spike at and around the November, 2020, election for the presidency. Without a longer timeline, it is difficult to say how the Trump administration differed from previous adminisrations at least in terms of the volume and types of changes.</p>
+<p>The Trump administration made a consistent effort after the first couple of months in office to change existing immigration policies. The policy initiatives seemed to spike at and around the November, 2020, election for the presidency. Without a longer timeline, it is difficult to say how the Trump administration differed from previous adminisrations at least in terms of the volume and types of changes. Public interest in immigration appeared to have waned in the end of Trump’s term when measured by internet searches. Of course, the pandemic was the preeminent story for most of 2020 and may have subsumed the public’s attention.</p>
 </div>
 <div id="acknowledgements" class="section level1">
 <h1><a href="#acknowledge">Acknowledgements</a></h1>
@@ -87,11 +92,14 @@ summary: This post presents a timeline of US immigration policy from the Immigra
 <div id="ref-R-rvest" class="csl-entry">
 <div class="csl-left-margin">[2] </div><div class="csl-right-inline">H. Wickham, <em>Rvest: Easily harvest (scrape) web pages</em>. 2020 [Online]. Available: <a href="https://CRAN.R-project.org/package=rvest">https://CRAN.R-project.org/package=rvest</a></div>
 </div>
+<div id="ref-R-tidyquant" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">M. Dancho and D. Vaughan, <em>Tidyquant: Tidy quantitative financial analysis</em>. 2021 [Online]. Available: <a href="https://github.com/business-science/tidyquant">https://github.com/business-science/tidyquant</a></div>
+</div>
 <div id="ref-R-base" class="csl-entry">
-<div class="csl-left-margin">[3] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2020 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2020 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
 </div>
 <div id="ref-R-blogdown" class="csl-entry">
-<div class="csl-left-margin">[4] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
 </div>
 </div>
 </div>
