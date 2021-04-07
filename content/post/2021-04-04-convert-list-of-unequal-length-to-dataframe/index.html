@@ -21,7 +21,7 @@ header:
   alt: list of unequal lengths
   caption: Lists are difficult to convert to a dataframe when they have unequal lengths.
 repo: ~
-summary: Lists as a data type can be confusing but also useful.  They can hold data of different types and lengths, making them versatile.  When dealing with lists, it is important to know whether it is a named, nested, and the length of the elements. This post deals with converting a list to a dataframe when it has unequal lengths.
+summary: Lists as a data type can be confusing but also useful.  They can hold data of different types and lengths, making them very versatile.  Lists can be named or nested and have the same or different lengths. This post deals with converting a list to a dataframe when it has unequal lengths.
 ---
 
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
@@ -44,20 +44,23 @@ summary: Lists as a data type can be confusing but also useful.  They can hold d
 
 <div id="create-a-named-list" class="section level1">
 <h1>Create a Named List</h1>
-<pre class="r"><code>my.l &lt;- list()
+<p>First, we’ll create a named, nested list of different lengths. (This is a list of named lists). This example comes from blogging where authors will assign a category and tags to a post. The categories and tags may have just one or many values.</p>
+<pre class="r"><code># my list (my.l)
+my.l &lt;- list()
 my.l[[1]] &lt;- list(categories = &quot;R&quot;, tags = &quot;list&quot;)
 my.l[[2]] &lt;- list(categories = &quot;R&quot;, tags = c(&quot;list&quot;, &quot;dataframe&quot;))
 names(my.l) &lt;- c(&quot;post_1&quot;, &quot;post_2&quot;)</code></pre>
 </div>
 <div id="generate-error" class="section level1">
 <h1>Generate error</h1>
-<p>Several methods for converting lists to dataframe can be found in this stackoverflow <a href="https://stackoverflow.com/questions/4227223/convert-a-list-to-a-data-frame">question.</a>. However, when the method is applied to the above list it generates an error because the ‘tags’ variable has one value in <code>post_1</code> and two values in <code>post_2</code>. The error reads, “invalid list argument: all variables should have the same length.” This is a common problem when scraping webpages where the <code>html_nodes</code> function will sometimes be ‘greedy’ and include multiple values from a page. Others have noted the problem when an api call is made and the response is returned with missing values.</p>
-<pre class="r"><code># Many potential solutions
+<p>Several methods for converting lists to dataframe can be found in this stackoverflow <a href="https://stackoverflow.com/questions/4227223/convert-a-list-to-a-data-frame">question</a>. However, when the most popular method is applied to the above list, it generates an error because the ‘tags’ variable has one value in <code>post_1</code> and two values in <code>post_2</code>. The error reads, “invalid list argument: all variables should have the same length.” This is a common problem when scraping webpages where the <code>html_nodes</code> function will sometimes capture multiple values from a page. Others have noted the problem when an api call is made and the response is returned with missing values.</p>
+<pre class="r"><code># Top solution on Stackoverflow
 do.call(rbind.data.frame, my.l)</code></pre>
 <pre><code>Error in (function (..., deparse.level = 1, make.row.names = TRUE, stringsAsFactors = default.stringsAsFactors(), : invalid list argument: all variables should have the same length</code></pre>
 </div>
 <div id="simple-solution" class="section level1">
 <h1><a href="#simple">Simple Solution</a></h1>
+<p>Probably, the fastest and most direct method is to use the <code>rbindlist</code> function from the <code>data.table</code> package. Note the list names are omitted.</p>
 <pre class="r"><code>data.table::rbindlist(my.l, fill = TRUE)</code></pre>
 <pre><code>   categories      tags
 1:          R      list
@@ -66,6 +69,7 @@ do.call(rbind.data.frame, my.l)</code></pre>
 </div>
 <div id="not-so-simple-solution" class="section level1">
 <h1><a href="#solution">Not-so-simple Solution</a></h1>
+<p>This is the not-so-simple solution. It introduced me to a new apply funcion <code>rapply</code>. It recursively applies a function to a list so will work in nested list situations. Collapsing all of the values into a single column in a data.frame allows me to easily inspect the differences as it iterates over the list. It also allows me flexibility to split the column by row or column.</p>
 <pre class="r"><code># combine with info from list page
 new.l &lt;- rapply(my.l, function(x) paste(x, collapse = &quot;|&quot;), how = &quot;replace&quot;)
 # fast
@@ -78,6 +82,7 @@ dt</code></pre>
 </div>
 <div id="separate-rows" class="section level1">
 <h1>Separate Rows</h1>
+<p>Using the example above, separating by row makes more sense as it would allow to the dataframe to be filtered by both category and tag.</p>
 <pre class="r"><code>dt %&gt;% tidyr::separate_rows(tags, sep = &quot;\\|&quot;)</code></pre>
 <pre><code># A tibble: 3 x 3
   categories tags      names 
@@ -88,6 +93,7 @@ dt</code></pre>
 </div>
 <div id="separate-columns" class="section level1">
 <h1>Separate Columns</h1>
+<p>Using the example above, you can also separate the column by a character as well. I’m not sure it makes a lot of sense for this example.</p>
 <pre class="r"><code>dt %&gt;% tidyr::separate(tags, into = c(&quot;tag_1&quot;, &quot;tag_2&quot;), sep = &quot;\\|&quot;)</code></pre>
 <pre><code>   categories tag_1     tag_2  names
 1:          R  list      &lt;NA&gt; post_1
@@ -95,10 +101,7 @@ dt</code></pre>
 </div>
 <div id="other-packages" class="section level1">
 <h1>Other Packages</h1>
-<ul>
-<li><p><code>purrr</code><span class="citation"><a href="#ref-R-purrr" role="doc-biblioref">[1]</a></span></p></li>
-<li><p><code>rlist</code><span class="citation"><a href="#ref-R-rlist" role="doc-biblioref"><strong>R-rlist?</strong></a></span></p></li>
-</ul>
+<p>Two other packages offer similar functionality. The first package <code>purrr</code> has a function <code>map_dfr</code> which returns a data frame created by row-binding and column-binding respectively. <span class="citation"><a href="#ref-R-purrr" role="doc-biblioref">[1]</a></span> The second package is <code>rlist</code> which has functions <code>list.rbind</code> and <code>list.cbind</code> for the task. <span class="citation"><a href="#ref-R-rlist" role="doc-biblioref">[2]</a></span></p>
 </div>
 <div id="acknowledgements" class="section level1">
 <h1><a href="#acknowledge">Acknowledgements</a></h1>
@@ -116,14 +119,17 @@ dt</code></pre>
 <div id="ref-R-purrr" class="csl-entry">
 <div class="csl-left-margin">[1] </div><div class="csl-right-inline">L. Henry and H. Wickham, <em>Purrr: Functional programming tools</em>. 2020 [Online]. Available: <a href="https://CRAN.R-project.org/package=purrr">https://CRAN.R-project.org/package=purrr</a></div>
 </div>
+<div id="ref-R-rlist" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">K. Ren, <em>Rlist: A toolbox for non-tabular data manipulation</em>. 2016 [Online]. Available: <a href="https://CRAN.R-project.org/package=rlist">https://CRAN.R-project.org/package=rlist</a></div>
+</div>
 <div id="ref-R-base" class="csl-entry">
-<div class="csl-left-margin">[2] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2020 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2020 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
 </div>
 <div id="ref-R-blogdown" class="csl-entry">
-<div class="csl-left-margin">[3] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
 </div>
 <div id="ref-R-tidyverse" class="csl-entry">
-<div class="csl-left-margin">[4] </div><div class="csl-right-inline">H. Wickham, <em>Tidyverse: Easily install and load the tidyverse</em>. 2019 [Online]. Available: <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a></div>
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">H. Wickham, <em>Tidyverse: Easily install and load the tidyverse</em>. 2019 [Online]. Available: <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a></div>
 </div>
 </div>
 </div>

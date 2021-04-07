@@ -21,7 +21,7 @@ header:
   alt: list of unequal lengths
   caption: Lists are difficult to convert to a dataframe when they have unequal lengths.
 repo: ~
-summary: Lists as a data type can be confusing but also useful.  They can hold data of different types and lengths, making them versatile.  When dealing with lists, it is important to know whether it is a named, nested, and the length of the elements. This post deals with converting a list to a dataframe when it has unequal lengths.
+summary: Lists as a data type can be confusing but also useful.  They can hold data of different types and lengths, making them very versatile.  Lists can be named or nested and have the same or different lengths. This post deals with converting a list to a dataframe when it has unequal lengths.
 ---
 
 
@@ -78,7 +78,10 @@ knitr::write_bib(.packages(), "./packages.bib")
 
 # Create a Named List
 
+First, we'll create a named, nested list of different lengths. (This is a list of named lists). This example comes from blogging where authors will assign a category and tags to a post.  The categories and tags may have just one or many values.
+
 ```{r, echo = T}
+# my list (my.l)
 my.l <- list()
 my.l[[1]] <- list(categories = "R", tags = "list")
 my.l[[2]] <- list(categories = "R", tags = c("list", "dataframe"))
@@ -87,21 +90,25 @@ names(my.l) <- c("post_1", "post_2")
 
 # Generate error
 
-Several methods for converting lists to dataframe can be found in this stackoverflow [question.](https://stackoverflow.com/questions/4227223/convert-a-list-to-a-data-frame).  However, when the method is applied to the above list it generates an error because the 'tags' variable has one value in `post_1` and two values in  `post_2`.  The error reads, "invalid list argument: all variables should have the same length."  This is a common problem when scraping webpages where the `html_nodes` function will sometimes be 'greedy' and include multiple values from a page. Others have noted the problem when an api call is made and the response is returned with missing values.
+Several methods for converting lists to dataframe can be found in this stackoverflow [question](https://stackoverflow.com/questions/4227223/convert-a-list-to-a-data-frame).  However, when the most popular method is applied to the above list, it generates an error because the 'tags' variable has one value in `post_1` and two values in  `post_2`.  The error reads, "invalid list argument: all variables should have the same length."  This is a common problem when scraping webpages where the `html_nodes` function will sometimes capture multiple values from a page. Others have noted the problem when an api call is made and the response is returned with missing values.
 
 
 ```{r generate-error, echo=T, error=T}
-# Many potential solutions
+# Top solution on Stackoverflow
 do.call(rbind.data.frame, my.l)
 ```
 
 # [Simple Solution](#simple)
+
+Probably, the fastest and most direct method is to use the `rbindlist` function from the `data.table` package. Note the list names are omitted.
 
 ```{r rbindlist-solution, echo = T}
 data.table::rbindlist(my.l, fill=TRUE)
 ```
 
 # [Not-so-simple Solution](#solution)
+
+This is the not-so-simple solution.  It introduced me to a new apply funcion `rapply`.  It recursively applies a function to a list so will work in nested list situations. Collapsing all of the values into a single column in a data.frame allows me to easily inspect the differences as it iterates over the list.  It also allows me flexibility to split the column by row or column.
 
 ```{r solution, echo=T, warning = F}
 #combine with info from list page
@@ -114,11 +121,15 @@ dt
 
 # Separate Rows
 
+Using the example above, separating by row makes more sense as it would allow to the dataframe to be filtered by both category and tag.
+
 ```{r, separate-rows, echo = T}
 dt %>% tidyr::separate_rows(tags, sep = "\\|")
 ```
 
 # Separate Columns
+
+Using the example above, you can also separate the column by a character as well.  I'm not sure it makes a lot of sense for this example.
 
 ```{r separate-cols, echo = T}
 dt %>% tidyr::separate(tags, into = c("tag_1", "tag_2"), sep ="\\|")
@@ -126,9 +137,7 @@ dt %>% tidyr::separate(tags, into = c("tag_1", "tag_2"), sep ="\\|")
 
 # Other Packages
 
-- `purrr`@R-purrr
-
-- `rlist`@R-rlist
+Two other packages offer similar functionality.  The first package `purrr` has a function `map_dfr` which returns a data frame created by row-binding and column-binding respectively. @R-purrr The second package is `rlist` which has functions `list.rbind` and `list.cbind` for the task.  @R-rlist
 
 # [Acknowledgements](#acknowledge)
 
@@ -136,7 +145,7 @@ This blog post was made possible thanks to:
 
 - [Converting a list to a data frame -- Jason Bryer](https://www.r-bloggers.com/2013/01/converting-a-list-to-a-data-frame/)
 
-- [Converting nested list to dataframe
+-  [Converting nested list to dataframe
 -- 27 ϕ 9](https://stackoverflow.com/questions/26177565/converting-nested-list-to-dataframe)
 
 - [Neatest way to build a data frame from a list of lists in R
