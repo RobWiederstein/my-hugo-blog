@@ -1,0 +1,159 @@
+---
+title: Convert List of Unequal Length to Dataframe
+author: Rob Wiederstein
+date: '2021-04-04'
+slug: convert-list-of-unequal-length-to-dataframe
+categories:
+  - R
+tags:
+  - list
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: feature.jpg
+  alt: list of unequal lengths
+  caption: Lists are difficult to convert to a dataframe when they have unequal lengths.
+repo: ~
+summary: Lists as a data type can be confusing but also useful.  They can hold data of different types and lengths, making them versatile.  When dealing with lists, it is important to know whether it is a named, nested, and the length of the elements. This post deals with converting a list to a dataframe when it has unequal lengths.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown',
+      'tidyverse',
+      'rlist',
+      'purrr'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
+library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+# Create a Named List
+
+```{r, echo = T}
+my.l <- list()
+my.l[[1]] <- list(categories = "R", tags = "list")
+my.l[[2]] <- list(categories = "R", tags = c("list", "dataframe"))
+names(my.l) <- c("post_1", "post_2")
+```
+
+# Generate error
+
+Several methods for converting lists to dataframe can be found in this stackoverflow [question.](https://stackoverflow.com/questions/4227223/convert-a-list-to-a-data-frame).  However, when the method is applied to the above list it generates an error because the 'tags' variable has one value in `post_1` and two values in  `post_2`.  The error reads, "invalid list argument: all variables should have the same length."  This is a common problem when scraping webpages where the `html_nodes` function will sometimes be 'greedy' and include multiple values from a page. Others have noted the problem when an api call is made and the response is returned with missing values.
+
+
+```{r generate-error, echo=T, error=T}
+# Many potential solutions
+do.call(rbind.data.frame, my.l)
+```
+
+# [Simple Solution](#simple)
+
+```{r rbindlist-solution, echo = T}
+data.table::rbindlist(my.l, fill=TRUE)
+```
+
+# [Not-so-simple Solution](#solution)
+
+```{r solution, echo=T, warning = F}
+#combine with info from list page
+new.l <-rapply(my.l, function(x) paste(x, collapse = "|"), how='replace')
+#fast
+dt <- data.table::rbindlist(new.l)
+dt$names <- names(new.l)
+dt
+```
+
+# Separate Rows
+
+```{r, separate-rows, echo = T}
+dt %>% tidyr::separate_rows(tags, sep = "\\|")
+```
+
+# Separate Columns
+
+```{r separate-cols, echo = T}
+dt %>% tidyr::separate(tags, into = c("tag_1", "tag_2"), sep ="\\|")
+```
+
+# Other Packages
+
+- `purrr`@R-purrr
+
+- `rlist`@R-rlist
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+- [Converting a list to a data frame -- Jason Bryer](https://www.r-bloggers.com/2013/01/converting-a-list-to-a-data-frame/)
+
+- [Converting nested list to dataframe
+-- 27 ϕ 9](https://stackoverflow.com/questions/26177565/converting-nested-list-to-dataframe)
+
+- [Neatest way to build a data frame from a list of lists in R
+](https://stackoverflow.com/questions/48608195/neatest-way-to-build-a-data-frame-from-a-list-of-lists-in-r)
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```

@@ -167,7 +167,7 @@ p <- p + ggthemes::theme_fivethirtyeight()
 p
 ```
 
-The first surge in immigration search was in January, 2017 and may have been as a result of three sweeping executive orders President Trump issued.  The first executive order became known as the ["muslim ban"](https://www.cnn.com/2017/01/28/politics/donald-trump-executive-order-immigration-reaction/index.html) by its critics and created confustion as to who could be admitted to the U.S. The second order required the building of the Mexican border wall.  And finally, the third order expanded efforts to cut illegal immigration.  See story [here.](https://www.nytimes.com/2017/01/25/us/politics/refugees-immigrants-wall-trump.html)  The second surge occurred May of 2018 when two GOP sponsored [bills](https://www.usatoday.com/story/news/politics/2018/06/20/house-gop-disarray-ahead-key-immigration-votes/718039002/) were scheduled for a vote.
+The first surge in immigration search was in January, 2017 and may have been as a result of three sweeping executive orders President Trump issued.  The first executive order became known as the ["muslim ban"](https://www.cnn.com/2017/01/28/politics/donald-trump-executive-order-immigration-reaction/index.html) by its critics and created confustion as to who could be admitted to the U.S. The second order required the building of the Mexican border wall.  And finally, the third order expanded efforts to cut illegal immigration.  See story [here.](https://www.nytimes.com/2017/01/25/us/politics/refugees-immigrants-wall-trump.html)  
 
 
 # [Conclusion](#conclusion)
