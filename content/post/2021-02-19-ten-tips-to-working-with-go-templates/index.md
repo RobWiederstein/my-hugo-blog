@@ -10,7 +10,7 @@ tags: []
 draft: no
 toc: yes
 header:
-   image: go-logo.jpg
+   image: feature.jpg
    alt: go logo
    caption: Go is the templating language behind HUGO. 
 summary:  Knowing a little bit about the go templating language will help you understand the syntax of layout templates in HUGO.

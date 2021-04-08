@@ -16,7 +16,7 @@ link-citations: yes
 nocite: |
   @R-base, @R-blogdown
 header:
-   image: nautical-chart-1200x630.jpg
+   image: feature.jpg
    alt: standard nautical chart with buoys
    caption: A sample nautical chart from the U.S. Coastguard Navigation Aid booklet.
 summary: There is a wide variety of navigational aids and they are classified according to an international system.

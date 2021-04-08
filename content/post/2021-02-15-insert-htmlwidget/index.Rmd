@@ -11,10 +11,8 @@ tags:
   - leaflet
   - plotly
   - sigmajs
-image: leaflet-widget-embed-1200-630.jpg
-caption:
 header:
-   image: leaflet-widget-embed-1200-630.jpg
+   image: feature.jpg
    alt: leaflet map of Evansville
    caption: An embedded leaflet map of downtown Evansville.
 summary: Blogdown & Hugo allow for the insertion of html widgets like leaflet. This is a huge time saver because one doesn't need to learn java and can instead stay within the `R` environment.

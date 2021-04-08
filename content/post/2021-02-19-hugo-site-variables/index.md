@@ -9,7 +9,7 @@ categories:
 tags: []
 draft: no
 header:
-   image: hugo-logo.jpg
+   image: feature.jpg
    alt: hugo logo
    caption: Hugo is the static web site generator paired with blogdown.
 summary: Inspecting a hugo website will reveal templates dependent on variables.  You have to have an understanding of what variables are available and under what circumstances.  Careful reading of hugo documentation is helpful, but here are a few tips.

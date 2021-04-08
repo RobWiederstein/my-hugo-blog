@@ -10,7 +10,7 @@ tags:
 layout: layouts/post/single
 draft: no
 header:
-   image: xml-lighthouse-data.png
+   image: feature.png
    alt: xml code screenshot
    caption: A dataset that was only available in pdf or xml.
 summary: Everytime I run into a file with an `.xml` extension, I cringe.  Though, admittedly, it's a file format that you have to be familiar with when it comes to sending and receiving data over the web. `R` has a package `xlm2` to assist in the conversion of nested data to tabular data.
