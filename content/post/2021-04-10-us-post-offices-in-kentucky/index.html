@@ -1,0 +1,174 @@
+---
+title: US Post Offices in Kentucky
+author: Rob Wiederstein
+date: '2021-04-10'
+slug: us-post-offices-in-kentucky
+categories:
+  - R
+tags:
+  - ggmap
+  - gganimate
+  - ggplot2
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: ~
+  alt: ~
+  caption: ~
+repo: ~
+summary: By default, Hugo automatically takes the first 70 words of your content as
+  its summary and stores it into the `.Summary` page variable for use in your templates.
+  You may customize the summary length by setting `summaryLength` in your site configuration
+  *or* you can set it in the front matter.
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#overview"><span>Overview</span></a></li>
+<li><a href="#background"><span>Background</span></a></li>
+<li><a href="#data-and-model"><span>Data and model</span></a></li>
+<li><a href="#results"><span>Results</span></a></li>
+<li><a href="#conclusion"><span>Conclusion</span></a></li>
+<li><a href="#acknowledgements"><span>Acknowledgements</span></a></li>
+<li><a href="#references"><span>References</span></a></li>
+<li><a href="#disclaimer"><span>Disclaimer</span></a></li>
+<li><a href="#reproducibility"><span>Reproducibility</span></a></li>
+</ul>
+</div>
+
+<div id="overview" class="section level1">
+<h1><a href="#overview">Overview</a></h1>
+<p>(Describe the problem.)</p>
+</div>
+<div id="background" class="section level1">
+<h1><a href="#background">Background</a></h1>
+<p>(Who else has worked on this problem? What did they find?)</p>
+</div>
+<div id="data-and-model" class="section level1">
+<h1><a href="#data">Data and model</a></h1>
+<p><img src="my_gif.gif" style="display: block; margin: auto;" /></p>
+<p>(What data did you use, where did you get it?)</p>
+</div>
+<div id="results" class="section level1">
+<h1><a href="#results">Results</a></h1>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to:</p>
+<ul>
+<li><p><a href="https://www.littlemissdata.com/blog/maps">Map Plots Created With R And Ggmap</a></p></li>
+<li><p><a href="https://d4tagirl.com/2017/05/how-to-plot-animated-maps-with-gganimate">How to plot animated maps with gganimate</a></p></li>
+<li><p><a href="https://rpubs.com/jedoenriquez/animatingchartsintro">An Intro to Animating Charts with gganimate</a></p></li>
+<li><p><a href="https://stackoverflow.com/questions/57734180/cumulative-points-over-year-on-map-with-r-ggplot2-and-ggplotly">Cumulative points over year on map with R ggplot2 and ggplotly</a></p></li>
+<li><p><a href="https://stackoverflow.com/questions/60820794/using-gganimate-and-getting-all-kind-of-errors">Using gganimate and getting all kind of errors</a></p></li>
+</ul>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2020 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value                       
+ version  R version 3.6.3 (2020-02-29)
+ os       macOS Catalina 10.15.7      
+ system   x86_64, darwin15.6.0        
+ ui       X11                         
+ language (EN)                        
+ collate  en_US.UTF-8                 
+ ctype    en_US.UTF-8                 
+ tz       America/Chicago             
+ date     2021-04-10                  
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version date       lib source        
+ assertthat    0.2.1   2019-03-21 [1] CRAN (R 3.6.0)
+ blogdown    * 1.2     2021-03-04 [1] CRAN (R 3.6.3)
+ bookdown      0.21    2020-10-13 [1] CRAN (R 3.6.3)
+ bslib         0.2.4   2021-01-25 [1] CRAN (R 3.6.2)
+ cachem        1.0.4   2021-02-13 [1] CRAN (R 3.6.2)
+ callr         3.5.1   2020-10-13 [1] CRAN (R 3.6.2)
+ cli           2.3.1   2021-02-23 [1] CRAN (R 3.6.3)
+ codetools     0.2-18  2020-11-04 [1] CRAN (R 3.6.2)
+ colorspace    2.0-0   2020-11-11 [1] CRAN (R 3.6.2)
+ crayon        1.4.1   2021-02-08 [1] CRAN (R 3.6.2)
+ DBI           1.1.1   2021-01-15 [1] CRAN (R 3.6.2)
+ desc          1.3.0   2021-03-05 [1] CRAN (R 3.6.3)
+ devtools    * 2.3.2   2020-09-18 [1] CRAN (R 3.6.2)
+ digest        0.6.27  2020-10-24 [1] CRAN (R 3.6.2)
+ dplyr         1.0.5   2021-03-05 [1] CRAN (R 3.6.3)
+ ellipsis      0.3.1   2020-05-15 [1] CRAN (R 3.6.2)
+ evaluate      0.14    2019-05-28 [1] CRAN (R 3.6.0)
+ fansi         0.4.2   2021-01-15 [1] CRAN (R 3.6.2)
+ farver        2.1.0   2021-02-28 [1] CRAN (R 3.6.3)
+ fastmap       1.1.0   2021-01-25 [1] CRAN (R 3.6.2)
+ fs            1.5.0   2020-07-31 [1] CRAN (R 3.6.2)
+ generics      0.1.0   2020-10-31 [1] CRAN (R 3.6.2)
+ ggplot2     * 3.3.3   2020-12-30 [1] CRAN (R 3.6.2)
+ ggthemes    * 4.2.4   2021-01-20 [1] CRAN (R 3.6.2)
+ glue          1.4.2   2020-08-27 [1] CRAN (R 3.6.2)
+ gtable        0.3.0   2019-03-25 [1] CRAN (R 3.6.0)
+ highr         0.8     2019-03-20 [1] CRAN (R 3.6.0)
+ htmltools     0.5.1.1 2021-01-22 [1] CRAN (R 3.6.2)
+ jquerylib     0.1.3   2020-12-17 [1] CRAN (R 3.6.2)
+ jsonlite      1.7.2   2020-12-09 [1] CRAN (R 3.6.2)
+ knitr         1.31    2021-01-27 [1] CRAN (R 3.6.2)
+ labeling      0.4.2   2020-10-20 [1] CRAN (R 3.6.2)
+ lifecycle     1.0.0   2021-02-15 [1] CRAN (R 3.6.2)
+ magrittr      2.0.1   2020-11-17 [1] CRAN (R 3.6.2)
+ memoise       2.0.0   2021-01-26 [1] CRAN (R 3.6.2)
+ munsell       0.5.0   2018-06-12 [1] CRAN (R 3.6.0)
+ pillar        1.5.1   2021-03-05 [1] CRAN (R 3.6.3)
+ pkgbuild      1.2.0   2020-12-15 [1] CRAN (R 3.6.2)
+ pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 3.6.0)
+ pkgload       1.2.0   2021-02-23 [1] CRAN (R 3.6.3)
+ prettyunits   1.1.1   2020-01-24 [1] CRAN (R 3.6.0)
+ processx      3.4.5   2020-11-30 [1] CRAN (R 3.6.2)
+ ps            1.6.0   2021-02-28 [1] CRAN (R 3.6.3)
+ purrr         0.3.4   2020-04-17 [1] CRAN (R 3.6.2)
+ R6            2.5.0   2020-10-28 [1] CRAN (R 3.6.2)
+ remotes       2.2.0   2020-07-21 [1] CRAN (R 3.6.2)
+ rlang         0.4.10  2020-12-30 [1] CRAN (R 3.6.2)
+ rmarkdown     2.7     2021-02-19 [1] CRAN (R 3.6.3)
+ rprojroot     2.0.2   2020-11-15 [1] CRAN (R 3.6.2)
+ sass          0.3.1   2021-01-24 [1] CRAN (R 3.6.2)
+ scales        1.1.1   2020-05-11 [1] CRAN (R 3.6.2)
+ sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.6.0)
+ stringi       1.5.3   2020-09-09 [1] CRAN (R 3.6.2)
+ stringr       1.4.0   2019-02-10 [1] CRAN (R 3.6.0)
+ testthat      3.0.2   2021-02-14 [1] CRAN (R 3.6.2)
+ tibble        3.1.0   2021-02-25 [1] CRAN (R 3.6.3)
+ tidyselect    1.1.0   2020-05-11 [1] CRAN (R 3.6.2)
+ usethis     * 2.0.1   2021-02-10 [1] CRAN (R 3.6.2)
+ utf8          1.1.4   2018-05-24 [1] CRAN (R 3.6.0)
+ vctrs         0.3.6   2020-12-17 [1] CRAN (R 3.6.2)
+ withr         2.4.1   2021-01-26 [1] CRAN (R 3.6.2)
+ xfun          0.21    2021-02-10 [1] CRAN (R 3.6.2)
+ yaml          2.2.1   2020-02-01 [1] CRAN (R 3.6.0)
+
+[1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library</code></pre>
+</div>
