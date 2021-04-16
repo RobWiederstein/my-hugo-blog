@@ -19,14 +19,11 @@ link-citations: yes
 nocite: |
   @R-base, @R-blogdown, @R-tidyverse
 header:
-  image: ~
-  alt: ~
-  caption: ~
-repo: ~
-summary: By default, Hugo automatically takes the first 70 words of your content as
-  its summary and stores it into the `.Summary` page variable for use in your templates.
-  You may customize the summary length by setting `summaryLength` in your site configuration
-  *or* you can set it in the front matter.
+  image: feature.jpg
+  alt: rural post office
+  caption: Post office in Botto, Kentucky circa 1940 by Marion Wolcot, Library of Congress.  Cropped and rescaled.
+repo: "hello"
+summary: Data can yield new insights and enrich our understanding of history.  A new book by historian Cameron Blevins takes the location of U.S. post offices from 1639 to 2000 and plots them on a map by date of their establishment. The visual display shows the expansion of the American colonies westward.
 ---
 
 
@@ -78,13 +75,15 @@ cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00",
 knitr::write_bib(.packages(), "./packages.bib")
 ```
 
-# [Overview](#overview)
+# [Introduction](#intro)
 
+This project is a derivative of the U.S. Post Offices dataset by Cameron Blevins & Richard W. Helbock.  It contains the records of 166,140 post offices spanning from 1639 to 2000. Background for the Blevins-Helbock effort can be found on their [website](https://cblevins.github.io/us-post-offices/) and the new book, [Paper Trails: The US Post and the Making of the American West](https://global.oup.com/academic/product/paper-trails-9780190053673?cc=us&lang=en&), was recently published by Oxford Press. The only change for this post is that the dataset was filtered or subset to just Kentucky post offices.
 (Describe the problem.)
 
 # [Background](#background)
 
-(Who else has worked on this problem?  What did they find?)
+The dataset is hosted at [Harvard Dataverse](https://doi.org/10.7910/DVN/NUKCNA). The `R` code is in a github [repository](https://github.com/cblevins/us-post-offices) maintained by Cameron Blevins.
+[@blevinsUSPostOffices2021a]
 
 # [Data and model](#data)
 
@@ -111,6 +110,10 @@ This blog post was made possible thanks to:
 -  [Cumulative points over year on map with R ggplot2 and ggplotly](https://stackoverflow.com/questions/57734180/cumulative-points-over-year-on-map-with-r-ggplot2-and-ggplotly)
 
 -  [Using gganimate and getting all kind of errors](https://stackoverflow.com/questions/60820794/using-gganimate-and-getting-all-kind-of-errors)
+
+-  [how to make a data frame into a simple features data frame?](https://stackoverflow.com/questions/49181715/how-to-make-a-data-frame-into-a-simple-features-data-frame)
+
+-  [tmap: get started!](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-getstarted.html#multiple-shapes-and-layers)
 
 # [References](#reference)
 

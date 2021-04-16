@@ -19,21 +19,18 @@ link-citations: yes
 nocite: |
   @R-base, @R-blogdown, @R-tidyverse
 header:
-  image: ~
-  alt: ~
-  caption: ~
-repo: ~
-summary: By default, Hugo automatically takes the first 70 words of your content as
-  its summary and stores it into the `.Summary` page variable for use in your templates.
-  You may customize the summary length by setting `summaryLength` in your site configuration
-  *or* you can set it in the front matter.
+  image: feature.jpg
+  alt: rural post office
+  caption: Post office in Botto, Kentucky circa 1940 by Marion Wolcot, Library of Congress.  Cropped and rescaled.
+repo: "hello"
+summary: Data can yield new insights and enrich our understanding of history.  A new book by historian Cameron Blevins takes the location of U.S. post offices from 1639 to 2000 and plots them on a map by date of their establishment. The visual display shows the expansion of the American colonies westward.
 ---
 
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 <div id="TOC">
 <ul>
-<li><a href="#overview"><span>Overview</span></a></li>
+<li><a href="#introduction"><span>Introduction</span></a></li>
 <li><a href="#background"><span>Background</span></a></li>
 <li><a href="#data-and-model"><span>Data and model</span></a></li>
 <li><a href="#results"><span>Results</span></a></li>
@@ -45,13 +42,15 @@ summary: By default, Hugo automatically takes the first 70 words of your content
 </ul>
 </div>
 
-<div id="overview" class="section level1">
-<h1><a href="#overview">Overview</a></h1>
-<p>(Describe the problem.)</p>
+<div id="introduction" class="section level1">
+<h1><a href="#intro">Introduction</a></h1>
+<p>This project is a derivative of the U.S. Post Offices dataset by Cameron Blevins &amp; Richard W. Helbock. It contains the records of 166,140 post offices spanning from 1639 to 2000. Background for the Blevins-Helbock effort can be found on their <a href="https://cblevins.github.io/us-post-offices/">website</a> and the new book, <a href="https://global.oup.com/academic/product/paper-trails-9780190053673?cc=us&amp;lang=en&amp;">Paper Trails: The US Post and the Making of the American West</a>, was recently published by Oxford Press. The only change for this post is that the dataset was filtered or subset to just Kentucky post offices.
+(Describe the problem.)</p>
 </div>
 <div id="background" class="section level1">
 <h1><a href="#background">Background</a></h1>
-<p>(Who else has worked on this problem? What did they find?)</p>
+<p>The dataset is hosted at <a href="https://doi.org/10.7910/DVN/NUKCNA">Harvard Dataverse</a>. The <code>R</code> code is in a github <a href="https://github.com/cblevins/us-post-offices">repository</a> maintained by Cameron Blevins.
+<span class="citation"><a href="#ref-blevinsUSPostOffices2021a" role="doc-biblioref">[1]</a></span></p>
 </div>
 <div id="data-and-model" class="section level1">
 <h1><a href="#data">Data and model</a></h1>
@@ -73,16 +72,21 @@ summary: By default, Hugo automatically takes the first 70 words of your content
 <li><p><a href="https://rpubs.com/jedoenriquez/animatingchartsintro">An Intro to Animating Charts with gganimate</a></p></li>
 <li><p><a href="https://stackoverflow.com/questions/57734180/cumulative-points-over-year-on-map-with-r-ggplot2-and-ggplotly">Cumulative points over year on map with R ggplot2 and ggplotly</a></p></li>
 <li><p><a href="https://stackoverflow.com/questions/60820794/using-gganimate-and-getting-all-kind-of-errors">Using gganimate and getting all kind of errors</a></p></li>
+<li><p><a href="https://stackoverflow.com/questions/49181715/how-to-make-a-data-frame-into-a-simple-features-data-frame">how to make a data frame into a simple features data frame?</a></p></li>
+<li><p><a href="https://cran.r-project.org/web/packages/tmap/vignettes/tmap-getstarted.html#multiple-shapes-and-layers">tmap: get started!</a></p></li>
 </ul>
 </div>
 <div id="references" class="section level1">
 <h1><a href="#reference">References</a></h1>
 <div id="refs" class="references csl-bib-body">
+<div id="ref-blevinsUSPostOffices2021a" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">C. Blevins and R. W. Helbock, <span>“<span>US Post Offices</span>.”</span> <span>Harvard Dataverse</span>, 2021 [Online]. Available: <a href="https://dataverse.harvard.edu/citation?persistentId=doi:10.7910/DVN/NUKCNA">https://dataverse.harvard.edu/citation?persistentId=doi:10.7910/DVN/NUKCNA</a>. [Accessed: 16-Apr-2021]</div>
+</div>
 <div id="ref-R-base" class="csl-entry">
-<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2020 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2020 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
 </div>
 <div id="ref-R-blogdown" class="csl-entry">
-<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
 </div>
 </div>
 </div>
