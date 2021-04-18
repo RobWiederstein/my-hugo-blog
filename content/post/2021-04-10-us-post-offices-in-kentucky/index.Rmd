@@ -32,7 +32,9 @@ summary: Data can yield new insights and enrich our understanding of history.  A
 packages <- c(
       'devtools', #for session info
       'ggthemes', #for plots
-      'blogdown'
+      'blogdown',
+      'magrittr',
+      'dplyr'
 )
 lapply(packages, function(x) {
   if (!requireNamespace(x)) install.packages(x)
@@ -75,27 +77,79 @@ cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00",
 knitr::write_bib(.packages(), "./packages.bib")
 ```
 
+```{r load-post-office-data}
+input <- "https://dl.dropbox.com/s/tagneeisx94a0kk/2021-04-15-us-post-offices.csv?dl=0"
+df <- data.table::fread(input = input)
+#variable names
+colnames(df) <- tolower(colnames(df))
+# build dataframe
+my.cols <- c("id", "name", "county1", "established", "discontinued",
+             "continuous", "duration", "latitude", "longitude")
+df.1 <-
+        df %>%
+        dplyr::filter(state == "KY") %>%
+        #dplyr::filter(continuous == "TRUE") %>%
+        #dplyr::filter(coordinates == T) %>%
+        select(all_of(my.cols))
+```
+
 # [Introduction](#intro)
 
 This project is a derivative of the U.S. Post Offices dataset by Cameron Blevins & Richard W. Helbock.  It contains the records of 166,140 post offices spanning from 1639 to 2000. Background for the Blevins-Helbock effort can be found on their [website](https://cblevins.github.io/us-post-offices/) and the new book, [Paper Trails: The US Post and the Making of the American West](https://global.oup.com/academic/product/paper-trails-9780190053673?cc=us&lang=en&), was recently published by Oxford Press. The only change for this post is that the dataset was filtered or subset to just Kentucky post offices.
-(Describe the problem.)
+
 
 # [Background](#background)
 
 The dataset is hosted at [Harvard Dataverse](https://doi.org/10.7910/DVN/NUKCNA). The `R` code is in a github [repository](https://github.com/cblevins/us-post-offices) maintained by Cameron Blevins.
-[@blevinsUSPostOffices2021a]
+[@blevinsUSPostOffices2021a] An extensive background for the data can be found at Blevins data [biography](https://cblevins.github.io/us-post-offices/data-biography/). Richard W. Helbock was included as a co-creator of the dataset posthumously.  
+
+Helbock published an eight volume series entitled, United States Post Offices, concluding in 2007. The series was accompanied with a Microsoft Access Database. After Helbock's passing in 2011,  Blevins discovered the digital records from Helbock's widow. Ms. Helbock continued to curate and promote the extensive postal research collection of her late husband, making its discovery possible.
 
 # [Data and model](#data)
 
-```{r post-office-gif}
-knitr::include_graphics(path="./my_gif.gif")
+This post uses the `us-post-offices.csv` file.  Only post offices in the 50 states are included.  The main source for the information was derived from [Records of Appointments of Postmasters](https://www.archives.gov/research/post-offices/postmasters-1832-1971.html).  According to the [data biography](https://cblevins.github.io/us-post-offices/data-biography/), post offices of the past were much more "fluid" than today. They often changed names, closed for months at a time, and changed locations.  In response to the question of how to use the data, the author Blevins states "carefully".  Be advised and consult the actual data biography before reaching conclusions.
+
+After reading in the full dataset, it contained `r nrow(df)` observations and `r ncol(df)` variables.  When filtered to just Kentucky, there were `r nrow(df.1)` post offices. `r df.1 %>% select(established) %>% count()` post offices were established between the years `r min(df.1$established)` and `r max(df.1$established)` while  `r df.1 %>% select(continuous) %>% dplyr::filter(continuous == "FALSE") %>% count()` were discontinued.
+
+
+```{r post-office-gif, out.width="100%", fig.cap="Kentucky post offices in continuous operation."}
+knitr::include_app(url = "https://rob-wiederstein.shinyapps.io/postoffice-app/")
 ```
 
-(What data did you use, where did you get it?)
+Rural Free Delivery, officially started in 1902, caused a wide-scale consolidation within the postal service. Rural residents no longer went to the post office to retrieve their mail.  Instead, a postal employee delivered the mail to their mailbox or doorstep.  The new convenience led to the closure of thousands of post offices in the early twentieth century.
+
+```{r plot-by-year-post-offices, out.width="100%", fig.cap="Kentucky Post Offices"}
+df.2 <-
+  df.1 %>% 
+  dplyr::filter(continuous == "TRUE") %>%
+  select(id, name, established, discontinued) %>%
+  tidyr::gather(key = "key", value = "date", -id, -name) %>%
+  mutate(n = 1) %>%
+  select(key, date, n) %>%
+  group_by(key, date) %>%
+  summarise(total = sum(n), .groups = 'drop')
+
+df.2$key <- factor(df.2$key)
+p <- ggplot(df.2, aes(x = date, y = total,  fill = key))
+p <- p + geom_bar(stat= "identity")
+p <- p + scale_fill_manual(values = cbPalette)
+p <- p + ggthemes::theme_fivethirtyeight()
+p <- p + labs(title = "Kentucky Post Offices",
+              subtitle = "1792 - 1995"
+              )
+p <- p + theme(legend.title = element_blank())
+p
+```
 
 # [Results](#results)
 
+There are many limitations with the dataset and it is more appropriately used for visualization and display purposes.  However, there are some general observations that can be made.  First, post offices opened from east to west as the country was settled.  That was not the case in Kentucky.  Places where there was mountain range appear to have been the last to be settled and, hence, have post offices.  More accessible places that were settled first were more likely to have a post office.  In places like Kentucky, post offices were established in western and central Kentucky with Appalachia or eastern Kentucky opening post offices later. It also appears that eastern Kentucky has a greater density of post offices toward the end of the period examined.
+
+A second observation is also possible.  Post offices were established with greater frequency in the first half of the time period and discontinued with greater frequency in more contemporary times. Reasons for the decline include improved transportation systems, consolidation of operations for efficiency, declining mail volumes and alternative delivery options.
+
 # [Conclusion](#conclusion)
+
+The dataset has extensive limitations, but nonetheless provides a visualization of how our country and state were settled from its earliest times.  Post offices are an early signal of community, settlement and civilization.
 
 # [Acknowledgements](#acknowledge)
 

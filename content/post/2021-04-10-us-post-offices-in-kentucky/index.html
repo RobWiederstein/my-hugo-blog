@@ -44,24 +44,41 @@ summary: Data can yield new insights and enrich our understanding of history.  A
 
 <div id="introduction" class="section level1">
 <h1><a href="#intro">Introduction</a></h1>
-<p>This project is a derivative of the U.S. Post Offices dataset by Cameron Blevins &amp; Richard W. Helbock. It contains the records of 166,140 post offices spanning from 1639 to 2000. Background for the Blevins-Helbock effort can be found on their <a href="https://cblevins.github.io/us-post-offices/">website</a> and the new book, <a href="https://global.oup.com/academic/product/paper-trails-9780190053673?cc=us&amp;lang=en&amp;">Paper Trails: The US Post and the Making of the American West</a>, was recently published by Oxford Press. The only change for this post is that the dataset was filtered or subset to just Kentucky post offices.
-(Describe the problem.)</p>
+<p>This project is a derivative of the U.S. Post Offices dataset by Cameron Blevins &amp; Richard W. Helbock. It contains the records of 166,140 post offices spanning from 1639 to 2000. Background for the Blevins-Helbock effort can be found on their <a href="https://cblevins.github.io/us-post-offices/">website</a> and the new book, <a href="https://global.oup.com/academic/product/paper-trails-9780190053673?cc=us&amp;lang=en&amp;">Paper Trails: The US Post and the Making of the American West</a>, was recently published by Oxford Press. The only change for this post is that the dataset was filtered or subset to just Kentucky post offices.</p>
 </div>
 <div id="background" class="section level1">
 <h1><a href="#background">Background</a></h1>
 <p>The dataset is hosted at <a href="https://doi.org/10.7910/DVN/NUKCNA">Harvard Dataverse</a>. The <code>R</code> code is in a github <a href="https://github.com/cblevins/us-post-offices">repository</a> maintained by Cameron Blevins.
-<span class="citation"><a href="#ref-blevinsUSPostOffices2021a" role="doc-biblioref">[1]</a></span></p>
+<span class="citation"><a href="#ref-blevinsUSPostOffices2021a" role="doc-biblioref">[1]</a></span> An extensive background for the data can be found at Blevins data <a href="https://cblevins.github.io/us-post-offices/data-biography/">biography</a>. Richard W. Helbock was included as a co-creator of the dataset posthumously.</p>
+<p>Helbock published an eight volume series entitled, United States Post Offices, concluding in 2007. The series was accompanied with a Microsoft Access Database. After Helbock’s passing in 2011, Blevins discovered the digital records from Helbock’s widow. Ms. Helbock continued to curate and promote the extensive postal research collection of her late husband, making its discovery possible.</p>
 </div>
 <div id="data-and-model" class="section level1">
 <h1><a href="#data">Data and model</a></h1>
-<p><img src="my_gif.gif" style="display: block; margin: auto;" /></p>
-<p>(What data did you use, where did you get it?)</p>
+<p>This post uses the <code>us-post-offices.csv</code> file. Only post offices in the 50 states are included. The main source for the information was derived from <a href="https://www.archives.gov/research/post-offices/postmasters-1832-1971.html">Records of Appointments of Postmasters</a>. According to the <a href="https://cblevins.github.io/us-post-offices/data-biography/">data biography</a>, post offices of the past were much more “fluid” than today. They often changed names, closed for months at a time, and changed locations. In response to the question of how to use the data, the author Blevins states “carefully.” Be advised and consult the actual data biography before reaching conclusions.</p>
+<p>After reading in the full dataset, it contained 166140 observations and 29 variables. When filtered to just Kentucky, there were 7432 post offices. 7432 post offices were established between the years 1792 and 1975 while 1181 were discontinued.</p>
+<div class="figure" style="text-align: center"><span id="fig:post-office-gif"></span>
+<iframe src="https://rob-wiederstein.shinyapps.io/postoffice-app/?showcase=0" width="100%" height="400px">
+</iframe>
+<p class="caption">
+Figure 1: Kentucky post offices in continuous operation.
+</p>
+</div>
+<p>Rural Free Delivery, officially started in 1902, caused a wide-scale consolidation within the postal service. Rural residents no longer went to the post office to retrieve their mail. Instead, a postal employee delivered the mail to their mailbox or doorstep. The new convenience led to the closure of thousands of post offices in the early twentieth century.</p>
+<div class="figure" style="text-align: center"><span id="fig:plot-by-year-post-offices"></span>
+<img src="{{< blogdown/postref >}}index_files/figure-html/plot-by-year-post-offices-1.svg" alt="Kentucky Post Offices" width="100%" />
+<p class="caption">
+Figure 2: Kentucky Post Offices
+</p>
+</div>
 </div>
 <div id="results" class="section level1">
 <h1><a href="#results">Results</a></h1>
+<p>There are many limitations with the dataset and it is more appropriately used for visualization and display purposes. However, there are some general observations that can be made. First, post offices opened from east to west as the country was settled. That was not the case in Kentucky. Places where there was mountain range appear to have been the last to be settled and, hence, have post offices. More accessible places that were settled first were more likely to have a post office. In places like Kentucky, post offices were established in western and central Kentucky with Appalachia or eastern Kentucky opening post offices later. It also appears that eastern Kentucky has a greater density of post offices toward the end of the period examined.</p>
+<p>A second observation is also possible. Post offices were established with greater frequency in the first half of the time period and discontinued with greater frequency in more contemporary times. Reasons for the decline include improved transportation systems, consolidation of operations for efficiency, declining mail volumes and alternative delivery options.</p>
 </div>
 <div id="conclusion" class="section level1">
 <h1><a href="#conclusion">Conclusion</a></h1>
+<p>The dataset has extensive limitations, but nonetheless provides a visualization of how our country and state were settled from its earliest times. Post offices are an early signal of community, settlement and civilization.</p>
 </div>
 <div id="acknowledgements" class="section level1">
 <h1><a href="#acknowledge">Acknowledgements</a></h1>
