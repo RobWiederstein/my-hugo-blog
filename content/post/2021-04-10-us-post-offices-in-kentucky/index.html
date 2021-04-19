@@ -5,8 +5,9 @@ date: '2021-04-10'
 slug: us-post-offices-in-kentucky
 categories:
   - R
+  - maps
 tags:
-  - ggmap
+  - leaflet
   - gganimate
   - ggplot2
 layout: layouts/post/single
@@ -17,16 +18,18 @@ bibliography:
 csl: ../ieee-with-url.csl
 link-citations: yes
 nocite: |
-  @R-base, @R-blogdown, @R-tidyverse
+  @R-base, @R-blogdown, @R-tidyverse, @R-leaflet
 header:
   image: feature.jpg
   alt: rural post office
   caption: Post office in Botto, Kentucky circa 1940 by Marion Wolcot, Library of Congress.  Cropped and rescaled.
-repo: "hello"
+repo: https://github.com/RobWiederstein/purple-bananas/blob/main/content/post/2021-04-10-us-post-offices-in-kentucky/index.Rmd
 summary: Data can yield new insights and enrich our understanding of history.  A new book by historian Cameron Blevins takes the location of U.S. post offices from 1639 to 2000 and plots them on a map by date of their establishment. The visual display shows the expansion of the American colonies westward.
 ---
 
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/kePrint/kePrint.js"></script>
+<link href="{{< blogdown/postref >}}index_files/lightable/lightable.css" rel="stylesheet" />
 
 <div id="TOC">
 <ul>
@@ -37,6 +40,7 @@ summary: Data can yield new insights and enrich our understanding of history.  A
 <li><a href="#conclusion"><span>Conclusion</span></a></li>
 <li><a href="#acknowledgements"><span>Acknowledgements</span></a></li>
 <li><a href="#references"><span>References</span></a></li>
+<li><a href="#appendixfirst-10-kentucky-post-offices"><span>Appendix–First 10 Kentucky Post Offices</span></a></li>
 <li><a href="#disclaimer"><span>Disclaimer</span></a></li>
 <li><a href="#reproducibility"><span>Reproducibility</span></a></li>
 </ul>
@@ -55,7 +59,7 @@ summary: Data can yield new insights and enrich our understanding of history.  A
 <div id="data-and-model" class="section level1">
 <h1><a href="#data">Data and model</a></h1>
 <p>This post uses the <code>us-post-offices.csv</code> file. Only post offices in the 50 states are included. The main source for the information was derived from <a href="https://www.archives.gov/research/post-offices/postmasters-1832-1971.html">Records of Appointments of Postmasters</a>. According to the <a href="https://cblevins.github.io/us-post-offices/data-biography/">data biography</a>, post offices of the past were much more “fluid” than today. They often changed names, closed for months at a time, and changed locations. In response to the question of how to use the data, the author Blevins states “carefully.” Be advised and consult the actual data biography before reaching conclusions.</p>
-<p>After reading in the full dataset, it contained 166140 observations and 29 variables. When filtered to just Kentucky, there were 7432 post offices. 7432 post offices were established between the years 1792 and 1975 while 1181 were discontinued.</p>
+<p>After reading in the full dataset, it contained 166140 observations and 29 variables. When filtered to just Kentucky, there were 7432 post offices. 7432 post offices were established between the years 1792 and 1975 while 1181 were discontinued. Kentucky’s first post office was established in Danville, Kentucky in 1792.</p>
 <div class="figure" style="text-align: center"><span id="fig:post-office-gif"></span>
 <iframe src="https://rob-wiederstein.shinyapps.io/postoffice-app/?showcase=0" width="100%" height="400px">
 </iframe>
@@ -82,7 +86,7 @@ Figure 2: Kentucky Post Offices
 </div>
 <div id="acknowledgements" class="section level1">
 <h1><a href="#acknowledge">Acknowledgements</a></h1>
-<p>This blog post was made possible thanks to:</p>
+<p>I really went down the rabbit hole on this post. Like usual, maps cause me a great deal of angst. Several solutions were used including <code>ggmap</code>, <code>leaflet</code> and <code>tmap</code>. Ultimately, <code>leaflet</code> was the best solution for this content. This blog post was made possible thanks to:</p>
 <ul>
 <li><p><a href="https://www.littlemissdata.com/blog/maps">Map Plots Created With R And Ggmap</a></p></li>
 <li><p><a href="https://d4tagirl.com/2017/05/how-to-plot-animated-maps-with-gganimate">How to plot animated maps with gganimate</a></p></li>
@@ -105,7 +109,173 @@ Figure 2: Kentucky Post Offices
 <div id="ref-R-blogdown" class="csl-entry">
 <div class="csl-left-margin">[3] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
 </div>
+<div id="ref-R-leaflet" class="csl-entry">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">J. Cheng, B. Karambelkar, and Y. Xie, <em>Leaflet: Create interactive web maps with the JavaScript leaflet library</em>. 2021 [Online]. Available: <a href="https://rstudio.github.io/leaflet/">https://rstudio.github.io/leaflet/</a></div>
 </div>
+</div>
+</div>
+<div id="appendixfirst-10-kentucky-post-offices" class="section level1">
+<h1><a href="#appendix">Appendix–First 10 Kentucky Post Offices</a></h1>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+id
+</th>
+<th style="text-align:left;">
+name
+</th>
+<th style="text-align:left;">
+county1
+</th>
+<th style="text-align:right;">
+established
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+77503
+</td>
+<td style="text-align:left;">
+DANVILLE
+</td>
+<td style="text-align:left;">
+BOYLE
+</td>
+<td style="text-align:right;">
+1792
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+67117
+</td>
+<td style="text-align:left;">
+BARDSTOWN
+</td>
+<td style="text-align:left;">
+NELSON
+</td>
+<td style="text-align:right;">
+1794
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+83672
+</td>
+<td style="text-align:left;">
+FRANKFORT
+</td>
+<td style="text-align:left;">
+FRANKLIN
+</td>
+<td style="text-align:right;">
+1794
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+87719
+</td>
+<td style="text-align:left;">
+HARRODSBURG
+</td>
+<td style="text-align:left;">
+MERCER
+</td>
+<td style="text-align:right;">
+1794
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+94768
+</td>
+<td style="text-align:left;">
+LEXINGTON
+</td>
+<td style="text-align:left;">
+FAYETTE
+</td>
+<td style="text-align:right;">
+1794
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+94985
+</td>
+<td style="text-align:left;">
+LIMESTONE
+</td>
+<td style="text-align:left;">
+MASON
+</td>
+<td style="text-align:right;">
+1794
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+120505
+</td>
+<td style="text-align:left;">
+WASHINGTON
+</td>
+<td style="text-align:left;">
+MASON
+</td>
+<td style="text-align:right;">
+1794
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+70079
+</td>
+<td style="text-align:left;">
+BOURBONTOWN
+</td>
+<td style="text-align:left;">
+BOURBON
+</td>
+<td style="text-align:right;">
+1795
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+96071
+</td>
+<td style="text-align:left;">
+LOUISVILLE
+</td>
+<td style="text-align:left;">
+JEFFERSON
+</td>
+<td style="text-align:right;">
+1795
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+105101
+</td>
+<td style="text-align:left;">
+PARIS
+</td>
+<td style="text-align:left;">
+BOURBON
+</td>
+<td style="text-align:right;">
+1795
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="disclaimer" class="section level1">
 <h1><a href="#disclaimer">Disclaimer</a></h1>

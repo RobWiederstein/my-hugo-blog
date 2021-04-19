@@ -5,8 +5,9 @@ date: '2021-04-10'
 slug: us-post-offices-in-kentucky
 categories:
   - R
+  - maps
 tags:
-  - ggmap
+  - leaflet
   - gganimate
   - ggplot2
 layout: layouts/post/single
@@ -17,12 +18,12 @@ bibliography:
 csl: ../ieee-with-url.csl
 link-citations: yes
 nocite: |
-  @R-base, @R-blogdown, @R-tidyverse
+  @R-base, @R-blogdown, @R-tidyverse, @R-leaflet
 header:
   image: feature.jpg
   alt: rural post office
   caption: Post office in Botto, Kentucky circa 1940 by Marion Wolcot, Library of Congress.  Cropped and rescaled.
-repo: "hello"
+repo: https://github.com/RobWiederstein/purple-bananas/blob/main/content/post/2021-04-10-us-post-offices-in-kentucky/index.Rmd
 summary: Data can yield new insights and enrich our understanding of history.  A new book by historian Cameron Blevins takes the location of U.S. post offices from 1639 to 2000 and plots them on a map by date of their establishment. The visual display shows the expansion of the American colonies westward.
 ---
 
@@ -109,7 +110,7 @@ Helbock published an eight volume series entitled, United States Post Offices, c
 
 This post uses the `us-post-offices.csv` file.  Only post offices in the 50 states are included.  The main source for the information was derived from [Records of Appointments of Postmasters](https://www.archives.gov/research/post-offices/postmasters-1832-1971.html).  According to the [data biography](https://cblevins.github.io/us-post-offices/data-biography/), post offices of the past were much more "fluid" than today. They often changed names, closed for months at a time, and changed locations.  In response to the question of how to use the data, the author Blevins states "carefully".  Be advised and consult the actual data biography before reaching conclusions.
 
-After reading in the full dataset, it contained `r nrow(df)` observations and `r ncol(df)` variables.  When filtered to just Kentucky, there were `r nrow(df.1)` post offices. `r df.1 %>% select(established) %>% count()` post offices were established between the years `r min(df.1$established)` and `r max(df.1$established)` while  `r df.1 %>% select(continuous) %>% dplyr::filter(continuous == "FALSE") %>% count()` were discontinued.
+After reading in the full dataset, it contained `r nrow(df)` observations and `r ncol(df)` variables.  When filtered to just Kentucky, there were `r nrow(df.1)` post offices. `r df.1 %>% select(established) %>% count()` post offices were established between the years `r min(df.1$established)` and `r max(df.1$established)` while  `r df.1 %>% select(continuous) %>% dplyr::filter(continuous == "FALSE") %>% count()` were discontinued.  Kentucky's first post office was established in Danville, Kentucky in 1792. 
 
 
 ```{r post-office-gif, out.width="100%", fig.cap="Kentucky post offices in continuous operation."}
@@ -153,7 +154,7 @@ The dataset has extensive limitations, but nonetheless provides a visualization 
 
 # [Acknowledgements](#acknowledge)
 
-This blog post was made possible thanks to:
+I really went down the rabbit hole on this post.  Like usual, maps cause me a great deal of angst.  Several solutions were used including `ggmap`, `leaflet` and `tmap`.  Ultimately, `leaflet` was the best solution for this content.  This blog post was made possible thanks to:
 
 -  [Map Plots Created With R And Ggmap](https://www.littlemissdata.com/blog/maps)
 
@@ -172,6 +173,18 @@ This blog post was made possible thanks to:
 # [References](#reference)
 
 <div id="refs"></div>
+
+# [Appendix--First 10 Kentucky Post Offices](#appendix)
+
+```{r table-early-post-offices}
+df.1 %>%
+  dplyr::filter(continuous == TRUE) %>%
+  select(id, name, county1, established) %>%
+  arrange(established) %>%
+  slice_head(n = 10) %>%
+  kableExtra::kbl()
+```
+
 
 # [Disclaimer](#disclaimer)
 
