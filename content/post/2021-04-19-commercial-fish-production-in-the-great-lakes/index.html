@@ -1,0 +1,446 @@
+---
+title: Commercial Fish Production in the Great Lakes
+author: Rob Wiederstein
+date: '2021-04-19'
+slug: commercial-fish-production-great-lakes
+categories:
+  - R
+tags:
+  - plotly
+layout: layouts/post/single
+draft: yes
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-forcats, @R-shiny
+header:
+  image: ~
+  alt: ~
+  caption: ~
+repo: ~
+summary: By default, Hugo automatically takes the first 70 words of your content as
+  its summary and stores it into the `.Summary` page variable for use in your templates.
+  You may customize the summary length by setting `summaryLength` in your site configuration
+  *or* you can set it in the front matter.
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/kePrint/kePrint.js"></script>
+<link href="{{< blogdown/postref >}}index_files/lightable/lightable.css" rel="stylesheet" />
+
+<div id="TOC">
+<ul>
+<li><a href="#overview"><span>Overview</span></a></li>
+<li><a href="#background"><span>Background</span></a>
+<ul>
+<li><a href="#general">General</a></li>
+<li><a href="#lake-productivity">Lake Productivity</a></li>
+<li><a href="#fisheries">Fisheries</a></li>
+<li><a href="#economic-impact">Economic Impact</a></li>
+</ul></li>
+<li><a href="#notable-species">Notable Species</a>
+<ul>
+<li><a href="#sea-lampreys">Sea lampreys</a></li>
+<li><a href="#lake-whitefish">Lake Whitefish</a></li>
+<li><a href="#alewife">Alewife</a></li>
+<li><a href="#salmon">Salmon</a></li>
+<li><a href="#mussels-round-goby">Mussels &amp; Round Goby</a></li>
+<li><a href="#bythotrephes">Bythotrephes</a></li>
+</ul></li>
+<li><a href="#data-and-model"><span>Data and model</span></a></li>
+<li><a href="#results"><span>Results</span></a></li>
+<li><a href="#conclusion"><span>Conclusion</span></a></li>
+<li><a href="#acknowledgements"><span>Acknowledgements</span></a></li>
+<li><a href="#references"><span>References</span></a></li>
+<li><a href="#disclaimer"><span>Disclaimer</span></a></li>
+<li><a href="#reproducibility"><span>Reproducibility</span></a></li>
+</ul>
+</div>
+
+<div id="overview" class="section level1">
+<h1><a href="#overview">Overview</a></h1>
+<p>The Great Lakes Fishery Commission (GLFC) published data on the commercial fish catch in the Great Lakes from 1867 to 2015.<span class="citation"><a href="#ref-baldwinCommercialFishProduction2018" role="doc-biblioref">[1]</a></span> Commercial catch records are an important indicator of the health of the fishing stocks and the lake eco system in general.</p>
+</div>
+<div id="background" class="section level1">
+<h1><a href="#background">Background</a></h1>
+<div id="general" class="section level2">
+<h2>General</h2>
+<p>The Great Lakes are comprised of, moving west to east: Superior, Michigan, Huron, Saint Claire, Erie and Ontario. According to the National Oceanic and Atmospheric Administration (NOAA), the Great Lakes contains 95% of the country’s surface fresh water supply, have a surface area of 94,000 square miles, and are encircled by 9,000 miles of shoreline. Also known as the “Laurentian Great Lakes,” they “comprise the largest surface freshwater system in the world.” <span class="citation"><a href="#ref-taylorChangingFaceGreat2019" role="doc-biblioref">[2]</a></span> Niagra Falls acted as a natural barrier separating Lake Ontario from the rest of the Great Lakes and preventing the westward migration of invasive species.</p>
+</div>
+<div id="lake-productivity" class="section level2">
+<h2>Lake Productivity</h2>
+<p>Lakes are commonly classfied by their “trophic” state, their ability to sustain aquatic life. Oligotrophic lakes are nutrient poor, typically very clear, deep, with little detritus on the bottom. Very few fish are present. Eutrophic lakes by contrast are nutrient rich, often turbid, shallow, with high algae concentrations and organic matter on the bottom. The lake sustains large quantities of fish. Lakes that are in the middle are referred to as mesotrophic.</p>
+<p>Many have attempted to estimate lake productivity using different measures and there are competing viewpoints on the appropriate methods. A widely used measure is the trophic state index for lakes, first conceived and proposed by Robert M. Carlson in 1977.<span class="citation"><a href="#ref-carlsonTrophicStateIndex1977" role="doc-biblioref">[3]</a></span> The Trophic State Index (TSI) is computed from commonly accepted measures like nutrient concentrations (i.e. phosphorous), biomass concentrations (i.e. clorophyll), and water clarity (secchi disk readings). Like the Richter Score for earthquakes, the index permits the trophic condition of a lake to be easily explained to a layperson with a TSI score of 0 to 100. <span class="citation"><a href="#ref-carlsonTrophicStateIndex1977" role="doc-biblioref">[3]</a></span></p>
+<div class="figure" style="text-align: center"><span id="fig:trophic-state-index-table"></span>
+<img src="trophic_state_index.png" alt="Note how phosphorous and chlorophyll concentrations increase as water clarity decreases.[@carlsonTrophicStateIndex1977]" width="90%" />
+<p class="caption">
+Figure 1: Note how phosphorous and chlorophyll concentrations increase as water clarity decreases.<span class="citation"><a href="#ref-carlsonTrophicStateIndex1977" role="doc-biblioref">[3]</a></span>
+</p>
+</div>
+<p>Lakes with high TSI scores are highly productive whereas lakes with low TSI scores are not. “The overwhelming evidence from” many, many studies “is that, as lakes become more eutrophic,”–whether measured by TSI scores or other means–“the standing crops, productivity, and yields of fish increase.”<span class="citation"><a href="#ref-bachmannRelationsTrophicState2011" role="doc-biblioref">[4]</a></span> This conclusion has also been expanded to include species considered to be sports fish as well.<span class="citation"><a href="#ref-bachmannRelationsTrophicState2011" role="doc-biblioref">[4]</a></span> However, in one large Florida study, only 75% of the variance could be explained by trophic state and the author described the use of it as a predictor as “imprecise.” <span class="citation"><a href="#ref-bachmannRelationsTrophicState2011" role="doc-biblioref">[4]</a></span></p>
+<p>As freshwater bodies, the Great Lakes are less productive than the oceans if climate is held constant." <span class="citation"><a href="#ref-zieglerEnvironmentCultureGreat2014" role="doc-biblioref">[5]</a></span> “Middle-latitude freshwater lakes are by no means nutrient poor, but they typically rank low in primary productivity compared with oceanic and tropical environments.” <span class="citation"><a href="#ref-zieglerEnvironmentCultureGreat2014" role="doc-biblioref">[5]</a></span></p>
+<p>When measured by the amount of microscopic plant productivity, Lake Erie is the most productive, followed by Lake Ontario, Lake Michigan, Lake Huron, and finally Lake Superior. <span class="citation"><a href="#ref-hallMethodsAssessingAquatic1975" role="doc-biblioref">[6]</a></span> “Of the five Laurentian Great Lakes, Superior and Huron and to a lesser extent Michigan are still relatively unproductive, whereas Ontario and Erie, particularly Erie’s western basin, are rich in nutrients and support a dense plant life. <span class="citation"><a href="#ref-hallMethodsAssessingAquatic1975" role="doc-biblioref">[6]</a></span>”In contrast, daily productivity in Lake Erie may be as much as 45 times greater than that of Lake Superior."</p>
+</div>
+<div id="fisheries" class="section level2">
+<h2>Fisheries</h2>
+<p>“The United States and Canadian Great Lakes fisheries are experiencing a long-term decline.”<span class="citation"><a href="#ref-zieglerEnvironmentCultureGreat2014" role="doc-biblioref">[5]</a></span>“In the 1800s, fish harvests in the Great Lakes were greater than they are today, and the long record suggests that the industry has experienced a continued pattern of fluctuations in harvests, species abundance, and demand for the product.” <span class="citation"><a href="#ref-zieglerEnvironmentCultureGreat2014" role="doc-biblioref">[5]</a></span>
+“Annual harvests in U.S. waters dropped from around 23,000 metric tons per year in 1980 to 9,000 metric tons per year in 2011.” <span class="citation"><a href="#ref-zieglerEnvironmentCultureGreat2014" role="doc-biblioref">[5]</a></span> "Historically, the Great Lakes system supported abundant populations of commercially-important fish species such as Lake Trout , Atlantic Salmon, Lake Whitefish, deepwater ciscoes (e.g. Bloater), Walleye, and Yellow Perch. <span class="citation"><a href="#ref-taylorChangingFaceGreat2019" role="doc-biblioref">[2]</a></span></p>
+</div>
+<div id="economic-impact" class="section level2">
+<h2>Economic Impact</h2>
+<p>At the national level when marine waters are included, commercial fishing contributes over 5.2 billion to the economy and supports approximately 1.2 million jobs, while recreational fishing contributes over 122 billion to the economy and supports 440,000 jobs." <span class="citation"><a href="#ref-taylorChangingFaceGreat2019" role="doc-biblioref">[2]</a></span> The "Great Lakes commercial fisheries, while locally and regionally of great importance,
+continue to decline, and today they contribute less than 1 percent of the billions of dollars a year to the regional economy that are attributed to recreational fisheries.<span class="citation"><a href="#ref-taylorChangingFaceGreat2019" role="doc-biblioref">[2]</a></span> Great Lakes commercial fishing is a fraction of recreational fishing and tourism, contributing less than one percent to the regional economy.<span class="citation"><a href="#ref-zieglerEnvironmentCultureGreat2014" role="doc-biblioref">[5]</a></span></p>
+<p>The commercial fishing industry has been buffeted by environmental changes over the last eighty years, “beginning with the sea lamprey invasion of the 1940s.” <span class="citation"><a href="#ref-zieglerEnvironmentCultureGreat2014" role="doc-biblioref">[5]</a></span> Since then, a variety of factors have impacted commercial fishing like overfishing, pollution, invasive species, technology and regulation.</p>
+</div>
+</div>
+<div id="notable-species" class="section level1">
+<h1>Notable Species</h1>
+<p>The species below are routinely mentioned in the literature and history regarding the health of Great Lakes fish stocks.</p>
+<div id="sea-lampreys" class="section level2">
+<h2>Sea lampreys</h2>
+<p>“Of all the problems the Great Lakes fishery has faced over the years, none has been more vexing than that of the sea lamprey.” <span class="citation"><a href="#ref-zieglerEnvironmentCultureGreat2014" role="doc-biblioref">[5]</a></span> Sea lampreys are an invasive species to the Great Lakes migrating from the Atlantic Ocean. They attach to their host with their circular rows of teeth and survive on the fluids of their host. Lampreys could be found in Lake Ontario and moved westward when the Welland Canal bypassed Niagra Falls. They devastated the fishing stocks of the Great Lakes gradually moving westward from Lake Ontario in the 1850s. The primary control method is through a chemical called (TFM) which targets lamprey larvae in the tributaries surrounding the Great Lakes. According to the Great Lakes Fishery Commission <a href="http://www.glfc.org/control.php">website</a>, about 200 areas are targeted for lampricide treatment.</p>
+<p>The sea lamprey never has become well established in Lake Erie.<span class="citation"><a href="#ref-zieglerEnvironmentCultureGreat2014" role="doc-biblioref">[5]</a></span>. The lake trout (Salvelinus namaycush), probably the most prized fish of the Great Lakes, was its [the Lamprey’s] favorite target," though they attack other prize sports fish too. <span class="citation"><a href="#ref-zieglerEnvironmentCultureGreat2014" role="doc-biblioref">[5]</a></span></p>
+</div>
+<div id="lake-whitefish" class="section level2">
+<h2>Lake Whitefish</h2>
+<p>“One of the Great Lakes’ most productive species had been the lake whitefish (Coregonus clupeaformis) until overfishing and poor recruitment led to a collapse of the whitefish harvest in the 1890s.” <span class="citation"><a href="#ref-zieglerEnvironmentCultureGreat2014" role="doc-biblioref">[5]</a></span></p>
+</div>
+<div id="alewife" class="section level2">
+<h2>Alewife</h2>
+<p>Alewife “is best known for its invasion of the Great Lakes via the Welland Canal. Its population surged between the 1950s and 1980s to the detriment of many native species of fish. In an effort to control them biologically, Pacific salmon were introduced, only partially successfully.” <a href="https://en.wikipedia.org/wiki/Alewife_(fish)">Wikpedia</a> Treated differently than the lamprey, it “became a commercial species, with thousands of tons sold to pet food processors and as bait to the Atlantic Coast lobster industry.” <span class="citation"><a href="#ref-zieglerEnvironmentCultureGreat2014" role="doc-biblioref">[5]</a></span> The “alewife abundance grew to shocking proportions by the mid-1960s, when billions of the small fish washed up on the shores of Lake Michigan where they fouled swimming beaches.”<span class="citation"><a href="#ref-zieglerEnvironmentCultureGreat2014" role="doc-biblioref">[5]</a></span></p>
+</div>
+<div id="salmon" class="section level2">
+<h2>Salmon</h2>
+<p>“Pacific salmonine species, introduced after lamprey control had begun, proved to be eager consumers of the alewife.” <span class="citation"><a href="#ref-zieglerEnvironmentCultureGreat2014" role="doc-biblioref">[5]</a></span> “Beginning in 1964, shipments of Coho Salmon eggs (&gt;1 million) and Chinook Salmon eggs (&gt;3 million) were sent to Michigan from hatcheries in Oregon and Washington.” <span class="citation"><a href="#ref-taylorChangingFaceGreat2019" role="doc-biblioref">[2]</a></span> “Today, Coho Salmon, Chinook Salmon, and Steelhead are considered the most socioeconomically valuable fishes in the Great Lakes basin.” <span class="citation"><a href="#ref-taylorChangingFaceGreat2019" role="doc-biblioref">[2]</a></span> “The three Pacific species were not introduced for the commercial fishery, but rather as a means for stimulating sport fishing.”
+<span class="citation"><a href="#ref-zieglerEnvironmentCultureGreat2014" role="doc-biblioref">[5]</a></span> Alewife population declined and salmon populations soon followed. Control of alewife led to a booming walleye population. <span class="citation"><a href="#ref-zieglerEnvironmentCultureGreat2014" role="doc-biblioref">[5]</a></span></p>
+</div>
+<div id="mussels-round-goby" class="section level2">
+<h2>Mussels &amp; Round Goby</h2>
+<p>Zebra and quagga mussels entered the Great Lakes in the 1980s, having originated from lakes in Russia, and likely carried by ocean going ships. The goby (Neogobius melanostomus), a round, soft-bodied fish, also seem to have entered the Great Lakes in ocean-going ships and feeds on mussels and fish eggs.</p>
+</div>
+<div id="bythotrephes" class="section level2">
+<h2>Bythotrephes</h2>
+<p>Bythotrephes longimanus (also Bythotrephes cederstroemi), or the spiny water flea, is a planktonic crustacean less than 15 millimetres (0.6 in) long. It is native to fresh waters of Northern Europe and Asia, but has been accidentally introduced and widely distributed in the Great Lakes area of North America since the 1980s.<a href="http://iaglr.org">1</a> Bythotrephes is typified by a long abdominal spine with several barbs which protect it from predators</p>
+</div>
+</div>
+<div id="data-and-model" class="section level1">
+<h1><a href="#data">Data and model</a></h1>
+<p>From the GLFC website, “records of commercial fish production in the Great Lakes were collected as early as 1867 in Canada and 1879 in the United States.” However, the information was not consolidated until the establishment of the International Board of Inquiry for the Great Lakes Fisheries in 1940. After a multi decade lapse, the GLFC republished the 1867 to 1940 fishing data again in 1962 along with the data from 1940 to 1962. The GLFC has continued to act as a collector and repository of the information with the most recent data available from 2015.</p>
+<p>In the GLFC “Notes on Statistics” two passages are significant in interpreting the data. The first was regarding weight. “Production amounts in each jurisdiction in a lake were rounded to the nearest thousand pounds after sums were calculated. (The sum of rounded amounts from the various jurisdictions will not necessarily correspond to the rounded total for the entire lake.) A blank indicates no catch report. A lake total for the species in question is not computed when the lack of a catch report is assumed attributable to zero catch.”</p>
+<p>The second significant passage in the “Notes on Statistics” was on the species field. “Confusion as to fish names and the combining of catches of species that are in the same market category or that resemble each other introduced considerable uncertainty into the statistics for many of the early years.” In the data, the species are listed alphabetically by their common name, rather than their phylogenetic order.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+year
+</th>
+<th style="text-align:left;">
+lake
+</th>
+<th style="text-align:left;">
+species
+</th>
+<th style="text-align:right;">
+grand_total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+2015
+</td>
+<td style="text-align:left;">
+Erie
+</td>
+<td style="text-align:left;">
+rainbow smelt
+</td>
+<td style="text-align:right;">
+8333000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2015
+</td>
+<td style="text-align:left;">
+Erie
+</td>
+<td style="text-align:left;">
+yellow perch
+</td>
+<td style="text-align:right;">
+5751000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2015
+</td>
+<td style="text-align:left;">
+Erie
+</td>
+<td style="text-align:left;">
+white bass
+</td>
+<td style="text-align:right;">
+4959000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2015
+</td>
+<td style="text-align:left;">
+Erie
+</td>
+<td style="text-align:left;">
+walleye
+</td>
+<td style="text-align:right;">
+4883000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2015
+</td>
+<td style="text-align:left;">
+Huron
+</td>
+<td style="text-align:left;">
+lake whitefish
+</td>
+<td style="text-align:right;">
+3444000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2015
+</td>
+<td style="text-align:left;">
+Superior
+</td>
+<td style="text-align:left;">
+lake whitefish
+</td>
+<td style="text-align:right;">
+2874036
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2015
+</td>
+<td style="text-align:left;">
+Erie
+</td>
+<td style="text-align:left;">
+white perch
+</td>
+<td style="text-align:right;">
+2684000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2015
+</td>
+<td style="text-align:left;">
+Superior
+</td>
+<td style="text-align:left;">
+cisco
+</td>
+<td style="text-align:right;">
+1796000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2015
+</td>
+<td style="text-align:left;">
+Erie
+</td>
+<td style="text-align:left;">
+drum
+</td>
+<td style="text-align:right;">
+1266000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2015
+</td>
+<td style="text-align:left;">
+Huron
+</td>
+<td style="text-align:left;">
+lake trout
+</td>
+<td style="text-align:right;">
+729000
+</td>
+</tr>
+</tbody>
+</table>
+<div class="figure" style="text-align: center"><span id="fig:plot-lake-production"></span>
+<img src="{{< blogdown/postref >}}index_files/figure-html/plot-lake-production-1.svg" alt="Fish production in pounds per square mile." width="672" />
+<p class="caption">
+Figure 2: Fish production in pounds per square mile.
+</p>
+</div>
+</div>
+<div id="results" class="section level1">
+<h1><a href="#results">Results</a></h1>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to:</p>
+<ul>
+<li><a href="http://www.glfc.org">Great Lakes Fishery Commission</a></li>
+<li><a href="http://iaglr.org">International Association of Great Lakes Research</a></li>
+<li><a href="https://www.usgs.gov/centers/glsc">Great Lakes Science Center</a></li>
+<li><a href="https://www.usgs.gov">United States Geologic Survey</a></li>
+<li><a href="https://wldb.ilec.or.jp">World Lake Database</a></li>
+<li><a href="https://www.fisheries.noaa.gov">NOAA - Fisheries</a></li>
+<li><a href="https://www.glerl.noaa.gov">NOAA - Great Lakes Env’l Research Lab</a></li>
+<li><a href="https://glatos.glos.us">GLATOS</a></li>
+</ul>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-baldwinCommercialFishProduction2018" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">N. S. Baldwin, R. W. Sallfeld, M. R. Dochoda, H. J. Buettner, R. L. Eshenroder, and R. O’Gorman, <span>“Commercial <span>Fish Production</span> in the <span>Great Lakes</span> 1867-2015.”</span> <span>Great Lakes Fishery Commission</span>, 2018 [Online]. Available: <a href="http://www.glfc.org/commercial/commercial.xls">http://www.glfc.org/commercial/commercial.xls</a>. [Accessed: 20-Apr-2021]</div>
+</div>
+<div id="ref-taylorChangingFaceGreat2019" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">W. W. Taylor, M. J. Good, A. K. Carlson, T. Scholze, H. A. Triezenberg, and R. Lambe, <span>“The changing face of <span>Great Lakes</span> fisheries,”</span> <em>Aquatic Ecosystem Health &amp; Management</em>, vol. 22, no. 3, pp. 355–367, Jul. 2019, doi: <a href="https://doi.org/10.1080/14634988.2019.1657688">10.1080/14634988.2019.1657688</a>. [Online]. Available: <a href="https://doi.org/10.1080/14634988.2019.1657688">https://doi.org/10.1080/14634988.2019.1657688</a>. [Accessed: 23-Apr-2021]</div>
+</div>
+<div id="ref-carlsonTrophicStateIndex1977" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">R. E. Carlson, <span>“A trophic state index for lakes,”</span> <em>Limnology and Oceanography</em>, vol. 22, no. 2, pp. 361–369, 1977, doi: <a href="https://doi.org/10.4319/lo.1977.22.2.0361">10.4319/lo.1977.22.2.0361</a>. [Online]. Available: <a href="https://aslopubs.onlinelibrary.wiley.com/doi/abs/10.4319/lo.1977.22.2.0361">https://aslopubs.onlinelibrary.wiley.com/doi/abs/10.4319/lo.1977.22.2.0361</a>. [Accessed: 24-Apr-2021]</div>
+</div>
+<div id="ref-bachmannRelationsTrophicState2011" class="csl-entry">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">R. W. Bachmann, B. L. Jones, D. D. Fox, M. Hoyer, L. A. Bull, and J. D E Canfield, <span>“Relations between trophic state indicators and fish in <span>Florida</span> (<span>U</span>.<span>S</span>.<span>A</span>.) lakes,”</span> <em>Canadian Journal of Fisheries and Aquatic Sciences</em>, Apr. 2011, doi: <a href="https://doi.org/10.1139/f95-236">10.1139/f95-236</a>. [Online]. Available: <a href="https://cdnsciencepub.com/doi/abs/10.1139/f95-236">https://cdnsciencepub.com/doi/abs/10.1139/f95-236</a>. [Accessed: 24-Apr-2021]</div>
+</div>
+<div id="ref-zieglerEnvironmentCultureGreat2014" class="csl-entry">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">S. Ziegler and J. C. Hudson, <span>“Environment, <span>Culture</span>, and the <span>Great Lakes Fisheries</span>,”</span> <em>Geographical Review</em>, vol. 104, pp. 391–413, 2014, doi: <a href="https://doi.org/doi: 10.1111/j.1931-0846.2014.12041.x">doi: 10.1111/j.1931-0846.2014.12041.x</a>. [Online]. Available: <a href="https://commons.nmu.edu/cgi/viewcontent.cgi?article=1107&amp;context=facwork_journalarticles">https://commons.nmu.edu/cgi/viewcontent.cgi?article=1107&amp;context=facwork_journalarticles</a>. [Accessed: 21-Apr-2018]</div>
+</div>
+<div id="ref-hallMethodsAssessingAquatic1975" class="csl-entry">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">C. A. S. Hall and R. Moll, <span>“Methods of <span>Assessing Aquatic Primary Productivity</span>,”</span> in <em>Primary <span>Productivity</span> of the <span>Biosphere</span></em>, H. Lieth and R. H. Whittaker, Eds. <span>Berlin, Heidelberg</span>: <span>Springer</span>, 1975, pp. 19–53 [Online]. Available: <a href="https://doi.org/10.1007/978-3-642-80913-2_3">https://doi.org/10.1007/978-3-642-80913-2_3</a>. [Accessed: 24-Apr-2021]</div>
+</div>
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2020 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+</div>
+<div id="ref-R-forcats" class="csl-entry">
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">H. Wickham, <em>Forcats: Tools for working with categorical variables (factors)</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=forcats">https://CRAN.R-project.org/package=forcats</a></div>
+</div>
+<div id="ref-R-shiny" class="csl-entry">
+<div class="csl-left-margin">[10] </div><div class="csl-right-inline">W. Chang <em>et al.</em>, <em>Shiny: Web application framework for r</em>. 2021 [Online]. Available: <a href="https://shiny.rstudio.com/">https://shiny.rstudio.com/</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value                       
+ version  R version 3.6.3 (2020-02-29)
+ os       macOS Catalina 10.15.7      
+ system   x86_64, darwin15.6.0        
+ ui       X11                         
+ language (EN)                        
+ collate  en_US.UTF-8                 
+ ctype    en_US.UTF-8                 
+ tz       America/Chicago             
+ date     2021-04-20                  
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version date       lib source        
+ assertthat    0.2.1   2019-03-21 [1] CRAN (R 3.6.0)
+ blogdown    * 1.3     2021-04-14 [1] CRAN (R 3.6.2)
+ bookdown      0.21    2020-10-13 [1] CRAN (R 3.6.3)
+ bslib         0.2.4   2021-01-25 [1] CRAN (R 3.6.2)
+ cachem        1.0.4   2021-02-13 [1] CRAN (R 3.6.2)
+ callr         3.5.1   2020-10-13 [1] CRAN (R 3.6.2)
+ cellranger    1.1.0   2016-07-27 [1] CRAN (R 3.6.0)
+ cli           2.3.1   2021-02-23 [1] CRAN (R 3.6.3)
+ codetools     0.2-18  2020-11-04 [1] CRAN (R 3.6.2)
+ colorspace    2.0-0   2020-11-11 [1] CRAN (R 3.6.2)
+ crayon        1.4.1   2021-02-08 [1] CRAN (R 3.6.2)
+ DBI           1.1.1   2021-01-15 [1] CRAN (R 3.6.2)
+ desc          1.3.0   2021-03-05 [1] CRAN (R 3.6.3)
+ devtools    * 2.3.2   2020-09-18 [1] CRAN (R 3.6.2)
+ digest        0.6.27  2020-10-24 [1] CRAN (R 3.6.2)
+ dplyr       * 1.0.5   2021-03-05 [1] CRAN (R 3.6.3)
+ ellipsis      0.3.1   2020-05-15 [1] CRAN (R 3.6.2)
+ evaluate      0.14    2019-05-28 [1] CRAN (R 3.6.0)
+ fansi         0.4.2   2021-01-15 [1] CRAN (R 3.6.2)
+ farver        2.1.0   2021-02-28 [1] CRAN (R 3.6.3)
+ fastmap       1.1.0   2021-01-25 [1] CRAN (R 3.6.2)
+ forcats     * 0.5.1   2021-01-27 [1] CRAN (R 3.6.2)
+ fs            1.5.0   2020-07-31 [1] CRAN (R 3.6.2)
+ generics      0.1.0   2020-10-31 [1] CRAN (R 3.6.2)
+ ggplot2     * 3.3.3   2020-12-30 [1] CRAN (R 3.6.2)
+ ggthemes    * 4.2.4   2021-01-20 [1] CRAN (R 3.6.2)
+ glue          1.4.2   2020-08-27 [1] CRAN (R 3.6.2)
+ gtable        0.3.0   2019-03-25 [1] CRAN (R 3.6.0)
+ highr         0.8     2019-03-20 [1] CRAN (R 3.6.0)
+ htmltools     0.5.1.1 2021-01-22 [1] CRAN (R 3.6.2)
+ jquerylib     0.1.3   2020-12-17 [1] CRAN (R 3.6.2)
+ jsonlite      1.7.2   2020-12-09 [1] CRAN (R 3.6.2)
+ knitr         1.32    2021-04-14 [1] CRAN (R 3.6.2)
+ labeling      0.4.2   2020-10-20 [1] CRAN (R 3.6.2)
+ lifecycle     1.0.0   2021-02-15 [1] CRAN (R 3.6.2)
+ magrittr      2.0.1   2020-11-17 [1] CRAN (R 3.6.2)
+ memoise       2.0.0   2021-01-26 [1] CRAN (R 3.6.2)
+ munsell       0.5.0   2018-06-12 [1] CRAN (R 3.6.0)
+ pillar        1.5.1   2021-03-05 [1] CRAN (R 3.6.3)
+ pkgbuild      1.2.0   2020-12-15 [1] CRAN (R 3.6.2)
+ pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 3.6.0)
+ pkgload       1.2.0   2021-02-23 [1] CRAN (R 3.6.3)
+ prettyunits   1.1.1   2020-01-24 [1] CRAN (R 3.6.0)
+ processx      3.4.5   2020-11-30 [1] CRAN (R 3.6.2)
+ ps            1.6.0   2021-02-28 [1] CRAN (R 3.6.3)
+ purrr         0.3.4   2020-04-17 [1] CRAN (R 3.6.2)
+ R6            2.5.0   2020-10-28 [1] CRAN (R 3.6.2)
+ Rcpp          1.0.6   2021-01-15 [1] CRAN (R 3.6.2)
+ readxl        1.3.1   2019-03-13 [1] CRAN (R 3.6.0)
+ remotes       2.2.0   2020-07-21 [1] CRAN (R 3.6.2)
+ rlang         0.4.10  2020-12-30 [1] CRAN (R 3.6.2)
+ rmarkdown     2.7     2021-02-19 [1] CRAN (R 3.6.3)
+ rprojroot     2.0.2   2020-11-15 [1] CRAN (R 3.6.2)
+ rstudioapi    0.13    2020-11-12 [1] CRAN (R 3.6.2)
+ sass          0.3.1   2021-01-24 [1] CRAN (R 3.6.2)
+ scales        1.1.1   2020-05-11 [1] CRAN (R 3.6.2)
+ sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.6.0)
+ stringi       1.5.3   2020-09-09 [1] CRAN (R 3.6.2)
+ stringr       1.4.0   2019-02-10 [1] CRAN (R 3.6.0)
+ testthat      3.0.2   2021-02-14 [1] CRAN (R 3.6.2)
+ tibble        3.1.0   2021-02-25 [1] CRAN (R 3.6.3)
+ tidyselect    1.1.0   2020-05-11 [1] CRAN (R 3.6.2)
+ usethis     * 2.0.1   2021-02-10 [1] CRAN (R 3.6.2)
+ utf8          1.1.4   2018-05-24 [1] CRAN (R 3.6.0)
+ vctrs         0.3.6   2020-12-17 [1] CRAN (R 3.6.2)
+ withr         2.4.1   2021-01-26 [1] CRAN (R 3.6.2)
+ xfun          0.22    2021-03-11 [1] CRAN (R 3.6.2)
+ yaml          2.2.1   2020-02-01 [1] CRAN (R 3.6.0)
+
+[1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library</code></pre>
+</div>
