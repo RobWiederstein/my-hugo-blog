@@ -20,7 +20,7 @@ header:
   image: feature.jpg
   alt: shiny application logo
   caption: Shiny allows interactive applications to be made in R.
-repo: ~
+repo: https://raw.githubusercontent.com/RobWiederstein/purple-bananas/main/content/post/2021-05-06-first-predictive-shiny-app/index.Rmd
 summary: This shiny app takes the speed in miles per hour of a car and estimates the distance in feet to stop, using data from the 1920s.
 ---
 
