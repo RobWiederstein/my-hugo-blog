@@ -1,0 +1,125 @@
+---
+title: A First Predictive Shiny App
+author: Rob Wiederstein
+date: '2021-05-06'
+slug: first-predictive-shiny-app
+categories:
+  - R
+  - shiny
+tags: []
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-shiny, @R-shinythemes, @R-bslib
+header:
+  image: feature.jpg
+  alt: shiny application logo
+  caption: Shiny allows interactive applications to be made in R.
+repo: ~
+summary: This shiny app takes the speed in miles per hour of a car and estimates the distance in feet to stop, using data from the 1920s.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown',
+      'shiny',
+      'shinythemes',
+      'bslib'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=F,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
+library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+# [Overview](#overview)
+ 
+ `shiny` applications are a great way to engage a reader.  They allow a person to interact with an application by entering inputs. The applications  require some organization and can range from the simple to extremely complex.
+
+# [Background](#background)
+
+There are a lot of places to find help in writing a first application in shiny.  (The `shiny` package must be installed first!)  Two places to start are Rstudio's [tutorials](https://shiny.rstudio.com/tutorial/) and Hadley Wickham's new book, "[Mastering Shiny](https://mastering-shiny.org)." The main idea behind this exercise was to design an app that took a viewer input and predicted the outcome using a mathmatical model.
+
+# [Data and model](#data)
+
+R comes loaded with some illustrative and easy datasets.  For this app, the `cars` dataset was used and is among the simplest datasets to understand. From the help page, "the data give the speed of cars and the distances taken to stop. Note that the data were recorded in the 1920s."  Early automobiles were powered by small engines and the top speed in the dataset is 25 miles per hour.
+
+# [Results](#results)
+
+Here's the application inserted into an `<iframe>` in my blog post:
+
+<iframe height="600" width="100%" frameborder="no" src="https://rob-wiederstein.shinyapps.io/app-basic/?_ga=2.38850148.616891874.1620303445-1056172305.1620303445"> </iframe>
+
+# [Conclusion](#conclusion)
+
+The application's simplicity is deceptive.  The basic structure allows for future modeling that includes more variables and methods. Or in other words, it can be scaled to other problems that are more complex. Additionally, it allows a user to explore and see the data.
+
+# [Acknowledgements](#acknowledge)
+
+There were some incredibly complex, insightful and time-intensive shiny applications that were consulted for this post.  Specifically, I want to acknowledge and thank the authors of the following apps:
+
+-   [NCAA Swimming Team Finder for Incoming College Athletes](https://github.com/gpilgrim2670/SwimMap)
+
+-   [Radiant - A shiny app for statistics and machine learning](https://github.com/radiant-rstats)
+
+-   [New Zealand Trade Intelligence Dashboard](https://gallery.shinyapps.io/nz-trade-dash/?_ga=2.65541224.755883071.1620045516-1178092619.1618606005)
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```

@@ -33,7 +33,8 @@ packages <- c(
       'blogdown',
       'dplyr',
       'forcats',
-      'shiny'
+      'shiny',
+      'kableExtra'
 )
 lapply(packages, function(x) {
   if (!requireNamespace(x)) install.packages(x)
@@ -76,7 +77,7 @@ cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00",
 knitr::write_bib(.packages(), "./packages.bib")
 ```
 
-```{r load-fishing-data, include = F}
+```{r load-fishing-data, include = F, cache = F}
 input <- "/Users/robwiederstein/Dropbox/public/datasets/glfc-great-lakes-comm-fish-catch-1867-2015.csv"
 df <- data.table::fread(input = input)
 ```
@@ -95,7 +96,7 @@ knitr::include_app("https://rob-wiederstein.shinyapps.io/fish-app/", height = "8
 
 ## General
 
-The Great Lakes are comprised of, moving west to east: Superior, Michigan, Huron, Saint Claire, Erie and Ontario. According to the National Oceanic and Atmospheric Administration (NOAA), the Great Lakes contains 95% of the country's surface fresh water supply, have a surface area of 94,000 square miles, and are encircled by 9,000 miles of shoreline.  Also known as the "Laurentian Great Lakes," they "comprise the largest surface freshwater system in the world." [@taylorChangingFaceGreat2019] Niagra Falls acted as a natural barrier separating Lake Ontario from the rest of the Great Lakes and preventing the westward migration of invasive species.
+The Great Lakes are comprised of, moving west to east: Superior, Michigan, Huron, Saint Claire, Erie and Ontario. According to the National Oceanic and Atmospheric Administration (NOAA), the Great Lakes contain 95% of the country's surface fresh water supply, have a surface area of 94,000 square miles, and are encircled by 9,000 miles of shoreline.  Also known as the "Laurentian Great Lakes," they "comprise the largest surface freshwater system in the world." [@taylorChangingFaceGreat2019] Niagra Falls acted as a natural barrier separating Lake Ontario from the rest of the Great Lakes and preventing the westward migration of invasive species.
 
 
 ```{r lake-profile, out.width="100%", fig.cap = "Based on surface area, Lake Superior is the least productive in commercial fishing, while Lake Erie with its shallow bottom and southern orientation, is the most productive of the Great Lakes."}
@@ -115,9 +116,9 @@ knitr::include_graphics("./trophic_state_index.png")
 ```
 
 
-Lakes with high TSI scores are highly productive whereas lakes with low TSI scores are not.  "The overwhelming evidence from" many, many studies "is that, as lakes become more eutrophic,"--whether measured by TSI scores or other means--"the standing crops, productivity, and yields of fish increase."[@bachmannRelationsTrophicState2011] This conclusion has also been expanded to include species considered to be sports fish as well.[@bachmannRelationsTrophicState2011] However, in one large Florida study, only 75% of the variance in fish production could be explained by trophic state and the author described the use of it as a predictor as "imprecise." [@bachmannRelationsTrophicState2011]
+Lakes with high TSI scores are highly productive whereas lakes with low TSI scores are not.  "The overwhelming evidence from" many, many studies "is that, as lakes become more eutrophic,"--whether measured by TSI scores or other means--"the standing crops, productivity, and yields of fish increase."[@bachmannRelationsTrophicState2011] This conclusion has also been expanded to include species considered to be sports fish as well.[@bachmannRelationsTrophicState2011] However, in one large Florida study, only 75% of the variance in fish production could be explained by trophic state and the author described its use  as a predictor as "imprecise." [@bachmannRelationsTrophicState2011]
 
-As freshwater bodies, the Great Lakes are less productive than the oceans if climate is held constant." [@zieglerEnvironmentCultureGreat2014] "Middle-latitude freshwater lakes are by no means nutrient poor, but they typically rank low in primary productivity compared with oceanic and tropical environments." [@zieglerEnvironmentCultureGreat2014]  
+"As freshwater bodies, the Great Lakes are less productive than the oceans if climate is held constant." [@zieglerEnvironmentCultureGreat2014] "Middle-latitude freshwater lakes are by no means nutrient poor, but they typically rank low in primary productivity compared with oceanic and tropical environments." [@zieglerEnvironmentCultureGreat2014]  
 
 When measured by the amount of microscopic plant productivity, Lake Erie is the most productive, followed by Lake Ontario, Lake Michigan, Lake Huron, and finally Lake Superior. [@hallMethodsAssessingAquatic1975]  "Of the five Laurentian Great Lakes, Superior and Huron and to a lesser extent Michigan are still relatively unproductive, whereas Ontario and Erie, particularly Erie's western basin, are rich in nutrients and support a dense plant life. [@hallMethodsAssessingAquatic1975] "In contrast, daily productivity in Lake Erie may be as much as 45 times greater than that of Lake Superior." 
 
@@ -139,9 +140,9 @@ The species below are routinely mentioned in the literature and history regardin
 
 ## Sea lampreys
 
-"Of all the problems the Great Lakes fishery has faced over the years, none has been more vexing than that of the sea lamprey". [@zieglerEnvironmentCultureGreat2014]  Sea lampreys are an invasive species to the Great Lakes migrating from the Atlantic Ocean.  They attach to their host with their circular rows of teeth and survive on the fluids of their host.  Lampreys could be found in Lake Ontario and moved westward when the Welland Canal bypassed Niagra Falls.  They devastated the fishing stocks of the Great Lakes gradually moving westward from Lake Ontario in the 1850s. The primary control method is through a chemical called (TFM) which targets lamprey larvae in the tributaries surrounding the Great Lakes.  According to the Great Lakes Fishery Commission [website](http://www.glfc.org/control.php), about 200 areas are targeted for lampricide treatment.
+"Of all the problems the Great Lakes fishery has faced over the years, none has been more vexing than that of the sea lamprey". [@zieglerEnvironmentCultureGreat2014]  Sea lampreys are an invasive species to the Great Lakes migrating from the Atlantic Ocean.  They attach to their host with their circular rows of teeth and survive on the fluids of their host.  Lampreys could be found in Lake Ontario and moved westward when the Welland Canal bypassed Niagra Falls.  They devastated the fishing stocks of the Great Lakes, gradually moving westward from Lake Ontario in the 1850s. The primary control method is through chemicals collectively known as lampricides.  The chemicals target lamprey larvae in the tributaries surrounding the Great Lakes.  According to the Great Lakes Fishery Commission [website](http://www.glfc.org/control.php), about 200 areas are targeted for lampricide treatment.
 
-The sea lamprey never has become well established in Lake Erie.[@zieglerEnvironmentCultureGreat2014].  The lake trout (Salvelinus namaycush), probably the most prized fish of the Great Lakes, was its [the Lamprey's] favorite target," though they attack other prize sports fish too. [@zieglerEnvironmentCultureGreat2014]
+The sea lamprey never has become well established in Lake Erie.[@zieglerEnvironmentCultureGreat2014].  The lake trout (Salvelinus namaycush), probably the most prized fish of the Great Lakes, was its [the lamprey's] favorite target," though they attack other prize sports fish too. [@zieglerEnvironmentCultureGreat2014]
 
 ## Lake Whitefish
 
@@ -168,59 +169,57 @@ In the GLFC ["Notes on Statistics"](http://www.glfc.org/commercial/COMMERCIAL%20
 
 The second significant passage in the "Notes on Statistics" was on the species field.  "Confusion as to fish names and the combining of catches of species that are in the same market category or that resemble each other introduced considerable uncertainty into the statistics for many of the early years."  In the data, the species are listed alphabetically by their common name, rather than their phylogenetic order.
 
-The most problematic portion of this dataset was the `species` field.  Upon import of the dataset, there were `X` number of unique values.  Some of the text fields were exceptionally long which makes them difficult to use in code and they often present awkward spacing in charts and graphs.  Ultimately they were shortened and narrowed to 34 unique fields, but the distillation was the result of the author's subjective judgment.
+The most problematic portion of this dataset was the `species` field.  Upon import of the dataset, there were 55 number of unique values.  Some of the text fields were exceptionally long which makes them difficult to use in code. Long variable names often present awkward spacing in charts and graphs.  Ultimately, the variables were shortened and narrowed to 34 unique names, but the distillation was the result of the author's subjective judgment.
 
-There were common patterns in the `species` field.  First, there were misspellings.  `amercian` was changed to `american`.  Second, singular were changed to plural.  For example, `chub` was changed to `chubs`. Third, names were shortened. `chinook`, `coho`, and `pacific` were shortened to just `salmon`. Fourth, there were substantive changes too.  `blue pike` was changed to `walleye`, because of some controversy over its appropriate taxonomy.  The complete list of changes is in the [Appendix](#appendix).
+There were common patterns in the `species` field.  First, there were misspellings.  `amercian` was changed to `american`.  Second, singular were changed to plural.  For example, `chub` was changed to `chubs`. Third, names were shortened. `chinook`, `coho`, and `pacific` were shortened to just `salmon`. Fourth, there were substantive changes too.  `blue pike` was changed to `walleye`, because of some controversy over its appropriate taxonomy.  The complete list of changes is in the [Appendix](#appendixspecies-grouping).
 
 
 # [Results](#results)
 
 The data were filtered to the latest year available and the total commercial catch was determined by lake and species.  The largest catch was rainbow smelt from Lake Erie. Six of the top 10 catches by weight were from Lake Erie.  Lake whitefish was the largest catch for both Lake Superior and Lake Huron.  Lakes Ontario and Michigan did not make the top 10 list.
 
-
-```{r table-total-comm-catch}
-library(magrittr)
-library(dplyr)
-df %>%
+```{r table-comm-fish-production}
+df %>% 
   dplyr::filter(year == max(year)) %>%
-  arrange(-grand_total) %>%
-  select(year, lake, species, grand_total) %>%
+  select(year, lake, species, kg) %>%
+  mutate(kg = round(kg, 2)) %>%
+  arrange(-kg) %>%
   slice_head(n = 10) %>%
   kableExtra::kbl() %>%
   kableExtra::kable_styling(position = "center")
 ```
 
-In order to make fair comparisons between the lakes, a measure of yield was derived.  Fish production was scaled to lake size in surface area. When considering the size of a lake, Lake Erie led the other lakes in terms of fish catch in pounds per square mile.
+
+
+In order to make fair comparisons between the lakes, a measure of yield was derived.  Fish production was scaled to lake size in surface area. When considering the size of a lake, Lake Erie led the other lakes in terms of fish catch in kilograms per square kilometer.
 
 ```{r plot-lake-production, fig.cap="Fish production in pounds per square mile.", fig.width=7}
 df.1 <- 
   df %>%
   #na.omit() %>%
   group_by(year, lake) %>%
-  summarize(total = sum(grand_total, na.rm = T))
-df.sa <- data.frame(lake = c("Michigan",
-                             "Erie",
-                             "Huron",
-                             "Superior",
-                             "Saint Clair",
-                             "Ontario"
-                             ),
-                    sa = c("22300", 
-                           "9910",
-                           "23000",
-                           "31700",
-                           "430",
-                           "7340"
-                           ),
-                    stringsAsFactors = F
-                    )
-df.sa$sa <- as.integer(df.sa$sa)
+  summarize(total = sum(kg, na.rm = T))
+df.sa <- tibble(lake = c("Erie",
+                         "Huron",
+                         "Michigan",
+                         "Ontario",
+                         "Saint Clair",
+                         "Superior"
+                         ),
+                sa_km = c(25655,
+                          59565,
+                          57753,
+                          19009,
+                          1100,
+                          82097)
+)
 df.1 <- dplyr::left_join(df.1, df.sa, by = "lake")
-df.1$lbs_per_sq_mi <- round((df.1$total / df.1$sa), 2)
+df.1$kg <- df.1$total * .45359237
+df.1$kg_per_km_sq <- round((df.1$kg / df.1$sa_km), 2)
 #df.1$lake <- stringr::str_sub(df.1$lake, start = 1, end = 5)
 df.1$lake <- factor(df.1$lake, levels = c("Erie", "Michigan", "Saint Clair", "Huron",  "Ontario", "Superior"))
 library(ggplot2)
-p <- ggplot(df.1, aes(year, lbs_per_sq_mi, color = lake))
+p <- ggplot(df.1, aes(year, kg_per_km_sq, color = lake))
 p <- p + geom_line(lwd = 1)
 # p <- p + scale_y_continuous(name = "",
 #                             breaks = c(0, 2000, 4000, 6000),
@@ -229,7 +228,7 @@ p <- p + geom_line(lwd = 1)
 p <- p + scale_x_continuous(name = "")
 p <- p + facet_grid(rows = vars(lake))
 p <- p + labs(title = "Great Lakes Commercial Fish Catch",
-              subtitle = expression(~pounds/mile^2),
+              subtitle = expression(~kg/km^2),
               caption = "Great Lakes Fishery Commission--2018"
               )
 p <- p + ggthemes::theme_fivethirtyeight()
@@ -241,11 +240,11 @@ p
 
 # [Conclusion](#conclusion)
 
-Commerical fishing is a challenging business.  Fish populations have changed over time and the composition of the fish has changed as well.  Invasive species like the sea lamprey and the Alewife have decimated native species and caused commercial fisherman to change tactics and expectations.  In some cases, they have abandoned the market completely.
+Commerical fishing is a challenging business.  Fish populations have changed over time and the composition of the fish has changed as well. Invasive species like the Sea Lamprey and the Alewife have decimated native species and caused commercial fisherman to change tactics and expectations.  In some cases, they have abandoned the market completely.
 
-The dataset confirms several propositions in the academic literature; namely, that commercial fish catches have declined over time.  Additionally, Lake Erie because of its unique features continues to be the most productive of the Great Lakes when measured by commercial fish catch in pounds per square mile.
+The dataset confirms several propositions in the academic literature; namely, that commercial fish catches have declined over time.  Additionally, Lake Erie because of its unique features continues to be the most productive of the Great Lakes when measured by commercial fish catch in kilograms per square kilometer.
 
-Several realtively new invasive species will continue to alter the historic balance of the Great Lakes fish as well. New challenges in the form dreissenid mussels and the round gobi will require commercial fisherman to remain vigilant in the dynamic ecology of the Great Lakes.
+Several realtively new invasive species will continue to alter the historic balance of the Great Lakes fish as well. New challenges from dreissenid mussels and the round gobi will require commercial fisherman to remain vigilant and flexible in the dynamic ecology of the Great Lakes.
 
 # [Acknowledgements](#acknowledge)
 
@@ -272,7 +271,7 @@ This blog post was made possible thanks to:
 [9]:http://169.62.82.226/dnr/0,4570,7-350-79136_79236_80538_80541-424724--,00.html
 
 
-# [Appendix--Species Grouping](#appendix)
+# [Appendix--Species Grouping]{#appendix}
 
 ```{r species-grouping, echo = T, eval=F, include=T}
 #clean species field
