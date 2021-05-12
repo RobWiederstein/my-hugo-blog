@@ -1,0 +1,347 @@
+---
+title: Piping R Code with Magrittr
+author: Rob Wiederstein
+date: '2021-05-09'
+slug: piping-r-code-with-magrittr
+categories:
+  - R
+tags:
+  - magrittr
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-dplyr, @R-magrittr, @R-purrr, @R-kableExtra
+header:
+  image: feature.png
+  alt: piping code with magrittr
+  caption: Magritter (the R package) is named for the surrealist painter Rene' Magritte. His painting "The Treachery of Images" was self captioned, "This is not a pipe." The work is now owned by and exhibited at the Los Angeles County Museum of Art.
+repo: ~
+summary: I've been piping code with dplyr for several years now.  But because I use it so often, I thought it was time for a refresher and some renewed investigation.  Sometimes, revisiting a topic can help break me out of a programming funk.  And sure enough, some new methods were discovered.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown',
+      'dplyr',
+      'magrittr',
+      'kableExtra',
+      'purrr'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=F,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=T
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
+library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+```{r load-datasets, include=F}
+data(mtcars)
+```
+
+
+# [Introduction](#intro)
+
+The `magrittr` package allows for the piping of R code.  It is to be given a strong French pronuniciation according to `vignette("magrittr")`. The package was named tongue-in-cheek after the artist Rene' Magritte.  As Magritte's painting of a pipe was not an actual pipe, neither is magrittr's operator `%>%` an actual pipe.  Rather it is a convenient way for code to be written from left to right without the nesting of functions or the creation of temporary variables. Nesting of functions is confusing and temporary variables clutter up the global environment. Using `magrittr`, `f(x)` is the equivalent of `x %>% f()` and `x %>% f(.)` where dot "." is the  placeholder for "x".
+
+```{r magrittr-load}
+#load library
+library(magrittr)
+```
+
+
+## Assignment
+
+Some disfavor the use of `magrittr` for assignment, preferring the traditional `<-`.
+
+```{r assign-common}
+# More common way to assign
+x <- 10 %>% divide_by(2)
+print(x)
+```
+
+```{r assign-rare}
+# Less common
+env <- environment()
+"x" %>% assign(5, envir = env) %>% print
+
+```
+
+
+## When to use
+
+Use pipes if you have (1) shorter than 10 steps, (2) a single input or output, and (3) simple dependencies.
+
+## Argument Placeholder
+
+From the magrittr tidyverse page cited below, here are two examples of using the "." as an argument placeholder:
+
+-   `x %>% f(y, .) is equivalent to f(y, x)`
+-   `x %>% f(y, z = .) is equivalent to f(y, z = x)`
+
+
+# [Operators - 4](#operators)
+
+The only operator that I've used consistently is the first one.
+
+## `%>%`
+
+```{r pipe-symbol}
+# As described above
+10 %>% divide_by(5)
+```
+
+
+## `%T>%`
+
+Also referred to as the "t-pipe," it is helpful to determine the output in a series of chained commands.
+
+```{r t-pipe-demo-1}
+# Note the 'NULL'
+rnorm(100) %>%
+  matrix(ncol = 2) %>%
+  plot() %>%
+  str()
+```
+
+```{r t-pipe-demo-2}
+rnorm(100) %>%
+  matrix(ncol = 2) %T>%
+  plot() %>%
+  str()
+```
+
+
+## `%$%` 
+
+```{r piping-dataframe, eval = T}
+car_data <- 
+        mtcars %>%
+        subset(hp > 100) %>%
+        aggregate(. ~ cyl, data = ., FUN = . %>% mean %>% round(2)) %>%
+        transform(kpl = mpg %>% multiply_by(0.4251)) %>%
+        print
+```
+
+## `%<>%`
+
+The above symbol is used for assignment, though disfavored.
+
+```{r piping-assignment, eval=F}
+#lake depth
+LakeHuron %<>% head(3) %>% print
+```
+
+
+
+# [Functions](#functions)
+
+## Unary Functions
+
+```{r unary-functions}
+# Unary functions
+f <- . %>% head(3)
+chickwts %>% f(.)
+```
+
+## Lambda Functions
+
+### Long-hand Notation
+
+```{r long-lambda, eval = F}
+car_data %>%
+(function(x) {
+  if (nrow(x) > 2) 
+    rbind(head(x, 1), tail(x, 1))
+  else x
+})
+```
+
+### Shorthand Notation
+
+```{r short-lambda, eval = F}
+car_data %>%
+{ 
+  if (nrow(.) > 0)
+    rbind(head(., 1), tail(., 1))
+  else .
+}
+```
+# Aliases
+
+Aliases can greatly improve the readibility of your code.  They can be found with the help command: `?magrittr::extract`. I'm frequently converting numbers to percentages.
+
+```{r alias-pct}
+.345 %>% multiply_by(100) %>% round(2) %>% paste0("%")
+```
+
+# [Examples](#examples)
+
+## `mtcars` 
+
+There are at least two things within the code that are not obvious, at least to me.  First, the piping operator `%>%` is being used within the functions themselves, instead of just the end of the line.  Second, the `aggregate` function contains a nested unary function `FUN = . %>% mean %>% round(2)`.
+
+```{r example-vignette, eval = T}
+# magrittr vignette
+car_data <- 
+  mtcars %>%
+  subset(hp > 100) %>%
+  aggregate(. ~ cyl, data = ., FUN = . %>% mean %>% round(2)) %>%
+  transform(kpl = mpg %>% multiply_by(0.4251)) %>%
+  print
+```
+
+
+```{r example-mtcars-2}
+mtcars %>%
+        tibble(.) %>%
+        #https://stackoverflow.com/questions/22353633/filter-for-complete-cases-in-data-frame-using-dplyr-case-wise-deletion
+        tidyr::drop_na() %>% 
+        mutate(type = rownames(mtcars)) %>%
+        filter(!grepl('^A|L', type)) %>%
+        filter(am == 0) %>%
+        select(cyl, mpg) %>%
+        group_by(cyl) %>%
+        summarize(avg_mpg = mpg %>% mean() %>% round(0)) %>%
+        arrange(-cyl) %>%
+        set_colnames(c("cylinder", "avg_mpg"))
+```
+
+## `starwars`
+
+Use `data(starwars)`. Examples from the `vignette("dplyr")`.
+
+```{r example-starwars-1}
+starwars %>% filter(skin_color == "light", eye_color == "brown")
+```
+
+```{r example-starwars-2}
+library(kableExtra)
+starwars %>%
+        select(name, height, mass, birth_year, sex, species, homeworld) %>%
+        filter(species == "Droid") %>%
+        arrange(desc(height)) %>%
+        slice_head(n = 4) %>%
+        kbl()
+
+        
+```
+
+
+
+
+
+## `babynames`
+
+This example was taken from R-bloggers post written by Stefan Milton, the author of the `magrittr` package. The post is included in the acknowledgements.
+
+```{r example-babynames-1}
+library(babynames)
+babynames %>% 
+    filter(name %>% substr(1, 3) %>% equals("Ste")) %>% 
+    group_by(year, sex) %>% 
+    summarize(total = sum(n)) %>%
+    qplot(year, total, color = sex, data = ., geom = "line") %>%
+    add(ggtitle('Names starting with "Ste"')) %>% 
+    print
+```
+
+# [Conditional Piping](#conditional)
+
+Making the flow of the pipe condition was the subject of this stackoverflow [question](https://stackoverflow.com/questions/30604107/r-conditional-evaluation-when-using-the-pipe-operator).
+
+```{r conditional-pipe-1}
+x <- 1
+y <- T
+x %>% 
+add(1) %>% 
+ {if(y) add(.,1) else .}
+```
+
+```{r conditional-pipe-2}
+library(purrr)
+1:10 %>%
+  when(
+    sum(.) <=   x ~ sum(.),
+    sum(.) <= 2*x ~ sum(.)/2,
+    ~ 0,
+    x = 60
+  )
+```
+
+# [Conclusion](#conclusion)
+
+It appears that base R has included its own pipe `|>` in a development version, thus making the `magrittr` package obsolete in future R versions. This was [announced](https://www.youtube.com/watch?v=X_eDHNVceCU&t=4082s) at the 2020 useR Conference.   Piping is used widely in  many languages and one could reasonably expect that, aside from syntax, the development `|>` pipe would function similarly to magrittr's `%>%` pipe.  Although to be clear, it's not a real pipe either! Happy piping!
+
+
+
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+The inimitable Hadley Wickham and another of his books, "[R for Data Science](https://r4ds.had.co.nz/pipes.html)". (Specifically, Chapter 18--"Pipes".)
+
+"[magrittr: part of the tidyverse](https://magrittr.tidyverse.org)"
+
+[Simplify Your Code with %>%](https://uc-r.github.io/pipe)
+
+[Simpler R coding with pipes > the present and future of the magrittr package](https://www.r-bloggers.com/2014/08/simpler-r-coding-with-pipes-the-present-and-future-of-the-magrittr-package/)
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```

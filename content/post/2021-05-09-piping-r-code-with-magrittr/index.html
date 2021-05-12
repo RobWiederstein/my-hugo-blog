@@ -1,0 +1,528 @@
+---
+title: Piping R Code with Magrittr
+author: Rob Wiederstein
+date: '2021-05-09'
+slug: piping-r-code-with-magrittr
+categories:
+  - R
+tags:
+  - magrittr
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-dplyr, @R-magrittr, @R-purrr, @R-kableExtra
+header:
+  image: feature.png
+  alt: piping code with magrittr
+  caption: Magritter (the R package) is named for the surrealist painter Rene' Magritte. His painting "The Treachery of Images" was self captioned, "This is not a pipe." The work is now owned by and exhibited at the Los Angeles County Museum of Art.
+repo: ~
+summary: I've been piping code with dplyr for several years now.  But because I use it so often, I thought it was time for a refresher and some renewed investigation.  Sometimes, revisiting a topic can help break me out of a programming funk.  And sure enough, some new methods were discovered.
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/kePrint/kePrint.js"></script>
+<link href="{{< blogdown/postref >}}index_files/lightable/lightable.css" rel="stylesheet" />
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction"><span>Introduction</span></a>
+<ul>
+<li><a href="#assignment">Assignment</a></li>
+<li><a href="#when-to-use">When to use</a></li>
+<li><a href="#argument-placeholder">Argument Placeholder</a></li>
+</ul></li>
+<li><a href="#operators---4"><span>Operators - 4</span></a>
+<ul>
+<li><a href="#section"><code>%&gt;%</code></a></li>
+<li><a href="#t"><code>%T&gt;%</code></a></li>
+<li><a href="#section-1"><code>%$%</code></a></li>
+<li><a href="#section-2"><code>%&lt;&gt;%</code></a></li>
+</ul></li>
+<li><a href="#functions"><span>Functions</span></a>
+<ul>
+<li><a href="#unary-functions">Unary Functions</a></li>
+<li><a href="#lambda-functions">Lambda Functions</a>
+<ul>
+<li><a href="#long-hand-notation">Long-hand Notation</a></li>
+<li><a href="#shorthand-notation">Shorthand Notation</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#aliases">Aliases</a></li>
+<li><a href="#examples"><span>Examples</span></a>
+<ul>
+<li><a href="#mtcars"><code>mtcars</code></a></li>
+<li><a href="#starwars"><code>starwars</code></a></li>
+<li><a href="#babynames"><code>babynames</code></a></li>
+</ul></li>
+<li><a href="#conditional-piping"><span>Conditional Piping</span></a></li>
+<li><a href="#conclusion"><span>Conclusion</span></a></li>
+<li><a href="#acknowledgements"><span>Acknowledgements</span></a></li>
+<li><a href="#references"><span>References</span></a></li>
+<li><a href="#disclaimer"><span>Disclaimer</span></a></li>
+<li><a href="#reproducibility"><span>Reproducibility</span></a></li>
+</ul>
+</div>
+
+<div id="introduction" class="section level1">
+<h1><a href="#intro">Introduction</a></h1>
+<p>The <code>magrittr</code> package allows for the piping of R code. It is to be given a strong French pronuniciation according to <code>vignette("magrittr")</code>. The package was named tongue-in-cheek after the artist Rene’ Magritte. As Magritte’s painting of a pipe was not an actual pipe, neither is magrittr’s operator <code>%&gt;%</code> an actual pipe. Rather it is a convenient way for code to be written from left to right without the nesting of functions or the creation of temporary variables. Nesting of functions is confusing and temporary variables clutter up the global environment. Using <code>magrittr</code>, <code>f(x)</code> is the equivalent of <code>x %&gt;% f()</code> and <code>x %&gt;% f(.)</code> where dot “.” is the placeholder for “x.”</p>
+<pre class="r"><code>#load library
+library(magrittr)</code></pre>
+<div id="assignment" class="section level2">
+<h2>Assignment</h2>
+<p>Some disfavor the use of <code>magrittr</code> for assignment, preferring the traditional <code>&lt;-</code>.</p>
+<pre class="r"><code># More common way to assign
+x &lt;- 10 %&gt;% divide_by(2)
+print(x)</code></pre>
+<pre><code>[1] 5</code></pre>
+<pre class="r"><code># Less common
+env &lt;- environment()
+&quot;x&quot; %&gt;% assign(5, envir = env) %&gt;% print</code></pre>
+<pre><code>[1] 5</code></pre>
+</div>
+<div id="when-to-use" class="section level2">
+<h2>When to use</h2>
+<p>Use pipes if you have (1) shorter than 10 steps, (2) a single input or output, and (3) simple dependencies.</p>
+</div>
+<div id="argument-placeholder" class="section level2">
+<h2>Argument Placeholder</h2>
+<p>From the magrittr tidyverse page cited below, here are two examples of using the “.” as an argument placeholder:</p>
+<ul>
+<li><code>x %&gt;% f(y, .) is equivalent to f(y, x)</code></li>
+<li><code>x %&gt;% f(y, z = .) is equivalent to f(y, z = x)</code></li>
+</ul>
+</div>
+</div>
+<div id="operators---4" class="section level1">
+<h1><a href="#operators">Operators - 4</a></h1>
+<p>The only operator that I’ve used consistently is the first one.</p>
+<div id="section" class="section level2">
+<h2><code>%&gt;%</code></h2>
+<pre class="r"><code># As described above
+10 %&gt;% divide_by(5)</code></pre>
+<pre><code>[1] 2</code></pre>
+</div>
+<div id="t" class="section level2">
+<h2><code>%T&gt;%</code></h2>
+<p>Also referred to as the “t-pipe,” it is helpful to determine the output in a series of chained commands.</p>
+<pre class="r"><code># Note the &#39;NULL&#39;
+rnorm(100) %&gt;%
+  matrix(ncol = 2) %&gt;%
+  plot() %&gt;%
+  str()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/t-pipe-demo-1-1.svg" width="576" style="display: block; margin: auto;" /></p>
+<pre><code> NULL</code></pre>
+<pre class="r"><code>rnorm(100) %&gt;%
+  matrix(ncol = 2) %T&gt;%
+  plot() %&gt;%
+  str()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/t-pipe-demo-2-1.svg" width="576" style="display: block; margin: auto;" /></p>
+<pre><code> num [1:50, 1:2] 0.1456 -0.5066 0.827 0.0585 0.2557 ...</code></pre>
+</div>
+<div id="section-1" class="section level2">
+<h2><code>%$%</code></h2>
+<pre class="r"><code>car_data &lt;- 
+        mtcars %&gt;%
+        subset(hp &gt; 100) %&gt;%
+        aggregate(. ~ cyl, data = ., FUN = . %&gt;% mean %&gt;% round(2)) %&gt;%
+        transform(kpl = mpg %&gt;% multiply_by(0.4251)) %&gt;%
+        print</code></pre>
+<pre><code>  cyl   mpg   disp     hp drat   wt  qsec   vs   am gear carb       kpl
+1   4 25.90 108.05 111.00 3.94 2.15 17.75 1.00 1.00 4.50 2.00 11.010090
+2   6 19.74 183.31 122.29 3.59 3.12 17.98 0.57 0.43 3.86 3.43  8.391474
+3   8 15.10 353.10 209.21 3.23 4.00 16.77 0.00 0.14 3.29 3.50  6.419010</code></pre>
+</div>
+<div id="section-2" class="section level2">
+<h2><code>%&lt;&gt;%</code></h2>
+<p>The above symbol is used for assignment, though disfavored.</p>
+<pre class="r"><code>#lake depth
+LakeHuron %&lt;&gt;% head(3) %&gt;% print</code></pre>
+</div>
+</div>
+<div id="functions" class="section level1">
+<h1><a href="#functions">Functions</a></h1>
+<div id="unary-functions" class="section level2">
+<h2>Unary Functions</h2>
+<pre class="r"><code># Unary functions
+f &lt;- . %&gt;% head(3)
+chickwts %&gt;% f(.)</code></pre>
+<pre><code>  weight      feed
+1    179 horsebean
+2    160 horsebean
+3    136 horsebean</code></pre>
+</div>
+<div id="lambda-functions" class="section level2">
+<h2>Lambda Functions</h2>
+<div id="long-hand-notation" class="section level3">
+<h3>Long-hand Notation</h3>
+<pre class="r"><code>car_data %&gt;%
+(function(x) {
+  if (nrow(x) &gt; 2) 
+    rbind(head(x, 1), tail(x, 1))
+  else x
+})</code></pre>
+</div>
+<div id="shorthand-notation" class="section level3">
+<h3>Shorthand Notation</h3>
+<pre class="r"><code>car_data %&gt;%
+{ 
+  if (nrow(.) &gt; 0)
+    rbind(head(., 1), tail(., 1))
+  else .
+}</code></pre>
+</div>
+</div>
+</div>
+<div id="aliases" class="section level1">
+<h1>Aliases</h1>
+<p>Aliases can greatly improve the readibility of your code. They can be found with the help command: <code>?magrittr::extract</code>. I’m frequently converting numbers to percentages.</p>
+<pre class="r"><code>.345 %&gt;% multiply_by(100) %&gt;% round(2) %&gt;% paste0(&quot;%&quot;)</code></pre>
+<pre><code>[1] &quot;34.5%&quot;</code></pre>
+</div>
+<div id="examples" class="section level1">
+<h1><a href="#examples">Examples</a></h1>
+<div id="mtcars" class="section level2">
+<h2><code>mtcars</code></h2>
+<p>There are at least two things within the code that are not obvious, at least to me. First, the piping operator <code>%&gt;%</code> is being used within the functions themselves, instead of just the end of the line. Second, the <code>aggregate</code> function contains a nested unary function <code>FUN = . %&gt;% mean %&gt;% round(2)</code>.</p>
+<pre class="r"><code># magrittr vignette
+car_data &lt;- 
+  mtcars %&gt;%
+  subset(hp &gt; 100) %&gt;%
+  aggregate(. ~ cyl, data = ., FUN = . %&gt;% mean %&gt;% round(2)) %&gt;%
+  transform(kpl = mpg %&gt;% multiply_by(0.4251)) %&gt;%
+  print</code></pre>
+<pre><code>  cyl   mpg   disp     hp drat   wt  qsec   vs   am gear carb       kpl
+1   4 25.90 108.05 111.00 3.94 2.15 17.75 1.00 1.00 4.50 2.00 11.010090
+2   6 19.74 183.31 122.29 3.59 3.12 17.98 0.57 0.43 3.86 3.43  8.391474
+3   8 15.10 353.10 209.21 3.23 4.00 16.77 0.00 0.14 3.29 3.50  6.419010</code></pre>
+<pre class="r"><code>mtcars %&gt;%
+        tibble(.) %&gt;%
+        #https://stackoverflow.com/questions/22353633/filter-for-complete-cases-in-data-frame-using-dplyr-case-wise-deletion
+        tidyr::drop_na() %&gt;% 
+        mutate(type = rownames(mtcars)) %&gt;%
+        filter(!grepl(&#39;^A|L&#39;, type)) %&gt;%
+        filter(am == 0) %&gt;%
+        select(cyl, mpg) %&gt;%
+        group_by(cyl) %&gt;%
+        summarize(avg_mpg = mpg %&gt;% mean() %&gt;% round(0)) %&gt;%
+        arrange(-cyl) %&gt;%
+        set_colnames(c(&quot;cylinder&quot;, &quot;avg_mpg&quot;))</code></pre>
+<pre><code># A tibble: 3 x 2
+  cylinder avg_mpg
+     &lt;dbl&gt;   &lt;dbl&gt;
+1        8      15
+2        6      19
+3        4      23</code></pre>
+</div>
+<div id="starwars" class="section level2">
+<h2><code>starwars</code></h2>
+<p>Use <code>data(starwars)</code>. Examples from the <code>vignette("dplyr")</code>.</p>
+<pre class="r"><code>starwars %&gt;% filter(skin_color == &quot;light&quot;, eye_color == &quot;brown&quot;)</code></pre>
+<pre><code># A tibble: 7 x 14
+  name     height  mass hair_color skin_color eye_color birth_year sex    gender
+  &lt;chr&gt;     &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; 
+1 Leia Or…    150    49 brown      light      brown             19 female femin…
+2 Biggs D…    183    84 black      light      brown             24 male   mascu…
+3 Cordé       157    NA brown      light      brown             NA female femin…
+4 Dormé       165    NA brown      light      brown             NA female femin…
+5 Raymus …    188    79 brown      light      brown             NA male   mascu…
+6 Poe Dam…     NA    NA brown      light      brown             NA male   mascu…
+7 Padmé A…    165    45 brown      light      brown             46 female femin…
+# … with 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
+#   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+<pre class="r"><code>library(kableExtra)
+starwars %&gt;%
+        select(name, height, mass, birth_year, sex, species, homeworld) %&gt;%
+        filter(species == &quot;Droid&quot;) %&gt;%
+        arrange(desc(height)) %&gt;%
+        slice_head(n = 4) %&gt;%
+        kbl()</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+name
+</th>
+<th style="text-align:right;">
+height
+</th>
+<th style="text-align:right;">
+mass
+</th>
+<th style="text-align:right;">
+birth_year
+</th>
+<th style="text-align:left;">
+sex
+</th>
+<th style="text-align:left;">
+species
+</th>
+<th style="text-align:left;">
+homeworld
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+IG-88
+</td>
+<td style="text-align:right;">
+200
+</td>
+<td style="text-align:right;">
+140
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:left;">
+none
+</td>
+<td style="text-align:left;">
+Droid
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+C-3PO
+</td>
+<td style="text-align:right;">
+167
+</td>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:right;">
+112
+</td>
+<td style="text-align:left;">
+none
+</td>
+<td style="text-align:left;">
+Droid
+</td>
+<td style="text-align:left;">
+Tatooine
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R5-D4
+</td>
+<td style="text-align:right;">
+97
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:left;">
+none
+</td>
+<td style="text-align:left;">
+Droid
+</td>
+<td style="text-align:left;">
+Tatooine
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2-D2
+</td>
+<td style="text-align:right;">
+96
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:left;">
+none
+</td>
+<td style="text-align:left;">
+Droid
+</td>
+<td style="text-align:left;">
+Naboo
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="babynames" class="section level2">
+<h2><code>babynames</code></h2>
+<p>This example was taken from R-bloggers post written by Stefan Milton, the author of the <code>magrittr</code> package. The post is included in the acknowledgements.</p>
+<pre class="r"><code>library(babynames)
+babynames %&gt;% 
+    filter(name %&gt;% substr(1, 3) %&gt;% equals(&quot;Ste&quot;)) %&gt;% 
+    group_by(year, sex) %&gt;% 
+    summarize(total = sum(n)) %&gt;%
+    qplot(year, total, color = sex, data = ., geom = &quot;line&quot;) %&gt;%
+    add(ggtitle(&#39;Names starting with &quot;Ste&quot;&#39;)) %&gt;% 
+    print</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/example-babynames-1-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="conditional-piping" class="section level1">
+<h1><a href="#conditional">Conditional Piping</a></h1>
+<p>Making the flow of the pipe condition was the subject of this stackoverflow <a href="https://stackoverflow.com/questions/30604107/r-conditional-evaluation-when-using-the-pipe-operator">question</a>.</p>
+<pre class="r"><code>x &lt;- 1
+y &lt;- T
+x %&gt;% 
+add(1) %&gt;% 
+ {if(y) add(.,1) else .}</code></pre>
+<pre><code>[1] 3</code></pre>
+<pre class="r"><code>library(purrr)
+1:10 %&gt;%
+  when(
+    sum(.) &lt;=   x ~ sum(.),
+    sum(.) &lt;= 2*x ~ sum(.)/2,
+    ~ 0,
+    x = 60
+  )</code></pre>
+<pre><code>[1] 55</code></pre>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+<p>It appears that base R has included its own pipe <code>|&gt;</code> in a development version, thus making the <code>magrittr</code> package obsolete in future R versions. This was <a href="https://www.youtube.com/watch?v=X_eDHNVceCU&amp;t=4082s">announced</a> at the 2020 useR Conference. Piping is used widely in many languages and one could reasonably expect that, aside from syntax, the development <code>|&gt;</code> pipe would function similarly to magrittr’s <code>%&gt;%</code> pipe. Although to be clear, it’s not a real pipe either! Happy piping!</p>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to:</p>
+<p>The inimitable Hadley Wickham and another of his books, “<a href="https://r4ds.had.co.nz/pipes.html">R for Data Science</a>.” (Specifically, Chapter 18–“Pipes.”)</p>
+<p>“<a href="https://magrittr.tidyverse.org">magrittr: part of the tidyverse</a>”</p>
+<p><a href="https://uc-r.github.io/pipe">Simplify Your Code with %&gt;%</a></p>
+<p><a href="https://www.r-bloggers.com/2014/08/simpler-r-coding-with-pipes-the-present-and-future-of-the-magrittr-package/">Simpler R coding with pipes &gt; the present and future of the magrittr package</a></p>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2020 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+</div>
+<div id="ref-R-dplyr" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">H. Wickham, R. François, L. Henry, and K. Müller, <em>Dplyr: A grammar of data manipulation</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a></div>
+</div>
+<div id="ref-R-kableExtra" class="csl-entry">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">H. Zhu, <em>kableExtra: Construct complex table with kable and pipe syntax</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=kableExtra">https://CRAN.R-project.org/package=kableExtra</a></div>
+</div>
+<div id="ref-R-magrittr" class="csl-entry">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">S. M. Bache and H. Wickham, <em>Magrittr: A forward-pipe operator for r</em>. 2020 [Online]. Available: <a href="https://CRAN.R-project.org/package=magrittr">https://CRAN.R-project.org/package=magrittr</a></div>
+</div>
+<div id="ref-R-purrr" class="csl-entry">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">L. Henry and H. Wickham, <em>Purrr: Functional programming tools</em>. 2020 [Online]. Available: <a href="https://CRAN.R-project.org/package=purrr">https://CRAN.R-project.org/package=purrr</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value                       
+ version  R version 3.6.3 (2020-02-29)
+ os       macOS Catalina 10.15.7      
+ system   x86_64, darwin15.6.0        
+ ui       X11                         
+ language (EN)                        
+ collate  en_US.UTF-8                 
+ ctype    en_US.UTF-8                 
+ tz       America/Chicago             
+ date     2021-05-11                  
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version date       lib source        
+ assertthat    0.2.1   2019-03-21 [1] CRAN (R 3.6.0)
+ blogdown    * 1.3     2021-04-14 [1] CRAN (R 3.6.2)
+ bookdown      0.21    2020-10-13 [1] CRAN (R 3.6.3)
+ bslib         0.2.4   2021-01-25 [1] CRAN (R 3.6.2)
+ cachem        1.0.4   2021-02-13 [1] CRAN (R 3.6.2)
+ callr         3.5.1   2020-10-13 [1] CRAN (R 3.6.2)
+ cli           2.3.1   2021-02-23 [1] CRAN (R 3.6.3)
+ codetools     0.2-18  2020-11-04 [1] CRAN (R 3.6.2)
+ colorspace    2.0-0   2020-11-11 [1] CRAN (R 3.6.2)
+ crayon        1.4.1   2021-02-08 [1] CRAN (R 3.6.2)
+ DBI           1.1.1   2021-01-15 [1] CRAN (R 3.6.2)
+ desc          1.3.0   2021-03-05 [1] CRAN (R 3.6.3)
+ devtools    * 2.3.2   2020-09-18 [1] CRAN (R 3.6.2)
+ digest        0.6.27  2020-10-24 [1] CRAN (R 3.6.2)
+ dplyr       * 1.0.5   2021-03-05 [1] CRAN (R 3.6.3)
+ ellipsis      0.3.1   2020-05-15 [1] CRAN (R 3.6.2)
+ evaluate      0.14    2019-05-28 [1] CRAN (R 3.6.0)
+ fansi         0.4.2   2021-01-15 [1] CRAN (R 3.6.2)
+ fastmap       1.1.0   2021-01-25 [1] CRAN (R 3.6.2)
+ fs            1.5.0   2020-07-31 [1] CRAN (R 3.6.2)
+ generics      0.1.0   2020-10-31 [1] CRAN (R 3.6.2)
+ ggplot2     * 3.3.3   2020-12-30 [1] CRAN (R 3.6.2)
+ ggthemes    * 4.2.4   2021-01-20 [1] CRAN (R 3.6.2)
+ glue          1.4.2   2020-08-27 [1] CRAN (R 3.6.2)
+ gtable        0.3.0   2019-03-25 [1] CRAN (R 3.6.0)
+ highr         0.8     2019-03-20 [1] CRAN (R 3.6.0)
+ htmltools     0.5.1.1 2021-01-22 [1] CRAN (R 3.6.2)
+ httr          1.4.2   2020-07-20 [1] CRAN (R 3.6.2)
+ jquerylib     0.1.3   2020-12-17 [1] CRAN (R 3.6.2)
+ jsonlite      1.7.2   2020-12-09 [1] CRAN (R 3.6.2)
+ kableExtra  * 1.3.4   2021-02-20 [1] CRAN (R 3.6.3)
+ knitr         1.32    2021-04-14 [1] CRAN (R 3.6.2)
+ lifecycle     1.0.0   2021-02-15 [1] CRAN (R 3.6.2)
+ magrittr    * 2.0.1   2020-11-17 [1] CRAN (R 3.6.2)
+ memoise       2.0.0   2021-01-26 [1] CRAN (R 3.6.2)
+ munsell       0.5.0   2018-06-12 [1] CRAN (R 3.6.0)
+ pillar        1.5.1   2021-03-05 [1] CRAN (R 3.6.3)
+ pkgbuild      1.2.0   2020-12-15 [1] CRAN (R 3.6.2)
+ pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 3.6.0)
+ pkgload       1.2.0   2021-02-23 [1] CRAN (R 3.6.3)
+ prettyunits   1.1.1   2020-01-24 [1] CRAN (R 3.6.0)
+ processx      3.4.5   2020-11-30 [1] CRAN (R 3.6.2)
+ ps            1.6.0   2021-02-28 [1] CRAN (R 3.6.3)
+ purrr       * 0.3.4   2020-04-17 [1] CRAN (R 3.6.2)
+ R6            2.5.0   2020-10-28 [1] CRAN (R 3.6.2)
+ remotes       2.2.0   2020-07-21 [1] CRAN (R 3.6.2)
+ rlang         0.4.10  2020-12-30 [1] CRAN (R 3.6.2)
+ rmarkdown     2.7     2021-02-19 [1] CRAN (R 3.6.3)
+ rprojroot     2.0.2   2020-11-15 [1] CRAN (R 3.6.2)
+ rstudioapi    0.13    2020-11-12 [1] CRAN (R 3.6.2)
+ rvest         0.3.6   2020-07-25 [1] CRAN (R 3.6.2)
+ sass          0.3.1   2021-01-24 [1] CRAN (R 3.6.2)
+ scales        1.1.1   2020-05-11 [1] CRAN (R 3.6.2)
+ sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.6.0)
+ stringi       1.5.3   2020-09-09 [1] CRAN (R 3.6.2)
+ stringr       1.4.0   2019-02-10 [1] CRAN (R 3.6.0)
+ svglite       2.0.0   2021-02-20 [1] CRAN (R 3.6.3)
+ systemfonts   1.0.1   2021-02-09 [1] CRAN (R 3.6.2)
+ testthat      3.0.2   2021-02-14 [1] CRAN (R 3.6.2)
+ tibble        3.1.0   2021-02-25 [1] CRAN (R 3.6.3)
+ tidyr         1.1.3   2021-03-03 [1] CRAN (R 3.6.3)
+ tidyselect    1.1.0   2020-05-11 [1] CRAN (R 3.6.2)
+ usethis     * 2.0.1   2021-02-10 [1] CRAN (R 3.6.2)
+ utf8          1.1.4   2018-05-24 [1] CRAN (R 3.6.0)
+ vctrs         0.3.6   2020-12-17 [1] CRAN (R 3.6.2)
+ viridisLite   0.3.0   2018-02-01 [1] CRAN (R 3.6.0)
+ webshot       0.5.2   2019-11-22 [1] CRAN (R 3.6.0)
+ withr         2.4.1   2021-01-26 [1] CRAN (R 3.6.2)
+ xfun          0.22    2021-03-11 [1] CRAN (R 3.6.2)
+ xml2          1.3.2   2020-04-23 [1] CRAN (R 3.6.2)
+ yaml          2.2.1   2020-02-01 [1] CRAN (R 3.6.0)
+
+[1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library</code></pre>
+</div>
