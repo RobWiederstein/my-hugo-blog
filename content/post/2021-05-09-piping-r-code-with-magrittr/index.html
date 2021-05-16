@@ -20,7 +20,7 @@ header:
   image: feature.png
   alt: piping code with magrittr
   caption: Magritter (the R package) is named for the surrealist painter Rene' Magritte. His painting "The Treachery of Images" was self captioned, "This is not a pipe." The work is now owned by and exhibited at the Los Angeles County Museum of Art.
-repo: ~
+repo: https://raw.githubusercontent.com/RobWiederstein/purple-bananas/main/content/post/2021-05-09-piping-r-code-with-magrittr/index.Rmd
 summary: I've been piping code with dplyr for several years now.  But because I use it so often, I thought it was time for a refresher and some renewed investigation.  Sometimes, revisiting a topic can help break me out of a programming funk.  And sure enough, some new methods were discovered.
 ---
 
@@ -117,7 +117,8 @@ rnorm(100) %&gt;%
   str()</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/t-pipe-demo-1-1.svg" width="576" style="display: block; margin: auto;" /></p>
 <pre><code> NULL</code></pre>
-<pre class="r"><code>rnorm(100) %&gt;%
+<pre class="r"><code>#Note the matrix output
+rnorm(100) %&gt;%
   matrix(ncol = 2) %T&gt;%
   plot() %&gt;%
   str()</code></pre>
@@ -140,12 +141,13 @@ rnorm(100) %&gt;%
 <div id="section-2" class="section level2">
 <h2><code>%&lt;&gt;%</code></h2>
 <p>The above symbol is used for assignment, though disfavored.</p>
-<pre class="r"><code>#lake depth
+<pre class="r"><code># data(LakeHuron)--lake depth
 LakeHuron %&lt;&gt;% head(3) %&gt;% print</code></pre>
 </div>
 </div>
 <div id="functions" class="section level1">
 <h1><a href="#functions">Functions</a></h1>
+<p>A function can be created by piping.</p>
 <div id="unary-functions" class="section level2">
 <h2>Unary Functions</h2>
 <pre class="r"><code># Unary functions
@@ -158,6 +160,7 @@ chickwts %&gt;% f(.)</code></pre>
 </div>
 <div id="lambda-functions" class="section level2">
 <h2>Lambda Functions</h2>
+<p>Functions can be defined and executed within piped code.</p>
 <div id="long-hand-notation" class="section level3">
 <h3>Long-hand Notation</h3>
 <pre class="r"><code>car_data %&gt;%
@@ -202,7 +205,6 @@ car_data &lt;-
 3   8 15.10 353.10 209.21 3.23 4.00 16.77 0.00 0.14 3.29 3.50  6.419010</code></pre>
 <pre class="r"><code>mtcars %&gt;%
         tibble(.) %&gt;%
-        #https://stackoverflow.com/questions/22353633/filter-for-complete-cases-in-data-frame-using-dplyr-case-wise-deletion
         tidyr::drop_na() %&gt;% 
         mutate(type = rownames(mtcars)) %&gt;%
         filter(!grepl(&#39;^A|L&#39;, type)) %&gt;%

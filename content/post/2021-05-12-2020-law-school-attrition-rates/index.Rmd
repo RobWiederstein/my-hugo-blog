@@ -1,0 +1,369 @@
+---
+title: 2020 Law School Attrition Rates
+author: Rob Wiederstein
+date: '2021-05-12'
+slug: 2020-law-school-attrition-rates
+categories:
+  - R
+  - education
+tags: []
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-plotly, @R-dplyr, @R-magrittr, @R-kableExtra
+header:
+  image: feature.jpg
+  alt: new graduate
+  caption: Photo by MD Duran on Unsplash. Original was cropped and rescaled.
+repo: ~
+summary: This post explores the law student attrition numbers at ABA accredited law schools in the United States.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown',
+      'dplyr',
+      'kableExtra',
+      'magrittr',
+      'plotly'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
+library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+```{r load-aba-data, include = F}
+#enrollment
+input <- "~/Dropbox/public/datasets/2021-05-11-aba-enrollment-by-school.csv"
+df.e <- data.table::fread(input = input)
+#attrition
+input <- "~/Dropbox/public/datasets/2021-05-11-aba-attrition-by-school.csv"
+df.a <- data.table::fread(input = input)
+#class profile
+input <- "~/Dropbox/public/datasets/2021-05-11-aba-class-profile-by-school.csv"
+df.p <- data.table::fread(input = input)
+```
+
+# [Overview](#overview)
+
+The 197 U.S. law schools in the U.S. annualy report their data to the American Bar Association ("ABA"). The 2020 school year is the latest available. `r sum(df.a$value)` law students left school on total enrollment of `r sum(df.e$value)`.  The nationally accredited law school attrition rate was `r divide_by(sum(df.a$value), sum(df.e$value)) %>% multiply_by(100) %>% round(2) %>% paste0("%")`. Attrition was concentrated among men, minorities, and first-year students. The global pandemic's impact on education and attrition is unknown. What follows is a descriptive analysis of the ABA datasets.
+
+# [Data and model](#data)
+
+Data were reported by individual law schools to the ABA.  The data is available on their disclosure [portal](http://www.abarequireddisclosures.org/Disclosure509.aspx), can be downloaded by year, and is formatted in an excel format.  These disclosures are informally named "509 Disclosures" and are required for a law school to receive accreditation.  The project relied on two of the datasets:  the (1) JD Enrollment and Ethnicity and (2) JD attrition.
+
+With regard to "JD Enrollment and Ethnicity," the ABA Guide to Compilation states that the "spreadsheet reports on the gender, race, ethnicity, and non-resident status of the student body as a whole and of the first-year class, broken down by full-time and part-time. It also reports on the gender, race, ethnicity, and nonresident status of the students receiving JD degrees in the previous academic year. “Other” refers to students who do not identify as male or female."
+
+With regard to "JD Attrition," the ABA Guide to Compilation states that the "spreadsheet reports on 1L as well as 2L, 3L, and 4L academic attrition, transfer attrition, and other attrition. The percentages in Columns G, L, Q, and V are based on the number of first-year matriculants in the previous year. The reporting requirements regarding transfer attrition changed in 2014, and this change may explain the larger numbers of transfers reported in 2014 compared to previous years. Also, it appears that some schools have reported students who transferred out after the first year as second year transfers. Such students should be reported as first year transfers out. The reporting instruction has been clarified going forward beginning with the 2015 Annual Questionnaire."
+
+In both datasets, there were computational and derived variables interspersed throughout the data.  The attrition dataset was 197 rows (one for each school) and 397 variables.  A column might include five different variables. Typical were column names like `"OtherAttrition_NRJD3Total"`.  Other variables were derivative of the existing data and represented intermediate calculations like "subtotal", "total" and "percentage". An example of an intermediate calculation was `"AcadAttrition_TotalJD1Percentage"`.  For this project, all intermediate computations of law school data were dropped, leaving only the raw count data. It is quite possible and even likely that ABA reported attrition rates may differ significantly from the results in this analysis.
+
+The guide did not provide a code sheet for data abbreviations.  In the "race" column, it is unclear the distinction between groups like `americanindian` and `native`.  It is also unclear what `nr` means.
+
+# [Results](#results)
+
+Overall, `r sum(df.a$value)` law students left school on total enrollment of `r sum(df.e$value)`.  The nationally accredited law school attrition rate was `r divide_by(sum(df.a$value), sum(df.e$value)) %>% multiply_by(100) %>% round(2) %>% paste0("%")`.  The number of students that dropped out was combined, regardless of whether they left for an academic reason or some "other" reason.
+
+## Attrition Rate by Year
+
+First year law students were more than three times likely to leave law school than students further along in their law school career.
+
+```{r attrition-rate-by-year}
+
+level.a <-
+        df.a %>%
+        dplyr::group_by(level) %>%
+        summarize(attrite = sum(value))
+
+level.e <-
+        df.e %>% 
+        group_by(level) %>%
+        summarize(enroll = sum(value))
+level <- left_join(level.a, level.e, by = "level")
+level %>%
+        mutate(rate = divide_by(attrite, enroll) %>% multiply_by(100) %>% round(2) %>% paste0("%")) %>%
+        kbl() %>%
+        kable_styling(position = "center")
+
+```
+
+## Attrition Rate by Gender
+
+The ABA questionaire allows for three responses regarding gender: male, female, other.  While "others" is the top in attrition rate, the absolute numbers are small.
+
+```{r attrition-rate-by-gender}
+gender.a <-
+        df.a %>%
+        group_by(gender) %>%
+        summarize(attrite = sum(value))
+gender.e <-
+        df.e %>%
+        group_by(gender) %>%
+        summarize(enroll = sum(value))
+
+gender <- left_join(gender.a, gender.e, by = "gender")
+gender %>%
+        mutate(rate = divide_by(attrite, enroll) %>% multiply_by(100) %>% round(2) %>% paste0("%")) %>%
+        arrange(desc(rate)) %>%
+        kbl() %>%
+        kable_styling(position = "center")
+```
+
+```{r, include=F}
+gender.at <-
+        df.a %>%
+        select(school, gender, value) %>%
+        group_by(school, gender) %>%
+        summarize(gender_total = sum(value))
+gender.et <-
+        df.e %>%
+        select(school, gender, value) %>%
+        group_by(school, gender) %>%
+        summarize(enroll_total = sum(value))
+
+gender.t <- left_join(gender.at, gender.et, by = c("school", "gender")) %>% ungroup()
+gender.t1 <- gender.t %>% 
+        mutate(attrite_rate = gender_total / enroll_total) %>%
+        select(gender, attrite_rate) %>% 
+        filter(gender %in% c("men", "women")) %>%
+        ungroup()
+gender.t1 <- ungroup(gender.t1)
+gender.t1$gender <- factor(gender.t1$gender)
+#p value is < .05 so difference between males and females
+#is significant
+t.test(attrite_rate ~ gender, data = gender.t1)                                       
+```
+
+## Attrition Rate by Race
+
+```{r attrition-rate-by-race}
+race.a <-
+        df.a %>%
+        group_by(race) %>%
+        summarize(attrite = sum(value))
+race.e <-
+        df.e %>%
+        group_by(race) %>%
+        summarize(enroll = sum(value))
+
+race <- left_join(race.a, race.e, by = "race")
+race %>%
+        mutate(rate = divide_by(attrite, enroll) %>% multiply_by(100) %>% round(2) %>% paste0("%")) %>%
+        arrange(desc(rate)) %>%
+        kbl() %>%
+        kable_styling(position = "center")
+```
+
+## Attrition Count by Reason
+
+Students were nearly twice as likely to leave law school for some reason other than academics.
+
+```{r attrition-count-reason}
+df.a %>% 
+        group_by(reason) %>%
+        summarize(total = sum(value)) %>%
+        mutate(pct = divide_by(total, sum(total)) %>% multiply_by(100) %>% round(2)%>% paste0("%")) %>%
+        arrange(desc(pct)) %>%
+        kbl() %>%
+         kable_styling(position = "center")
+```
+
+## Top 10 Law Schools for Retention
+
+```{r top-10-schools-for-retention}
+
+school.a <-
+        df.a %>%
+        group_by(school) %>%
+        summarize(attrite = sum(value))
+school.e <-
+        df.e %>%
+        group_by(school) %>%
+        summarize(enroll = sum(value))
+school <- left_join(school.a, school.e, by = "school")
+school.top.10 <- 
+        school %>%
+        group_by(school) %>%
+        mutate(pct_rate = divide_by(attrite, enroll) %>% multiply_by(100) %>% round(2)) %>%
+        arrange(pct_rate) %>%
+        head(10) %>%
+        kbl() %>%
+        kable_styling(position = "center")
+ school.top.10       
+```
+
+## Bottom 10 Law Schools for Retention
+
+```{r school-bottom-10}
+school.bottom.10 <-
+school %>%
+        group_by(school) %>%
+        mutate(pct_rate = divide_by(attrite, enroll) %>% multiply_by(100) %>% round(2)) %>%
+        arrange(desc(pct_rate))%>%
+        head(10) %>%
+        kbl() %>%
+        kable_styling(position = "center")
+school.bottom.10
+```
+
+
+## Attrition Counts by Gender & Race
+
+The abbreviations in the race column matched conventional classifications with one exception.  The "nr" abbreviation could not be deciphered though it might stand for "non-resident".  As mentioned above, no code sheet or abbreviations were published in the guide book.
+
+```{r treemap-race-gender, out.width = "100%", eval = F}
+# library
+library(treemap)
+library(RColorBrewer)
+#dataset
+df.a1 <- df.a%>%
+        group_by(race, gender) %>%
+        summarize(total = sum(value))
+#plot
+p <- treemap(df.a1,
+             index = c("gender", "race"),
+             vSize = "total",
+             palette = cbPalette,
+             type = "index",
+             title = "2020 U.S. Law School Attrition by gender and race"
+             )
+
+
+```
+ 
+
+
+## Boxplot GPA to Attrition Rate
+
+One group of the ABA data is referred to as the class profile. Several of the features address the entering qualification of future students.  Grade point average of the 50th percentile of the class is given for each school.  The feature was divided into five sections of approximately equal groups.  Here, it was about 40 schools per quintile. Less selective schools were in the first quintile and were more willing to accept prospective students with lower grades.  More selective schools were in the fifth quintile and accepted only students with the highest GPAs.
+
+Concerning the first bar plot, 40 schools had a GPA 50th percentile between 2.93 to 3.27. The median attrition rate for the first quintile of schools was 3.8%. An outlier was identified with an attrition rate over twelve percent.  "Florida Coastal" was identified as having the highest attrition rate of all of the ABA-certified schools.  Going to the other side of the GPA range--or the fifth quintile, the median attrition rate was less than one percent; yet, there was an outlier in the fifth quintile as well.  The outlier was Pennsylvania State.
+
+
+```{r boxplot-acceptance-rate-attrition, out.width="100%"}
+school.1 <- school %>% mutate(attr_rate = `/`(attrite, enroll) %>% `*`(100) %>% round(2))
+#merge
+school.2 <- left_join(school.1, df.p)
+school.2 <- school.2 %>% select(unique(colnames(school.2)))
+colnames(school.2) <- tolower(colnames(school.2))
+#set up categoricals
+school.2$all50gpa_f <- ggplot2::cut_number(school.2$all50gpa, n = 5)
+#labels
+school.2$label <- stringr::word(school$school, start = 1, end = 2)
+school.2$label <- gsub(",", "", school.2$label)
+#plotly
+x <- list(
+        title = "gpa"
+)
+y <- list(
+        title = "%"
+)
+
+fig <- plot_ly(school.2, 
+               x = ~all50gpa_f, 
+               y = ~attr_rate, 
+               color = ~all50gpa_f, 
+               type = "box",
+               hoverinfo = 'text',
+               text = ~paste('<br> School: ', label)
+               )
+fig <- fig %>% layout(title = "Attrition Rate by GPA in 50th Percentile",
+                      xaxis = x, 
+                      yaxis = y,
+                      showlegend = FALSE)
+fig
+```
+
+
+```{r school-summary}
+school.2 <- school.2 %>% select(unique(colnames(school.2)))
+        school.2 %>%
+        group_by(all50gpa_f) %>%
+        summarize(fivenum = fivenum(attr_rate),
+                  Position = c("Minimum", "First Quartile", "Median", "Third Quartile", "Maximum")) %>%
+        tidyr::pivot_wider(names_from = Position, values_from = fivenum) %>%
+                kbl() %>%
+                kable_styling(position = "center")
+```
+
+
+```{r, eval=F}
+mydata <- school[-c(56, 5), ]
+p <- ggplot(school, aes(all50gpa, attr_rate))
+p <- p + geom_point()
+p <- p + geom_smooth()
+p
+fit.lm <- lm(attr_rate ~  all50gpa  + enroll, data = mydata)
+summary(fit.lm)
+plot(fit.lm)
+```
+
+
+# [Conclusion](#conclusion)
+
+ABA-accredited law schools in the U.S. had an overall attrition rate of 1.66% with students more likely to drop out in the first year.  They were more likely to be minorities and men.  Students were twice as likely to leave for a non-academic reason. Additionally, the choice of law school impacted the likelihood of withdrawal as well.  More selective law schools with high GPA requirements of prospective students were more likely to retain students.  This analysis does not show changes over time or the impact of transfers. The unexpected impact of the global pandemic may reveal 2020 to be an outlier in educational attrition and graduation rates. Future analysis would benefit from the consideration of additional variables like public versus private schools, faculty-to-student ratios and financial aid to discern if they correlate with student retention.
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```

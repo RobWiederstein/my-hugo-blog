@@ -1,0 +1,1014 @@
+---
+title: 2020 Law School Attrition Rates
+author: Rob Wiederstein
+date: '2021-05-12'
+slug: 2020-law-school-attrition-rates
+categories:
+  - R
+  - education
+tags: []
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-plotly, @R-dplyr, @R-magrittr, @R-kableExtra
+header:
+  image: feature.jpg
+  alt: new graduate
+  caption: Photo by MD Duran on Unsplash. Original was cropped and rescaled.
+repo: ~
+summary: This post explores the law student attrition numbers at ABA accredited law schools in the United States.
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/kePrint/kePrint.js"></script>
+<link href="{{< blogdown/postref >}}index_files/lightable/lightable.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="{{< blogdown/postref >}}index_files/plotly-binding/plotly.js"></script>
+<script src="{{< blogdown/postref >}}index_files/typedarray/typedarray.min.js"></script>
+<script src="{{< blogdown/postref >}}index_files/jquery/jquery.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/crosstalk/js/crosstalk.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/plotly-main/plotly-latest.min.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#overview"><span>Overview</span></a></li>
+<li><a href="#data-and-model"><span>Data and model</span></a></li>
+<li><a href="#results"><span>Results</span></a>
+<ul>
+<li><a href="#attrition-rate-by-year">Attrition Rate by Year</a></li>
+<li><a href="#attrition-rate-by-gender">Attrition Rate by Gender</a></li>
+<li><a href="#attrition-rate-by-race">Attrition Rate by Race</a></li>
+<li><a href="#attrition-count-by-reason">Attrition Count by Reason</a></li>
+<li><a href="#top-10-law-schools-for-retention">Top 10 Law Schools for Retention</a></li>
+<li><a href="#bottom-10-law-schools-for-retention">Bottom 10 Law Schools for Retention</a></li>
+<li><a href="#attrition-counts-by-gender-race">Attrition Counts by Gender &amp; Race</a></li>
+<li><a href="#boxplot-gpa-to-attrition-rate">Boxplot GPA to Attrition Rate</a></li>
+</ul></li>
+<li><a href="#conclusion"><span>Conclusion</span></a></li>
+<li><a href="#acknowledgements"><span>Acknowledgements</span></a></li>
+<li><a href="#references"><span>References</span></a></li>
+<li><a href="#disclaimer"><span>Disclaimer</span></a></li>
+<li><a href="#reproducibility"><span>Reproducibility</span></a></li>
+</ul>
+</div>
+
+<div id="overview" class="section level1">
+<h1><a href="#overview">Overview</a></h1>
+<p>The 197 U.S. law schools in the U.S. annualy report their data to the American Bar Association (“ABA”). The 2020 school year is the latest available. 1901 law students left school on total enrollment of 114522. The nationally accredited law school attrition rate was 1.66%. Attrition was concentrated among men, minorities, and first-year students. The global pandemic’s impact on education and attrition is unknown. What follows is a descriptive analysis of the ABA datasets.</p>
+</div>
+<div id="data-and-model" class="section level1">
+<h1><a href="#data">Data and model</a></h1>
+<p>Data were reported by individual law schools to the ABA. The data is available on their disclosure <a href="http://www.abarequireddisclosures.org/Disclosure509.aspx">portal</a>, can be downloaded by year, and is formatted in an excel format. These disclosures are informally named “509 Disclosures” and are required for a law school to receive accreditation. The project relied on two of the datasets: the (1) JD Enrollment and Ethnicity and (2) JD attrition.</p>
+<p>With regard to “JD Enrollment and Ethnicity,” the ABA Guide to Compilation states that the “spreadsheet reports on the gender, race, ethnicity, and non-resident status of the student body as a whole and of the first-year class, broken down by full-time and part-time. It also reports on the gender, race, ethnicity, and nonresident status of the students receiving JD degrees in the previous academic year. “Other” refers to students who do not identify as male or female."</p>
+<p>With regard to “JD Attrition,” the ABA Guide to Compilation states that the “spreadsheet reports on 1L as well as 2L, 3L, and 4L academic attrition, transfer attrition, and other attrition. The percentages in Columns G, L, Q, and V are based on the number of first-year matriculants in the previous year. The reporting requirements regarding transfer attrition changed in 2014, and this change may explain the larger numbers of transfers reported in 2014 compared to previous years. Also, it appears that some schools have reported students who transferred out after the first year as second year transfers. Such students should be reported as first year transfers out. The reporting instruction has been clarified going forward beginning with the 2015 Annual Questionnaire.”</p>
+<p>In both datasets, there were computational and derived variables interspersed throughout the data. The attrition dataset was 197 rows (one for each school) and 397 variables. A column might include five different variables. Typical were column names like <code>"OtherAttrition_NRJD3Total"</code>. Other variables were derivative of the existing data and represented intermediate calculations like “subtotal,” “total” and “percentage.” An example of an intermediate calculation was <code>"AcadAttrition_TotalJD1Percentage"</code>. For this project, all intermediate computations of law school data were dropped, leaving only the raw count data. It is quite possible and even likely that ABA reported attrition rates may differ significantly from the results in this analysis.</p>
+<p>The guide did not provide a code sheet for data abbreviations. In the “race” column, it is unclear the distinction between groups like <code>americanindian</code> and <code>native</code>. It is also unclear what <code>nr</code> means.</p>
+</div>
+<div id="results" class="section level1">
+<h1><a href="#results">Results</a></h1>
+<p>Overall, 1901 law students left school on total enrollment of 114522. The nationally accredited law school attrition rate was 1.66%. The number of students that dropped out was combined, regardless of whether they left for an academic reason or some “other” reason.</p>
+<div id="attrition-rate-by-year" class="section level2">
+<h2>Attrition Rate by Year</h2>
+<p>First year law students were more than three times likely to leave law school than students further along in their law school career.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+level
+</th>
+<th style="text-align:right;">
+attrite
+</th>
+<th style="text-align:right;">
+enroll
+</th>
+<th style="text-align:left;">
+rate
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1402
+</td>
+<td style="text-align:right;">
+39156
+</td>
+<td style="text-align:left;">
+3.58%
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+363
+</td>
+<td style="text-align:right;">
+37331
+</td>
+<td style="text-align:left;">
+0.97%
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+125
+</td>
+<td style="text-align:right;">
+35879
+</td>
+<td style="text-align:left;">
+0.35%
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+2156
+</td>
+<td style="text-align:left;">
+0.51%
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="attrition-rate-by-gender" class="section level2">
+<h2>Attrition Rate by Gender</h2>
+<p>The ABA questionaire allows for three responses regarding gender: male, female, other. While “others” is the top in attrition rate, the absolute numbers are small.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+gender
+</th>
+<th style="text-align:right;">
+attrite
+</th>
+<th style="text-align:right;">
+enroll
+</th>
+<th style="text-align:left;">
+rate
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+others
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+232
+</td>
+<td style="text-align:left;">
+2.16%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+men
+</td>
+<td style="text-align:right;">
+995
+</td>
+<td style="text-align:right;">
+52340
+</td>
+<td style="text-align:left;">
+1.9%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+women
+</td>
+<td style="text-align:right;">
+901
+</td>
+<td style="text-align:right;">
+61950
+</td>
+<td style="text-align:left;">
+1.45%
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="attrition-rate-by-race" class="section level2">
+<h2>Attrition Rate by Race</h2>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+race
+</th>
+<th style="text-align:right;">
+attrite
+</th>
+<th style="text-align:right;">
+enroll
+</th>
+<th style="text-align:left;">
+rate
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+native
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+146
+</td>
+<td style="text-align:left;">
+3.42%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+americanindian
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+543
+</td>
+<td style="text-align:left;">
+3.31%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+black
+</td>
+<td style="text-align:right;">
+225
+</td>
+<td style="text-align:right;">
+8869
+</td>
+<td style="text-align:left;">
+2.54%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+race
+</td>
+<td style="text-align:right;">
+105
+</td>
+<td style="text-align:right;">
+4378
+</td>
+<td style="text-align:left;">
+2.4%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+unknown
+</td>
+<td style="text-align:right;">
+85
+</td>
+<td style="text-align:right;">
+3984
+</td>
+<td style="text-align:left;">
+2.13%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+otherhisp
+</td>
+<td style="text-align:right;">
+239
+</td>
+<td style="text-align:right;">
+14827
+</td>
+<td style="text-align:left;">
+1.61%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+asian
+</td>
+<td style="text-align:right;">
+112
+</td>
+<td style="text-align:right;">
+7328
+</td>
+<td style="text-align:left;">
+1.53%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+white
+</td>
+<td style="text-align:right;">
+1080
+</td>
+<td style="text-align:right;">
+71036
+</td>
+<td style="text-align:left;">
+1.52%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nr
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+3411
+</td>
+<td style="text-align:left;">
+0.94%
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="attrition-count-by-reason" class="section level2">
+<h2>Attrition Count by Reason</h2>
+<p>Students were nearly twice as likely to leave law school for some reason other than academics.</p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+reason
+</th>
+<th style="text-align:right;">
+total
+</th>
+<th style="text-align:left;">
+pct
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+other
+</td>
+<td style="text-align:right;">
+1194
+</td>
+<td style="text-align:left;">
+62.81%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+acad
+</td>
+<td style="text-align:right;">
+707
+</td>
+<td style="text-align:left;">
+37.19%
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="top-10-law-schools-for-retention" class="section level2">
+<h2>Top 10 Law Schools for Retention</h2>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+school
+</th>
+<th style="text-align:right;">
+attrite
+</th>
+<th style="text-align:right;">
+enroll
+</th>
+<th style="text-align:right;">
+pct_rate
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+NORTH CAROLINA, UNIVERSITY OF
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+589
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PITTSBURGH, UNIVERSITY OF
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+387
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TENNESSEE, UNIVERSITY OF
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+365
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TEXAS SOUTHERN UNIVERSITY
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+536
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HARVARD UNIVERSITY
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1715
+</td>
+<td style="text-align:right;">
+0.06
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MICHIGAN, UNIVERSITY OF
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1013
+</td>
+<td style="text-align:right;">
+0.10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NORTHWESTERN UNIVERSITY
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+779
+</td>
+<td style="text-align:right;">
+0.13
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DUKE UNIVERSITY
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+709
+</td>
+<td style="text-align:right;">
+0.14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MARYLAND, UNIVERSITY OF
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+656
+</td>
+<td style="text-align:right;">
+0.15
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NEW YORK UNIVERSITY
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1370
+</td>
+<td style="text-align:right;">
+0.15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="bottom-10-law-schools-for-retention" class="section level2">
+<h2>Bottom 10 Law Schools for Retention</h2>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+school
+</th>
+<th style="text-align:right;">
+attrite
+</th>
+<th style="text-align:right;">
+enroll
+</th>
+<th style="text-align:right;">
+pct_rate
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+FLORIDA COASTAL SCHOOL OF LAW
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+194
+</td>
+<td style="text-align:right;">
+12.37
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+APPALACHIAN SCHOOL OF LAW
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+170
+</td>
+<td style="text-align:right;">
+8.82
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NORTHERN KENTUCKY UNIVERSITY
+</td>
+<td style="text-align:right;">
+26
+</td>
+<td style="text-align:right;">
+388
+</td>
+<td style="text-align:right;">
+6.70
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MISSISSIPPI COLLEGE
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+360
+</td>
+<td style="text-align:right;">
+6.39
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+LIBERTY UNIVERSITY
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+245
+</td>
+<td style="text-align:right;">
+6.12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+WESTERN STATE COLLEGE OF LAW
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+229
+</td>
+<td style="text-align:right;">
+6.11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ATLANTA’S JOHN MARSHALL LAW SCHOOL
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:right;">
+295
+</td>
+<td style="text-align:right;">
+6.10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CHARLESTON SCHOOL OF LAW
+</td>
+<td style="text-align:right;">
+33
+</td>
+<td style="text-align:right;">
+558
+</td>
+<td style="text-align:right;">
+5.91
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNT DALLAS COLLEGE OF LAW
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+390
+</td>
+<td style="text-align:right;">
+5.64
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+WESTERN MICHIGAN UNIVERSITY
+</td>
+<td style="text-align:right;">
+52
+</td>
+<td style="text-align:right;">
+926
+</td>
+<td style="text-align:right;">
+5.62
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="attrition-counts-by-gender-race" class="section level2">
+<h2>Attrition Counts by Gender &amp; Race</h2>
+<p>The abbreviations in the race column matched conventional classifications with one exception. The “nr” abbreviation could not be deciphered though it might stand for “non-resident.” As mentioned above, no code sheet or abbreviations were published in the guide book.</p>
+</div>
+<div id="boxplot-gpa-to-attrition-rate" class="section level2">
+<h2>Boxplot GPA to Attrition Rate</h2>
+<p>One group of the ABA data is referred to as the class profile. Several of the features address the entering qualification of future students. Grade point average of the 50th percentile of the class is given for each school. The feature was divided into five sections of approximately equal groups. Here, it was about 40 schools per quintile. Less selective schools were in the first quintile and were more willing to accept prospective students with lower grades. More selective schools were in the fifth quintile and accepted only students with the highest GPAs.</p>
+<p>Concerning the first bar plot, 40 schools had a GPA 50th percentile between 2.93 to 3.27. The median attrition rate for the first quintile of schools was 3.8%. An outlier was identified with an attrition rate over twelve percent. “Florida Coastal” was identified as having the highest attrition rate of all of the ABA-certified schools. Going to the other side of the GPA range–or the fifth quintile, the median attrition rate was less than one percent; yet, there was an outlier in the fifth quintile as well. The outlier was Pennsylvania State.</p>
+<div id="htmlwidget-1" style="width:100%;height:460.8px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"visdat":{"7f5753e04be3":["function () ","plotlyVisDat"]},"cur_data":"7f5753e04be3","attrs":{"7f5753e04be3":{"x":{},"y":{},"hoverinfo":"text","text":{},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"box"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Attrition Rate by GPA in 50th Percentile","xaxis":{"domain":[0,1],"automargin":true,"title":"gpa","type":"category","categoryorder":"array","categoryarray":["[2.93,3.27]","(3.27,3.43]","(3.43,3.56]","(3.56,3.69]","(3.69,3.94]"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"%"},"showlegend":false,"hovermode":"closest"},"source":"A","config":{"showSendToCloud":false},"data":[{"fillcolor":"rgba(102,194,165,0.5)","x":["[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]","[2.93,3.27]"],"y":[8.82,6.1,5.52,2.64,5.42,5.91,1.71,2.04,5.24,12.37,5.37,1.95,3.55,4.01,6.39,2.28,2.52,4.2,3.58,6.7,3.19,2.7,2.31,1.35,2.3,2.64,3.64,4.08,1.58,0,3.52,1.4,5.64,1.13,5.62,0.93,6.11,2.41,3.72,4.57],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text"],"text":["<br> School:  APPALACHIAN SCHOOL","<br> School:  ATLANTA'S JOHN","<br> School:  BARRY UNIVERSITY","<br> School:  CALIFORNIA WESTERN","<br> School:  CAPITAL UNIVERSITY","<br> School:  CHARLESTON SCHOOL","<br> School:  CREIGHTON UNIVERSITY","<br> School:  DETROIT MERCY","<br> School:  DISTRICT OF","<br> School:  FLORIDA COASTAL","<br> School:  GOLDEN GATE","<br> School:  IDAHO UNIVERSITY","<br> School:  JOHN MARSHALL","<br> School:  LINCOLN MEMORIAL","<br> School:  MISSISSIPPI COLLEGE","<br> School:  NA","<br> School:  NEW ENGLAND","<br> School:  NORTH CAROLINA","<br> School:  NORTHERN ILLINOIS","<br> School:  NORTHERN KENTUCKY","<br> School:  NOVA SOUTHEASTERN","<br> School:  OHIO NORTHERN","<br> School:  PONTIFICAL CATHOLIC","<br> School:  ROGER WILLIAMS","<br> School:  SOUTH TEXAS","<br> School:  SOUTHERN UNIVERSITY","<br> School:  SOUTHWESTERN LAW","<br> School:  ST. MARY'S","<br> School:  ST. THOMAS","<br> School:  TEXAS SOUTHERN","<br> School:  TOURO COLLEGE","<br> School:  UNIVERSITY OF","<br> School:  UNT DALLAS","<br> School:  VERMONT LAW","<br> School:  WESTERN MICHIGAN","<br> School:  WESTERN NEW","<br> School:  WESTERN STATE","<br> School:  WIDENER UNIVERSITY-DELAWARE","<br> School:  NA","<br> School:  WILLAMETTE UNIVERSITY"],"type":"box","name":"[2.93,3.27]","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(252,141,98,0.5)","x":["(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]","(3.27,3.43]"],"y":[3.74,1.34,2.27,5.24,1.57,1.11,3.7,2.27,2.32,1.21,2.29,3.64,3.95,4.45,1.45,0.59,4.01,0.44,1.65,6.12,0.77,1.86,3.66,2.77,1.55,2.76,0.92,3.41,1.85,0.82,1.11,2.72,0.82,0.75,2.95,2.32,1.81,1.29,1.3],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text"],"text":["<br> School:  AKRON UNIVERSITY","<br> School:  ALBANY LAW","<br> School:  ARKANSAS LITTLE","<br> School:  AVE MARIA","<br> School:  BALTIMORE UNIVERSITY","<br> School:  CALIFORNIA-HASTINGS UNIVERSITY","<br> School:  CAMPBELL UNIVERSITY","<br> School:  CATHOLIC UNIVERSITY","<br> School:  CLEVELAND STATE","<br> School:  DEPAUL UNIVERSITY","<br> School:  DUQUESNE UNIVERSITY","<br> School:  ELON UNIVERSITY","<br> School:  FAULKNER UNIVERSITY","<br> School:  FLORIDA A&M","<br> School:  GONZAGA UNIVERSITY","<br> School:  HAWAII UNIVERSITY","<br> School:  HOFSTRA UNIVERSITY","<br> School:  HOWARD UNIVERSITY","<br> School:  INTER AMERICAN","<br> School:  LIBERTY UNIVERSITY","<br> School:  LOYOLA UNIVERSITY-CHICAGO","<br> School:  LOYOLA UNIVERSITY-NEW","<br> School:  MCGEORGE SCHOOL","<br> School:  MEMPHIS UNIVERSITY","<br> School:  MERCER UNIVERSITY","<br> School:  MISSOURI-KANSAS CITY","<br> School:  NORTH DAKOTA","<br> School:  OKLAHOMA CITY","<br> School:  PACE UNIVERSITY","<br> School:  PENNSYLVANIA STATE","<br> School:  RUTGERS UNIVERSITY","<br> School:  SAN FRANCISCO","<br> School:  SANTA CLARA","<br> School:  SEATTLE UNIVERSITY","<br> School:  SOUTHERN ILLINOIS","<br> School:  TOLEDO UNIVERSITY","<br> School:  TULSA UNIVERSITY","<br> School:  WASHBURN UNIVERSITY","<br> School:  WYOMING UNIVERSITY"],"type":"box","name":"(3.27,3.43]","marker":{"color":"rgba(252,141,98,1)","line":{"color":"rgba(252,141,98,1)"}},"line":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(141,160,203,0.5)","x":["(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]","(3.43,3.56]"],"y":[0.79,1.53,0.44,0.75,1.94,2.48,2.68,1.23,4.57,1.49,0.31,1.65,0.59,3.31,3.84,0.52,1.35,2.36,0.85,1.13,1.11,1.08,2.72,2.21,0.34,3.22,1.15,0,1.56,5.57,2.27,0.93,1.64,2.05,0.93,0.42,2.98,2.12,1.9,2.16,0.66,1.13,2.45],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text"],"text":["<br> School:  AMERICAN UNIVERSITY","<br> School:  ARIZONA UNIVERSITY","<br> School:  BROOKLYN LAW","<br> School:  CASE WESTERN","<br> School:  CHAPMAN UNIVERSITY","<br> School:  CHICAGO-KENT COLLEGE","<br> School:  CITY UNIVERSITY","<br> School:  CONNECTICUT UNIVERSITY","<br> School:  DAYTON UNIVERSITY","<br> School:  DENVER UNIVERSITY","<br> School:  DRAKE UNIVERSITY","<br> School:  DREXEL UNIVERSITY","<br> School:  GEORGIA STATE","<br> School:  INDIANA UNIVERSITY","<br> School:  KENTUCKY UNIVERSITY","<br> School:  LEWIS AND","<br> School:  LOUISIANA STATE","<br> School:  MAINE UNIVERSITY","<br> School:  MARQUETTE UNIVERSITY","<br> School:  MIAMI UNIVERSITY","<br> School:  MICHIGAN STATE","<br> School:  MISSISSIPPI UNIVERSITY","<br> School:  MONTANA UNIVERSITY","<br> School:  NEW HAMPSHIRE","<br> School:  NEW MEXICO","<br> School:  NEW YORK","<br> School:  OREGON UNIVERSITY","<br> School:  PITTSBURGH UNIVERSITY","<br> School:  QUINNIPIAC UNIVERSITY","<br> School:  REGENT UNIVERSITY","<br> School:  SAINT LOUIS","<br> School:  SAMFORD UNIVERSITY","<br> School:  SETON HALL","<br> School:  SOUTH CAROLINA","<br> School:  SOUTH DAKOTA","<br> School:  ST. THOMAS","<br> School:  STETSON UNIVERSITY","<br> School:  SUFFOLK UNIVERSITY","<br> School:  SYRACUSE UNIVERSITY","<br> School:  TEXAS TECH","<br> School:  TULANE UNIVERSITY","<br> School:  UNIVERSITY OF","<br> School:  WEST VIRGINIA"],"type":"box","name":"(3.43,3.56]","marker":{"color":"rgba(141,160,203,1)","line":{"color":"rgba(141,160,203,1)"}},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(231,138,195,0.5)","x":["(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]","(3.56,3.69]"],"y":[0.85,1.12,3.15,1,0.42,1.78,1.72,1.96,0.47,0.29,1.96,1.27,2.95,0.62,1.08,0.15,2.34,1.26,0,0.99,0.78,0.58,0.75,0.48,1.48,1.48,2.17,0,1.35,1.12,0.83,1.2,1.53,0.16,0.27],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text"],"text":["<br> School:  ARKANSAS FAYETTEVILLE","<br> School:  BAYLOR UNIVERSITY","<br> School:  BELMONT UNIVERSITY","<br> School:  CALIFORNIA-IRVINE UNIVERSITY","<br> School:  CARDOZO SCHOOL","<br> School:  CINCINNATI UNIVERSITY","<br> School:  COLORADO UNIVERSITY","<br> School:  FLORIDA INTERNATIONAL","<br> School:  FORDHAM UNIVERSITY","<br> School:  HOUSTON UNIVERSITY","<br> School:  ILLINOIS UNIVERSITY","<br> School:  IOWA UNIVERSITY","<br> School:  KANSAS UNIVERSITY","<br> School:  LOUISVILLE UNIVERSITY","<br> School:  LOYOLA MARYMOUNT","<br> School:  MARYLAND UNIVERSITY","<br> School:  MISSOURI UNIVERSITY","<br> School:  NEBRASKA UNIVERSITY","<br> School:  NORTH CAROLINA","<br> School:  NORTHEASTERN UNIVERSITY","<br> School:  OKLAHOMA UNIVERSITY","<br> School:  PEPPERDINE UNIVERSITY","<br> School:  PUERTO RICO","<br> School:  RICHMOND UNIVERSITY","<br> School:  SAN DIEGO","<br> School:  ST. JOHN'S","<br> School:  TEMPLE UNIVERSITY","<br> School:  TENNESSEE UNIVERSITY","<br> School:  UNIVERSITY OF","<br> School:  VILLANOVA UNIVERSITY","<br> School:  WASHINGTON AND","<br> School:  WASHINGTON UNIVERSITY","<br> School:  WAYNE STATE","<br> School:  WILLIAM AND","<br> School:  WISCONSIN UNIVERSITY"],"type":"box","name":"(3.56,3.69]","marker":{"color":"rgba(231,138,195,1)","line":{"color":"rgba(231,138,195,1)"}},"line":{"color":"rgba(231,138,195,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(166,216,84,0.5)","x":["(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]","(3.69,3.94]"],"y":[0.53,1.5,0.27,0.26,0.87,0.38,1.45,0.8,0.64,0.16,0.87,0.14,0.26,0.33,1.52,0.83,0.23,0.59,0.52,0.06,0.75,0.1,1.48,0.15,0.13,0.36,0.36,1.85,0.52,0.33,0.57,0.53,0.97,0.41,1.03,0.53,0.32,0.86,0.69,0.31],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text"],"text":["<br> School:  ALABAMA UNIVERSITY","<br> School:  ARIZONA STATE","<br> School:  BOSTON COLLEGE","<br> School:  BOSTON UNIVERSITY","<br> School:  BRIGHAM YOUNG","<br> School:  CALIFORNIA-BERKELEY UNIVERSITY","<br> School:  CALIFORNIA-DAVIS UNIVERSITY","<br> School:  CALIFORNIA-LOS ANGELES","<br> School:  CHICAGO UNIVERSITY","<br> School:  COLUMBIA UNIVERSITY","<br> School:  CORNELL UNIVERSITY","<br> School:  DUKE UNIVERSITY","<br> School:  EMORY UNIVERSITY","<br> School:  FLORIDA STATE","<br> School:  FLORIDA UNIVERSITY","<br> School:  GEORGE MASON","<br> School:  GEORGE WASHINGTON","<br> School:  GEORGETOWN UNIVERSITY","<br> School:  GEORGIA UNIVERSITY","<br> School:  HARVARD UNIVERSITY","<br> School:  INDIANA UNIVERSITY","<br> School:  MICHIGAN UNIVERSITY","<br> School:  MINNESOTA UNIVERSITY","<br> School:  NEW YORK","<br> School:  NORTHWESTERN UNIVERSITY","<br> School:  NOTRE DAME","<br> School:  OHIO STATE","<br> School:  PENNSYLVANIA STATE","<br> School:  PENNSYLVANIA UNIVERSITY","<br> School:  SOUTHERN CALIFORNIA","<br> School:  SOUTHERN METHODIST","<br> School:  STANFORD UNIVERSITY","<br> School:  TEXAS A&M","<br> School:  TEXAS AT","<br> School:  UTAH UNIVERSITY","<br> School:  VANDERBILT UNIVERSITY","<br> School:  VIRGINIA UNIVERSITY","<br> School:  WAKE FOREST","<br> School:  WASHINGTON UNIVERSITY","<br> School:  YALE UNIVERSITY"],"type":"box","name":"(3.69,3.94]","marker":{"color":"rgba(166,216,84,1)","line":{"color":"rgba(166,216,84,1)"}},"line":{"color":"rgba(166,216,84,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+all50gpa_f
+</th>
+<th style="text-align:right;">
+Minimum
+</th>
+<th style="text-align:right;">
+First Quartile
+</th>
+<th style="text-align:right;">
+Median
+</th>
+<th style="text-align:right;">
+Third Quartile
+</th>
+<th style="text-align:right;">
+Maximum
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+[2.93,3.27]
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+2.29
+</td>
+<td style="text-align:right;">
+3.565
+</td>
+<td style="text-align:right;">
+5.470
+</td>
+<td style="text-align:right;">
+12.37
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+(3.27,3.43]
+</td>
+<td style="text-align:right;">
+0.44
+</td>
+<td style="text-align:right;">
+1.25
+</td>
+<td style="text-align:right;">
+1.860
+</td>
+<td style="text-align:right;">
+3.180
+</td>
+<td style="text-align:right;">
+6.12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+(3.43,3.56]
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.89
+</td>
+<td style="text-align:right;">
+1.530
+</td>
+<td style="text-align:right;">
+2.315
+</td>
+<td style="text-align:right;">
+5.57
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+(3.56,3.69]
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+<td style="text-align:right;">
+0.53
+</td>
+<td style="text-align:right;">
+1.080
+</td>
+<td style="text-align:right;">
+1.505
+</td>
+<td style="text-align:right;">
+3.15
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+(3.69,3.94]
+</td>
+<td style="text-align:right;">
+0.06
+</td>
+<td style="text-align:right;">
+0.29
+</td>
+<td style="text-align:right;">
+0.525
+</td>
+<td style="text-align:right;">
+0.845
+</td>
+<td style="text-align:right;">
+1.85
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+<p>ABA-accredited law schools in the U.S. had an overall attrition rate of 1.66% with students more likely to drop out in the first year. They were more likely to be minorities and men. Students were twice as likely to leave for a non-academic reason. Additionally, the choice of law school impacted the likelihood of withdrawal as well. More selective law schools with high GPA requirements of prospective students were more likely to retain students. This analysis does not show changes over time or the impact of transfers. The unexpected impact of the global pandemic may reveal 2020 to be an outlier in educational attrition and graduation rates. Future analysis would benefit from the consideration of additional variables like public versus private schools, faculty-to-student ratios and financial aid to discern if they correlate with student retention.</p>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to:</p>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2020 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+</div>
+<div id="ref-R-dplyr" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">H. Wickham, R. François, L. Henry, and K. Müller, <em>Dplyr: A grammar of data manipulation</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a></div>
+</div>
+<div id="ref-R-kableExtra" class="csl-entry">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">H. Zhu, <em>kableExtra: Construct complex table with kable and pipe syntax</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=kableExtra">https://CRAN.R-project.org/package=kableExtra</a></div>
+</div>
+<div id="ref-R-magrittr" class="csl-entry">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">S. M. Bache and H. Wickham, <em>Magrittr: A forward-pipe operator for r</em>. 2020 [Online]. Available: <a href="https://CRAN.R-project.org/package=magrittr">https://CRAN.R-project.org/package=magrittr</a></div>
+</div>
+<div id="ref-R-plotly" class="csl-entry">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">C. Sievert <em>et al.</em>, <em>Plotly: Create interactive web graphics via plotly.js</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=plotly">https://CRAN.R-project.org/package=plotly</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value                       
+ version  R version 3.6.3 (2020-02-29)
+ os       macOS Catalina 10.15.7      
+ system   x86_64, darwin15.6.0        
+ ui       X11                         
+ language (EN)                        
+ collate  en_US.UTF-8                 
+ ctype    en_US.UTF-8                 
+ tz       America/Chicago             
+ date     2021-05-12                  
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package      * version date       lib source        
+ assertthat     0.2.1   2019-03-21 [1] CRAN (R 3.6.0)
+ blogdown     * 1.3     2021-04-14 [1] CRAN (R 3.6.2)
+ bookdown       0.21    2020-10-13 [1] CRAN (R 3.6.3)
+ bslib          0.2.4   2021-01-25 [1] CRAN (R 3.6.2)
+ cachem         1.0.4   2021-02-13 [1] CRAN (R 3.6.2)
+ callr          3.5.1   2020-10-13 [1] CRAN (R 3.6.2)
+ cli            2.3.1   2021-02-23 [1] CRAN (R 3.6.3)
+ codetools      0.2-18  2020-11-04 [1] CRAN (R 3.6.2)
+ colorspace     2.0-0   2020-11-11 [1] CRAN (R 3.6.2)
+ crayon         1.4.1   2021-02-08 [1] CRAN (R 3.6.2)
+ data.table     1.13.6  2020-12-30 [1] CRAN (R 3.6.2)
+ DBI            1.1.1   2021-01-15 [1] CRAN (R 3.6.2)
+ desc           1.3.0   2021-03-05 [1] CRAN (R 3.6.3)
+ devtools     * 2.3.2   2020-09-18 [1] CRAN (R 3.6.2)
+ digest         0.6.27  2020-10-24 [1] CRAN (R 3.6.2)
+ dplyr        * 1.0.5   2021-03-05 [1] CRAN (R 3.6.3)
+ ellipsis       0.3.1   2020-05-15 [1] CRAN (R 3.6.2)
+ evaluate       0.14    2019-05-28 [1] CRAN (R 3.6.0)
+ fansi          0.4.2   2021-01-15 [1] CRAN (R 3.6.2)
+ fastmap        1.1.0   2021-01-25 [1] CRAN (R 3.6.2)
+ fs             1.5.0   2020-07-31 [1] CRAN (R 3.6.2)
+ generics       0.1.0   2020-10-31 [1] CRAN (R 3.6.2)
+ ggplot2      * 3.3.3   2020-12-30 [1] CRAN (R 3.6.2)
+ ggthemes     * 4.2.4   2021-01-20 [1] CRAN (R 3.6.2)
+ glue           1.4.2   2020-08-27 [1] CRAN (R 3.6.2)
+ gridBase       0.4-7   2014-02-24 [1] CRAN (R 3.6.0)
+ gtable         0.3.0   2019-03-25 [1] CRAN (R 3.6.0)
+ highr          0.8     2019-03-20 [1] CRAN (R 3.6.0)
+ htmltools      0.5.1.1 2021-01-22 [1] CRAN (R 3.6.2)
+ httpuv         1.5.5   2021-01-13 [1] CRAN (R 3.6.2)
+ httr           1.4.2   2020-07-20 [1] CRAN (R 3.6.2)
+ igraph         1.2.6   2020-10-06 [1] CRAN (R 3.6.2)
+ jquerylib      0.1.3   2020-12-17 [1] CRAN (R 3.6.2)
+ jsonlite       1.7.2   2020-12-09 [1] CRAN (R 3.6.2)
+ kableExtra   * 1.3.4   2021-02-20 [1] CRAN (R 3.6.3)
+ knitr          1.32    2021-04-14 [1] CRAN (R 3.6.2)
+ later          1.1.0.1 2020-06-05 [1] CRAN (R 3.6.2)
+ lifecycle      1.0.0   2021-02-15 [1] CRAN (R 3.6.2)
+ magrittr     * 2.0.1   2020-11-17 [1] CRAN (R 3.6.2)
+ memoise        2.0.0   2021-01-26 [1] CRAN (R 3.6.2)
+ mime           0.10    2021-02-13 [1] CRAN (R 3.6.2)
+ munsell        0.5.0   2018-06-12 [1] CRAN (R 3.6.0)
+ pillar         1.5.1   2021-03-05 [1] CRAN (R 3.6.3)
+ pkgbuild       1.2.0   2020-12-15 [1] CRAN (R 3.6.2)
+ pkgconfig      2.0.3   2019-09-22 [1] CRAN (R 3.6.0)
+ pkgload        1.2.0   2021-02-23 [1] CRAN (R 3.6.3)
+ prettyunits    1.1.1   2020-01-24 [1] CRAN (R 3.6.0)
+ processx       3.4.5   2020-11-30 [1] CRAN (R 3.6.2)
+ promises       1.2.0.1 2021-02-11 [1] CRAN (R 3.6.3)
+ ps             1.6.0   2021-02-28 [1] CRAN (R 3.6.3)
+ purrr          0.3.4   2020-04-17 [1] CRAN (R 3.6.2)
+ R6             2.5.0   2020-10-28 [1] CRAN (R 3.6.2)
+ RColorBrewer * 1.1-2   2014-12-07 [1] CRAN (R 3.6.0)
+ Rcpp           1.0.6   2021-01-15 [1] CRAN (R 3.6.2)
+ remotes        2.2.0   2020-07-21 [1] CRAN (R 3.6.2)
+ rlang          0.4.10  2020-12-30 [1] CRAN (R 3.6.2)
+ rmarkdown      2.7     2021-02-19 [1] CRAN (R 3.6.3)
+ rprojroot      2.0.2   2020-11-15 [1] CRAN (R 3.6.2)
+ rstudioapi     0.13    2020-11-12 [1] CRAN (R 3.6.2)
+ rvest          0.3.6   2020-07-25 [1] CRAN (R 3.6.2)
+ sass           0.3.1   2021-01-24 [1] CRAN (R 3.6.2)
+ scales         1.1.1   2020-05-11 [1] CRAN (R 3.6.2)
+ sessioninfo    1.1.1   2018-11-05 [1] CRAN (R 3.6.0)
+ shiny          1.6.0   2021-01-25 [1] CRAN (R 3.6.2)
+ stringi        1.5.3   2020-09-09 [1] CRAN (R 3.6.2)
+ stringr        1.4.0   2019-02-10 [1] CRAN (R 3.6.0)
+ svglite        2.0.0   2021-02-20 [1] CRAN (R 3.6.3)
+ systemfonts    1.0.1   2021-02-09 [1] CRAN (R 3.6.2)
+ testthat       3.0.2   2021-02-14 [1] CRAN (R 3.6.2)
+ tibble         3.1.0   2021-02-25 [1] CRAN (R 3.6.3)
+ tidyselect     1.1.0   2020-05-11 [1] CRAN (R 3.6.2)
+ treemap      * 2.4-2   2017-01-04 [1] CRAN (R 3.6.0)
+ usethis      * 2.0.1   2021-02-10 [1] CRAN (R 3.6.2)
+ utf8           1.1.4   2018-05-24 [1] CRAN (R 3.6.0)
+ vctrs          0.3.6   2020-12-17 [1] CRAN (R 3.6.2)
+ viridisLite    0.3.0   2018-02-01 [1] CRAN (R 3.6.0)
+ webshot        0.5.2   2019-11-22 [1] CRAN (R 3.6.0)
+ withr          2.4.1   2021-01-26 [1] CRAN (R 3.6.2)
+ xfun           0.22    2021-03-11 [1] CRAN (R 3.6.2)
+ xml2           1.3.2   2020-04-23 [1] CRAN (R 3.6.2)
+ xtable         1.8-4   2019-04-21 [1] CRAN (R 3.6.0)
+ yaml           2.2.1   2020-02-01 [1] CRAN (R 3.6.0)
+
+[1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library</code></pre>
+</div>

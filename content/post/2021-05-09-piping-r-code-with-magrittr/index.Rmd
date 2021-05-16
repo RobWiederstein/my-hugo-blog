@@ -20,7 +20,7 @@ header:
   image: feature.png
   alt: piping code with magrittr
   caption: Magritter (the R package) is named for the surrealist painter Rene' Magritte. His painting "The Treachery of Images" was self captioned, "This is not a pipe." The work is now owned by and exhibited at the Los Angeles County Museum of Art.
-repo: ~
+repo: https://raw.githubusercontent.com/RobWiederstein/purple-bananas/main/content/post/2021-05-09-piping-r-code-with-magrittr/index.Rmd
 summary: I've been piping code with dplyr for several years now.  But because I use it so often, I thought it was time for a refresher and some renewed investigation.  Sometimes, revisiting a topic can help break me out of a programming funk.  And sure enough, some new methods were discovered.
 ---
 
@@ -147,6 +147,7 @@ rnorm(100) %>%
 ```
 
 ```{r t-pipe-demo-2}
+#Note the matrix output
 rnorm(100) %>%
   matrix(ncol = 2) %T>%
   plot() %>%
@@ -170,13 +171,15 @@ car_data <-
 The above symbol is used for assignment, though disfavored.
 
 ```{r piping-assignment, eval=F}
-#lake depth
+# data(LakeHuron)--lake depth
 LakeHuron %<>% head(3) %>% print
 ```
 
 
 
 # [Functions](#functions)
+
+A function can be created by piping.
 
 ## Unary Functions
 
@@ -187,6 +190,8 @@ chickwts %>% f(.)
 ```
 
 ## Lambda Functions
+
+Functions can be defined and executed within piped code.
 
 ### Long-hand Notation
 
@@ -237,7 +242,6 @@ car_data <-
 ```{r example-mtcars-2}
 mtcars %>%
         tibble(.) %>%
-        #https://stackoverflow.com/questions/22353633/filter-for-complete-cases-in-data-frame-using-dplyr-case-wise-deletion
         tidyr::drop_na() %>% 
         mutate(type = rownames(mtcars)) %>%
         filter(!grepl('^A|L', type)) %>%
