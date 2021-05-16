@@ -95,7 +95,7 @@ The 197 U.S. law schools in the U.S. annualy report their data to the American B
 
 # [Data and model](#data)
 
-Data were reported by individual law schools to the ABA.  The data is available on their disclosure [portal](http://www.abarequireddisclosures.org/Disclosure509.aspx), can be downloaded by year, and is formatted in an excel format.  These disclosures are informally named "509 Disclosures" and are required for a law school to receive accreditation.  The project relied on two of the datasets:  the (1) JD Enrollment and Ethnicity and (2) JD attrition.
+Data were reported by individual law schools to the ABA. The data is available on their disclosure [portal](http://www.abarequireddisclosures.org/Disclosure509.aspx), can be downloaded by year, and is formatted in an excel format.  These disclosures are informally named "509 Disclosures" and are required for a law school to receive accreditation.  The project relied on two of the datasets:  the (1) JD Enrollment and Ethnicity and (2) JD attrition.
 
 With regard to "JD Enrollment and Ethnicity," the ABA Guide to Compilation states that the "spreadsheet reports on the gender, race, ethnicity, and non-resident status of the student body as a whole and of the first-year class, broken down by full-time and part-time. It also reports on the gender, race, ethnicity, and nonresident status of the students receiving JD degrees in the previous academic year. “Other” refers to students who do not identify as male or female."
 
@@ -351,6 +351,13 @@ ABA-accredited law schools in the U.S. had an overall attrition rate of 1.66% wi
 # [Acknowledgements](#acknowledge)
 
 This blog post was made possible thanks to:
+
+-   [American Bar Association: Section of Legal Education and Admissions to the Bar.](http://www.abarequireddisclosures.org/Disclosure509.aspx)
+
+-   [Law School Transparency](https://www.lawschooltransparency.com)
+
+-   [Law School Dropout Rates](https://lawschooli.com/law-school-dropout-rates/)
+
 
 # [References](#reference)
 
