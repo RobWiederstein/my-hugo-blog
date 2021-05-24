@@ -1,0 +1,432 @@
+---
+title: 2020 Law School Attrition Rates Part 2
+author: Rob Wiederstein
+date: '2021-05-17'
+slug: 2020-law-school-attrition-rates-part-2
+categories:
+  - R
+  - education
+tags: []
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-factoextra, @R-clustertend
+header:
+  image: feature.jpg
+  alt: law student
+  caption: Photo by MD Duran on Unsplash. Original was cropped and rescaled.
+repo: ~
+summary: This post is part 2 of the law student attrition numbers at ABA-accredited law schools.  It attempts to separate the law schools into clusters using principal component analysis, k-means, pam, and hierarchical algorithms.
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/kePrint/kePrint.js"></script>
+<link href="{{< blogdown/postref >}}index_files/lightable/lightable.css" rel="stylesheet" />
+
+<div id="TOC">
+<ul>
+<li><a href="#overview"><span>Overview</span></a></li>
+<li><a href="#background"><span>Background</span></a>
+<ul>
+<li><a href="#clustering-techniques">Clustering Techniques</a>
+<ul>
+<li><a href="#hierarchical">Hierarchical</a></li>
+<li><a href="#partitioning">Partitioning</a></li>
+</ul></li>
+<li><a href="#clustering-packages-in-r">Clustering Packages in R</a></li>
+<li><a href="#issues">Issues</a></li>
+</ul></li>
+<li><a href="#data-and-model"><span>Data and model</span></a>
+<ul>
+<li><a href="#partitioning-1">Partitioning</a>
+<ul>
+<li><a href="#principal-component-analysis">Principal Component Analysis</a></li>
+<li><a href="#k-means">K-means</a></li>
+<li><a href="#pam">PAM</a></li>
+</ul></li>
+<li><a href="#hierarchical-1">Hierarchical</a></li>
+<li><a href="#clustering-tendency">Clustering Tendency</a></li>
+<li><a href="#visual-assessment-of-cluster-tendency">Visual Assessment of Cluster Tendency</a></li>
+<li><a href="#clustering-validation">Clustering Validation</a></li>
+</ul></li>
+<li><a href="#conclusion"><span>Conclusion</span></a></li>
+<li><a href="#acknowledgements"><span>Acknowledgements</span></a></li>
+<li><a href="#references"><span>References</span></a></li>
+<li><a href="#disclaimer"><span>Disclaimer</span></a></li>
+<li><a href="#reproducibility"><span>Reproducibility</span></a></li>
+</ul>
+</div>
+
+<div id="overview" class="section level1">
+<h1><a href="#overview">Overview</a></h1>
+<p>This is Part 2 of a series about the American Bar Association’s law school data. The data are released at the school level and are collected and released annually. The information is extensive and this post is an effort to understand the interaction among the different variables. Clustering analysis is often used to understand correlation among the different values and to categorize the different observations by cluster.</p>
+<p>This blogpost will proceed with a review of machine learning strategies and place cluster analysis in context. The data and model section will cluster the data according to three commonly used algorithms: principal component analysis, k-means, and PAM. Each method will be applied to the law school data and a randomly generated dataset. One hierarchical plot will be constructed as well.</p>
+<p>Finally, the Hopkins statistic will be computed, the data will be visually inspected for randomness and the <code>clValid</code> package will evaluate the effectiveness of the different strategies.</p>
+</div>
+<div id="background" class="section level1">
+<h1><a href="#background">Background</a></h1>
+<p>Grouping and classifying objects is our way of organizing the world around us. Sometimes the objects are labeled like a medical diagnosis with a specific set of symptoms or the assignment of humans to the kingdom “Animalia.” “In virtually every scientific field dealing with empirical data, people attempt to get a first impression on their data by trying to identify groups of similar behavior in their data.”<span class="citation"><a href="#ref-vonluxburgTutorialSpectralClustering2007" role="doc-biblioref">[1]</a></span> In programming, where the label is known before its classification, it is coined “supervised classification.” Where the label is unknown before classification, it is referred to as “unsupervised classification” or more commonly “cluster analysis.”</p>
+<p>Objects are classified through the use of an algorithm that predicts the class of the unknown object. Also known as a “classifier,” the algorithm’s accuracy is judged by the object’s assignment to the correct category. Unsupervised classification “is considered to be more difficult than supervised classification as there is no label attached to the patterns in clustering.”<span class="citation"><a href="#ref-saxenaReviewClusteringTechniques2017" role="doc-biblioref">[2]</a></span> “Clustering methods are generally more demanding than supervised approaches but provide more insights about complex data. This type of classifiers constitutes the main object of the current work.”<span class="citation"><a href="#ref-rodriguezClusteringAlgorithmsComparative2019" role="doc-biblioref">[3]</a></span></p>
+<p>“Clustering embraces several interdisciplinary areas such as: from mathematics and statistics to biology and genetics, where all of these use various terminology to explain the topologies formed using this clustering analysis technique. For example, from biological”taxonomies“, to medical”syndromes" and genetic “genotypes” to manufacturing “group technology,” each of these topics has the identical problem: create groups of instances and assign each instance to the appropriate groups."<span class="citation"><a href="#ref-saxenaReviewClusteringTechniques2017" role="doc-biblioref">[2]</a></span></p>
+<div id="clustering-techniques" class="section level2">
+<h2>Clustering Techniques</h2>
+<p>Many approaches fall under the umbrella of “clustering techniques.” “The reason for having different clustering approaches towards various techniques is due to the fact that there is no such precise definition to the notion of cluster.”<span class="citation"><a href="#ref-saxenaReviewClusteringTechniques2017" role="doc-biblioref">[2]</a></span> “While many classification methods have been proposed, there is no consensus on which methods are more suitable for a given dataset.” <span class="citation"><a href="#ref-rodriguezClusteringAlgorithmsComparative2019" role="doc-biblioref">[3]</a></span> The techniques fall into two broad categories: hierarchical (dendrograms) and partitional (i.e., k-means).</p>
+<div class="figure" style="text-align: center"><span id="fig:cluster-diagram"></span>
+<img src="clustering-diagram.jpg" alt="Classification of clustering techniques. [@saxenaReviewClusteringTechniques2017]" width="90%" />
+<p class="caption">
+Figure 1: Classification of clustering techniques. <span class="citation"><a href="#ref-saxenaReviewClusteringTechniques2017" role="doc-biblioref">[2]</a></span>
+</p>
+</div>
+<div id="hierarchical" class="section level3">
+<h3>Hierarchical</h3>
+<p>“In hierarchical clustering methods, clusters are formed by iteratively dividing the patterns using a top-down or bottom-up approach. There are two forms of hierarchical method namely agglomerative and divisive hierarchical clustering.”<span class="citation"><a href="#ref-saxenaReviewClusteringTechniques2017" role="doc-biblioref">[2]</a></span></p>
+<div class="figure" style="text-align: center"><span id="fig:dendrogram-diagram"></span>
+<img src="hierarchial-dendrogram.jpg" alt="Hierarchical methods yield dendrograms that are formed in one of two directions. [@saxenaReviewClusteringTechniques2017]" width="75%" />
+<p class="caption">
+Figure 2: Hierarchical methods yield dendrograms that are formed in one of two directions. <span class="citation"><a href="#ref-saxenaReviewClusteringTechniques2017" role="doc-biblioref">[2]</a></span>
+</p>
+</div>
+<p>Hierarchical clustering algorithms are often criticized for a lack of robustness, meaning they are sensitive to outliers. They are computationally intensive and are therefore difficult to use in large datasets.<span class="citation"><a href="#ref-saxenaReviewClusteringTechniques2017" role="doc-biblioref">[2]</a></span></p>
+</div>
+<div id="partitioning" class="section level3">
+<h3>Partitioning</h3>
+<p>“Partitional clustering is opposite to hierarchical clustering; here data are assigned into k clusters without any hierarchical structure by optimizing some criterion function.”<span class="citation"><a href="#ref-saxenaReviewClusteringTechniques2017" role="doc-biblioref">[2]</a></span> The similarity between two objects is measured in distance, with Euclidean distance being the most common. Other measures of distance include Minkowski, cosine, Pearson, the extended Jaccard, and the Dice coefficient. A second partitioning strategy allows for the assignment of an object to more than one cluster, a strategy known as “fuzzy clustering.”</p>
+<p>“Spectral” clustering was described by Saxena as a variant of clustering methods and popular within the machine learning community. Because of its prominence in clustering literature, greater exposition is appropriate. “Spectral clustering . . . consists of algorithms cluster points using eigenvectors of matrices derived from the data.”<span class="citation"><a href="#ref-saxenaReviewClusteringTechniques2017" role="doc-biblioref">[2]</a></span> The wide use of spectral clustering is because (1) it does not make strong assumptions on the form of the clusters, (2) it can solve very general problems like intertwined spirals and (3) it can be implemented efficiently even for large data sets. <span class="citation"><a href="#ref-saxenaReviewClusteringTechniques2017" role="doc-biblioref">[2]</a></span></p>
+<p>“Some of the advantages of partition based algorithms include that they are (i) relatively scalable and simple and (ii) suitable for datasets with compact spherical clusters that are well-separated. However, disadvantages with these algorithms include poor (i) cluster descriptors; (ii) reliance on the user to specify the number of clusters in advance; (iii) high sensitivity to initialization phase, noise and outliers; and (iv) inability to deal with non-convex clusters of varying size and density.”<span class="citation"><a href="#ref-saxenaReviewClusteringTechniques2017" role="doc-biblioref">[2]</a></span></p>
+</div>
+</div>
+<div id="clustering-packages-in-r" class="section level2">
+<h2>Clustering Packages in R</h2>
+<p>One extensive study used 400 datasets and nine R packages representing different clustering methods. The results revealed that, when considering the default configurations of the adopted methods, the <strong>spectral approach</strong> tended to present particularly good performance.“<span class="citation"><a href="#ref-rodriguezClusteringAlgorithmsComparative2019" role="doc-biblioref">[3]</a></span> A second finding was that the default configurations from the different packages was”not always accurate.“<span class="citation"><a href="#ref-rodriguezClusteringAlgorithmsComparative2019" role="doc-biblioref">[3]</a></span> In fact, the random selection of the package parameters was a”good alternative" to improving performance. <span class="citation"><a href="#ref-rodriguezClusteringAlgorithmsComparative2019" role="doc-biblioref">[3]</a></span></p>
+</div>
+<div id="issues" class="section level2">
+<h2>Issues</h2>
+<p>A big issue, in cluster analysis, is that clustering methods will return clusters even if the data does not contain any clusters. In other words, if you blindly apply a clustering method on a data set, it will divide the data into clusters because that is what it is supposed to do." <a href="https://www.datanovia.com/en/lessons/assessing-clustering-tendency/">Datanovia</a></p>
+</div>
+</div>
+<div id="data-and-model" class="section level1">
+<h1><a href="#data">Data and model</a></h1>
+<p>Rows are observations (individuals) and columns are variables Any missing value in the data must be removed or estimated. The data must be standardized (i.e., scaled) to make variables comparable. Standardization consists of transforming the variables such that they have mean zero and standard deviation one.</p>
+<div id="partitioning-1" class="section level2">
+<h2>Partitioning</h2>
+<p>The ABA law school data was partitioned using principal component analysis, k-means, and the PAM methods. In each case, the results were compared to a randomly generated set of data too.</p>
+<div id="principal-component-analysis" class="section level3">
+<h3>Principal Component Analysis</h3>
+<div id="law-school" class="section level4">
+<h4>Law School</h4>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/prin-comp-cluster-law-school-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="random" class="section level4">
+<h4>Random</h4>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/prin-comp-cluster-random-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="k-means" class="section level3">
+<h3>K-means</h3>
+<p>An analyst can and often does group the data. However, the “elbow” method is also commonly used to set the number of groups in the cluster.</p>
+<div id="elbow-method" class="section level4">
+<h4>Elbow Method</h4>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/optimal-grouping-elbow-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="law-school-1" class="section level4">
+<h4>Law School</h4>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/k-means-cluster-law-school-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="random-1" class="section level4">
+<h4>Random</h4>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/k-means-cluster-random-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="pam" class="section level3">
+<h3>PAM</h3>
+<p>“The use of means implies k-means clustering is highly sensitive to outliers. This can severely affect the assignment of outliers to clusters. A more robust method is provided by the PAM algorithm.” <span class="citation"><a href="#ref-kassambaraPracticalGuideCluster2017" role="doc-biblioref">[4]</a></span> The optimal number of clusters “is the one that maximizes the average silhouette over the possible ranges, <em>k</em>.” <span class="citation"><a href="#ref-kassambaraPracticalGuideCluster2017" role="doc-biblioref">[4]</a></span></p>
+<div id="silhouette-method" class="section level4">
+<h4>Silhouette Method</h4>
+<div class="figure" style="text-align: center"><span id="fig:optimal-grouping-silhouette"></span>
+<img src="{{< blogdown/postref >}}index_files/figure-html/optimal-grouping-silhouette-1.svg" alt="From the method silhouette, the optimal number of clusters is 2." width="576" />
+<p class="caption">
+Figure 3: From the method silhouette, the optimal number of clusters is 2.
+</p>
+</div>
+</div>
+<div id="law-school-2" class="section level4">
+<h4>Law School</h4>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/pam-cluster-law-school-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="random-2" class="section level4">
+<h4>Random</h4>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/pam-cluster-random-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+</div>
+<div id="hierarchical-1" class="section level2">
+<h2>Hierarchical</h2>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/dendogram-law-schools-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="clustering-tendency" class="section level2">
+<h2>Clustering Tendency</h2>
+<p>According to the Practical Guide to Cluster Analysis in R: Unsupervised Machine Learning, the <em>Hopkins statistic</em> is “used to assess the clustering tendency of a data set by measuring the probability that a given dataset is generated by a uniform data distribution. In other words, it tests the spatial randomness of the data.”<span class="citation"><a href="#ref-kassambaraPracticalGuideCluster2017" role="doc-biblioref">[4]</a></span></p>
+<p>If the value of Hopkins statistic is close to 1 (far above 0.5), then we can conclude that the dataset is significantly clusterable. The law school dataset had a Hopkins statistic of 0.5577173 and the random dataset’s Hopkins statistic was 0.4990672.</p>
+</div>
+<div id="visual-assessment-of-cluster-tendency" class="section level2">
+<h2>Visual Assessment of Cluster Tendency</h2>
+<div class="figure" style="text-align: center"><span id="fig:vat-assessment-both"></span>
+<img src="{{< blogdown/postref >}}index_files/figure-html/vat-assessment-both-1.svg" alt="Visual Assessment of law schools versus randomly generated data." width="100%" />
+<p class="caption">
+Figure 4: Visual Assessment of law schools versus randomly generated data.
+</p>
+</div>
+</div>
+<div id="clustering-validation" class="section level2">
+<h2>Clustering Validation</h2>
+<p>The <code>clValid</code> package contains functions for validating the results of a clustering analysis. As such, it can be an important tool in choosing the right algorithm and the number of clusters. The three measures are “internal,” “stability” and “biological.” Available clustering options include" “hierarchical,” “kmeans,” “diana,” “fanny,” “som,” “model,” “sota,” “pam,” “clara,” and “agnes.” The function returns an object which has summary, plot, print, and additional methods which allow the user to display the optimal validation scores and extract clustering results.<span class="citation"><a href="#ref-brockClValidPackageCluster2008" role="doc-biblioref">[5]</a></span></p>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Score
+</th>
+<th style="text-align:left;">
+Method
+</th>
+<th style="text-align:left;">
+Clusters
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+APN
+</td>
+<td style="text-align:right;">
+0.0421380
+</td>
+<td style="text-align:left;">
+hierarchical
+</td>
+<td style="text-align:left;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AD
+</td>
+<td style="text-align:right;">
+6.6522772
+</td>
+<td style="text-align:left;">
+kmeans
+</td>
+<td style="text-align:left;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ADM
+</td>
+<td style="text-align:right;">
+0.2653266
+</td>
+<td style="text-align:left;">
+pam
+</td>
+<td style="text-align:left;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+FOM
+</td>
+<td style="text-align:right;">
+0.8956259
+</td>
+<td style="text-align:left;">
+kmeans
+</td>
+<td style="text-align:left;">
+9
+</td>
+</tr>
+</tbody>
+</table>
+<p>From the website <a href="https://www.datanovia.com/en/lessons/choosing-the-best-clustering-algorithms/">Datanovia</a>, the acronyms have the following meanings:</p>
+<ul>
+<li><p>APN measures the average proportion of observations not placed in the same cluster by clustering based on the full data and clustering based on the data with a single column removed.</p></li>
+<li><p>AD measures the average distance between observations placed in the same cluster under both cases (full data set and removal of one column).</p></li>
+<li><p>ADM measures the average distance between cluster centers for observations placed in the same cluster under both cases.</p></li>
+<li><p>FOM measures the average intra-cluster variance of the deleted column, where the clustering is based on the remaining (undeleted) columns.</p></li>
+</ul>
+<p>The values of APN, ADM and FOM ranges from 0 to 1, with smaller values corresponding with highly consistent clustering results. AD has a value between 0 and infinity, and smaller values are also preferred.</p>
+</div>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+<p>The writeup followed the structure of the book “Practical Guide to Clustering Analysis in R.” The<br />
+Hopkins score on the law school data of .55 revealed that the clustering tendency was weak. Nonetheless some variation in the data could be explained by different classifiers.</p>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to:</p>
+<ul>
+<li><p>Dr. Philip Murphy’s paper: <a href="https://rpubs.com/pjmurphy/269609">Clustering Variables and Respondents in R (2017)</a></p></li>
+<li><p>UC Business Analytics R Programming Guide, <a href="https://uc-r.github.io/kmeans_clustering">K-means Clustering Analysis</a></p></li>
+<li><p><a href="https://stats.stackexchange.com/questions/332651/validating-cluster-tendency-using-hopkins-statistic">Validating cluster tendency using Hopkins statistic</a></p></li>
+<li><p><a href="https://remiller1450.github.io/s230f19/pca.html">An Introduction to Principal Components Analysis</a></p></li>
+<li><p><a href="https://www.datanovia.com/en/">Datanovia</a></p></li>
+</ul>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-vonluxburgTutorialSpectralClustering2007" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">U. von Luxburg, <span>“A <span>Tutorial</span> on <span>Spectral Clustering</span>,”</span> <em>arXiv:0711.0189 [cs]</em>, Nov. 2007 [Online]. Available: <a href="http://arxiv.org/abs/0711.0189">http://arxiv.org/abs/0711.0189</a>. [Accessed: 24-May-2021]</div>
+</div>
+<div id="ref-saxenaReviewClusteringTechniques2017" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">A. Saxena <em>et al.</em>, <span>“A review of clustering techniques and developments,”</span> <em>Neurocomputing</em>, vol. 267, pp. 664–681, Dec. 2017, doi: <a href="https://doi.org/10.1016/j.neucom.2017.06.053">10.1016/j.neucom.2017.06.053</a>. [Online]. Available: <a href="https://www.sciencedirect.com/science/article/pii/S0925231217311815">https://www.sciencedirect.com/science/article/pii/S0925231217311815</a>. [Accessed: 19-May-2021]</div>
+</div>
+<div id="ref-rodriguezClusteringAlgorithmsComparative2019" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">M. Z. Rodriguez <em>et al.</em>, <span>“Clustering algorithms: <span>A</span> comparative approach,”</span> <em>PLOS ONE</em>, vol. 14, no. 1, p. e0210236, Jan. 2019, doi: <a href="https://doi.org/10.1371/journal.pone.0210236">10.1371/journal.pone.0210236</a>. [Online]. Available: <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0210236">https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0210236</a>. [Accessed: 19-May-2021]</div>
+</div>
+<div id="ref-kassambaraPracticalGuideCluster2017" class="csl-entry">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">A. Kassambara, <em>Practical <span>Guide</span> to <span>Cluster Analysis</span> in <span>R</span>: <span>Unsupervised Machine Learning</span> in <span>R</span></em>, vol. Vol. 1. <span>Sthda</span>, 2017. </div>
+</div>
+<div id="ref-brockClValidPackageCluster2008" class="csl-entry">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">G. Brock, V. Pihur, S. Datta, and S. Datta, <span>“<span class="nocase">clValid</span>: <span>An R Package</span> for <span>Cluster Validation</span>,”</span> <em>Journal of Statistical Software</em>, vol. 25, no. 1, pp. 1–22, Mar. 2008, doi: <a href="https://doi.org/10.18637/jss.v025.i04">10.18637/jss.v025.i04</a>. [Online]. Available: <a href="https://www.jstatsoft.org/index.php/jss/article/view/v025i04">https://www.jstatsoft.org/index.php/jss/article/view/v025i04</a>. [Accessed: 23-May-2021]</div>
+</div>
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2020 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+</div>
+<div id="ref-R-clustertend" class="csl-entry">
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline">K. Wright, L. YiLan, and Z. RuTong, <em>Clustertend: Check the clustering tendency</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=clustertend">https://CRAN.R-project.org/package=clustertend</a></div>
+</div>
+<div id="ref-R-factoextra" class="csl-entry">
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">A. Kassambara and F. Mundt, <em>Factoextra: Extract and visualize the results of multivariate data analyses</em>. 2020 [Online]. Available: <a href="http://www.sthda.com/english/rpkgs/factoextra">http://www.sthda.com/english/rpkgs/factoextra</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value                       
+ version  R version 3.6.3 (2020-02-29)
+ os       macOS Catalina 10.15.7      
+ system   x86_64, darwin15.6.0        
+ ui       X11                         
+ language (EN)                        
+ collate  en_US.UTF-8                 
+ ctype    en_US.UTF-8                 
+ tz       America/Chicago             
+ date     2021-05-18                  
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version date       lib source        
+ abind         1.4-5   2016-07-21 [1] CRAN (R 3.6.0)
+ assertthat    0.2.1   2019-03-21 [1] CRAN (R 3.6.0)
+ backports     1.2.1   2020-12-09 [1] CRAN (R 3.6.2)
+ blogdown    * 1.3     2021-04-14 [1] CRAN (R 3.6.2)
+ bookdown      0.21    2020-10-13 [1] CRAN (R 3.6.3)
+ broom         0.7.5   2021-02-19 [1] CRAN (R 3.6.3)
+ bslib         0.2.4   2021-01-25 [1] CRAN (R 3.6.2)
+ cachem        1.0.4   2021-02-13 [1] CRAN (R 3.6.2)
+ callr         3.5.1   2020-10-13 [1] CRAN (R 3.6.2)
+ car           3.0-10  2020-09-29 [1] CRAN (R 3.6.2)
+ carData       3.0-4   2020-05-22 [1] CRAN (R 3.6.2)
+ cellranger    1.1.0   2016-07-27 [1] CRAN (R 3.6.0)
+ cli           2.5.0   2021-04-26 [1] CRAN (R 3.6.2)
+ clustertend * 1.5     2021-04-06 [1] CRAN (R 3.6.2)
+ codetools     0.2-18  2020-11-04 [1] CRAN (R 3.6.2)
+ colorspace    2.0-1   2021-05-04 [1] CRAN (R 3.6.2)
+ crayon        1.4.1   2021-02-08 [1] CRAN (R 3.6.2)
+ curl          4.3     2019-12-02 [1] CRAN (R 3.6.0)
+ data.table    1.13.6  2020-12-30 [1] CRAN (R 3.6.2)
+ DBI           1.1.1   2021-01-15 [1] CRAN (R 3.6.2)
+ desc          1.3.0   2021-03-05 [1] CRAN (R 3.6.3)
+ devtools    * 2.3.2   2020-09-18 [1] CRAN (R 3.6.2)
+ digest        0.6.27  2020-10-24 [1] CRAN (R 3.6.2)
+ dplyr       * 1.0.5   2021-03-05 [1] CRAN (R 3.6.3)
+ ellipsis      0.3.2   2021-04-29 [1] CRAN (R 3.6.2)
+ evaluate      0.14    2019-05-28 [1] CRAN (R 3.6.0)
+ factoextra  * 1.0.7   2020-04-01 [1] CRAN (R 3.6.2)
+ fansi         0.4.2   2021-01-15 [1] CRAN (R 3.6.2)
+ farver        2.1.0   2021-02-28 [1] CRAN (R 3.6.3)
+ fastmap       1.1.0   2021-01-25 [1] CRAN (R 3.6.2)
+ forcats       0.5.1   2021-01-27 [1] CRAN (R 3.6.2)
+ foreign       0.8-75  2020-01-20 [1] CRAN (R 3.6.3)
+ fs            1.5.0   2020-07-31 [1] CRAN (R 3.6.2)
+ generics      0.1.0   2020-10-31 [1] CRAN (R 3.6.2)
+ ggplot2     * 3.3.3   2020-12-30 [1] CRAN (R 3.6.2)
+ ggpubr        0.4.0   2020-06-27 [1] CRAN (R 3.6.2)
+ ggrepel       0.9.1   2021-01-15 [1] CRAN (R 3.6.2)
+ ggsignif      0.6.1   2021-02-23 [1] CRAN (R 3.6.2)
+ ggthemes    * 4.2.4   2021-01-20 [1] CRAN (R 3.6.2)
+ glue          1.4.2   2020-08-27 [1] CRAN (R 3.6.2)
+ gtable        0.3.0   2019-03-25 [1] CRAN (R 3.6.0)
+ haven         2.3.1   2020-06-01 [1] CRAN (R 3.6.2)
+ highr         0.8     2019-03-20 [1] CRAN (R 3.6.0)
+ hms           1.0.0   2021-01-13 [1] CRAN (R 3.6.2)
+ htmltools     0.5.1.1 2021-01-22 [1] CRAN (R 3.6.2)
+ jquerylib     0.1.3   2020-12-17 [1] CRAN (R 3.6.2)
+ jsonlite      1.7.2   2020-12-09 [1] CRAN (R 3.6.2)
+ knitr         1.32    2021-04-14 [1] CRAN (R 3.6.2)
+ labeling      0.4.2   2020-10-20 [1] CRAN (R 3.6.2)
+ lifecycle     1.0.0   2021-02-15 [1] CRAN (R 3.6.2)
+ magrittr    * 2.0.1   2020-11-17 [1] CRAN (R 3.6.2)
+ memoise       2.0.0   2021-01-26 [1] CRAN (R 3.6.2)
+ munsell       0.5.0   2018-06-12 [1] CRAN (R 3.6.0)
+ openxlsx      4.2.3   2020-10-27 [1] CRAN (R 3.6.2)
+ pillar        1.6.0   2021-04-13 [1] CRAN (R 3.6.2)
+ pkgbuild      1.2.0   2020-12-15 [1] CRAN (R 3.6.2)
+ pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 3.6.0)
+ pkgload       1.2.0   2021-02-23 [1] CRAN (R 3.6.3)
+ plyr          1.8.6   2020-03-03 [1] CRAN (R 3.6.0)
+ prettyunits   1.1.1   2020-01-24 [1] CRAN (R 3.6.0)
+ processx      3.4.5   2020-11-30 [1] CRAN (R 3.6.2)
+ ps            1.6.0   2021-02-28 [1] CRAN (R 3.6.3)
+ purrr         0.3.4   2020-04-17 [1] CRAN (R 3.6.2)
+ R6            2.5.0   2020-10-28 [1] CRAN (R 3.6.2)
+ Rcpp          1.0.6   2021-01-15 [1] CRAN (R 3.6.2)
+ readxl        1.3.1   2019-03-13 [1] CRAN (R 3.6.0)
+ remotes       2.2.0   2020-07-21 [1] CRAN (R 3.6.2)
+ reshape2      1.4.4   2020-04-09 [1] CRAN (R 3.6.2)
+ rio           0.5.26  2021-03-01 [1] CRAN (R 3.6.3)
+ rlang         0.4.11  2021-04-30 [1] CRAN (R 3.6.2)
+ rmarkdown     2.7     2021-02-19 [1] CRAN (R 3.6.3)
+ rprojroot     2.0.2   2020-11-15 [1] CRAN (R 3.6.2)
+ rstatix       0.7.0   2021-02-13 [1] CRAN (R 3.6.2)
+ sass          0.3.1   2021-01-24 [1] CRAN (R 3.6.2)
+ scales        1.1.1   2020-05-11 [1] CRAN (R 3.6.2)
+ sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.6.0)
+ stringi       1.5.3   2020-09-09 [1] CRAN (R 3.6.2)
+ stringr       1.4.0   2019-02-10 [1] CRAN (R 3.6.0)
+ testthat      3.0.2   2021-02-14 [1] CRAN (R 3.6.2)
+ tibble        3.1.1   2021-04-18 [1] CRAN (R 3.6.2)
+ tidyr         1.1.3   2021-03-03 [1] CRAN (R 3.6.3)
+ tidyselect    1.1.0   2020-05-11 [1] CRAN (R 3.6.2)
+ usethis     * 2.0.1   2021-02-10 [1] CRAN (R 3.6.2)
+ utf8          1.2.1   2021-03-12 [1] CRAN (R 3.6.2)
+ vctrs         0.3.8   2021-04-29 [1] CRAN (R 3.6.2)
+ withr         2.4.2   2021-04-18 [1] CRAN (R 3.6.2)
+ xfun          0.22    2021-03-11 [1] CRAN (R 3.6.2)
+ yaml          2.2.1   2020-02-01 [1] CRAN (R 3.6.0)
+ zip           2.1.1   2020-08-27 [1] CRAN (R 3.6.2)
+
+[1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library</code></pre>
+</div>
