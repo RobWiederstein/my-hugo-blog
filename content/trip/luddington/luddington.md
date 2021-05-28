@@ -139,6 +139,7 @@ Dinner at:
 11976 Mink River Rd.
 Ellison Bay WI 53210 [map](https://goo.gl/maps/smid6tDnipa3KoMe7)
 [920.854.3305](tel:+19208543305)
+7:45 p.m. outside; confirmation: #8Z6EYH5V
 
 
 
