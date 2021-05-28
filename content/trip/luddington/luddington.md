@@ -2,7 +2,7 @@
 title:  "Trip to Luddington"
 author: "Rob Wiederstein"
 date: "2021-03-01"
-draft: true
+draft: no
 slug: []
 resources:
 - src: gallery/*.jpg
@@ -51,7 +51,7 @@ Ludington, MI 49431 [map](https://goo.gl/maps/4pcufdfQN8KfEfmLA)
 # Day 3 --  Walk to Lighthouse in Stearns Park
 
 Stearns Park [map](https://goo.gl/maps/8rULX4iD3nNqFnvt5)
-Walk to Ludington Breakwater Lighthouse.  
+Walk to Ludington Breakwater Lighthouse.
 
 Eat lunch at
 [Blu-Moon](http://blumoonbistro.com)
@@ -158,4 +158,3 @@ Chives Door County [menu](http://chivesdoorcounty.com/to-go-menu/)
 8041 Hwy 57
 Bailey’s Harbor, WI 54202[map]
 [920.839.2000](tel:920-839-2000)
-
