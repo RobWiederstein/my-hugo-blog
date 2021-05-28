@@ -10,13 +10,11 @@ resources:
   title: gallery-title-:counter
 ---
 
-{{< gallery folder="gallery" title="Purple Flowers" >}}
+<!--{{< gallery folder="gallery" title="Purple Flowers" >}}-->
 
 # Route
 
 <iframe src="https://www.google.com/maps/d/embed?mid=1hd8MvcJzNXsBFlGN6DiaDwx8QcO916Ke" width="640" height="480"></iframe>
-
-<iframe height="400" width="300" border="0" marginwidth="0" marginheight="0" src="https://www.mapquest.com/embed/directions/from/us/in/evansville/to/us/mi/ludington/to/us/wi/manitowoc/to/us/wi/ellison-bay/to/us/ky/paducah?center=41.29431726315258,-87.5390625&zoom=4&maptype=map&center=42.06560675405716,-86.0009765625&zoom=4&maptype=map"></iframe>
 
 # Day 1 -- Arrive -- June 7
 
