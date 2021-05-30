@@ -19,7 +19,7 @@ header:
   image: feature.jpg
   alt: tidymodels packages
   caption: The tidymodels packages
-repo: ~
+repo: https://raw.githubusercontent.com/RobWiederstein/purple-bananas/main/content/post/2021-05-30-tidymodel-tutorial-scripts/index.Rmd
 summary: This post is a distillation of the tidymodels tutorials on machine learning.  Formatting from the original was shortened and converted to a script with comments. Original tutorials are [here](https://www.tidymodels.org). This post is basically my notes from the those tutorials.
 ---
 
@@ -29,7 +29,9 @@ summary: This post is a distillation of the tidymodels tutorials on machine lear
 packages <- c(
       'devtools', #for session info
       'ggthemes', #for plots
-      'blogdown'
+      'blogdown',
+      'tidyverse',
+      'tidymodels'
 )
 lapply(packages, function(x) {
   if (!requireNamespace(x)) install.packages(x)
@@ -76,11 +78,11 @@ knitr::write_bib(.packages(), "./packages.bib")
 
 # [Overview](#overview)
 
-It's been a while since I'd done any modeling so, quite on accident, I'd discovered that Rstudio has released a new package `tinymodels`.  Prior to stumbling into the new package, the `caret` package, by Max Kuhn,  was the default for any modeling by Max Kuhn.  So it was a great comfort to learn that  he released an updated, vegetable-themed package `parsnip`. 
+It's been a while since I'd done any modeling so, quite on accident, I'd discovered that Rstudio has released a new package `tidymodels`.  Prior to stumbling into the new package, the `caret` package, by Max Kuhn,  was the default for any modeling by Max Kuhn.  So it was a great comfort to learn that  he released an updated, vegetable-themed package `parsnip`. 
 
 There's a set of five tutorials in the `tidymodel` to get you started. They're extremely helpful and should be viewed prior to further reading of this post.  In order to assimilate the lessons, I essentially distilled the narrative and code blocks into scripts with comments only.  Using the new outline feature in Rstudio 1.4 (I hadn't updated Rstudio in a while) the new commenting paradigm gave structure to each lesson.  
 
-They've been included as gist embeds and you can simply copy and paste the text into your script. Make sure to hit the outline button in Rstudio so you can see the outline headings.
+They've been included as gist embeds so the text can be copied and pasted into your script. Make sure to hit the outline button in Rstudio so you can see the outline headings.
 
 ```{r outline-feature, out.width="90%", fig.cap="Show document outline button in Rstudio"}
 knitr::include_graphics("./outline-pic.png")
@@ -109,6 +111,7 @@ knitr::include_graphics("./outline-pic.png")
 
 # [Conclusion](#conclusion)
 
+Everybody learns in their own way.  Tutorials are really helpful and the `tidymodels` tutorials are great.  After finishing those up, I hope to spend some time with the book, Tidy Modeling in R, and then do some more examples.  No matter how many examples I try, I don't ever feel comfortable modeling data. By converting the narrative format into R scripts it should make it easier to copy and paste and step through the code.
 
 # [Acknowledgements](#acknowledge)
 
