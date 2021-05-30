@@ -521,3 +521,19 @@ tbody tr:last-of-type {
     border: 1px solid transparent;
     color: #fff;
 }
+
+/* GIST EMBED*/
+/* Set width to 600px, and center box */
+.gist {
+  margin-left: auto;
+  margin-right: auto;
+  width: 600px !important;
+}
+
+/* Limit height and width of script box, and enable scrollbars */
+.gist-data {
+    height:250px;
+    overflow-y: visible;
+    width: 600px;
+    overflow-x: visible;
+}

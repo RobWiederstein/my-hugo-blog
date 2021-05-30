@@ -1,5 +1,5 @@
 ---
-title: Tidymodel Tutorial Scripts
+title: Tidymodel Tutorials As Scripts
 author: Rob Wiederstein
 date: '2021-05-30'
 slug: tidymodel-tutorial-scripts
@@ -14,16 +14,13 @@ bibliography:
 csl: ../ieee-with-url.csl
 link-citations: yes
 nocite: |
-  @R-base, @R-blogdown, @R-tidyverse
+  @R-base, @R-blogdown, @R-tidyverse, @R-tidymodels
 header:
-  image: ~
-  alt: ~
-  caption: ~
+  image: feature.jpg
+  alt: tidymodels packages
+  caption: The tidymodels packages
 repo: ~
-summary: By default, Hugo automatically takes the first 70 words of your content as
-  its summary and stores it into the `.Summary` page variable for use in your templates.
-  You may customize the summary length by setting `summaryLength` in your site configuration
-  *or* you can set it in the front matter.
+summary: This post is a distillation of the tidymodels tutorials on machine learning.  Formatting from the original was shortened and converted to a script with comments. Original tutorials are [here](https://www.tidymodels.org). This post is basically my notes from the those tutorials.
 ---
 
 
@@ -75,38 +72,53 @@ cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00",
 knitr::write_bib(.packages(), "./packages.bib")
 ```
 
-# [R image](#image)
 
-
-```{r plot-mtcars, echo=F, fig.cap = "A plot with 538 layout theme and color blind palette."}
-data(mtcars)
-mtcars$cyl <- factor(mtcars$cyl)
-p <- ggplot(mtcars, aes(mpg, hp, group = cyl, colour = cyl))
-p <- p + scale_color_manual(values = cbPalette)
-p <- p + geom_point(size = 2)
-p <- p + ggtitle("mtcars")
-p
-```
 
 # [Overview](#overview)
 
-<script src="https://gist.github.com/RobWiederstein/42b05dc91dbe59349368078563d92759.js"></script>
+It's been a while since I'd done any modeling so, quite on accident, I'd discovered that Rstudio has released a new package `tinymodels`.  Prior to stumbling into the new package, the `caret` package, by Max Kuhn,  was the default for any modeling by Max Kuhn.  So it was a great comfort to learn that  he released an updated, vegetable-themed package `parsnip`. 
 
-# [Background](#background)
+There's a set of five tutorials in the `tidymodel` to get you started. They're extremely helpful and should be viewed prior to further reading of this post.  In order to assimilate the lessons, I essentially distilled the narrative and code blocks into scripts with comments only.  Using the new outline feature in Rstudio 1.4 (I hadn't updated Rstudio in a while) the new commenting paradigm gave structure to each lesson.  
 
-(Who else has worked on this problem?  What did they find?)
+They've been included as gist embeds and you can simply copy and paste the text into your script. Make sure to hit the outline button in Rstudio so you can see the outline headings.
 
-# [Data and model](#data)
+```{r outline-feature, out.width="90%", fig.cap="Show document outline button in Rstudio"}
+knitr::include_graphics("./outline-pic.png")
+```
 
-(What data did you use, where did you get it?)
 
-# [Results](#results)
+# [First Tutorial](#first)
+
+<script src="https://gist.github.com/RobWiederstein/4b47ffac86d170413c750a43c16ea896.js"></script>
+
+# [Second Tutorial](#second)
+
+<script src="https://gist.github.com/RobWiederstein/bb21985f3998041aeeea7dc2044df1f0.js"></script>
+
+# [Third Tutorial](#third)
+
+<script src="https://gist.github.com/RobWiederstein/8def57b19749f3ee28d926d37407f220.js"></script>
+
+# [Fourth Tutorial](#fourth)
+
+<script src="https://gist.github.com/RobWiederstein/66443eef38a24776327ff994fed375df.js"></script>
+
+# [Fifth Tutorial](#fifth)
+
+<script src="https://gist.github.com/RobWiederstein/a85731e45d6a88cf3496c25b55cf97e4.js"></script>
 
 # [Conclusion](#conclusion)
+
 
 # [Acknowledgements](#acknowledge)
 
 This blog post was made possible thanks to:
+
+-  [Rstudio](https://www.rstudio.com)
+
+- [Tidy Modeling with R](https://www.tmwr.org)
+
+-  [Tidymodels: tidy machine learning in R](http://www.rebeccabarter.com/blog/2020-03-25_machine_learning/) by Rebecca Barter
 
 # [References](#reference)
 

@@ -1,5 +1,5 @@
 ---
-title: Tidymodel Tutorial Scripts
+title: Tidymodel Tutorials As Scripts
 author: Rob Wiederstein
 date: '2021-05-30'
 slug: tidymodel-tutorial-scripts
@@ -14,27 +14,25 @@ bibliography:
 csl: ../ieee-with-url.csl
 link-citations: yes
 nocite: |
-  @R-base, @R-blogdown, @R-tidyverse
+  @R-base, @R-blogdown, @R-tidyverse, @R-tidymodels
 header:
-  image: ~
-  alt: ~
-  caption: ~
+  image: feature.jpg
+  alt: tidymodels packages
+  caption: The tidymodels packages
 repo: ~
-summary: By default, Hugo automatically takes the first 70 words of your content as
-  its summary and stores it into the `.Summary` page variable for use in your templates.
-  You may customize the summary length by setting `summaryLength` in your site configuration
-  *or* you can set it in the front matter.
+summary: This post is a distillation of the tidymodels tutorials on machine learning.  Formatting from the original was shortened and converted to a script with comments. Original tutorials are [here](https://www.tidymodels.org). This post is basically my notes from the those tutorials.
 ---
 
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 <div id="TOC">
 <ul>
-<li><a href="#r-image"><span>R image</span></a></li>
 <li><a href="#overview"><span>Overview</span></a></li>
-<li><a href="#background"><span>Background</span></a></li>
-<li><a href="#data-and-model"><span>Data and model</span></a></li>
-<li><a href="#results"><span>Results</span></a></li>
+<li><a href="#first-tutorial"><span>First Tutorial</span></a></li>
+<li><a href="#second-tutorial"><span>Second Tutorial</span></a></li>
+<li><a href="#third-tutorial"><span>Third Tutorial</span></a></li>
+<li><a href="#fourth-tutorial"><span>Fourth Tutorial</span></a></li>
+<li><a href="#fifth-tutorial"><span>Fifth Tutorial</span></a></li>
 <li><a href="#conclusion"><span>Conclusion</span></a></li>
 <li><a href="#acknowledgements"><span>Acknowledgements</span></a></li>
 <li><a href="#references"><span>References</span></a></li>
@@ -43,29 +41,37 @@ summary: By default, Hugo automatically takes the first 70 words of your content
 </ul>
 </div>
 
-<div id="r-image" class="section level1">
-<h1><a href="#image">R image</a></h1>
-<div class="figure" style="text-align: center"><span id="fig:plot-mtcars"></span>
-<img src="{{< blogdown/postref >}}index_files/figure-html/plot-mtcars-1.svg" alt="A plot with 538 layout theme and color blind palette." width="576" />
+<div id="overview" class="section level1">
+<h1><a href="#overview">Overview</a></h1>
+<p>It’s been a while since I’d done any modeling so, quite on accident, I’d discovered that Rstudio has released a new package <code>tinymodels</code>. Prior to stumbling into the new package, the <code>caret</code> package, by Max Kuhn, was the default for any modeling by Max Kuhn. So it was a great comfort to learn that he released an updated, vegetable-themed package <code>parsnip</code>.</p>
+<p>There’s a set of five tutorials in the <code>tidymodel</code> to get you started. They’re extremely helpful and should be viewed prior to further reading of this post. In order to assimilate the lessons, I essentially distilled the narrative and code blocks into scripts with comments only. Using the new outline feature in Rstudio 1.4 (I hadn’t updated Rstudio in a while) the new commenting paradigm gave structure to each lesson.</p>
+<p>They’ve been included as gist embeds and you can simply copy and paste the text into your script. Make sure to hit the outline button in Rstudio so you can see the outline headings.</p>
+<div class="figure" style="text-align: center"><span id="fig:outline-feature"></span>
+<img src="outline-pic.png" alt="Show document outline button in Rstudio" width="90%" />
 <p class="caption">
-Figure 1: A plot with 538 layout theme and color blind palette.
+Figure 1: Show document outline button in Rstudio
 </p>
 </div>
 </div>
-<div id="overview" class="section level1">
-<h1><a href="#overview">Overview</a></h1>
-<script src="https://gist.github.com/RobWiederstein/42b05dc91dbe59349368078563d92759.js"></script>
+<div id="first-tutorial" class="section level1">
+<h1><a href="#first">First Tutorial</a></h1>
+<script src="https://gist.github.com/RobWiederstein/4b47ffac86d170413c750a43c16ea896.js"></script>
 </div>
-<div id="background" class="section level1">
-<h1><a href="#background">Background</a></h1>
-<p>(Who else has worked on this problem? What did they find?)</p>
+<div id="second-tutorial" class="section level1">
+<h1><a href="#second">Second Tutorial</a></h1>
+<script src="https://gist.github.com/RobWiederstein/bb21985f3998041aeeea7dc2044df1f0.js"></script>
 </div>
-<div id="data-and-model" class="section level1">
-<h1><a href="#data">Data and model</a></h1>
-<p>(What data did you use, where did you get it?)</p>
+<div id="third-tutorial" class="section level1">
+<h1><a href="#third">Third Tutorial</a></h1>
+<script src="https://gist.github.com/RobWiederstein/8def57b19749f3ee28d926d37407f220.js"></script>
 </div>
-<div id="results" class="section level1">
-<h1><a href="#results">Results</a></h1>
+<div id="fourth-tutorial" class="section level1">
+<h1><a href="#fourth">Fourth Tutorial</a></h1>
+<script src="https://gist.github.com/RobWiederstein/66443eef38a24776327ff994fed375df.js"></script>
+</div>
+<div id="fifth-tutorial" class="section level1">
+<h1><a href="#fifth">Fifth Tutorial</a></h1>
+<script src="https://gist.github.com/RobWiederstein/a85731e45d6a88cf3496c25b55cf97e4.js"></script>
 </div>
 <div id="conclusion" class="section level1">
 <h1><a href="#conclusion">Conclusion</a></h1>
@@ -73,6 +79,11 @@ Figure 1: A plot with 538 layout theme and color blind palette.
 <div id="acknowledgements" class="section level1">
 <h1><a href="#acknowledge">Acknowledgements</a></h1>
 <p>This blog post was made possible thanks to:</p>
+<ul>
+<li><p><a href="https://www.rstudio.com">Rstudio</a></p></li>
+<li><p><a href="https://www.tmwr.org">Tidy Modeling with R</a></p></li>
+<li><p><a href="http://www.rebeccabarter.com/blog/2020-03-25_machine_learning/">Tidymodels: tidy machine learning in R</a> by Rebecca Barter</p></li>
+</ul>
 </div>
 <div id="references" class="section level1">
 <h1><a href="#reference">References</a></h1>
