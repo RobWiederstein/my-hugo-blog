@@ -78,9 +78,9 @@ knitr::write_bib(.packages(), "./packages.bib")
 
 # [Overview](#overview)
 
-It's been a while since I'd done any modeling so, quite on accident, I'd discovered that Rstudio has released a new package `tidymodels`.  Prior to stumbling into the new package, the `caret` package, by Max Kuhn,  was the default for any modeling by Max Kuhn.  So it was a great comfort to learn that  he released an updated, vegetable-themed package `parsnip`. 
+It's been a while since I'd done any modeling so, quite on accident, I'd discovered that Rstudio was promoting a new package called `tidymodels`.  Prior to stumbling into the new package, the `caret` package, by Max Kuhn,  was the default for any modeling that I did.  So it was a great comfort to learn that he released an updated, vegetable-themed package `parsnip`. 
 
-There's a set of five tutorials in the `tidymodel` to get you started. They're extremely helpful and should be viewed prior to further reading of this post.  In order to assimilate the lessons, I essentially distilled the narrative and code blocks into scripts with comments only.  Using the new outline feature in Rstudio 1.4 (I hadn't updated Rstudio in a while) the new commenting paradigm gave structure to each lesson.  
+There's a set of five tutorials in the `tidymodel` to get you started. They're extremely helpful and should be viewed prior to further reading of this post.  In order to absorb the lessons, I essentially distilled the narrative and code blocks into scripts with comments only.  Using the new outline feature in Rstudio 1.4 (I hadn't updated Rstudio in a while) the new commenting paradigm gave structure to each lesson.  
 
 They've been included as gist embeds so the text can be copied and pasted into your script. Make sure to hit the outline button in Rstudio so you can see the outline headings.
 
@@ -111,7 +111,7 @@ knitr::include_graphics("./outline-pic.png")
 
 # [Conclusion](#conclusion)
 
-Everybody learns in their own way.  Tutorials are really helpful and the `tidymodels` tutorials are great.  After finishing those up, I hope to spend some time with the book, Tidy Modeling in R, and then do some more examples.  No matter how many examples I try, I don't ever feel comfortable modeling data. By converting the narrative format into R scripts it should make it easier to copy and paste and step through the code.
+Everybody learns in their own way.  Tutorials are really helpful and the `tidymodels` tutorials are great.  After finishing those up, I hope to spend some time with the book, Tidy Modeling in R, and then do some more examples.  No matter how many examples I try, I don't ever feel comfortable modeling data. By converting the narrative format into R scripts it should make it easier to copy and paste and step through the code on your own.  Enjoy.
 
 # [Acknowledgements](#acknowledge)
 
