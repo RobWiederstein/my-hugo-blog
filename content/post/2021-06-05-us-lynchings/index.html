@@ -1,0 +1,248 @@
+---
+title: US Lynchings
+author: Rob Wiederstein
+date: '2021-06-05'
+slug: us-lynchings
+categories:
+  - R
+tags: []
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: feature.jpg
+  alt: Senator Ellender celebrates the blocking of the anti-lynching bill in 1938
+  caption: Louisiana Senator Allen J. Ellender celebrates the defeat of the Anti-lynching bill in 1938.  Photo courtesy of PICRYL. No anti-lynching bill has passed both houses as of March, 2021.
+repo: ~
+summary: By default, Hugo automatically takes the first 70 words of your content as
+  its summary and stores it into the `.Summary` page variable for use in your templates.
+  You may customize the summary length by setting `summaryLength` in your site configuration
+  *or* you can set it in the front matter.
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="{{< blogdown/postref >}}index_files/pymjs/pym.v1.js"></script>
+<script src="{{< blogdown/postref >}}index_files/widgetframe-binding/widgetframe.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#overview"><span>Overview</span></a></li>
+<li><a href="#background"><span>Background</span></a></li>
+<li><a href="#data-and-model"><span>Data and model</span></a></li>
+<li><a href="#results"><span>Results</span></a>
+<ul>
+<li><a href="#lynchings-by-dataset">Lynchings by Dataset</a></li>
+<li><a href="#total-lynchings">Total Lynchings</a></li>
+<li><a href="#lynchings-by-state">Lynchings by State</a></li>
+<li><a href="#lynching-by-gender-race">Lynching by Gender &amp; Race</a></li>
+</ul></li>
+<li><a href="#conclusion"><span>Conclusion</span></a></li>
+<li><a href="#acknowledgements"><span>Acknowledgements</span></a></li>
+<li><a href="#references"><span>References</span></a></li>
+<li><a href="#disclaimer"><span>Disclaimer</span></a></li>
+<li><a href="#reproducibility"><span>Reproducibility</span></a></li>
+</ul>
+</div>
+
+<div id="overview" class="section level1">
+<h1><a href="#overview">Overview</a></h1>
+<p>4134 people were killed outside of the judicial process in the United States between 1882 and 1936. Most of the victims were black males living in former slave states of the deep South and were killed by lynching. However, lynchings were not unique to the South and occurred in other places as well.</p>
+<div class="figure" style="text-align: center"><span id="fig:leaflet-map-lynchings"></span>
+<div id="htmlwidget-1" style="width:100%;height:400px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"url":"index_files/figure-html//widgets/widget_leaflet-map-lynchings.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<p class="caption">
+Figure 1: After geocoding, 3984 lynchings remained. Locations were plotted to the center of the declared county.
+</p>
+</div>
+</div>
+<div id="background" class="section level1">
+<h1><a href="#background">Background</a></h1>
+<p>The original lynching data was collected starting in the 1880s and ending through the 1910s by the Chicago Tribune, Tuskegee University, and the NAACP. Two sociologists, Stewart Tolnay and E.M. Beck, combined the original data sources into a single dataset. It was the basis for their book, “A festival of violence: an analysis of Southern lynchings, 1882-1930,” published in 1995.</p>
+<p>They document the extrajudicial killings of 2800+ victims in ten Southern states, most of them black and most of them men. The original ten states were Alabama, Arkansas, Florida, Georgia, Kentucky, Louisiana, Mississippi, North Carolina and South Carolina. Their findings include that “lynching responded to fluctuations in the price of cotton, decreasing in frequency when prices rose and increasing when they fell.”<span class="citation"><a href="#ref-tolnayFestivalViolenceAnalysis1995" role="doc-biblioref">[1]</a></span> The authors’ data can be found at <a href="http://people.uncw.edu/hinese/HAL/HAL%20Web%20Page.htm">Project HAL: Historical American Lynching
+Data Collection Project</a>. For purposes of this post, the original dataset will be referred to as the “Tolnay dataset.”</p>
+<p>In 2019, sociologists Charles Seguin and David Rigby extended the original data by expanding the search for lynchings to the 38 states outside of the South. In their article, “National Crimes: A New National Data Set of Lynchings in the United States, 1883 to 1941,” Seguin and Rigby discovered an additional 1,328 victims.<span class="citation"><a href="#ref-seguinNationalCrimesNew2019" role="doc-biblioref">[2]</a></span> The Seguin “data include every lynching victim [verified in local newspapers] . . . from 1883 to 1941 in the 38 contiguous U.S. states not included in the original Tolnay-Beck data.” <span class="citation"><a href="#ref-seguinNationalCrimesNew2019" role="doc-biblioref">[2]</a></span> For purposes of this post, this expanded dataset will be referred to as the “Seguin dataset.”</p>
+<p>Both Tolnay and Seguin used the same definition for lynching as “(1) an extrajudicial killing, (2) motivated or justified by reference to “justice” or tradition, and (3) committed by three or more people."</p>
+<p>“When combined with the new Tolnay-Beck data, we record 4,467 total victims of lynching from 1883 to 1941. Of these victims, 4,027 were men, 99 were women, and 341 were unknown gender (although likely male); 3,265 were black, 1,082 were white,671 were Mexican or of Mexican descent, 38 were American Indian, 10 were Chinese, and 1 was Japanese.”<span class="citation"><a href="#ref-seguinNationalCrimesNew2019" role="doc-biblioref">[2]</a></span></p>
+</div>
+<div id="data-and-model" class="section level1">
+<h1><a href="#data">Data and model</a></h1>
+<p>The Tolnay dataset was downloaded from <a href="http://people.uncw.edu/hinese/HAL/HAL%20Web%20Page.htm">Project HAL</a> as an excel spreadsheet. The Seguin dataset was downloaded from <a href="https://osf.io/kr8yc/">OSF</a>. The two sets were combined.</p>
+</div>
+<div id="results" class="section level1">
+<h1><a href="#results">Results</a></h1>
+<div id="lynchings-by-dataset" class="section level2">
+<h2>Lynchings by Dataset</h2>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/plot-by-dataset-1.svg" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="total-lynchings" class="section level2">
+<h2>Total Lynchings</h2>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/plot-total-lynchings-1.svg" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="lynchings-by-state" class="section level2">
+<h2>Lynchings by State</h2>
+<div class="figure" style="text-align: center"><span id="fig:plot-lynchings-by-state"></span>
+<img src="{{< blogdown/postref >}}index_files/figure-html/plot-lynchings-by-state-1.svg" alt="Facet panels are in descending order by the total number of lynchings." width="100%" />
+<p class="caption">
+Figure 2: Facet panels are in descending order by the total number of lynchings.
+</p>
+</div>
+</div>
+<div id="lynching-by-gender-race" class="section level2">
+<h2>Lynching by Gender &amp; Race</h2>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/treemap-demographics-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+<p>Lynching remains a historic tragedy borne, primarily but not exclusively, by black men in the South where slavery was formerly practiced. Since 1900, the Chicago Tribune, The Tuskegee Institute and the NAACP documented these tragedies. But for their early efforts, the breadth of the horror might have never been discovered. Academics like Tolnay and Beck substantiated the early reports and it was further extended by Seguin and Rigby. The Sequin dataset showed other states like Texas, Missouri and Oklahoma were the sites of many lynchings.</p>
+<p>Several legislative efforts to federally criminalize lynchings have been made and failed. The most recent effort occurred on February 26, 2020. The Emmett Till Antilynching Act passed the House of Representatives, by a vote of 410–4. Emmit Till was a 14-year-old who was lynched in Mississippi in 1955. Senator Rand Paul of Kentucky has held the bill from passage by unanimous consent in the Senate. Kentucky was home to 192 lynchings between 1891 and 1921.</p>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to:</p>
+<ul>
+<li><p><a href="NAACPhttps://naacp.org">NAACP</a></p></li>
+<li><p><a href="https://www.tuskegee.edu/">Tuskegee University (formerly “The Tuskegee Institute”)</a></p></li>
+<li><p><a href="https://www.chicagotribune.com/">The Chicago Tribune</a></p></li>
+<li><p><a href="https://soc.washington.edu/people/stewart-tolnay">Professor Stewart Tolnay</a></p></li>
+<li><p><a href="https://www.sociology.uga.edu/directory/people/e-m-beck">Professor E.M. Beck</a></p></li>
+<li><p><a href="http://www.charlieseguin.com/">Professor Charles Seguin</a></p></li>
+<li><p><a href="https://rigby.netlify.app">Doctoral Candidate David Rigby</a></p></li>
+</ul>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-tolnayFestivalViolenceAnalysis1995" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">S. E. Tolnay and E. M. Beck, <em>A festival of violence: An analysis of <span>Southern</span> lynchings, 1882-1930</em>. <span>Urbana</span>: <span>University of Illinois Press</span>, 1995. </div>
+</div>
+<div id="ref-seguinNationalCrimesNew2019" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">C. Seguin and D. Rigby, <span>“National <span>Crimes</span>: <span>A New National Data Set</span> of <span>Lynchings</span> in the <span>United States</span>, 1883 to 1941,”</span> <em>Socius</em>, vol. 5, p. 2378023119841780, Jan. 2019, doi: <a href="https://doi.org/10.1177/2378023119841780">10.1177/2378023119841780</a>. [Online]. Available: <a href="https://doi.org/10.1177/2378023119841780">https://doi.org/10.1177/2378023119841780</a>. [Accessed: 05-Jun-2021]</div>
+</div>
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2020 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+</div>
+<div id="ref-R-tidyverse" class="csl-entry">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">H. Wickham, <em>Tidyverse: Easily install and load the tidyverse</em>. 2019 [Online]. Available: <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value                       
+ version  R version 3.6.3 (2020-02-29)
+ os       macOS Catalina 10.15.7      
+ system   x86_64, darwin15.6.0        
+ ui       X11                         
+ language (EN)                        
+ collate  en_US.UTF-8                 
+ ctype    en_US.UTF-8                 
+ tz       America/Chicago             
+ date     2021-06-05                  
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version    date       lib source                             
+ assertthat    0.2.1      2019-03-21 [1] CRAN (R 3.6.0)                     
+ backports     1.2.1      2020-12-09 [1] CRAN (R 3.6.2)                     
+ blogdown    * 1.3        2021-04-14 [1] CRAN (R 3.6.2)                     
+ bookdown      0.21       2020-10-13 [1] CRAN (R 3.6.3)                     
+ broom         0.7.6      2021-04-05 [1] CRAN (R 3.6.2)                     
+ bslib         0.2.4      2021-01-25 [1] CRAN (R 3.6.2)                     
+ cachem        1.0.4      2021-02-13 [1] CRAN (R 3.6.2)                     
+ callr         3.5.1      2020-10-13 [1] CRAN (R 3.6.2)                     
+ cellranger    1.1.0      2016-07-27 [1] CRAN (R 3.6.0)                     
+ cli           2.5.0      2021-04-26 [1] CRAN (R 3.6.2)                     
+ clisymbols    1.2.0      2017-05-21 [1] CRAN (R 3.6.0)                     
+ codetools     0.2-18     2020-11-04 [1] CRAN (R 3.6.2)                     
+ colorspace    2.0-1      2021-05-04 [1] CRAN (R 3.6.2)                     
+ crayon        1.4.1      2021-02-08 [1] CRAN (R 3.6.2)                     
+ DBI           1.1.1      2021-01-15 [1] CRAN (R 3.6.2)                     
+ dbplyr        2.1.0      2021-02-03 [1] CRAN (R 3.6.2)                     
+ desc          1.3.0      2021-03-05 [1] CRAN (R 3.6.3)                     
+ devtools    * 2.3.2      2020-09-18 [1] CRAN (R 3.6.2)                     
+ digest        0.6.27     2020-10-24 [1] CRAN (R 3.6.2)                     
+ dplyr       * 1.0.5      2021-03-05 [1] CRAN (R 3.6.3)                     
+ ellipsis      0.3.2      2021-04-29 [1] CRAN (R 3.6.2)                     
+ evaluate      0.14       2019-05-28 [1] CRAN (R 3.6.0)                     
+ fansi         0.4.2      2021-01-15 [1] CRAN (R 3.6.2)                     
+ farver        2.1.0      2021-02-28 [1] CRAN (R 3.6.3)                     
+ fastmap       1.1.0      2021-01-25 [1] CRAN (R 3.6.2)                     
+ forcats     * 0.5.1      2021-01-27 [1] CRAN (R 3.6.2)                     
+ fs            1.5.0      2020-07-31 [1] CRAN (R 3.6.2)                     
+ generics      0.1.0      2020-10-31 [1] CRAN (R 3.6.2)                     
+ ggplot2     * 3.3.3      2020-12-30 [1] CRAN (R 3.6.2)                     
+ ggthemes    * 4.2.4      2021-01-20 [1] CRAN (R 3.6.2)                     
+ glue          1.4.2      2020-08-27 [1] CRAN (R 3.6.2)                     
+ gtable        0.3.0      2019-03-25 [1] CRAN (R 3.6.0)                     
+ haven         2.3.1      2020-06-01 [1] CRAN (R 3.6.2)                     
+ highr         0.8        2019-03-20 [1] CRAN (R 3.6.0)                     
+ hms           1.0.0      2021-01-13 [1] CRAN (R 3.6.2)                     
+ htmltools     0.5.1.1    2021-01-22 [1] CRAN (R 3.6.2)                     
+ httr          1.4.2      2020-07-20 [1] CRAN (R 3.6.2)                     
+ jquerylib     0.1.3      2020-12-17 [1] CRAN (R 3.6.2)                     
+ jsonlite      1.7.2      2020-12-09 [1] CRAN (R 3.6.2)                     
+ knitr         1.32       2021-04-14 [1] CRAN (R 3.6.2)                     
+ labeling      0.4.2      2020-10-20 [1] CRAN (R 3.6.2)                     
+ lifecycle     1.0.0      2021-02-15 [1] CRAN (R 3.6.2)                     
+ lubridate     1.7.10     2021-02-26 [1] CRAN (R 3.6.3)                     
+ magrittr    * 2.0.1      2020-11-17 [1] CRAN (R 3.6.2)                     
+ memoise       2.0.0      2021-01-26 [1] CRAN (R 3.6.2)                     
+ modelr        0.1.8      2020-05-19 [1] CRAN (R 3.6.2)                     
+ munsell       0.5.0      2018-06-12 [1] CRAN (R 3.6.0)                     
+ mypkg       * 0.0.0.9000 2021-06-03 [1] local                              
+ pillar        1.6.0      2021-04-13 [1] CRAN (R 3.6.2)                     
+ pkgbuild      1.2.0      2020-12-15 [1] CRAN (R 3.6.2)                     
+ pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 3.6.0)                     
+ pkgload       1.2.0      2021-02-23 [1] CRAN (R 3.6.3)                     
+ prettyunits   1.1.1      2020-01-24 [1] CRAN (R 3.6.0)                     
+ processx      3.4.5      2020-11-30 [1] CRAN (R 3.6.2)                     
+ prompt      * 1.0.0      2020-03-25 [1] Github (gaborcsardi/prompt@b332c42)
+ ps            1.6.0      2021-02-28 [1] CRAN (R 3.6.3)                     
+ purrr       * 0.3.4      2020-04-17 [1] CRAN (R 3.6.2)                     
+ R6            2.5.0      2020-10-28 [1] CRAN (R 3.6.2)                     
+ Rcpp          1.0.6      2021-01-15 [1] CRAN (R 3.6.2)                     
+ readr       * 1.4.0      2020-10-05 [1] CRAN (R 3.6.2)                     
+ readxl        1.3.1      2019-03-13 [1] CRAN (R 3.6.0)                     
+ remotes       2.3.0      2021-04-01 [1] CRAN (R 3.6.2)                     
+ reprex        1.0.0      2021-01-27 [1] CRAN (R 3.6.2)                     
+ rlang         0.4.11     2021-04-30 [1] CRAN (R 3.6.2)                     
+ rmarkdown     2.7        2021-02-19 [1] CRAN (R 3.6.3)                     
+ roxygen2    * 7.1.1      2020-06-27 [1] CRAN (R 3.6.2)                     
+ rprojroot     2.0.2      2020-11-15 [1] CRAN (R 3.6.2)                     
+ rstudioapi    0.13       2020-11-12 [1] CRAN (R 3.6.2)                     
+ rvest         0.3.6      2020-07-25 [1] CRAN (R 3.6.2)                     
+ sass          0.3.1      2021-01-24 [1] CRAN (R 3.6.2)                     
+ scales        1.1.1      2020-05-11 [1] CRAN (R 3.6.2)                     
+ sessioninfo   1.1.1      2018-11-05 [1] CRAN (R 3.6.0)                     
+ stringi       1.5.3      2020-09-09 [1] CRAN (R 3.6.2)                     
+ stringr     * 1.4.0      2019-02-10 [1] CRAN (R 3.6.0)                     
+ testthat      3.0.2      2021-02-14 [1] CRAN (R 3.6.2)                     
+ tibble      * 3.1.1      2021-04-18 [1] CRAN (R 3.6.2)                     
+ tidyr       * 1.1.3      2021-03-03 [1] CRAN (R 3.6.3)                     
+ tidyselect    1.1.0      2020-05-11 [1] CRAN (R 3.6.2)                     
+ tidyverse   * 1.3.0      2019-11-21 [1] CRAN (R 3.6.0)                     
+ usethis     * 2.0.1      2021-02-10 [1] CRAN (R 3.6.2)                     
+ utf8          1.2.1      2021-03-12 [1] CRAN (R 3.6.2)                     
+ vctrs         0.3.8      2021-04-29 [1] CRAN (R 3.6.2)                     
+ withr         2.4.2      2021-04-18 [1] CRAN (R 3.6.2)                     
+ xfun          0.22       2021-03-11 [1] CRAN (R 3.6.2)                     
+ xml2          1.3.2      2020-04-23 [1] CRAN (R 3.6.2)                     
+ yaml          2.2.1      2020-02-01 [1] CRAN (R 3.6.0)                     
+
+[1] /Library/Frameworks/R.framework/Versions/3.6/Resources/library</code></pre>
+</div>

@@ -1,0 +1,261 @@
+---
+title: US Lynchings
+author: Rob Wiederstein
+date: '2021-06-05'
+slug: us-lynchings
+categories:
+  - R
+tags: []
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: feature.jpg
+  alt: Senator Ellender celebrates the blocking of the anti-lynching bill in 1938
+  caption: Louisiana Senator Allen J. Ellender celebrates the defeat of the Anti-lynching bill in 1938.  Photo courtesy of PICRYL. No anti-lynching bill has passed both houses as of March, 2021.
+repo: ~
+summary: By default, Hugo automatically takes the first 70 words of your content as
+  its summary and stores it into the `.Summary` page variable for use in your templates.
+  You may customize the summary length by setting `summaryLength` in your site configuration
+  *or* you can set it in the front matter.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown',
+      'treemap',
+      'leaflet',
+      'widgetframe', 
+      'htmlwidgets'
+      
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
+library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+```{r load-dataset}
+input <- "~/Dropbox/public/datasets/2021-06-05-us_lynchings.csv"
+df.0 <- data.table::fread(input = input)
+```
+
+# [Overview](#overview)
+
+4134 people were killed outside of the judicial process in the United States between 1882 and 1936.  Most of the victims were black males living in former slave states of the deep South and were killed by lynching. However, lynchings were not unique to the South and occurred in other places as well.
+
+```{r leaflet-map-lynchings, fig.height=4, fig.cap="After geocoding, 3984 lynchings remained. Locations were plotted to the center of the declared county."}
+library(leaflet)
+#import
+input <- "https://dl.dropbox.com/s/hj75ux1ndz1w5h1/2021-06-06-us-lynchings-geocode.csv?dl=0"
+df.m <- data.table::fread(input = input, check.names = T)
+#variable names
+colnames(df.m) <- tolower(colnames(df.m))
+
+my.cols <- c("fips", "state", "county", "lat", "lon", "date",
+             "victim", "race", "gender")
+df.m1 <-
+        df.m %>%
+        select(all_of(my.cols))
+
+df.m1$lat <- jitter(df.m1$lat, factor = .0001)
+df.m1$lon <- jitter(df.m1$lon, factor = .0001)
+
+m <-    leaflet(df.m1) %>%
+        addTiles() %>%
+        setView(lng = -84.32,
+                lat = 37.52,
+                zoom = 10
+        ) %>%
+        # set boundaries for map
+        fitBounds(lng1 = max(df.m1$lon),
+                  lat1 = min(df.m1$lat),
+                  lng2 = min(df.m1$lon),
+                  lat2 = max(df.m1$lat)
+        ) %>%
+        addCircleMarkers(lng = ~lon,
+                         lat = ~lat,
+                         radius = 3,
+                         popup = paste("Date: ", df.m1$date, "<br>",
+                                       "County: ", df.m1$county, "<br>",
+                                       "Victim: ", df.m1$victim, "<br>",
+                                       "Race: ", df.m1$race, "<br>",
+                                       "Gender: ", df.m1$gender),
+                         clusterOptions = markerClusterOptions()
+        )
+
+frameWidget(m, height = 400)
+```
+
+# [Background](#background)
+
+The original lynching data was collected starting in the 1880s and ending through the 1910s by the Chicago Tribune, Tuskegee University, and the NAACP.  Two sociologists, Stewart Tolnay and E.M. Beck, combined the original data sources into a single dataset.  It was the basis for their book, "A festival of violence: an analysis of Southern lynchings, 1882-1930," published in 1995.  
+
+They document the extrajudicial killings of 2800+ victims in ten Southern states, most of them black and most of them men.  The original ten states were Alabama, Arkansas, Florida, Georgia, Kentucky, Louisiana, Mississippi, North Carolina and South Carolina. Their findings include that "lynching responded to fluctuations in the price of cotton, decreasing in frequency when prices rose and increasing when they fell."[@tolnayFestivalViolenceAnalysis1995] The authors' data can be found at [Project HAL:  Historical American Lynching 
+Data Collection Project](http://people.uncw.edu/hinese/HAL/HAL%20Web%20Page.htm). For purposes of this post, the original dataset will be referred to as the "Tolnay dataset".
+
+ In 2019, sociologists Charles Seguin and David Rigby extended the original data by expanding the search for lynchings to the 38 states outside of the South. In their article, "National Crimes: A New National Data Set of Lynchings in the United States, 1883 to 1941," Seguin and Rigby discovered an additional 1,328 victims.[@seguinNationalCrimesNew2019]  The Seguin "data include every lynching victim [verified in local newspapers] . . . from 1883 to 1941 in the 38 contiguous U.S. states not included in the original Tolnay-Beck data." [@seguinNationalCrimesNew2019] For purposes of this post, this expanded dataset will be referred to as the "Seguin dataset".
+
+Both Tolnay and Seguin used the same definition for lynching as "(1) an extrajudicial killing, (2) motivated or justified by reference to “justice” or tradition, and (3) committed by three or more people."
+
+"When combined with the new Tolnay-Beck data, we record 4,467 total victims of lynching from 1883 to 1941. Of these victims, 4,027 were men, 99 were women, and 341 were unknown gender (although likely male); 3,265 were black, 1,082 were white,671 were Mexican or of Mexican descent, 38 were American Indian, 10 were Chinese, and 1 was Japanese."[@seguinNationalCrimesNew2019]
+
+# [Data and model](#data)
+
+The Tolnay dataset was downloaded from [Project HAL](http://people.uncw.edu/hinese/HAL/HAL%20Web%20Page.htm) as an excel spreadsheet. The Seguin dataset was downloaded from [OSF](https://osf.io/kr8yc/). The two sets were combined.
+
+# [Results](#results)
+
+## Lynchings by Dataset
+
+```{r plot-by-dataset, fig.asp=.66, out.width="100%"}
+df.0 %>%
+group_by(dataset, year = lubridate::floor_date(date, "year")) %>%
+tally(name = "deaths") %>% 
+ggplot(aes(year, deaths, group = dataset, color = dataset)) +
+geom_line() +
+theme_minimal() +
+labs(title = "Annual U.S. Lynchings by Dataset",
+              subtitle = "1882 to 1936",
+              caption = "Source: Project HAL & Seguin")
+```
+
+## Total Lynchings
+
+```{r plot-total-lynchings, fig.asp = .66, out.width="100%"}
+df.0 %>%
+group_by(year = lubridate::floor_date(date, "year")) %>%
+tally(name = "deaths") %>%
+ggplot(aes(year, deaths)) +
+geom_line() +
+theme_minimal() +
+labs(title = "Total Annual U.S. Lynchings",
+              subtitle = "1882 to 1936",
+              caption = "Source: Project HAL & Seguin"
+     )
+```
+
+## Lynchings by State
+
+```{r plot-lynchings-by-state, fig.asp = 1, out.width="100%", fig.cap="Facet panels are in descending order by the total number of lynchings."}
+df.3 <-
+        df.0 %>%
+        group_by(state, year = lubridate::floor_date(date, "year")) %>%
+        tally(name = "deaths")
+df.3$state <- factor(df.3$state,
+                     levels = c("MS", "GA", "TX", "LA", "AL", "FL", "AR", "TN", "KY", "SC",
+                                       "OK", "MO", "NC", "VA", "MT", "KS", "CO", "CA", "IN", "WV", "WY",
+                                       "NE", "IL", "MD", "NM", "IA", "OH", "WA", "AZ", "SD", "ND", "ID",
+                                       "MI", "MN", "NV", "OR", "WI", "UT", "NY", "PA", "CT", "DE", "NJ"
+))
+df.4 <- df.3 %>% dplyr::filter(state %in% levels(df.3$state)[1:12])
+p <- ggplot(df.4, aes(year, deaths, group = state, color = state))
+p <- p + geom_line()
+p <- p + facet_wrap(vars(state))
+p <- p + theme_minimal()
+p <- p + theme(legend.position = "none")
+p <- p + geom_smooth()
+p <- p + labs(title = "Annual U.S. Lynchings by State",
+              subtitle = "1882 to 1936",
+              caption = "Source: Project HAL & Seguin")
+p
+```
+
+## Lynching by Gender & Race
+
+```{r treemap-demographics}
+df.0 %>% 
+group_by(race, gender) %>% 
+tally() %>% 
+treemap(index=c("gender", "race"),
+        vSize="n",
+        type="index",
+        palette = cbPalette,
+        title = "Lynching Demographics--Gender & Race"
+) 
+```
+
+# [Conclusion](#conclusion)
+
+Lynching remains a historic tragedy borne, primarily but not exclusively, by black men in the South where slavery was formerly practiced.  Since 1900, the Chicago Tribune, The Tuskegee Institute and the NAACP documented these tragedies. But for their early efforts, the breadth of the horror might have never been discovered. Academics like Tolnay and Beck substantiated the early reports and it was further extended by Seguin and Rigby. The Sequin dataset showed other states like Texas, Missouri and Oklahoma were the sites of many lynchings.  
+
+Several legislative efforts to federally criminalize lynchings have been made and failed. The most recent effort occurred on February 26, 2020. The Emmett Till Antilynching Act passed the House of Representatives, by a vote of 410–4. Emmit Till was a  14-year-old who was lynched in Mississippi in 1955. Senator Rand Paul of Kentucky has held the bill from passage by unanimous consent in the Senate. Kentucky was home to 192 lynchings between 1891 and 1921.
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+- [NAACP](NAACPhttps://naacp.org)
+
+- [Tuskegee University (formerly "The Tuskegee Institute")](https://www.tuskegee.edu/)
+
+- [The Chicago Tribune](https://www.chicagotribune.com/)
+
+- [Professor Stewart Tolnay](https://soc.washington.edu/people/stewart-tolnay)
+
+- [Professor E.M. Beck](https://www.sociology.uga.edu/directory/people/e-m-beck)
+
+- [Professor Charles Seguin](http://www.charlieseguin.com/)
+
+- [Doctoral Candidate David Rigby](https://rigby.netlify.app)
+
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```
