@@ -10,11 +10,9 @@ resources:
   title: gallery-title-:counter
 ---
 
-{{< gallery folder="gallery" title="Purple Flowers" >}}
+ [our pictures](https://www.dropbox.com/sh/b7iuqikr48nbe3o/AADBJTUYz9_qIP5CaJwJEfNUa?dl=0)
 
- [our pictures](https://www.dropbox.com/sh/v9ssa0bdnlc4fug/AAAPaB2JCxWdHzufAvHWpzC2a?dl=0)
-
-# Day 1 -- Arrive -- June 7
+ # Day 1 -- Arrive -- June 7
 
 [Ponchos Pond](https://www.poncho.com)
 5335 W. Wallace Ln.
