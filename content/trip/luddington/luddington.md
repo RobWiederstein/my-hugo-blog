@@ -10,7 +10,7 @@ resources:
   title: gallery-title-:counter
 ---
 
-<!--{{< gallery folder="gallery" title="Purple Flowers" >}}-->
+{{< gallery folder="gallery" title="Purple Flowers" >}}
 
 # Route
 
