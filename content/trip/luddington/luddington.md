@@ -12,9 +12,7 @@ resources:
 
 {{< gallery folder="gallery" title="Purple Flowers" >}}
 
-# Route
-
-<iframe src="https://www.google.com/maps/d/embed?mid=1hd8MvcJzNXsBFlGN6DiaDwx8QcO916Ke" width="640" height="480"></iframe>
+ [our pictures](https://www.dropbox.com/sh/v9ssa0bdnlc4fug/AAAPaB2JCxWdHzufAvHWpzC2a?dl=0)
 
 # Day 1 -- Arrive -- June 7
 
