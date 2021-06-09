@@ -10,8 +10,8 @@ resources:
   title: gallery-title-:counter
 ---
 
- <iframe src="https://www.powr.io/photo-gallery/u/d98e9fd9_1623196609#platform=iframe" style="width:100%;" height="531px" frameborder="0"></iframe>
- 
+Our trip [photos](http://photos.robwiederstein.org)
+
  # Day 1 -- Arrive -- June 7
 
 [Ponchos Pond](https://www.poncho.com)
