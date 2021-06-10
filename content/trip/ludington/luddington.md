@@ -1,5 +1,5 @@
 ---
-title:  "Trip to Luddington"
+title:  "Trip to Ludington"
 author: "Rob Wiederstein"
 date: "2021-03-01"
 draft: no
@@ -59,7 +59,18 @@ Ludington MI 49431 [map](https://goo.gl/maps/FxTz9rLHBssYk6sQA)
 
 # Day 5
 
-Open
+[The Jam Farm](https://www.facebook.com/Lois.jamlady)
+5075 W. Meisenheimer
+Ludington, MI 49431 [map](https://www.google.com/maps/place/5075+W+Meisenheimer+Rd,+Ludington,+MI+49431/@43.8628104,-86.4075804,17z/data=!3m1!4b1!4m5!3m4!1s0x881c056c11caa1cb:0xd468344f4aae21b2!8m2!3d43.8628104!4d-86.4053864)
+[231-845-9909](tel:+12318459909)
+
+[Bortell's Fisheries](https://www.facebook.com/BortellsFisheries/)
+5510 S Lakeshore Dr.
+Ludington, MI 49431-9789 [map](https://www.google.com/maps/place/5510+S+Lakeshore+Dr,+Ludington,+MI+49431/@43.8573427,-86.4325894,17z/data=!3m1!4b1!4m5!3m4!1s0x881c0f9ae140b94f:0x475bfc713a23d778!8m2!3d43.8573427!4d-86.4303954)
+[menu](https://www.facebook.com/BortellsFisheries/photos/p.10159764940661833/10159764940661833)
+
+[Summit Park](https://www.google.com/maps/place/Summit+Park/@43.855102,-86.4337039,73m/data=!3m1!1e3!4m15!1m7!3m6!1s0x881c0f9ae140b94f:0x475bfc713a23d778!2s5510+S+Lakeshore+Dr,+Ludington,+MI+49431!3b1!8m2!3d43.8573427!4d-86.4303954!3m6!1s0x881c0f9b176374bb:0x84cadecb8545f411!8m2!3d43.8558967!4d-86.432088!9m1!1b1)
+
 
 # Day 6 --
 
