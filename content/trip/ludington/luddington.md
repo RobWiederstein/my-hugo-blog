@@ -4,13 +4,9 @@ author: "Rob Wiederstein"
 date: "2021-03-01"
 draft: no
 slug: []
-resources:
-- src: gallery/*.jpg
-  name: gallery-:counter
-  title: gallery-title-:counter
 ---
 
-Our trip [photos](http://photos.robwiederstein.org)
+Our trip [photos](https://stupefied-banach-d12ad4.netlify.app/ludington/)
 
  # Day 1 -- Arrive -- June 7
 
@@ -35,12 +31,6 @@ Ludington, Michigan 49431 [map](https://goo.gl/maps/z5Ej3fMUdQ9Nvn6X8)
 [231.845.7343](tel:12318457343)
 
 Two mile walk. Gift shop.
-
-Lunch at:
-[Chuck Wagon Pizza](http://www.chuckwagonpizza.net/)
-971 N Lakeshore Dr.
-Ludington, MI 49431 [map](https://goo.gl/maps/4pcufdfQN8KfEfmLA)
-[+12318432852](tel:+12318432852)
 
 # Day 3 --  Walk to Lighthouse in Stearns Park
 
@@ -71,10 +61,9 @@ Ludington MI 49431 [map](https://goo.gl/maps/FxTz9rLHBssYk6sQA)
 
 Open
 
-
 # Day 6 --
 
-Tear down, stow gear.
+Tear down, launder, stow gear.
 
 Dinner at
 
