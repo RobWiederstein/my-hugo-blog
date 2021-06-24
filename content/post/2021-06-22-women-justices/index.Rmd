@@ -1,0 +1,207 @@
+---
+title: Women Justices - An International Comparison
+author: Rob Wiederstein
+date: '2021-06-22'
+slug: women-justices
+categories:
+  - R
+tags:
+  - ggplot2
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: feature.jpg
+  alt: Justice Sandra Day O'Connor
+  caption: Justice Sandra Day O'Connor Being Sworn in by Chief Justice Warren Burger on September 25, 1981. Photo courtesy of the National Archives.
+repo: 
+summary: Women serving on their country's highest courts are a relatively new phenomena.  The trend accelerated beginning in the 1990s and now includes countries all over the world of differing economic levels. Women impact both the process and outcome of court decisions when appointed.  Additionally, women bolster court legitmacy among marginalized and unrepresented constituencies.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .65,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
+library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+```{r load-data, cache=T}
+input <- "https://dl.dropbox.com/s/agi9getocytsobw/women-on-high-courts-v1.csv?dl=0"
+df.0 <- data.table::fread(input = input, colClasses = "character")
+input <- "https://dl.dropbox.com/s/e6ytd68ii9uwhec/2021-06-23-human-development-index.csv?dl=0"
+hdi <- data.table::fread(input = input)
+```
+
+# [Overview](#overview)
+
+A dataset was released on the number of women by country serving on the highest courts.[@escobar-lemmonBreakingJudicialGlass2021] Two kinds of court structures exist.  Some countries' highest court is comprised of one court and it is often referred to as a "Supreme" court.  Examples of this court structure would include the United States.  Other countries have two high courts, comprised of a "Constitutional" court and an "Appellate" court.  This structure is prevalent in civil law countries.   In the dataset, the variable `courttype` is coded as `r unique(df.0$courttype)`.
+
+The dataset contains two date variables.  `year` includes the years 1970 through 2013. The second variable `yearfirstwoman` is more current and includes any woman appointed to a high court as of December 31, 2020.  The co-principal investigators profiles are available [here](https://womenonhighcourts.com/researchers/) and the book "Reimagining the Judiciary: Women's Representation on High Courts Worldwide" is to be released in October 2021. More information is available, including visualizations, at [Women on high courts](https://womenonhighcourts.com).
+
+# [Visualizations](#pics)
+
+```{r women-justices-by-region, out.width="100%"}
+# Wrangle - Women Serving on Appellate Courts by Region
+df.1 <-
+        df.0 %>%
+        mutate(numwomen = numwomen %>% as.integer) %>%
+        mutate(year = year %>% as.integer) %>%
+        drop_na(numwomen) %>%
+        group_by(year, region) %>%
+        tally(numwomen)
+# plot
+        df.1 %>%
+        ggplot(aes(year, n, group = region, color = region)) %>%
+        add(geom_line()) %>%
+        add(labs(title = "Number of Women Justices by Region")) %>%
+        add(ylab("")) %>%
+        add(xlab("")) %>%
+        add(theme_minimal())
+```
+
+```{r women-justices-oecd}
+#There are currently (May 2021) 38 members of the OECD.
+
+oecd <- c("Australia", "Austria", "Belgium", "Canada", "Chile", "Colombia",
+          "Costa Rica", "Czech Republic", "Denmark", "Estonia", "Finland",
+          "France", "Germany", "Greece", "Hungary", "Iceland", "Ireland",
+          "Israel", "Italy", "Japan", "South Korea", "Latvia", "Lithuania",
+          "Luxembourg", "Mexico", "Netherlands", "New Zealand", "Norway",
+          "Poland", "Portugal", "Slovakia", "Slovenia", "Spain", "Sweden",
+          "Switzerland", "Turkey", "United Kingdom", "United States")
+
+# Wrangle- Women Serving on Appellate Courts by OECD
+df.2 <-
+        df.0 %>%
+        mutate(numwomen = numwomen %>% as.integer) %>%
+        mutate(year = year %>% as.integer) %>%
+        mutate(oecd = country %in% oecd) %>%
+        mutate(oecd = factor(oecd, labels = c("no", "yes"))) %>%
+        drop_na(numwomen) %>%
+        group_by(year, oecd) %>%
+        tally(numwomen)
+# Plot
+        df.2 %>%
+        ggplot(aes(year, n, group = oecd, color = oecd)) %>%
+        add(geom_line()) %>%
+        add(labs(title = "Number of Women Justices in OECD")) %>%
+        add(ylab("")) %>%
+        add(xlab("")) %>%
+        add(theme_minimal())
+```
+
+```{r women-justices-by-courttype}
+# Wrangle 3 - Number of Women Serving by Court Type
+df.3 <-
+        df.0 %>%
+        mutate(numwomen = numwomen %>% as.integer) %>%
+        mutate(year = year %>% as.integer) %>%
+        drop_na(numwomen) %>%
+        group_by(year, courttype) %>%
+        tally(numwomen)
+# plot
+        df.3 %>%
+        ggplot(aes(year, n, group = courttype, color = courttype)) %>%
+        add(geom_line()) %>%
+        add(labs(title = "Number of Women Justices Serving by Court Type")) %>%
+        add(ylab("")) %>%
+        add(xlab("")) %>%
+        add(theme_minimal())
+```
+
+```{r women-justices-by-hdi}
+df.4 <- left_join(df.0, hdi, by = "country")
+# Wrangle - Pct Women on on Appellate Courts by HDI
+df.5 <-
+        df.4 %>%
+        mutate(year = year %>% as.integer) %>%
+        mutate(pctwomen = pctwomen %>% as.numeric) %>%
+        mutate(hdi_quintile = ggplot2::cut_number(hdi, n = 5)) %>%
+        drop_na() %>%
+        group_by(year, hdi_quintile) %>%
+        summarize(pct_median = median(pctwomen))
+
+# plot
+        df.5 %>%
+        ggplot(aes(year, pct_median, group = hdi_quintile, color = hdi_quintile)) %>%
+        add(geom_line()) %>%
+        add(labs(title = "Pct. Women on High Courts by HDI Quintile")) %>%
+        add(xlab("")) %>%
+        add(ylab("pct_%")) %>%
+        add(theme_minimal())
+```
+
+
+# [Conclusion](#conclusion)
+
+As of 2013, there were more women justices in the West, in non-OECD countries and on courts designated as "APP".  The percentage of women serving was highest in countries in the top quintile of the human development index.  More economically advanced countries were the first to begin appointing women, but over time, women in less prosperous countries have made significant advances as well.  I'm really looking forward to the release of the researchers new book and hope you'll read it too.
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+[Women on High Courts]((https://womenonhighcourts.com/researchers/))
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```
