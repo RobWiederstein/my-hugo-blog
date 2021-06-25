@@ -83,15 +83,24 @@ df.1 <- df %>% select(-location)
 
 # [Overview](#overview)
 
+Birth outcome data from the Annie E. Casey [Kids Count](https://datacenter.kidscount.org) project was downloaded for Indiana to understand how Indiana's largest counties were faring relative to one another.
+
 
 # [Background](#background)
 
+Maternal and infant health is one of the most studied areas in human development and is associated with some of the highest returns on public investment.
 
 # [Data and model](#data)
+
+The Kids Count data center produces a wide variety of information regarding children.  Birth data is included and contains both mother and infant indicators.  Low birth weight, preterm births, race and ethnicity, breastfeeding, prenatal care, mothers smoking, percent medicaid, marital status and teen births were selected for the analysis.
+
+Small counties were more likely to have data suppressed or have extreme variation in year-to-year observations.  Counties were ranked by the number of live births and only the twenty largest counties were included. For the latest year available, Marion County--the home of Indianapolis-- led in Indiana with 14,331 live births.  Vanderburgh was eighth with 2,127 live births.  The twentieth largest county when measured by live births was Howard County with 971.
 
 The variables in the birth outcomes dataset were transformed so the values were comparable. It was assumed that the data was normally distributed and they were scaled, ie. the mean was subtracted and then divided by the standard deviation, by column.
 
 ## Correlation heatmap
+
+There are two very distinct groups.  
 
 ```{r plot-correlogram}
 
@@ -110,14 +119,15 @@ widgetframe::frameWidget(
 
 ## Heatmap
 
-The heatmap is scaled by column.
+The comparisons are by column.  The reader should pay careful attention to the those colors associated with the outer poles or extreme values. With the "vidiris" palette, bright yellow and dark blue identify outliers.  
+
+For example, in the column `breastfeeding`, Howard County is in the extreme negative end of the distribution with a -2.51 dark blue color while Hamilton County is far above the mean in `breastfeeding` with a positive 1.84 and a yellowish hue. Checking the underlying numbers, 95% of Hamilton County mothers breastfed while just 66% of Howard County mothers did. (Vanderburgh was 86%)
+
 ```{r plot-heatmap}
 #build heatmap
 library(heatmaply)
 widgetframe::frameWidget(heatmaply(df.1, scale = "column"), height = 600)
 ```
-
-
 
 # [Results](#results)
 
@@ -127,6 +137,8 @@ widgetframe::frameWidget(heatmaply(df.1, scale = "column"), height = 600)
 # [Acknowledgements](#acknowledge)
 
 This blog post was made possible thanks to:
+
+[Annie E. Casey Foundation](https://www.aecf.org)
 
 # [References](#reference)
 
