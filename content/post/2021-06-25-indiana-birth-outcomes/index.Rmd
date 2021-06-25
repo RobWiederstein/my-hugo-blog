@@ -1,0 +1,145 @@
+---
+title: Indiana Birth Outcomes
+author: Rob Wiederstein
+date: '2021-06-25'
+slug: indiana-birth-outcomes
+categories:
+  - R
+  - health
+tags: []
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: ~
+  alt: ~
+  caption: ~
+repo: ~
+summary: Indiana's birth outcomes are examined using data from the Annie E. Casey foundation Kids Count website.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
+library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+```{r load-data}
+input <- "https://dl.dropbox.com/s/v8uef97q73zwq1j/2021-06-25-maternal-infant-health.csv?dl=0"
+df <- data.table::fread(input = input)
+# prepare data
+rownames(df) <- df$location
+df.1 <- df %>% select(-location)
+```
+
+# [Overview](#overview)
+
+
+# [Background](#background)
+
+
+# [Data and model](#data)
+
+The variables in the birth outcomes dataset were transformed so the values were comparable. It was assumed that the data was normally distributed and they were scaled, ie. the mean was subtracted and then divided by the standard deviation, by column.
+
+## Correlation heatmap
+
+```{r plot-correlogram}
+
+widgetframe::frameWidget(
+        heatmaply_cor(
+        cor(df.1),
+        xlab = "Features",
+        ylab = "Features",
+        k_col = 2,
+        k_row = 2
+        ),
+        height = 600
+)
+
+```
+
+## Heatmap
+
+The heatmap is scaled by column.
+```{r plot-heatmap}
+#build heatmap
+library(heatmaply)
+widgetframe::frameWidget(heatmaply(df.1, scale = "column"), height = 600)
+```
+
+
+
+# [Results](#results)
+
+
+# [Conclusion](#conclusion)
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```

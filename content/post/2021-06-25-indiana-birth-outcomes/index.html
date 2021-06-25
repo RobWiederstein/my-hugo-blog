@@ -1,0 +1,221 @@
+---
+title: Indiana Birth Outcomes
+author: Rob Wiederstein
+date: '2021-06-25'
+slug: indiana-birth-outcomes
+categories:
+  - R
+  - health
+tags: []
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: ~
+  alt: ~
+  caption: ~
+repo: ~
+summary: Indiana's birth outcomes are examined using data from the Annie E. Casey foundation Kids Count website.
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="{{< blogdown/postref >}}index_files/pymjs/pym.v1.js"></script>
+<script src="{{< blogdown/postref >}}index_files/widgetframe-binding/widgetframe.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#overview"><span>Overview</span></a></li>
+<li><a href="#background"><span>Background</span></a></li>
+<li><a href="#data-and-model"><span>Data and model</span></a>
+<ul>
+<li><a href="#correlation-heatmap">Correlation heatmap</a></li>
+<li><a href="#heatmap">Heatmap</a></li>
+</ul></li>
+<li><a href="#results"><span>Results</span></a></li>
+<li><a href="#conclusion"><span>Conclusion</span></a></li>
+<li><a href="#acknowledgements"><span>Acknowledgements</span></a></li>
+<li><a href="#references"><span>References</span></a></li>
+<li><a href="#disclaimer"><span>Disclaimer</span></a></li>
+<li><a href="#reproducibility"><span>Reproducibility</span></a></li>
+</ul>
+</div>
+
+<div id="overview" class="section level1">
+<h1><a href="#overview">Overview</a></h1>
+</div>
+<div id="background" class="section level1">
+<h1><a href="#background">Background</a></h1>
+</div>
+<div id="data-and-model" class="section level1">
+<h1><a href="#data">Data and model</a></h1>
+<p>The variables in the birth outcomes dataset were transformed so the values were comparable. It was assumed that the data was normally distributed and they were scaled, ie. the mean was subtracted and then divided by the standard deviation, by column.</p>
+<div id="correlation-heatmap" class="section level2">
+<h2>Correlation heatmap</h2>
+<div id="htmlwidget-1" style="width:100%;height:600px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"url":"index_files/figure-html//widgets/widget_plot-correlogram.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="heatmap" class="section level2">
+<h2>Heatmap</h2>
+<p>The heatmap is scaled by column.</p>
+<div id="htmlwidget-2" style="width:100%;height:600px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2">{"x":{"url":"index_files/figure-html//widgets/widget_plot-heatmap.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div id="results" class="section level1">
+<h1><a href="#results">Results</a></h1>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to:</p>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2021 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+</div>
+<div id="ref-R-tidyverse" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">H. Wickham, <em>Tidyverse: Easily install and load the tidyverse</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value                       
+ version  R version 4.1.0 (2021-05-18)
+ os       macOS Catalina 10.15.7      
+ system   x86_64, darwin17.0          
+ ui       X11                         
+ language (EN)                        
+ collate  en_US.UTF-8                 
+ ctype    en_US.UTF-8                 
+ tz       America/Chicago             
+ date     2021-06-25                  
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package      * version date       lib source        
+ assertthat     0.2.1   2019-03-21 [1] CRAN (R 4.1.0)
+ backports      1.2.1   2020-12-09 [1] CRAN (R 4.1.0)
+ blogdown     * 1.3     2021-04-14 [1] CRAN (R 4.1.0)
+ bookdown       0.22    2021-04-22 [1] CRAN (R 4.1.0)
+ broom          0.7.7   2021-06-13 [1] CRAN (R 4.1.0)
+ bslib          0.2.5.1 2021-05-18 [1] CRAN (R 4.1.0)
+ cachem         1.0.5   2021-05-15 [1] CRAN (R 4.1.0)
+ callr          3.7.0   2021-04-20 [1] CRAN (R 4.1.0)
+ cellranger     1.1.0   2016-07-27 [1] CRAN (R 4.1.0)
+ cli            2.5.0   2021-04-26 [1] CRAN (R 4.1.0)
+ codetools      0.2-18  2020-11-04 [1] CRAN (R 4.1.0)
+ colorspace     2.0-1   2021-05-04 [1] CRAN (R 4.1.0)
+ crayon         1.4.1   2021-02-08 [1] CRAN (R 4.1.0)
+ crosstalk      1.1.1   2021-01-12 [1] CRAN (R 4.1.0)
+ curl           4.3.1   2021-04-30 [1] CRAN (R 4.1.0)
+ data.table     1.14.0  2021-02-21 [1] CRAN (R 4.1.0)
+ DBI            1.1.1   2021-01-15 [1] CRAN (R 4.1.0)
+ dbplyr         2.1.1   2021-04-06 [1] CRAN (R 4.1.0)
+ dendextend     1.15.1  2021-05-08 [1] CRAN (R 4.1.0)
+ desc           1.3.0   2021-03-05 [1] CRAN (R 4.1.0)
+ devtools     * 2.4.2   2021-06-07 [1] CRAN (R 4.1.0)
+ digest         0.6.27  2020-10-24 [1] CRAN (R 4.1.0)
+ dplyr        * 1.0.6   2021-05-05 [1] CRAN (R 4.1.0)
+ ellipsis       0.3.2   2021-04-29 [1] CRAN (R 4.1.0)
+ evaluate       0.14    2019-05-28 [1] CRAN (R 4.1.0)
+ fansi          0.5.0   2021-05-25 [1] CRAN (R 4.1.0)
+ farver         2.1.0   2021-02-28 [1] CRAN (R 4.1.0)
+ fastmap        1.1.0   2021-01-25 [1] CRAN (R 4.1.0)
+ forcats      * 0.5.1   2021-01-27 [1] CRAN (R 4.1.0)
+ foreach        1.5.1   2020-10-15 [1] CRAN (R 4.1.0)
+ fs             1.5.0   2020-07-31 [1] CRAN (R 4.1.0)
+ generics       0.1.0   2020-10-31 [1] CRAN (R 4.1.0)
+ ggplot2      * 3.3.4   2021-06-16 [1] CRAN (R 4.1.0)
+ ggthemes     * 4.2.4   2021-01-20 [1] CRAN (R 4.1.0)
+ glue           1.4.2   2020-08-27 [1] CRAN (R 4.1.0)
+ gridExtra      2.3     2017-09-09 [1] CRAN (R 4.1.0)
+ gtable         0.3.0   2019-03-25 [1] CRAN (R 4.1.0)
+ haven          2.4.1   2021-04-23 [1] CRAN (R 4.1.0)
+ heatmaply    * 1.2.1   2021-02-02 [1] CRAN (R 4.1.0)
+ hms            1.1.0   2021-05-17 [1] CRAN (R 4.1.0)
+ htmltools      0.5.1.1 2021-01-22 [1] CRAN (R 4.1.0)
+ htmlwidgets    1.5.3   2020-12-10 [1] CRAN (R 4.1.0)
+ httr           1.4.2   2020-07-20 [1] CRAN (R 4.1.0)
+ iterators      1.0.13  2020-10-15 [1] CRAN (R 4.1.0)
+ jquerylib      0.1.4   2021-04-26 [1] CRAN (R 4.1.0)
+ jsonlite       1.7.2   2020-12-09 [1] CRAN (R 4.1.0)
+ knitr          1.33    2021-04-24 [1] CRAN (R 4.1.0)
+ labeling       0.4.2   2020-10-20 [1] CRAN (R 4.1.0)
+ lazyeval       0.2.2   2019-03-15 [1] CRAN (R 4.1.0)
+ lifecycle      1.0.0   2021-02-15 [1] CRAN (R 4.1.0)
+ lubridate      1.7.10  2021-02-26 [1] CRAN (R 4.1.0)
+ magrittr     * 2.0.1   2020-11-17 [1] CRAN (R 4.1.0)
+ memoise        2.0.0   2021-01-26 [1] CRAN (R 4.1.0)
+ modelr         0.1.8   2020-05-19 [1] CRAN (R 4.1.0)
+ munsell        0.5.0   2018-06-12 [1] CRAN (R 4.1.0)
+ pillar         1.6.1   2021-05-16 [1] CRAN (R 4.1.0)
+ pkgbuild       1.2.0   2020-12-15 [1] CRAN (R 4.1.0)
+ pkgconfig      2.0.3   2019-09-22 [1] CRAN (R 4.1.0)
+ pkgload        1.2.1   2021-04-06 [1] CRAN (R 4.1.0)
+ plotly       * 4.9.4.1 2021-06-18 [1] CRAN (R 4.1.0)
+ plyr           1.8.6   2020-03-03 [1] CRAN (R 4.1.0)
+ prettyunits    1.1.1   2020-01-24 [1] CRAN (R 4.1.0)
+ processx       3.5.2   2021-04-30 [1] CRAN (R 4.1.0)
+ prompt       * 1.0.1   2021-03-12 [1] CRAN (R 4.1.0)
+ ps             1.6.0   2021-02-28 [1] CRAN (R 4.1.0)
+ purrr        * 0.3.4   2020-04-17 [1] CRAN (R 4.1.0)
+ R6             2.5.0   2020-10-28 [1] CRAN (R 4.1.0)
+ RColorBrewer   1.1-2   2014-12-07 [1] CRAN (R 4.1.0)
+ Rcpp           1.0.6   2021-01-15 [1] CRAN (R 4.1.0)
+ readr        * 1.4.0   2020-10-05 [1] CRAN (R 4.1.0)
+ readxl         1.3.1   2019-03-13 [1] CRAN (R 4.1.0)
+ registry       0.5-1   2019-03-05 [1] CRAN (R 4.1.0)
+ remotes        2.4.0   2021-06-02 [1] CRAN (R 4.1.0)
+ reprex         2.0.0   2021-04-02 [1] CRAN (R 4.1.0)
+ reshape2       1.4.4   2020-04-09 [1] CRAN (R 4.1.0)
+ rlang          0.4.11  2021-04-30 [1] CRAN (R 4.1.0)
+ rmarkdown      2.9     2021-06-15 [1] CRAN (R 4.1.0)
+ roxygen2     * 7.1.1   2020-06-27 [1] CRAN (R 4.1.0)
+ rprojroot      2.0.2   2020-11-15 [1] CRAN (R 4.1.0)
+ rstudioapi     0.13    2020-11-12 [1] CRAN (R 4.1.0)
+ rvest          1.0.0   2021-03-09 [1] CRAN (R 4.1.0)
+ sass           0.4.0   2021-05-12 [1] CRAN (R 4.1.0)
+ scales         1.1.1   2020-05-11 [1] CRAN (R 4.1.0)
+ seriation      1.2-9   2020-10-01 [1] CRAN (R 4.1.0)
+ sessioninfo    1.1.1   2018-11-05 [1] CRAN (R 4.1.0)
+ stringi        1.6.2   2021-05-17 [1] CRAN (R 4.1.0)
+ stringr      * 1.4.0   2019-02-10 [1] CRAN (R 4.1.0)
+ testthat       3.0.3   2021-06-16 [1] CRAN (R 4.1.0)
+ tibble       * 3.1.2   2021-05-16 [1] CRAN (R 4.1.0)
+ tidyr        * 1.1.3   2021-03-03 [1] CRAN (R 4.1.0)
+ tidyselect     1.1.1   2021-04-30 [1] CRAN (R 4.1.0)
+ tidyverse    * 1.3.1   2021-04-15 [1] CRAN (R 4.1.0)
+ TSP            1.1-10  2020-04-17 [1] CRAN (R 4.1.0)
+ usethis      * 2.0.1   2021-02-10 [1] CRAN (R 4.1.0)
+ utf8           1.2.1   2021-03-12 [1] CRAN (R 4.1.0)
+ vctrs          0.3.8   2021-04-29 [1] CRAN (R 4.1.0)
+ viridis      * 0.6.1   2021-05-11 [1] CRAN (R 4.1.0)
+ viridisLite  * 0.4.0   2021-04-13 [1] CRAN (R 4.1.0)
+ webshot        0.5.2   2019-11-22 [1] CRAN (R 4.1.0)
+ widgetframe    0.3.1   2017-12-20 [1] CRAN (R 4.1.0)
+ withr          2.4.2   2021-04-18 [1] CRAN (R 4.1.0)
+ xfun           0.24    2021-06-15 [1] CRAN (R 4.1.0)
+ xml2           1.3.2   2020-04-23 [1] CRAN (R 4.1.0)
+ yaml           2.2.1   2020-02-01 [1] CRAN (R 4.1.0)
+
+[1] /Library/Frameworks/R.framework/Versions/4.1/Resources/library</code></pre>
+</div>
