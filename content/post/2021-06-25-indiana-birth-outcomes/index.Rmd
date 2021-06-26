@@ -126,7 +126,7 @@ For example, in the column `breastfeeding`, Howard County is in the extreme nega
 ```{r plot-heatmap}
 #build heatmap
 library(heatmaply)
-widgetframe::frameWidget(heatmaply(df.1, scale = "column"), height = 600)
+widgetframe::frameWidget(heatmaply(df.1, scale = "column"), height = 800)
 ```
 
 # [Results](#results)
