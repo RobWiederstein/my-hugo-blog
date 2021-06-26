@@ -98,25 +98,6 @@ Small counties were more likely to have data suppressed or have extreme variatio
 
 The variables in the birth outcomes dataset were transformed so the values were comparable. It was assumed that the data was normally distributed and they were scaled, ie. the mean was subtracted and then divided by the standard deviation, by column.
 
-## Correlation heatmap
-
-There are two very distinct groups.  
-
-```{r plot-correlogram}
-
-widgetframe::frameWidget(
-        heatmaply_cor(
-        cor(df.1),
-        xlab = "Features",
-        ylab = "Features",
-        k_col = 2,
-        k_row = 2
-        ),
-        height = 600
-)
-
-```
-
 ## Heatmap
 
 The comparisons are by column.  The reader should pay careful attention to the those colors associated with the outer poles or extreme values. With the "vidiris" palette, bright yellow and dark blue identify outliers.  
@@ -124,13 +105,15 @@ The comparisons are by column.  The reader should pay careful attention to the t
 For example, in the column `breastfeeding`, Howard County is in the extreme negative end of the distribution with a -2.51 dark blue color while Hamilton County is far above the mean in `breastfeeding` with a positive 1.84 and a yellowish hue. Checking the underlying numbers, 95% of Hamilton County mothers breastfed while just 66% of Howard County mothers did. (Vanderburgh was 86%)
 
 ```{r plot-heatmap}
-#build heatmap
+
 library(heatmaply)
-widgetframe::frameWidget(heatmaply(df.1, scale = "column"), height = 800)
+library(widgetframe)
+hm <- heatmaply(df.1, scale = "column")
+frameWidget(hm, height = 600)
+
 ```
 
 # [Results](#results)
-
 
 # [Conclusion](#conclusion)
 

@@ -35,7 +35,6 @@ summary: Indiana's birth outcomes are examined using data from the Annie E. Case
 <li><a href="#background"><span>Background</span></a></li>
 <li><a href="#data-and-model"><span>Data and model</span></a>
 <ul>
-<li><a href="#correlation-heatmap">Correlation heatmap</a></li>
 <li><a href="#heatmap">Heatmap</a></li>
 </ul></li>
 <li><a href="#results"><span>Results</span></a></li>
@@ -60,17 +59,11 @@ summary: Indiana's birth outcomes are examined using data from the Annie E. Case
 <p>The Kids Count data center produces a wide variety of information regarding children. Birth data is included and contains both mother and infant indicators. Low birth weight, preterm births, race and ethnicity, breastfeeding, prenatal care, mothers smoking, percent medicaid, marital status and teen births were selected for the analysis.</p>
 <p>Small counties were more likely to have data suppressed or have extreme variation in year-to-year observations. Counties were ranked by the number of live births and only the twenty largest counties were included. For the latest year available, Marion County–the home of Indianapolis– led in Indiana with 14,331 live births. Vanderburgh was eighth with 2,127 live births. The twentieth largest county when measured by live births was Howard County with 971.</p>
 <p>The variables in the birth outcomes dataset were transformed so the values were comparable. It was assumed that the data was normally distributed and they were scaled, ie. the mean was subtracted and then divided by the standard deviation, by column.</p>
-<div id="correlation-heatmap" class="section level2">
-<h2>Correlation heatmap</h2>
-<p>There are two very distinct groups.</p>
-<div id="htmlwidget-1" style="width:100%;height:600px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1">{"x":{"url":"index_files/figure-html//widgets/widget_plot-correlogram.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
-</div>
 <div id="heatmap" class="section level2">
 <h2>Heatmap</h2>
 <p>The comparisons are by column. The reader should pay careful attention to the those colors associated with the outer poles or extreme values. With the “vidiris” palette, bright yellow and dark blue identify outliers.</p>
 <p>For example, in the column <code>breastfeeding</code>, Howard County is in the extreme negative end of the distribution with a -2.51 dark blue color while Hamilton County is far above the mean in <code>breastfeeding</code> with a positive 1.84 and a yellowish hue. Checking the underlying numbers, 95% of Hamilton County mothers breastfed while just 66% of Howard County mothers did. (Vanderburgh was 86%)</p>
-<div id="htmlwidget-1" style="width:100%;height:800px;" class="widgetframe html-widget"></div>
+<div id="htmlwidget-1" style="width:100%;height:600px;" class="widgetframe html-widget"></div>
 <script type="application/json" data-for="htmlwidget-1">{"x":{"url":"index_files/figure-html//widgets/widget_plot-heatmap.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
