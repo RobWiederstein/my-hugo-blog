@@ -15,16 +15,13 @@ bibliography:
 csl: ../ieee-with-url.csl
 link-citations: yes
 nocite: |
-  @R-base, @R-blogdown, @R-tidyverse
+  @R-base, @R-blogdown, @R-tidyverse, @R-bslib, @R-flexdashboard, @R-rmarkdown
 header:
-  image: ~
-  alt: ~
-  caption: ~
-repo: ~
-summary: By default, Hugo automatically takes the first 70 words of your content as
-  its summary and stores it into the `.Summary` page variable for use in your templates.
-  You may customize the summary length by setting `summaryLength` in your site configuration
-  *or* you can set it in the front matter.
+  image: feature.jpg
+  alt: dashboard with footer
+  caption: Flexdashboard with footer
+repo: https://raw.githubusercontent.com/RobWiederstein/purple-bananas/main/content/post/2021-07-05-footer-for-flexdashboard/index.Rmd
+summary: You can create a data dashboard in `R` using the `flexdashboard` package. In the background, there are a handful of other packages like bootstrap, bootswatch and fontawesome. The generated website did not have a footer though.  Here is a mashup of some html and css. The code was posted in a codepen repo.
 ---
 
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
@@ -32,6 +29,7 @@ summary: By default, Hugo automatically takes the first 70 words of your content
 <div id="TOC">
 <ul>
 <li><a href="#overview"><span>Overview</span></a></li>
+<li><a href="#yaml-frontmatter"><span>Yaml Frontmatter</span></a></li>
 <li><a href="#codepen-embed"><span>CodePen Embed</span></a></li>
 <li><a href="#acknowledgements"><span>Acknowledgements</span></a></li>
 <li><a href="#references"><span>References</span></a></li>
@@ -42,7 +40,38 @@ summary: By default, Hugo automatically takes the first 70 words of your content
 
 <div id="overview" class="section level1">
 <h1><a href="#overview">Overview</a></h1>
-<p>Flexdashboard creates slick dashboards for the presentation of data. However, it didn’t have a footer. Below is a footer that worked for a dashboard that I created.</p>
+<p>Flexdashboard creates slick dashboards for the presentation of data. However, the out-of-the-box webpage didn’t have a footer. The footer relies on older versions of bootstrap and it displays differently in codepen than in the “Indiana Early Childhood” <a href="https://robwiederstein.github.io/early_childhood/">dashboard</a></p>
+<p>Ideally, a footer should complement and match the navigation bar of the dashboard. And it shouldn’t distract from the presentation of the data. It was a bit of a challenge to find a simple footer.</p>
+</div>
+<div id="yaml-frontmatter" class="section level1">
+<h1><a href="#frontmatter">Yaml Frontmatter</a></h1>
+<p>The code was used in the Indiana Early Childhood <a href="https://github.com/RobWiederstein/early_childhood">repo</a> and the files are <code>./my-css-rules.css</code> and <code>./includes/footer.html</code> . The YAML frontmatter for the flexdashboard looks like this:</p>
+<pre class="r"><code>---
+title: &quot;Indiana Early Childhood&quot;
+output:
+  flexdashboard::flex_dashboard:
+    theme:
+      version: 4
+      bootswatch: sandstone
+      base_font: 
+        google: Castoro
+      heading_font:
+        google: Lato
+      code_font:
+        google: 
+          # arguments to sass::font_google() 
+          family: Roboto Mono
+          local: false
+      font_scale: 1
+    css: my-css-rules.css
+    mathjax: NULL
+    orientation: columns
+    vertical_layout: fill
+    source_code: embed
+    includes:
+      after_body: ./includes/footer.html
+  bibliography: ./refs.bib
+---</code></pre>
 </div>
 <div id="codepen-embed" class="section level1">
 <h1><a href="#codepen">CodePen Embed</a></h1>
@@ -54,7 +83,7 @@ on <a href="https://codepen.io">CodePen</a>.
 </div>
 <div id="acknowledgements" class="section level1">
 <h1><a href="#acknowledge">Acknowledgements</a></h1>
-<p>The footer was forked from:</p>
+<p>The footer’s original code was forked in Codepen from <a href="https://codepen.io/scanfcode/pen/MEZPNd">here</a>.</p>
 </div>
 <div id="references" class="section level1">
 <h1><a href="#reference">References</a></h1>
@@ -65,8 +94,17 @@ on <a href="https://codepen.io">CodePen</a>.
 <div id="ref-R-blogdown" class="csl-entry">
 <div class="csl-left-margin">[2] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2021. </div>
 </div>
+<div id="ref-R-bslib" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">C. Sievert and J. Cheng, <em>Bslib: Custom bootstrap ’sass’ themes for shiny and rmarkdown</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=bslib">https://CRAN.R-project.org/package=bslib</a></div>
+</div>
+<div id="ref-R-flexdashboard" class="csl-entry">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">C. Sievert, R. Iannone, J. Allaire, and B. Borges, <em>Flexdashboard: R markdown format for flexible dashboards</em>. 2021. </div>
+</div>
+<div id="ref-R-rmarkdown" class="csl-entry">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">J. Allaire <em>et al.</em>, <em>Rmarkdown: Dynamic documents for r</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=rmarkdown">https://CRAN.R-project.org/package=rmarkdown</a></div>
+</div>
 <div id="ref-R-tidyverse" class="csl-entry">
-<div class="csl-left-margin">[3] </div><div class="csl-right-inline">H. Wickham, <em>Tidyverse: Easily install and load the tidyverse</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a></div>
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">H. Wickham, <em>Tidyverse: Easily install and load the tidyverse</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a></div>
 </div>
 </div>
 </div>
