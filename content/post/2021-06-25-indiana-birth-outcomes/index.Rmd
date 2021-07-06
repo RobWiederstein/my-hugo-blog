@@ -15,12 +15,13 @@ bibliography:
 csl: ../ieee-with-url.csl
 link-citations: yes
 nocite: |
-  @R-base, @R-blogdown, @R-tidyverse
+  @R-base, @R-blogdown, @R-tidyverse, @R-widgetframe,
+  @R-heatmaply
 header:
-  image: ~
-  alt: ~
-  caption: ~
-repo: ~
+  image: feature.jpg
+  alt: young children playing
+  caption: Photo by Luis Arias on Unsplash. Photo cropped and rescaled from original.
+repo: 
 summary: Indiana's birth outcomes are examined using data from the Annie E. Casey foundation Kids Count website.
 ---
 
@@ -30,7 +31,9 @@ summary: Indiana's birth outcomes are examined using data from the Annie E. Case
 packages <- c(
       'devtools', #for session info
       'ggthemes', #for plots
-      'blogdown'
+      'blogdown',
+      'widgetframe',
+      'heatmaply'
 )
 lapply(packages, function(x) {
   if (!requireNamespace(x)) install.packages(x)
