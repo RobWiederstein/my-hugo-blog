@@ -78,27 +78,22 @@ knitr::write_bib(.packages(), "./packages.bib")
 
 # [Overview](#overview)
 
-(Describe the problem.)
+Flexdashboard creates slick dashboards for the presentation of data.  However, it didn't have a footer.  Below is a footer that worked for a dashboard that I created.  
 
-# [Background](#background)
 
-<iframe height="300" style="width: 100%;" scrolling="no" title="Bootstrap 4 Footer with Social icons" src="https://codepen.io/rob_wiederstein/embed/MWmazZq?defaultTab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+# [CodePen Embed](#codepen)
+
+<iframe height="600" style="width: 100%;" scrolling="no" title="Bootstrap 4 Footer with Social icons" src="https://codepen.io/rob_wiederstein/embed/MWmazZq?defaultTab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href="https://codepen.io/rob_wiederstein/pen/MWmazZq">
   Bootstrap 4 Footer with Social icons</a> by Rob Wiederstein (<a href="https://codepen.io/rob_wiederstein">@rob_wiederstein</a>)
   on <a href="https://codepen.io">CodePen</a>.
 </iframe>
 
-# [Data and model](#data)
-
-(What data did you use, where did you get it?)
-
-# [Results](#results)
-
-# [Conclusion](#conclusion)
-
 # [Acknowledgements](#acknowledge)
 
-This blog post was made possible thanks to:
+The footer was forked from: 
+
+
 
 # [References](#reference)
 
