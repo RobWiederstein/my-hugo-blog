@@ -15,16 +15,13 @@ bibliography:
 csl: ../ieee-with-url.csl
 link-citations: yes
 nocite: |
-  @R-base, @R-blogdown, @R-tidyverse
+  @R-base, @R-blogdown, @R-tidyverse, @R-bslib, @R-flexdashboard, @R-rmarkdown
 header:
-  image: ~
-  alt: ~
-  caption: ~
-repo: ~
-summary: By default, Hugo automatically takes the first 70 words of your content as
-  its summary and stores it into the `.Summary` page variable for use in your templates.
-  You may customize the summary length by setting `summaryLength` in your site configuration
-  *or* you can set it in the front matter.
+  image: feature.jpg
+  alt: dashboard with footer
+  caption: Flexdashboard with footer
+repo: https://raw.githubusercontent.com/RobWiederstein/purple-bananas/main/content/post/2021-07-05-footer-for-flexdashboard/index.Rmd
+summary: You can create a data dashboard in `R` using the `flexdashboard` package. In the background, there are a handful of other packages like bootstrap, bootswatch and fontawesome. The generated website did not have a footer though.  Here is a mashup of some html and css. The code was posted in a codepen repo.
 ---
 
 
@@ -33,7 +30,12 @@ summary: By default, Hugo automatically takes the first 70 words of your content
 packages <- c(
       'devtools', #for session info
       'ggthemes', #for plots
-      'blogdown'
+      'blogdown',
+      'flexdashboard',
+      'rmarkdown',
+      'DT',
+      'bslib'
+      
 )
 lapply(packages, function(x) {
   if (!requireNamespace(x)) install.packages(x)
@@ -78,7 +80,43 @@ knitr::write_bib(.packages(), "./packages.bib")
 
 # [Overview](#overview)
 
-Flexdashboard creates slick dashboards for the presentation of data.  However, it didn't have a footer.  Below is a footer that worked for a dashboard that I created.  
+Flexdashboard creates slick dashboards for the presentation of data.  However, the out-of-the-box webpage didn't have a footer.  The footer relies on older versions of bootstrap and it displays differently in codepen than in the "Indiana Early Childhood" [dashboard](https://robwiederstein.github.io/early_childhood/)
+
+Ideally, a footer should complement and match the navigation bar of the dashboard.  And it shouldn't distract from the presentation of the data.  It was a bit of a challenge to find a simple footer.
+
+# [Yaml Frontmatter](#frontmatter)
+
+The code was used in the Indiana Early Childhood [repo](https://github.com/RobWiederstein/early_childhood) and the files are `./my-css-rules.css` and `./includes/footer.html` . The YAML frontmatter for the flexdashboard looks like this:
+
+```{r yaml-frontmatter, eval=F, echo = T}
+---
+title: "Indiana Early Childhood"
+output:
+  flexdashboard::flex_dashboard:
+    theme:
+      version: 4
+      bootswatch: sandstone
+      base_font: 
+        google: Castoro
+      heading_font:
+        google: Lato
+      code_font:
+        google: 
+          # arguments to sass::font_google() 
+          family: Roboto Mono
+          local: false
+      font_scale: 1
+    css: my-css-rules.css
+    mathjax: NULL
+    orientation: columns
+    vertical_layout: fill
+    source_code: embed
+    includes:
+      after_body: ./includes/footer.html
+  bibliography: ./refs.bib
+---
+```
+
 
 
 # [CodePen Embed](#codepen)
@@ -91,9 +129,7 @@ Flexdashboard creates slick dashboards for the presentation of data.  However, i
 
 # [Acknowledgements](#acknowledge)
 
-The footer was forked from: 
-
-
+The footer's original code was forked in Codepen from [here](https://codepen.io/scanfcode/pen/MEZPNd). 
 
 # [References](#reference)
 
