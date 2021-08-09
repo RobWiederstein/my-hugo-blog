@@ -6,7 +6,7 @@ draft: no
 slug: []
 ---
 
-Our trip [photos](https://stupefied-banach-d12ad4.netlify.app/ludington/)
+Our trip [photos](https://stupefied-banach-d12ad4.netlify.app/key_west/)
 
 # Day 1 -- Arrive -- July 31
 
