@@ -1,0 +1,727 @@
+---
+title: Motorcycle and Moped Accidents in Florida
+author: Rob Wiederstein
+date: '2021-08-09'
+slug: motorcycle-and-moped-accidents-in-florida
+categories:
+  - R
+  - health
+tags: []
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: ~
+  alt: ~
+  caption: ~
+repo: ~
+summary: Florida is the destination for many visitors.  Many different modes of transportation are available like cars, motorcycles, scooters, mopeds and golf carts.  This post explores the accident rate of motorcyles and mopeds.
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/kePrint/kePrint.js"></script>
+<link href="{{< blogdown/postref >}}index_files/lightable/lightable.css" rel="stylesheet" />
+
+<div id="TOC">
+<ul>
+<li><a href="#overview"><span>Overview</span></a></li>
+<li><a href="#background"><span>Background</span></a></li>
+<li><a href="#data-and-model"><span>Data and model</span></a></li>
+<li><a href="#results"><span>Results</span></a>
+<ul>
+<li><a href="#top-10-cities-for-motorcycle-crashes-in-2019">Top 10 Cities for Motorcycle Crashes in 2019</a></li>
+<li><a href="#crashes-by-year-in-cities">Crashes by Year in Cities</a></li>
+<li><a href="#top-10-cities-by-crash-rate-in-2018">Top 10 Cities by Crash Rate in 2018</a></li>
+<li><a href="#crashes-within-cities-by-day">Crashes within Cities by Day</a></li>
+</ul></li>
+<li><a href="#crashes-key-west-vs.-florida-cities">Crashes Key West vs. Florida Cities</a></li>
+<li><a href="#conclusion"><span>Conclusion</span></a></li>
+<li><a href="#acknowledgements"><span>Acknowledgements</span></a></li>
+<li><a href="#references"><span>References</span></a></li>
+<li><a href="#disclaimer"><span>Disclaimer</span></a></li>
+<li><a href="#reproducibility"><span>Reproducibility</span></a></li>
+</ul>
+</div>
+
+<div id="overview" class="section level1">
+<h1><a href="#overview">Overview</a></h1>
+<p>As a recent visitor to Key West via ferry, I needed transportation upon my arrival. Rental cars were expensive and it can be difficult to find parking on a crowded island. A moped seemed like a decent alternative given its cheap cost and easy maneuvering. But what were the safety considerations? After an internet search or two, I discovered that the Key West Police Department raised concerns about moped accidents in the past. So I decided to do some sleuthing on my own.</p>
+</div>
+<div id="background" class="section level1">
+<h1><a href="#background">Background</a></h1>
+<p>The safety of different kind of vehicles are constantly being evaluated by researchers. And there are a variety of products available for rental or purchase. The possibilities include things like hover boards and scooters.</p>
+</div>
+<div id="data-and-model" class="section level1">
+<h1><a href="#data">Data and model</a></h1>
+<p>Florida has an open data <a href="https://gis-fdot.opendata.arcgis.com">portal</a>. There, a <a href="https://gis-fdot.opendata.arcgis.com/datasets/fdot::motorcycle-moped-crashes/about">dataset</a> regarding motorcycle and moped “crashes” is maintained. The data were collected beginning in 2012 through 2019. The 2019 data are suspect in that crashes notably declined and its cause is unknown.</p>
+</div>
+<div id="results" class="section level1">
+<h1><a href="#results">Results</a></h1>
+<div id="top-10-cities-for-motorcycle-crashes-in-2019" class="section level2">
+<h2>Top 10 Cities for Motorcycle Crashes in 2019</h2>
+<table class=" lightable-material lightable-striped lightable-hover" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+year
+</th>
+<th style="text-align:left;">
+city_code
+</th>
+<th style="text-align:left;">
+city
+</th>
+<th style="text-align:right;">
+n
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+0166
+</td>
+<td style="text-align:left;">
+MIAMI
+</td>
+<td style="text-align:right;">
+59
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+1134
+</td>
+<td style="text-align:left;">
+GAINESVILLE
+</td>
+<td style="text-align:right;">
+57
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+0350
+</td>
+<td style="text-align:left;">
+TAMPA
+</td>
+<td style="text-align:right;">
+51
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+1350
+</td>
+<td style="text-align:left;">
+TALLAHASSEE
+</td>
+<td style="text-align:right;">
+39
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+0830
+</td>
+<td style="text-align:left;">
+DAYTONA BEACH
+</td>
+<td style="text-align:right;">
+38
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+0238
+</td>
+<td style="text-align:left;">
+JACKSONVILLE
+</td>
+<td style="text-align:right;">
+37
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+2350
+</td>
+<td style="text-align:left;">
+PANAMA CITY
+</td>
+<td style="text-align:right;">
+34
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+0225
+</td>
+<td style="text-align:left;">
+JACKSONVILLE
+</td>
+<td style="text-align:right;">
+33
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+0746
+</td>
+<td style="text-align:left;">
+ORLANDO
+</td>
+<td style="text-align:right;">
+33
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+1044
+</td>
+<td style="text-align:left;">
+HOLLYWOOD
+</td>
+<td style="text-align:right;">
+31
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="crashes-by-year-in-cities" class="section level2">
+<h2>Crashes by Year in Cities</h2>
+<table class=" lightable-material lightable-striped lightable-hover" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+year
+</th>
+<th style="text-align:right;">
+total_crashes
+</th>
+<th style="text-align:right;">
+total_persons
+</th>
+<th style="text-align:right;">
+total_injured
+</th>
+<th style="text-align:right;">
+total_killed
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+2012
+</td>
+<td style="text-align:right;">
+4103
+</td>
+<td style="text-align:right;">
+8706
+</td>
+<td style="text-align:right;">
+3944
+</td>
+<td style="text-align:right;">
+169
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2013
+</td>
+<td style="text-align:right;">
+4449
+</td>
+<td style="text-align:right;">
+9482
+</td>
+<td style="text-align:right;">
+4132
+</td>
+<td style="text-align:right;">
+203
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2014
+</td>
+<td style="text-align:right;">
+4722
+</td>
+<td style="text-align:right;">
+9862
+</td>
+<td style="text-align:right;">
+4398
+</td>
+<td style="text-align:right;">
+183
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2015
+</td>
+<td style="text-align:right;">
+4993
+</td>
+<td style="text-align:right;">
+10591
+</td>
+<td style="text-align:right;">
+4555
+</td>
+<td style="text-align:right;">
+229
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2016
+</td>
+<td style="text-align:right;">
+4942
+</td>
+<td style="text-align:right;">
+10299
+</td>
+<td style="text-align:right;">
+4456
+</td>
+<td style="text-align:right;">
+239
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2017
+</td>
+<td style="text-align:right;">
+4505
+</td>
+<td style="text-align:right;">
+9507
+</td>
+<td style="text-align:right;">
+4120
+</td>
+<td style="text-align:right;">
+219
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+3725
+</td>
+<td style="text-align:right;">
+8050
+</td>
+<td style="text-align:right;">
+3391
+</td>
+<td style="text-align:right;">
+196
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:right;">
+1268
+</td>
+<td style="text-align:right;">
+2860
+</td>
+<td style="text-align:right;">
+1240
+</td>
+<td style="text-align:right;">
+145
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="top-10-cities-by-crash-rate-in-2018" class="section level2">
+<h2>Top 10 Cities by Crash Rate in 2018</h2>
+<table class=" lightable-material lightable-striped lightable-hover" style="font-family: &quot;Source Sans Pro&quot;, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+city_code
+</th>
+<th style="text-align:left;">
+city
+</th>
+<th style="text-align:right;">
+pop
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+rate_per_100k
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+3842
+</td>
+<td style="text-align:left;">
+KEY WEST
+</td>
+<td style="text-align:right;">
+24506
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+208.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+0830
+</td>
+<td style="text-align:left;">
+DAYTONA BEACH
+</td>
+<td style="text-align:right;">
+68709
+</td>
+<td style="text-align:right;">
+133
+</td>
+<td style="text-align:right;">
+193.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2362
+</td>
+<td style="text-align:left;">
+PANAMA CITY BEACH
+</td>
+<td style="text-align:right;">
+13111
+</td>
+<td style="text-align:right;">
+25
+</td>
+<td style="text-align:right;">
+190.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2840
+</td>
+<td style="text-align:left;">
+NEW PORT RICHEY
+</td>
+<td style="text-align:right;">
+16486
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+133.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+0454
+</td>
+<td style="text-align:left;">
+PINELLAS PARK
+</td>
+<td style="text-align:right;">
+53157
+</td>
+<td style="text-align:right;">
+62
+</td>
+<td style="text-align:right;">
+116.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+0168
+</td>
+<td style="text-align:left;">
+MIAMI BEACH
+</td>
+<td style="text-align:right;">
+89808
+</td>
+<td style="text-align:right;">
+98
+</td>
+<td style="text-align:right;">
+109.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+0844
+</td>
+<td style="text-align:left;">
+NEW SMYRNA BEACH
+</td>
+<td style="text-align:right;">
+27156
+</td>
+<td style="text-align:right;">
+29
+</td>
+<td style="text-align:right;">
+106.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+0850
+</td>
+<td style="text-align:left;">
+ORMOND BEACH
+</td>
+<td style="text-align:right;">
+43343
+</td>
+<td style="text-align:right;">
+39
+</td>
+<td style="text-align:right;">
+90.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+0682
+</td>
+<td style="text-align:left;">
+PALM SPRINGS
+</td>
+<td style="text-align:right;">
+24984
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:right;">
+88.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+0468
+</td>
+<td style="text-align:left;">
+TARPON SPRINGS
+</td>
+<td style="text-align:right;">
+25474
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+82.4
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="crashes-within-cities-by-day" class="section level2">
+<h2>Crashes within Cities by Day</h2>
+<p>Data was available for the calendar years 2012 through 2019. The crashes were summed by date and faceted by year. Years 2012 through 2014 were omitted to expand the vertical plotting area and make the variation more prevalent. The number of crashes decreased beginning in 2019.</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/plot-crash-by-day-1.svg" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="crashes-key-west-vs.-florida-cities" class="section level1">
+<h1>Crashes Key West vs. Florida Cities</h1>
+<p>There was significant variation in the number of motorcyle/moped crashes recorded in Key West. In 2017, there were only six crashes and, in 2019, there were only nine. It’s also important to remember that the statewide data represents the rate per 100 thousand residents that live in cities in Florida. Since cities have greater population densities and more traffic, the crash incidence is likely higher than if it was computed with more rural residents included.</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/crashes-per-capita-compared-1.svg" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to:</p>
+<ul>
+<li><p>The Florida Department of Transportation</p></li>
+<li><p>The Key West Police Department</p></li>
+<li></li>
+</ul>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2021 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2021. </div>
+</div>
+<div id="ref-R-tidyverse" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">H. Wickham, <em>Tidyverse: Easily install and load the tidyverse</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value                       
+ version  R version 4.1.0 (2021-05-18)
+ os       macOS Catalina 10.15.7      
+ system   x86_64, darwin17.0          
+ ui       X11                         
+ language (EN)                        
+ collate  en_US.UTF-8                 
+ ctype    en_US.UTF-8                 
+ tz       America/Chicago             
+ date     2021-08-11                  
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version date       lib source                           
+ assertthat    0.2.1   2019-03-21 [1] CRAN (R 4.1.0)                   
+ backports     1.2.1   2020-12-09 [1] CRAN (R 4.1.0)                   
+ blogdown    * 1.3.2   2021-07-06 [1] Github (rstudio/blogdown@00a2090)
+ bookdown      0.22    2021-04-22 [1] CRAN (R 4.1.0)                   
+ broom         0.7.8   2021-06-24 [1] CRAN (R 4.1.0)                   
+ bslib         0.2.5.1 2021-05-18 [1] CRAN (R 4.1.0)                   
+ cachem        1.0.5   2021-05-15 [1] CRAN (R 4.1.0)                   
+ callr         3.7.0   2021-04-20 [1] CRAN (R 4.1.0)                   
+ cellranger    1.1.0   2016-07-27 [1] CRAN (R 4.1.0)                   
+ cli           3.0.1   2021-07-17 [1] CRAN (R 4.1.0)                   
+ codetools     0.2-18  2020-11-04 [1] CRAN (R 4.1.0)                   
+ colorspace    2.0-2   2021-06-24 [1] CRAN (R 4.1.0)                   
+ crayon        1.4.1   2021-02-08 [1] CRAN (R 4.1.0)                   
+ DBI           1.1.1   2021-01-15 [1] CRAN (R 4.1.0)                   
+ dbplyr        2.1.1   2021-04-06 [1] CRAN (R 4.1.0)                   
+ desc          1.3.0   2021-03-05 [1] CRAN (R 4.1.0)                   
+ devtools    * 2.4.2   2021-06-07 [1] CRAN (R 4.1.0)                   
+ digest        0.6.27  2020-10-24 [1] CRAN (R 4.1.0)                   
+ dplyr       * 1.0.7   2021-06-18 [1] CRAN (R 4.1.0)                   
+ ellipsis      0.3.2   2021-04-29 [1] CRAN (R 4.1.0)                   
+ evaluate      0.14    2019-05-28 [1] CRAN (R 4.1.0)                   
+ fansi         0.5.0   2021-05-25 [1] CRAN (R 4.1.0)                   
+ fastmap       1.1.0   2021-01-25 [1] CRAN (R 4.1.0)                   
+ forcats     * 0.5.1   2021-01-27 [1] CRAN (R 4.1.0)                   
+ fs            1.5.0   2020-07-31 [1] CRAN (R 4.1.0)                   
+ generics      0.1.0   2020-10-31 [1] CRAN (R 4.1.0)                   
+ ggplot2     * 3.3.4   2021-06-16 [1] CRAN (R 4.1.0)                   
+ ggthemes    * 4.2.4   2021-01-20 [1] CRAN (R 4.1.0)                   
+ glue          1.4.2   2020-08-27 [1] CRAN (R 4.1.0)                   
+ gtable        0.3.0   2019-03-25 [1] CRAN (R 4.1.0)                   
+ haven         2.4.1   2021-04-23 [1] CRAN (R 4.1.0)                   
+ hms           1.1.0   2021-05-17 [1] CRAN (R 4.1.0)                   
+ htmltools     0.5.1.1 2021-01-22 [1] CRAN (R 4.1.0)                   
+ httr          1.4.2   2020-07-20 [1] CRAN (R 4.1.0)                   
+ jquerylib     0.1.4   2021-04-26 [1] CRAN (R 4.1.0)                   
+ jsonlite      1.7.2   2020-12-09 [1] CRAN (R 4.1.0)                   
+ knitr         1.33    2021-04-24 [1] CRAN (R 4.1.0)                   
+ lifecycle     1.0.0   2021-02-15 [1] CRAN (R 4.1.0)                   
+ lubridate     1.7.10  2021-02-26 [1] CRAN (R 4.1.0)                   
+ magrittr    * 2.0.1   2020-11-17 [1] CRAN (R 4.1.0)                   
+ memoise       2.0.0   2021-01-26 [1] CRAN (R 4.1.0)                   
+ modelr        0.1.8   2020-05-19 [1] CRAN (R 4.1.0)                   
+ munsell       0.5.0   2018-06-12 [1] CRAN (R 4.1.0)                   
+ pillar        1.6.1   2021-05-16 [1] CRAN (R 4.1.0)                   
+ pkgbuild      1.2.0   2020-12-15 [1] CRAN (R 4.1.0)                   
+ pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.1.0)                   
+ pkgload       1.2.1   2021-04-06 [1] CRAN (R 4.1.0)                   
+ prettyunits   1.1.1   2020-01-24 [1] CRAN (R 4.1.0)                   
+ processx      3.5.2   2021-04-30 [1] CRAN (R 4.1.0)                   
+ prompt      * 1.0.1   2021-03-12 [1] CRAN (R 4.1.0)                   
+ ps            1.6.0   2021-02-28 [1] CRAN (R 4.1.0)                   
+ purrr       * 0.3.4   2020-04-17 [1] CRAN (R 4.1.0)                   
+ R6            2.5.0   2020-10-28 [1] CRAN (R 4.1.0)                   
+ Rcpp          1.0.7   2021-07-07 [1] CRAN (R 4.1.0)                   
+ readr       * 1.4.0   2020-10-05 [1] CRAN (R 4.1.0)                   
+ readxl        1.3.1   2019-03-13 [1] CRAN (R 4.1.0)                   
+ remotes       2.4.0   2021-06-02 [1] CRAN (R 4.1.0)                   
+ reprex        2.0.0   2021-04-02 [1] CRAN (R 4.1.0)                   
+ rlang         0.4.11  2021-04-30 [1] CRAN (R 4.1.0)                   
+ rmarkdown     2.9     2021-06-15 [1] CRAN (R 4.1.0)                   
+ roxygen2    * 7.1.1   2020-06-27 [1] CRAN (R 4.1.0)                   
+ rprojroot     2.0.2   2020-11-15 [1] CRAN (R 4.1.0)                   
+ rstudioapi    0.13    2020-11-12 [1] CRAN (R 4.1.0)                   
+ rvest         1.0.0   2021-03-09 [1] CRAN (R 4.1.0)                   
+ sass          0.4.0   2021-05-12 [1] CRAN (R 4.1.0)                   
+ scales        1.1.1   2020-05-11 [1] CRAN (R 4.1.0)                   
+ sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 4.1.0)                   
+ stringi       1.7.3   2021-07-16 [1] CRAN (R 4.1.0)                   
+ stringr     * 1.4.0   2019-02-10 [1] CRAN (R 4.1.0)                   
+ testthat      3.0.3   2021-06-16 [1] CRAN (R 4.1.0)                   
+ tibble      * 3.1.2   2021-05-16 [1] CRAN (R 4.1.0)                   
+ tidyr       * 1.1.3   2021-03-03 [1] CRAN (R 4.1.0)                   
+ tidyselect    1.1.1   2021-04-30 [1] CRAN (R 4.1.0)                   
+ tidyverse   * 1.3.1   2021-04-15 [1] CRAN (R 4.1.0)                   
+ usethis     * 2.0.1   2021-02-10 [1] CRAN (R 4.1.0)                   
+ utf8          1.2.1   2021-03-12 [1] CRAN (R 4.1.0)                   
+ vctrs         0.3.8   2021-04-29 [1] CRAN (R 4.1.0)                   
+ withr         2.4.2   2021-04-18 [1] CRAN (R 4.1.0)                   
+ xfun          0.24    2021-06-15 [1] CRAN (R 4.1.0)                   
+ xml2          1.3.2   2020-04-23 [1] CRAN (R 4.1.0)                   
+ yaml          2.2.1   2020-02-01 [1] CRAN (R 4.1.0)                   
+
+[1] /Library/Frameworks/R.framework/Versions/4.1/Resources/library</code></pre>
+</div>
