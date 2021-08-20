@@ -86,7 +86,7 @@ As a recent visitor to Key West via ferry, I needed transportation upon my arriv
 
 # [Background](#background)
 
-The safety of different kind of vehicles are constantly being evaluated by researchers.  And there are a variety of products available for rental or purchase.  The possibilities include things like hover boards and scooters.
+The safety of different kind of vehicles are constantly being evaluated by researchers.  And there are a variety of products available for rental or purchase.  The possibilities include things like hover boards and scooters.[@nationalhighwaytrafficsafetyadministrationTrafficSafetyFacts2021]
 
 
 # [Data and model](#data)
@@ -96,16 +96,16 @@ Florida has an open data [portal](https://gis-fdot.opendata.arcgis.com). There, 
 
 # [Results](#results)
 
-## Top 10 Cities for Motorcycle Crashes in 2019
+## Top 10 Cities for Motorcycle Crashes in 2018
 
 ```{r top-10-cities}
 df.1 <-
 crash_data %>% 
-dplyr::filter(year == "2019") %>% 
+dplyr::filter(year == "2018") %>% 
 group_by(city_code, city) %>% 
   tally() %>% 
   arrange(desc(n)) %>% 
-  mutate(year = 2019) %>% 
+  mutate(year = 2018) %>% 
   select(year, city_code, city, n)
 
 df.1 <- df.1[1:10, ]

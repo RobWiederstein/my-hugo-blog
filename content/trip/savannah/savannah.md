@@ -38,8 +38,7 @@ Reservation made via resy
 # Day 4 -- Thursday -- Sept 16
 Arrive Augusta, Georgia
 Mike Jackson, Manager
-Heritage RV Park
-www.heritagervpark.com
+[Heritage RV Park](https://www.heritagervpark.com)
 <a href="tel:+7068633333">706.863.3333</a>
 (Confirmation: R00022062)
 
@@ -59,4 +58,40 @@ Open
 Open
 
 # Day 7 -- Sunday -- Sept 19
-Arrive Charleston or Eddyville?
+Arrive Charleston.
+[Charleston KOA Holiday](https://koa.com/campgrounds/charleston/)
+9494 U.S. Highway 78
+Ladson, SC 29456
+<a href="tel:+800.562.5812">800.562.5812</a>
+(Reservation number: 9128373)
+
+# Day 8 -- Monday -- Sept 20
+
+Open
+
+# Day 9 -- Tuesday -- Sept 21
+
+Open
+
+# Day 10 -- Wednesday -- Sept 22
+
+Arrive Savannah, Georgia.
+[CreekFire RV Resort and Campground](https://www.creekfirerv.com/contact/?_ga=2.144069173.1850387545.1629481991-1353317392.1629481991)
+275 Argyle Rd.
+Savannah, GA 31419
+Check in 2:00 p.m. to 8:00 p.m.
+<a href="tel:+9128972855">912.897.2855</a>
+
+# Day 11 -- Thursday -- Sept 23
+
+Open
+
+# Day 12 -- Friday -- Sept 24
+
+Open
+
+# Day 13 -- Saturday -- Sept 25
+
+Open
+
+Leave for Eddyville.
