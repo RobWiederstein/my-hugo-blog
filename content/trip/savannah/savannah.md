@@ -67,11 +67,15 @@ Ladson, SC 29456
 
 # Day 8 -- Monday -- Sept 20
 
-Open
+[2-Hour Historic Charleston Guided Sightseeing Walking Tour](https://www.tripadvisor.com/AttractionProductReview-g54171-d11456831-2_Hour_Historic_Charleston_Guided_Sightseeing_Walking_Tour-Charleston_South_Carolin.html)
+
 
 # Day 9 -- Tuesday -- Sept 21
 
-Open
+[Kolter Homes](https://www.kolterhomes.com/new-homes/cresswind-charlotte-north-carolina-active-adult-55-homes/)
+
+[Del Webb](https://www.delwebb.com/homes/south-carolina/charleston)
+
 
 # Day 10 -- Wednesday -- Sept 22
 
@@ -84,11 +88,11 @@ Check in 2:00 p.m. to 8:00 p.m.
 
 # Day 11 -- Thursday -- Sept 23
 
-Open
+[Bonaventure Cemetary Tour](https://bonaventurecemeterytours.com)
 
 # Day 12 -- Friday -- Sept 24
 
-Open
+[Savannah Southern Flavors Food, Pub Crawl, and History Combo Walking Tour](https://www.tripadvisor.com/AttractionProductReview-g60814-d15016590-Savannah_Southern_Flavors_Food_Pub_Crawl_and_History_Combo_Walking_Tour-Savannah_Ge.html)
 
 # Day 13 -- Saturday -- Sept 25
 
