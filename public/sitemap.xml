@@ -4,22 +4,182 @@
   
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/</loc>
-    <lastmod>2021-04-01T00:00:00+00:00</lastmod>
+    <lastmod>2021-08-09T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/categories/</loc>
-    <lastmod>2021-04-01T00:00:00+00:00</lastmod>
+    <lastmod>2021-08-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/categories/health/</loc>
+    <lastmod>2021-08-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/08/09/motorcycle-and-moped-accidents-in-florida/</loc>
+    <lastmod>2021-08-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/post/</loc>
-    <lastmod>2021-04-01T00:00:00+00:00</lastmod>
+    <lastmod>2021-08-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/categories/r/</loc>
+    <lastmod>2021-08-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/trip/</loc>
+    <lastmod>2021-08-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/trip/pictured_rock/pictured_rock/</loc>
+    <lastmod>2021-08-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/trip/savannah/savannah/</loc>
+    <lastmod>2021-08-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/07/20/staying-organized/</loc>
+    <lastmod>2021-07-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/tags/flexdashboard/</loc>
+    <lastmod>2021-07-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/07/05/footer-for-flexdashboard/</loc>
+    <lastmod>2021-07-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/tags/</loc>
+    <lastmod>2021-07-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/trip/key_west/key_west/</loc>
+    <lastmod>2021-07-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/06/25/indiana-birth-outcomes/</loc>
+    <lastmod>2021-06-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/tags/ggplot2/</loc>
+    <lastmod>2021-06-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/06/22/women-justices/</loc>
+    <lastmod>2021-06-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/06/05/us-lynchings/</loc>
+    <lastmod>2021-06-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/05/30/tidymodel-tutorial-scripts/</loc>
+    <lastmod>2021-05-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/05/17/2020-law-school-attrition-rates-part-2/</loc>
+    <lastmod>2021-05-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/categories/education/</loc>
+    <lastmod>2021-05-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/05/12/2020-law-school-attrition-rates/</loc>
+    <lastmod>2021-05-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/tags/magrittr/</loc>
+    <lastmod>2021-05-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/05/09/piping-r-code-with-magrittr/</loc>
+    <lastmod>2021-05-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/05/06/first-predictive-shiny-app/</loc>
+    <lastmod>2021-05-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/categories/shiny/</loc>
+    <lastmod>2021-05-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/04/19/commercial-fish-production-great-lakes/</loc>
+    <lastmod>2021-04-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/tags/plotly/</loc>
+    <lastmod>2021-04-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/tags/gganimate/</loc>
+    <lastmod>2021-04-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/tags/leaflet/</loc>
+    <lastmod>2021-04-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/categories/maps/</loc>
+    <lastmod>2021-04-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/04/10/us-post-offices-in-kentucky/</loc>
+    <lastmod>2021-04-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/04/04/convert-list-of-unequal-length-to-dataframe/</loc>
+    <lastmod>2021-04-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/tags/list/</loc>
+    <lastmod>2021-04-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/categories/immigration/</loc>
+    <lastmod>2021-04-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/tags/rvest/</loc>
     <lastmod>2021-04-01T00:00:00+00:00</lastmod>
   </url>
   
@@ -39,11 +199,6 @@
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/</loc>
-    <lastmod>2021-03-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://keen-noether-7d2e44.netlify.app/2021/03/20/lost-cargo-in-wisconsin-shipwrecks/</loc>
     <lastmod>2021-03-20T00:00:00+00:00</lastmod>
   </url>
@@ -51,11 +206,6 @@
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/tags/wordcloud/</loc>
     <lastmod>2021-03-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/leaflet/</loc>
-    <lastmod>2021-03-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -164,17 +314,7 @@
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/trip/</loc>
-    <lastmod>2021-03-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/trip/kansas/</loc>
-    <lastmod>2021-03-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/trip/washington/</loc>
+    <loc>https://keen-noether-7d2e44.netlify.app/trip/ludington/luddington/</loc>
     <lastmod>2021-03-01T00:00:00+00:00</lastmod>
   </url>
   
@@ -255,11 +395,6 @@
   
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/2021/02/15/insert_htmlwidget/</loc>
-    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/plotly/</loc>
     <lastmod>2021-02-15T00:00:00+00:00</lastmod>
   </url>
   

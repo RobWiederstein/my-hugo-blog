@@ -6,7 +6,133 @@
     <description>Recent content in My Blog Posts on Rob Wiederstein - a blog about coding, data and public policy</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 09 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Motorcycle and Moped Accidents in Florida</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/08/09/motorcycle-and-moped-accidents-in-florida/</link>
+      <pubDate>Mon, 09 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/08/09/motorcycle-and-moped-accidents-in-florida/</guid>
+      <description>Florida is the destination for many visitors.  Many different modes of transportation are available like cars, motorcycles, scooters, mopeds and golf carts.  This post explores the accident rate of motorcyles and mopeds.</description>
+    </item>
+    
+    <item>
+      <title>Staying Organized in R</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/07/20/staying-organized/</link>
+      <pubDate>Tue, 20 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/07/20/staying-organized/</guid>
+      <description>When code starts to run into the dozens of lines, it can begin to look like a jumbled box of legos.  The parts all go together, but you can easily forget the order and the ultimate goal of the project.  Here&amp;rsquo;s a post to offer an organizational strategy for writing code in Rstudio.</description>
+    </item>
+    
+    <item>
+      <title>Footer for Flexdashboard</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/07/05/footer-for-flexdashboard/</link>
+      <pubDate>Mon, 05 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/07/05/footer-for-flexdashboard/</guid>
+      <description>You can create a data dashboard in &lt;code&gt;R&lt;/code&gt; using the &lt;code&gt;flexdashboard&lt;/code&gt; package. In the background, there are a handful of other packages like bootstrap, bootswatch and fontawesome. The generated website did not have a footer though.  Here is a mashup of some html and css. The code was posted in a codepen repo.</description>
+    </item>
+    
+    <item>
+      <title>Indiana Birth Outcomes</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/06/25/indiana-birth-outcomes/</link>
+      <pubDate>Fri, 25 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/06/25/indiana-birth-outcomes/</guid>
+      <description>Indiana&amp;rsquo;s birth outcomes are examined using data from the Annie E. Casey foundation Kids Count website.</description>
+    </item>
+    
+    <item>
+      <title>Women Justices - An International Comparison</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/06/22/women-justices/</link>
+      <pubDate>Tue, 22 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/06/22/women-justices/</guid>
+      <description>Women serving on their country&amp;rsquo;s highest courts are a relatively new phenomena.  The trend accelerated beginning in the 1990s and now includes countries all over the world of differing economic levels. Women impact both the process and outcome of court decisions when appointed.  Additionally, women bolster court legitmacy among marginalized and unrepresented constituencies.</description>
+    </item>
+    
+    <item>
+      <title>US Lynchings</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/06/05/us-lynchings/</link>
+      <pubDate>Sat, 05 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/06/05/us-lynchings/</guid>
+      <description>4134 people were killed outside of the judicial process in the United States between 1882 and 1936.  Most of the victims were black males living in former slave states of the deep South and were killed by lynching. However, lynchings were not unique to the South and occurred in other places as well.</description>
+    </item>
+    
+    <item>
+      <title>Tidymodel Tutorials As Scripts</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/05/30/tidymodel-tutorial-scripts/</link>
+      <pubDate>Sun, 30 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/05/30/tidymodel-tutorial-scripts/</guid>
+      <description>This post is a distillation of the tidymodels tutorials on machine learning.  Formatting from the original was shortened and converted to a script with comments. Original tutorials are &lt;a href=&#34;https://www.tidymodels.org&#34;&gt;here&lt;/a&gt;. This post is basically my notes from the those tutorials.</description>
+    </item>
+    
+    <item>
+      <title>2020 Law School Attrition Rates Part 2</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/05/17/2020-law-school-attrition-rates-part-2/</link>
+      <pubDate>Mon, 17 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/05/17/2020-law-school-attrition-rates-part-2/</guid>
+      <description>This post is part 2 of the law student attrition numbers at ABA-accredited law schools.  It attempts to separate the law schools into clusters using principal component analysis, k-means, pam, and hierarchical algorithms.</description>
+    </item>
+    
+    <item>
+      <title>2020 Law School Attrition Rates Part 1</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/05/12/2020-law-school-attrition-rates/</link>
+      <pubDate>Wed, 12 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/05/12/2020-law-school-attrition-rates/</guid>
+      <description>This post explores the law student attrition numbers at ABA accredited law schools in the United States.</description>
+    </item>
+    
+    <item>
+      <title>Piping R Code with Magrittr</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/05/09/piping-r-code-with-magrittr/</link>
+      <pubDate>Sun, 09 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/05/09/piping-r-code-with-magrittr/</guid>
+      <description>I&amp;rsquo;ve been piping code with dplyr for several years now.  But because I use it so often, I thought it was time for a refresher and some renewed investigation.  Sometimes, revisiting a topic can help break me out of a programming funk.  And sure enough, some new methods were discovered.</description>
+    </item>
+    
+    <item>
+      <title>A First Predictive Shiny App</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/05/06/first-predictive-shiny-app/</link>
+      <pubDate>Thu, 06 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/05/06/first-predictive-shiny-app/</guid>
+      <description>This shiny app takes the speed in miles per hour of a car and estimates the distance in feet to stop, using data from the 1920s.</description>
+    </item>
+    
+    <item>
+      <title>Commercial Fish Production in the Great Lakes</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/04/19/commercial-fish-production-great-lakes/</link>
+      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/04/19/commercial-fish-production-great-lakes/</guid>
+      <description>The Great Lakes Fishery Commission (GLFC) published data on the commercial fish catch in the Great Lakes from 1867 to 2015. Each lake is unique and its features impact what fish are present, their composition over time and the overall volume of commercial fish catch.</description>
+    </item>
+    
+    <item>
+      <title>US Post Offices in Kentucky</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/04/10/us-post-offices-in-kentucky/</link>
+      <pubDate>Sat, 10 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/04/10/us-post-offices-in-kentucky/</guid>
+      <description>Data can yield new insights and enrich our understanding of history.  A new book by historian Cameron Blevins takes the location of U.S. post offices from 1639 to 2000 and plots them on a map by date of their establishment. The visual display shows the expansion of the American colonies westward.</description>
+    </item>
+    
+    <item>
+      <title>Convert List of Unequal Length to Dataframe</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/04/04/convert-list-of-unequal-length-to-dataframe/</link>
+      <pubDate>Sun, 04 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/04/04/convert-list-of-unequal-length-to-dataframe/</guid>
+      <description>Lists as a data type can be confusing but also useful.  They can hold data of different types and lengths, making them very versatile.  Lists can be named or nested and have the same or different lengths. This post deals with converting a list to a dataframe when it has unequal lengths.</description>
+    </item>
+    
     <item>
       <title>US Immigration Policies in the Trump Administration</title>
       <link>https://keen-noether-7d2e44.netlify.app/2021/04/01/us-immigration-policies-in-the-trump-administration/</link>

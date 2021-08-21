@@ -477,9 +477,6 @@ tbody tr:last-of-type {
     border-bottom: 2px solid #5271ff;
 }
 
-/**/
-/* GALLERY */
-/**/
 
 .responsive {
   padding: 0 6px;
@@ -521,3 +518,78 @@ tbody tr:last-of-type {
     border: 1px solid transparent;
     color: #fff;
 }
+
+/* GIST EMBED*/
+/* Set width to 600px, and center box */
+.gist {
+  margin-left: auto;
+  margin-right: auto;
+  width: 600px !important;
+}
+
+/* Limit height and width of script box, and enable scrollbars */
+.gist-data {
+    height:250px;
+    overflow-y: visible;
+    width: 600px;
+    overflow-x: visible;
+}
+
+/* Better styles for embedding GitHub Gists */
+.gist{font-size:13px;line-height:18px;width:53em}
+.gist pre{font-family:Menlo,Monaco,'Bitstream Vera Sans Mono','Courier New',monospace !important}
+.gist-meta{font-family:Arial,sans-serif;font-size:13px !important}
+.gist-meta a{color:#5271ff !important;font-weight:bold;text-decoration:none}
+.gist-meta a:hover{text-decoration:underline}
+
+/**/
+/* GALLERY */
+/**/
+
+
+.gallery{
+  width: 100%;
+  display: block;
+  margin:0 auto;
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+  .gallery {
+    column-count: 1;
+    column-gap: 3px;
+  }
+}
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+  .gallery {
+    column-count: 3;
+    column-gap: 3px;
+  }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+  .gallery { /* Masonry container */
+      column-count: 4;
+      column-gap: 3px;
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+  .gallery{
+    column-count: 5;
+    column-gap: 0.2rem;
+    width: 100%;
+  }
+}
+
+
+.gallery-item { /* Masonry bricks or child elements */
+    background-color: #eee;
+    display: inline-block;
+    margin: 0 0 0.2rem;
+    width: auto;
+}
+/* END GALLERY */
