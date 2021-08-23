@@ -56,11 +56,6 @@ Munising, Michigan 49862
 
 # Day 5 -- Saturday -- July 9
 
-[Pictured Rock Cruises](https://picturedrocks.com)
-Classic Cruise is 32 miles cost is $40 per person.
-
-# Day 6 -- Sunday -- July 10
-
 ATV trail Riding
 [Renze Power Sports](https://www.renzepower.com/rent-our-vehicles-atvs-boats-utvs-snowmobiles-dealership--atv-rentals)
 E 9650 Prospect Street
@@ -70,15 +65,55 @@ $320 daily rental for Polaris SxS UTV (1 - 2 People)
 [SORVA of Alger County](https://www.algersorva.com)
 
 
+# Day 6 -- Sunday -- July 10
+
+[Pictured Rock Cruises](https://picturedrocks.com)
+Classic Cruise is 32 miles cost is $40 per person.
+
+and/or
+
+[Uncle Ducky's Kayak Tours](https://www.paddlingmichigan.com/kayaking-tours/)
+
+# Day 7 -- Monday -- July 11
+
+Arrive Madison, Wisconsin
+
+# Miscellaneous
+
 [Pictured Rocks National Lakeshore](https://www.nps.gov/piro/index.htm)
 
 [Grand Island Ferry Munising](https://www.michigan.org/property/grand-island-ferry)
 
-
-[Munising Tourist Park Campground](https://munisingtouristpark.com)
-
-[Muldoons for a Cornish "pasty"](https://www.muldoonspasties.com) (It is pronounced "pass-tee".)
-
 [Falling Rock Cafe & Bookstore](https://fallingrockcafe.com)
 
 [Soo Locks](https://www.saultstemarie.com/attractions/soo-locks/)
+
+[Oswalds Bear Ranch](https://www.oswaldsbearranch.com)
+
+# Local Foods
+
+- [Muldoons for a Cornish "pasty"](https://www.muldoonspasties.com) (It is pronounced "pass-tee".)
+
+- Potato sausage
+
+- Cudighi, a spicy Italian meat made with clove and cinnamon
+
+- Nisu, a cardamom-flavored sweet bread
+
+- Limppu, an Eastern Finnish rye bread
+
+- Pannukakku, a variant on the pancake with a custard flavor;
+
+- Viili (sometimes spelled "fellia"), a stretchy, fermented Finnish milk
+
+- Korppu, hard slices of toasted cinnamon bread
+
+- Juusto (cheese or curd)
+
+- Saunamakkara (a ring-bologna sausage)
+
+- Maple syrup
+
+- Lake Trout, whitefish and smelt
+
+- Thimbleberry jam and chokecherry jelly
