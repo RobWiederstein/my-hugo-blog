@@ -11,10 +11,11 @@ slug: []
 # Day 1 -- Tuesday -- July 5
 
 Arrive Mackinaw City, Michigan (11 hrs)
-Mackinac Island KOA Journey
+[Mackinac Island KOA Journey](https://koa.com/campgrounds/mackinaw-city/)
 566 Trailsend Road
 Mackinaw City , MI 49701
-800-562-1738
+<a href="tel:+8005621738">800.562.1738</a>
+(Confirmation no: 9156770 & 9156801)
 
 # Day 2 -- Wednesday -- July 6
 [Mackinac Island Star Line Ferry](https://www.mackinacferry.com)
@@ -52,7 +53,7 @@ Arrive Munising, Michigan (3 hrs)
 E8518 W M-28 West
 Munising, Michigan 49862
 [site map](https://munisingtouristpark.com/reservations-2/)
-??following season on October 21, 2020 starting at 8pm.?? CALL FOR MORE INFO
+December 1 for reservations in 2022.  Check website for specific time.
 
 # Day 5 -- Saturday -- July 9
 
@@ -61,6 +62,7 @@ ATV trail Riding
 E 9650 Prospect Street
 Munising, MI 49862
 $320 daily rental for Polaris SxS UTV (1 - 2 People)
+(Do the trails go past Miner's Falls and Miner's Castle Rock?)
 
 [SORVA of Alger County](https://www.algersorva.com)
 
