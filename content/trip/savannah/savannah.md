@@ -72,9 +72,20 @@ Ladson, SC 29456
 
 # Day 9 -- Tuesday -- Sept 21
 
-[Kolter Homes](https://www.kolterhomes.com/new-homes/cresswind-charlotte-north-carolina-active-adult-55-homes/)
+10 a.m. [Del Webb](https://www.delwebb.com/homes/south-carolina/charleston)
 
-[Del Webb](https://www.delwebb.com/homes/south-carolina/charleston)
+12 p.m.
+Tracy
+[Five Loaves Cafe](https://www.fiveloavescafe.com)
+214 N Cedar St
+Summerville, SC 29483
+
+2:00 p.m.
+Harel Howze
+[Cresswind Charleston](https://www.kolterhomes.com/new-homes/cresswind-charlotte-north-carolina-active-adult-55-homes/)
+467 Hundred Oaks Parkway
+Summerville, SC 29483
+
 
 
 # Day 10 -- Wednesday -- Sept 22
