@@ -17,10 +17,10 @@ link-citations: yes
 nocite: |
   @R-base, @R-blogdown, @R-tidyverse
 header:
-  image: ~
-  alt: ~
-  caption: ~
-repo: ~
+  image: feature.jpg
+  alt: moped with two riders
+  caption: Photo from Reshot.  (That's probably not Florida in the background, but it is water!)
+repo: https://github.com/RobWiederstein/purple-bananas/blob/main/content/post/2021-08-09-motorcycle-and-moped-accidents-in-florida/index.Rmd
 summary: Florida is the destination for many visitors.  Many different modes of transportation are available like cars, motorcycles, scooters, mopeds and golf carts.  This post explores the accident rate of motorcyles and mopeds.
 ---
 
@@ -84,11 +84,29 @@ mc_crashes_pc <- readr::read_csv(file = file)
 
 # [Overview](#overview)
 
-As a recent visitor to Key West via ferry, I needed transportation upon my arrival.  Rental cars were expensive and it can be difficult to find parking on a crowded island.  A moped seemed like a decent alternative given its cheap cost and easy maneuvering.  But what were the safety considerations? After an internet search or two, I discovered that the Key West Police Department raised concerns about moped accidents in the past.  So I decided to do some sleuthing on my own.
+Visitors to Florida beaches often need transporation upon arrival. There are many options available and can be seen exiting airport and ferry terminals. Tourist destinations can be crowded places, particularly when traveling during a peak time.    Rental cars are expensive and it can be difficult to find parking at a crowded beech or island.  Mopeds seem like a decent alternative given their cheap cost and easy maneuvering.  But what are the safety considerations? Some internet searches revealed that the Key West Police Department has raised concerns about moped accidents in the past. Before renting a moped or motorcycle, one should consider their safety.
 
 # [Background](#background)
 
 The safety of different kind of vehicles are constantly being evaluated by researchers.  And there are a variety of products available for rental or purchase.  The possibilities include things like hover boards and scooters.[@nationalhighwaytrafficsafetyadministrationTrafficSafetyFacts2021]
+
+The National Conference of State Legislatures (NCSL) recently published an [article](https://www.ncsl.org/research/transportation/motorcycle-safety-overview.aspx) about the safety of motorcycles and the National Highway and Traffic Safety Administration (NHTSA) prepared a "Traffic Safety Facts" [datasheet](https://crashstats.nhtsa.dot.gov/Api/Public/ViewPublication/813112). The highlights include:
+
+- 4,985 motorcyclists were killed in crashes in 2018;
+
+-  71% of motorcyclists used a helmet while on surfaced streets in 2018;
+
+- 14% of traffic fatalities were motorcyclists;
+
+- Annual motorcyclist deaths has gradually decreased since its peak in 2016;
+
+- 84,000 motorcyclists were injured in 2019.
+
+- 9 times the fatality rate for motorcyclists vs. light trucks.
+
+- 591 motorcyclists were killed in Florida in 2019, 52% of them were not wearing a helmet.
+
+
 
 
 # [Data and model](#data)
