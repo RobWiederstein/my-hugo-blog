@@ -72,3 +72,10 @@ markup:
     endLevel: 3
     ordered: false
     startLevel: 1
+ # rss feed
+rssLimit: 20
+copyright: 2021 Rob Wiederstein All rights reserved
+languageCode: en-us
+author:
+  name: Rob Wiederstein
+  email: rob@robwiederstein.org
