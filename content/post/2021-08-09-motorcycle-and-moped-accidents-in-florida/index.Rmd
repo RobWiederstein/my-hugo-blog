@@ -161,11 +161,9 @@ Cities are often a center of traffic. The motorvehicle crashes were coded by `ci
 
 Given that so many of the top cities had "beach" in their name, a new feature was created called `beach` and was coded based on whether the city name included the word "beach".  For example, Miami Beach and Daytona Beach would have been included. The idea was that the grouping variable was a proxy for location and tourism.  The graph revealed that cities that had "beach' in their name were the site of more motorcycle accidents when scaled by population.
 
-The results of the analysis have some challenges.  First and foremost, it is unclear why accident reports have declined so significantly and leads one to speculate that a change in reporting criteria may have changed over the period examined.  Second, most of the research examined used a different metric in computing an accident rate.  Motorcycle registrations and miles driven was more prevalent; however, those data weren't available at the city level so population was used instead.
+The results of the analysis have some challenges.  First and foremost, it is unclear why accident reports have declined so significantly and leads one to speculate that a change in reporting criteria may have changed over the period examined.  Second, most of the research examined used a different metric in computing an accident rate.  Motorcycle registrations and miles driven were more prevalent in the literature; however, those data weren't available at the city level so population was used instead.
 
 All of this is to say:  Think twice before renting a moped on your next Florida beach vacation.
-
-
 
 # [Acknowledgements](#acknowledge)
 
