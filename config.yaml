@@ -2,7 +2,9 @@ baseurl: https://keen-noether-7d2e44.netlify.app/
 languageCode: en-us
 title: Rob Wiederstein - a blog about coding, data and public policy
 theme: hugo-lithium
-author: "Rob Wiederstein"
+author: 
+  name: Rob Wiederstein
+  email: rob@robwiederstein.org
 googleAnalytics: 'UA-59724072-1'
 disqusShortname: ''
 ignoreFiles:
@@ -75,7 +77,3 @@ markup:
  # rss feed
 rssLimit: 20
 copyright: 2021 Rob Wiederstein All rights reserved
-languageCode: en-us
-author:
-  name: Rob Wiederstein
-  email: rob@robwiederstein.org
