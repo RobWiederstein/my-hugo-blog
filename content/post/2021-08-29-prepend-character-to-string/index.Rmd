@@ -95,7 +95,7 @@ This wreaks havoc on your project when you go to merge.
 
 One strategy to dealing with this problem is to read in the data as character so that the formatting is clear.  Otherwise, the function will just drop the leading zeros and convert the column to an integer. For example, in the `data.table` and `utils` package, the code might look like:
 
-```{r, import-solutions, eval = F}
+```{r, import-solutions, eval=F}
 utils::read.csv(file = file, colClasses = "character")
 #or
 data.table::fread(input = input, colClasses = "character")
