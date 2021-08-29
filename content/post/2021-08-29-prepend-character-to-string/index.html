@@ -15,7 +15,7 @@ bibliography:
 csl: ../ieee-with-url.csl
 link-citations: yes
 nocite: |
-  @R-base, @R-blogdown, @R-tidyverse, @R-stringr, @R-readr, @R-data.table
+  @R-base, @R-blogdown, @R-tidyverse, @R-stringr, @R-readr, @R-datatable
 header:
   image: feature.jpg
   alt: odometer
@@ -33,7 +33,7 @@ summary: With the ubiquitous "FIPS" codes, there is no consistency in how they a
 <li><a href="#strategy-1---set-column-type">Strategy 1 - Set column type</a></li>
 <li><a href="#strategy-2---the-readr-package">Strategy 2 - the <code>readr</code> package</a></li>
 <li><a href="#strategy-3---the-hacky-way">Strategy 3 - the “Hacky Way”</a></li>
-<li><a href="#strategy-4---the-elegant-way">Strategy 4 - The Elegant Way</a></li>
+<li><a href="#strategy-4---the-elegant-way">Strategy 4 - the “Elegant Way”</a></li>
 <li><a href="#conclusion"><span>Conclusion</span></a></li>
 <li><a href="#references"><span>References</span></a></li>
 <li><a href="#disclaimer"><span>Disclaimer</span></a></li>
@@ -77,7 +77,7 @@ df</code></pre>
 2 01000</code></pre>
 </div>
 <div id="strategy-4---the-elegant-way" class="section level1">
-<h1>Strategy 4 - The Elegant Way</h1>
+<h1>Strategy 4 - the “Elegant Way”</h1>
 <pre class="r"><code>library(stringr)
 df %&gt;% 
   mutate(fips = str_pad(fips, width = 5, side = &quot;left&quot;, pad = &quot;0&quot;))</code></pre>

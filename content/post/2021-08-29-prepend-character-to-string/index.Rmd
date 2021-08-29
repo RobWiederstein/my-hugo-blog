@@ -15,7 +15,7 @@ bibliography:
 csl: ../ieee-with-url.csl
 link-citations: yes
 nocite: |
-  @R-base, @R-blogdown, @R-tidyverse, @R-stringr, @R-readr, @R-data.table
+  @R-base, @R-blogdown, @R-tidyverse, @R-stringr, @R-readr, @R-datatable
 header:
   image: feature.jpg
   alt: odometer
@@ -118,7 +118,7 @@ df$fips[which(nchar(df$fips)==4)] <- paste0("0", df$fips[which(nchar(df$fips)==4
 df
 ```
 
-# Strategy 4 - The Elegant Way
+# Strategy 4 - the "Elegant Way"
 
 ```{r strategy-stringr}
 library(stringr)
