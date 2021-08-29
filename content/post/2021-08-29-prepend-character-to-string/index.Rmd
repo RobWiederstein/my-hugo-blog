@@ -1,0 +1,151 @@
+---
+title: Prepend or Pad Character to String
+author: Rob Wiederstein
+date: '2021-08-29'
+slug: prepend-character-to-string
+categories:
+  - R
+tags:
+  - stringr
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: feature.jpg
+  alt: odometer
+  caption: How would the above number be imported? (Photo by Scott Rodgerson on Unsplash)
+  
+repo: ~
+summary: With the ubiquitous "FIPS" codes, there is no consistency in how they are formatted.  It seems like on every project, the merge is dependent upon the format matching in the datasets and then I've usually got a mess on my hands.  A missing "0" is often the problem.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=T
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
+library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+# [Overview](#overview)
+
+As an illustration, FIPS codes will often look like this where the lengths of the strings are different. Some datasets will have the zero in front, while other will not. Sometimes, the problem isn't how the data was formatted, but how the analyst imports it.
+
+```{r intro}
+df <- tibble(fips = c("1000", "01000"))
+df
+```
+```{r example-data, include=F}
+write.csv(df, file = "./example.csv", row.names = F)
+```
+ 
+This wreaks havoc on your project when you go to merge.
+
+# Strategy 1 - Set column type
+
+One strategy to dealing with this problem is to read in the data as character so that the formatting is clear.  Otherwise, the function will just drop the leading zeros and convert the column to an integer. For example, in the `data.table` package, the code might look like:
+
+```{r, import-solutions, eval = F}
+utils::read.csv(file = file, colClasses = "character")
+#or
+data.table::fread(input = input, colClasses = "character")
+```
+
+# Strategy 2 - the `readr` package
+
+I tried out the `readr` package for this problem and it correctly converted the example to a character string and retained the leading zero.
+
+```{r readr, eval=F}
+readr::read_csv(file = file)
+```
+
+# Strategy 3 - the "Hacky Way"
+
+I'm embarrased to admit that this was some code I routinely used in projects. And I cringe looking at it.  The line of code was interrupting a readable `magrittr` pipe. (Check out the new pipe `|>`). There is a better, more elegant solution.
+
+```{r old-solution}
+df$fips[which(nchar(df$fips)==4)] <- paste0("0", df$fips[which(nchar(df$fips)==4)])
+df
+```
+
+# Strategy 4 - The Elegant Way
+
+```{r strategy-stringr}
+library(stringr)
+df %>% 
+  mutate(fips = str_pad(fips, width = 5, side = "left", pad = "0"))
+```
+
+
+# [Conclusion](#conclusion)
+
+The best strategy is to avoid this problem in the first place.  Import the data correctly.  Importing all data as character first allows you to see the data as it is without getting transformed by an import package.  The next best strategy is to use `str_pad` in the `stringr` package.  It makes for readable code and describes what occurred.  Check the Stackoverflow post, "[How to add leading zeros?](https://stackoverflow.com/questions/5812493/how-to-add-leading-zeros/5816779#5816779)", for additional ideas.
+
+Sometimes the hardest part of coding is knowing what the best search term is.  I wished I'd used the term "pad" and I could've avoided years of hacky code. Ugh.
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```

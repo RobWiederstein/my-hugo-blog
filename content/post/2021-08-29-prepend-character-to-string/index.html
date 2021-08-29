@@ -1,0 +1,218 @@
+---
+title: Prepend or Pad Character to String
+author: Rob Wiederstein
+date: '2021-08-29'
+slug: prepend-character-to-string
+categories:
+  - R
+tags:
+  - stringr
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: feature.jpg
+  alt: odometer
+  caption: How would the above number be imported? (Photo by Scott Rodgerson on Unsplash)
+  
+repo: ~
+summary: With the ubiquitous "FIPS" codes, there is no consistency in how they are formatted.  It seems like on every project, the merge is dependent upon the format matching in the datasets and then I've usually got a mess on my hands.  A missing "0" is often the problem.
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#overview"><span>Overview</span></a></li>
+<li><a href="#strategy-1---set-column-type">Strategy 1 - Set column type</a></li>
+<li><a href="#strategy-2---the-readr-package">Strategy 2 - the <code>readr</code> package</a></li>
+<li><a href="#strategy-3---the-hacky-way">Strategy 3 - the “Hacky Way”</a></li>
+<li><a href="#strategy-4---the-elegant-way">Strategy 4 - The Elegant Way</a></li>
+<li><a href="#conclusion"><span>Conclusion</span></a></li>
+<li><a href="#acknowledgements"><span>Acknowledgements</span></a></li>
+<li><a href="#references"><span>References</span></a></li>
+<li><a href="#disclaimer"><span>Disclaimer</span></a></li>
+<li><a href="#reproducibility"><span>Reproducibility</span></a></li>
+</ul>
+</div>
+
+<div id="overview" class="section level1">
+<h1><a href="#overview">Overview</a></h1>
+<p>As an illustration, FIPS codes will often look like this where the lengths of the strings are different. Some datasets will have the zero in front, while other will not. Sometimes, the problem isn’t how the data was formatted, but how the analyst imports it.</p>
+<pre class="r"><code>df &lt;- tibble(fips = c(&quot;1000&quot;, &quot;01000&quot;))
+df</code></pre>
+<pre><code># A tibble: 2 × 1
+  fips 
+  &lt;chr&gt;
+1 1000 
+2 01000</code></pre>
+<p>This wreaks havoc on your project when you go to merge.</p>
+</div>
+<div id="strategy-1---set-column-type" class="section level1">
+<h1>Strategy 1 - Set column type</h1>
+<p>One strategy to dealing with this problem is to read in the data as character so that the formatting is clear. Otherwise, the function will just drop the leading zeros and convert the column to an integer. For example, in the <code>data.table</code> package, the code might look like:</p>
+<pre class="r"><code>utils::read.csv(file = file, colClasses = &quot;character&quot;)
+#or
+data.table::fread(input = input, colClasses = &quot;character&quot;)</code></pre>
+</div>
+<div id="strategy-2---the-readr-package" class="section level1">
+<h1>Strategy 2 - the <code>readr</code> package</h1>
+<p>I tried out the <code>readr</code> package for this problem and it correctly converted the example to a character string and retained the leading zero.</p>
+<pre class="r"><code>readr::read_csv(file = file)</code></pre>
+</div>
+<div id="strategy-3---the-hacky-way" class="section level1">
+<h1>Strategy 3 - the “Hacky Way”</h1>
+<p>I’m embarrased to admit that this was some code I routinely used in projects. And I cringe looking at it. The line of code was interrupting a readable <code>magrittr</code> pipe. (Check out the new pipe <code>|&gt;</code>). There is a better, more elegant solution.</p>
+<pre class="r"><code>df$fips[which(nchar(df$fips)==4)] &lt;- paste0(&quot;0&quot;, df$fips[which(nchar(df$fips)==4)])
+df</code></pre>
+<pre><code># A tibble: 2 × 1
+  fips 
+  &lt;chr&gt;
+1 01000
+2 01000</code></pre>
+</div>
+<div id="strategy-4---the-elegant-way" class="section level1">
+<h1>Strategy 4 - The Elegant Way</h1>
+<pre class="r"><code>library(stringr)
+df %&gt;% 
+  mutate(fips = str_pad(fips, width = 5, side = &quot;left&quot;, pad = &quot;0&quot;))</code></pre>
+<pre><code># A tibble: 2 × 1
+  fips 
+  &lt;chr&gt;
+1 01000
+2 01000</code></pre>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+<p>The best strategy is to avoid this problem in the first place. Import the data correctly. Importing all data as character first allows you to see the data as it is without getting transformed by an import package. The next best strategy is to use <code>str_pad</code> in the <code>stringr</code> package. It makes for readable code and describes what occurred. Check the Stackoverflow post, “<a href="https://stackoverflow.com/questions/5812493/how-to-add-leading-zeros/5816779#5816779">How to add leading zeros?</a>”, for additional ideas.</p>
+<p>Sometimes the hardest part of coding is knowing what the best search term is. I wished I’d used the term “pad” and I could’ve avoided years of hacky code. Ugh.</p>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to:</p>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2021 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+</div>
+<div id="ref-R-tidyverse" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">H. Wickham, <em>Tidyverse: Easily install and load the tidyverse</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=tidyverse">https://CRAN.R-project.org/package=tidyverse</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value                       
+ version  R version 4.1.0 (2021-05-18)
+ os       macOS Catalina 10.15.7      
+ system   x86_64, darwin17.0          
+ ui       X11                         
+ language (EN)                        
+ collate  en_US.UTF-8                 
+ ctype    en_US.UTF-8                 
+ tz       America/Chicago             
+ date     2021-08-29                  
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version date       lib source        
+ assertthat    0.2.1   2019-03-21 [1] CRAN (R 4.1.0)
+ backports     1.2.1   2020-12-09 [1] CRAN (R 4.1.0)
+ blogdown    * 1.4     2021-07-23 [1] CRAN (R 4.1.0)
+ bookdown      0.23    2021-08-13 [1] CRAN (R 4.1.0)
+ broom         0.7.9   2021-07-27 [1] CRAN (R 4.1.0)
+ bslib         0.2.5.1 2021-05-18 [1] CRAN (R 4.1.0)
+ cachem        1.0.5   2021-05-15 [1] CRAN (R 4.1.0)
+ callr         3.7.0   2021-04-20 [1] CRAN (R 4.1.0)
+ cellranger    1.1.0   2016-07-27 [1] CRAN (R 4.1.0)
+ cli           3.0.1   2021-07-17 [1] CRAN (R 4.1.0)
+ codetools     0.2-18  2020-11-04 [1] CRAN (R 4.1.0)
+ colorspace    2.0-2   2021-06-24 [1] CRAN (R 4.1.0)
+ crayon        1.4.1   2021-02-08 [1] CRAN (R 4.1.0)
+ DBI           1.1.1   2021-01-15 [1] CRAN (R 4.1.0)
+ dbplyr        2.1.1   2021-04-06 [1] CRAN (R 4.1.0)
+ desc          1.3.0   2021-03-05 [1] CRAN (R 4.1.0)
+ devtools    * 2.4.2   2021-06-07 [1] CRAN (R 4.1.0)
+ digest        0.6.27  2020-10-24 [1] CRAN (R 4.1.0)
+ dplyr       * 1.0.7   2021-06-18 [1] CRAN (R 4.1.0)
+ ellipsis      0.3.2   2021-04-29 [1] CRAN (R 4.1.0)
+ evaluate      0.14    2019-05-28 [1] CRAN (R 4.1.0)
+ fansi         0.5.0   2021-05-25 [1] CRAN (R 4.1.0)
+ fastmap       1.1.0   2021-01-25 [1] CRAN (R 4.1.0)
+ forcats     * 0.5.1   2021-01-27 [1] CRAN (R 4.1.0)
+ fs            1.5.0   2020-07-31 [1] CRAN (R 4.1.0)
+ generics      0.1.0   2020-10-31 [1] CRAN (R 4.1.0)
+ ggplot2     * 3.3.5   2021-06-25 [1] CRAN (R 4.1.0)
+ ggthemes    * 4.2.4   2021-01-20 [1] CRAN (R 4.1.0)
+ glue          1.4.2   2020-08-27 [1] CRAN (R 4.1.0)
+ gtable        0.3.0   2019-03-25 [1] CRAN (R 4.1.0)
+ haven         2.4.3   2021-08-04 [1] CRAN (R 4.1.0)
+ hms           1.1.0   2021-05-17 [1] CRAN (R 4.1.0)
+ htmltools     0.5.1.1 2021-01-22 [1] CRAN (R 4.1.0)
+ httr          1.4.2   2020-07-20 [1] CRAN (R 4.1.0)
+ jquerylib     0.1.4   2021-04-26 [1] CRAN (R 4.1.0)
+ jsonlite      1.7.2   2020-12-09 [1] CRAN (R 4.1.0)
+ knitr         1.33    2021-04-24 [1] CRAN (R 4.1.0)
+ lifecycle     1.0.0   2021-02-15 [1] CRAN (R 4.1.0)
+ lubridate     1.7.10  2021-02-26 [1] CRAN (R 4.1.0)
+ magrittr    * 2.0.1   2020-11-17 [1] CRAN (R 4.1.0)
+ memoise       2.0.0   2021-01-26 [1] CRAN (R 4.1.0)
+ modelr        0.1.8   2020-05-19 [1] CRAN (R 4.1.0)
+ munsell       0.5.0   2018-06-12 [1] CRAN (R 4.1.0)
+ pillar        1.6.2   2021-07-29 [1] CRAN (R 4.1.0)
+ pkgbuild      1.2.0   2020-12-15 [1] CRAN (R 4.1.0)
+ pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.1.0)
+ pkgload       1.2.1   2021-04-06 [1] CRAN (R 4.1.0)
+ prettyunits   1.1.1   2020-01-24 [1] CRAN (R 4.1.0)
+ processx      3.5.2   2021-04-30 [1] CRAN (R 4.1.0)
+ prompt      * 1.0.1   2021-03-12 [1] CRAN (R 4.1.0)
+ ps            1.6.0   2021-02-28 [1] CRAN (R 4.1.0)
+ purrr       * 0.3.4   2020-04-17 [1] CRAN (R 4.1.0)
+ R6            2.5.0   2020-10-28 [1] CRAN (R 4.1.0)
+ Rcpp          1.0.7   2021-07-07 [1] CRAN (R 4.1.0)
+ readr       * 2.0.1   2021-08-10 [1] CRAN (R 4.1.0)
+ readxl        1.3.1   2019-03-13 [1] CRAN (R 4.1.0)
+ remotes       2.4.0   2021-06-02 [1] CRAN (R 4.1.0)
+ reprex        2.0.1   2021-08-05 [1] CRAN (R 4.1.0)
+ rlang         0.4.11  2021-04-30 [1] CRAN (R 4.1.0)
+ rmarkdown     2.10    2021-08-06 [1] CRAN (R 4.1.0)
+ roxygen2    * 7.1.1   2020-06-27 [1] CRAN (R 4.1.0)
+ rprojroot     2.0.2   2020-11-15 [1] CRAN (R 4.1.0)
+ rstudioapi    0.13    2020-11-12 [1] CRAN (R 4.1.0)
+ rvest         1.0.1   2021-07-26 [1] CRAN (R 4.1.0)
+ sass          0.4.0   2021-05-12 [1] CRAN (R 4.1.0)
+ scales        1.1.1   2020-05-11 [1] CRAN (R 4.1.0)
+ sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 4.1.0)
+ stringi       1.7.3   2021-07-16 [1] CRAN (R 4.1.0)
+ stringr     * 1.4.0   2019-02-10 [1] CRAN (R 4.1.0)
+ testthat      3.0.4   2021-07-01 [1] CRAN (R 4.1.0)
+ tibble      * 3.1.3   2021-07-23 [1] CRAN (R 4.1.0)
+ tidyr       * 1.1.3   2021-03-03 [1] CRAN (R 4.1.0)
+ tidyselect    1.1.1   2021-04-30 [1] CRAN (R 4.1.0)
+ tidyverse   * 1.3.1   2021-04-15 [1] CRAN (R 4.1.0)
+ tzdb          0.1.2   2021-07-20 [1] CRAN (R 4.1.0)
+ usethis     * 2.0.1   2021-02-10 [1] CRAN (R 4.1.0)
+ utf8          1.2.2   2021-07-24 [1] CRAN (R 4.1.0)
+ vctrs         0.3.8   2021-04-29 [1] CRAN (R 4.1.0)
+ withr         2.4.2   2021-04-18 [1] CRAN (R 4.1.0)
+ xfun          0.25    2021-08-06 [1] CRAN (R 4.1.0)
+ xml2          1.3.2   2020-04-23 [1] CRAN (R 4.1.0)
+ yaml          2.2.1   2020-02-01 [1] CRAN (R 4.1.0)
+
+[1] /Library/Frameworks/R.framework/Versions/4.1/Resources/library</code></pre>
+</div>
