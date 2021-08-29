@@ -17,9 +17,9 @@ link-citations: yes
 nocite: |
   @R-base, @R-blogdown, @R-tidyverse, @R-stringr, @R-readr, @R-datatable
 header:
-  image: feature.jpg
+  image: feature.png
   alt: odometer
-  caption: How would the above number be imported? (Photo by Scott Rodgerson on Unsplash)
+  caption: How would the above number be imported? (You need to know!)
   
 repo: ~
 summary: With the ubiquitous "FIPS" codes, there is no consistency in how they are formatted.  It seems like on every project, the merge is dependent upon the format matching in the datasets and then I've usually got a mess on my hands.  A missing "0" is often the problem.
