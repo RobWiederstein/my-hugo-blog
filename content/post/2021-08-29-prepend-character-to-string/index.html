@@ -35,7 +35,6 @@ summary: With the ubiquitous "FIPS" codes, there is no consistency in how they a
 <li><a href="#strategy-3---the-hacky-way">Strategy 3 - the “Hacky Way”</a></li>
 <li><a href="#strategy-4---the-elegant-way">Strategy 4 - The Elegant Way</a></li>
 <li><a href="#conclusion"><span>Conclusion</span></a></li>
-<li><a href="#acknowledgements"><span>Acknowledgements</span></a></li>
 <li><a href="#references"><span>References</span></a></li>
 <li><a href="#disclaimer"><span>Disclaimer</span></a></li>
 <li><a href="#reproducibility"><span>Reproducibility</span></a></li>
@@ -56,7 +55,7 @@ df</code></pre>
 </div>
 <div id="strategy-1---set-column-type" class="section level1">
 <h1>Strategy 1 - Set column type</h1>
-<p>One strategy to dealing with this problem is to read in the data as character so that the formatting is clear. Otherwise, the function will just drop the leading zeros and convert the column to an integer. For example, in the <code>data.table</code> package, the code might look like:</p>
+<p>One strategy to dealing with this problem is to read in the data as character so that the formatting is clear. Otherwise, the function will just drop the leading zeros and convert the column to an integer. For example, in the <code>data.table</code> and <code>utils</code> package, the code might look like:</p>
 <pre class="r"><code>utils::read.csv(file = file, colClasses = &quot;character&quot;)
 #or
 data.table::fread(input = input, colClasses = &quot;character&quot;)</code></pre>
@@ -92,10 +91,6 @@ df %&gt;%
 <h1><a href="#conclusion">Conclusion</a></h1>
 <p>The best strategy is to avoid this problem in the first place. Import the data correctly. Importing all data as character first allows you to see the data as it is without getting transformed by an import package. The next best strategy is to use <code>str_pad</code> in the <code>stringr</code> package. It makes for readable code and describes what occurred. Check the Stackoverflow post, “<a href="https://stackoverflow.com/questions/5812493/how-to-add-leading-zeros/5816779#5816779">How to add leading zeros?</a>”, for additional ideas.</p>
 <p>Sometimes the hardest part of coding is knowing what the best search term is. I wished I’d used the term “pad” and I could’ve avoided years of hacky code. Ugh.</p>
-</div>
-<div id="acknowledgements" class="section level1">
-<h1><a href="#acknowledge">Acknowledgements</a></h1>
-<p>This blog post was made possible thanks to:</p>
 </div>
 <div id="references" class="section level1">
 <h1><a href="#reference">References</a></h1>
