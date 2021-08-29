@@ -15,7 +15,7 @@ bibliography:
 csl: ../ieee-with-url.csl
 link-citations: yes
 nocite: |
-  @R-base, @R-blogdown, @R-tidyverse
+  @R-base, @R-blogdown, @R-tidyverse, @R-stringr, @R-readr, @R-data.table
 header:
   image: feature.jpg
   alt: odometer
