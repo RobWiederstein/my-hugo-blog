@@ -27,7 +27,13 @@ One Lodge Street Asheville, NC 28803
 
 # Day 3 -- Wednesday -- Sept 15
 
-Open
+3:00 p.m.
+Michael Davis
+[Brown Haven Homes](https://www.brownhavenhomes.com)
+219 Merrimon Ave.
+Asheville, NC 28801
+<a href="tel:+18286408877">828.640.8877</a>
+
 
 6:00 p.m
 [Jettie Rae's Oyster House](https://jettieraes.com/)

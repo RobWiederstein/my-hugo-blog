@@ -78,7 +78,7 @@ knitr::write_bib(.packages(), "./packages.bib")
 
 # [Overview](#overview)
 
-As an illustration, FIPS codes will often look like this where the lengths of the strings are different. Some datasets will have the zero in front, while other will not. Sometimes, the problem isn't how the data was formatted, but how the analyst imports it.
+As an illustration, FIPS codes will often look like this where the lengths of the strings are different. Some datasets will have the zero in front, while others will not. Sometimes, the problem isn't how the data was formatted, but how the analyst imports it.
 
 ```{r intro}
 df <- tibble(fips = c("1000", "01000"))
