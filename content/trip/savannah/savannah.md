@@ -11,12 +11,15 @@ slug: []
 
 # Day 1 -- Monday -- Sept 13
 
-Arrive Asheville, North Carolina
+Arrive Asheville, North Carolina (6 hrs.)
 [Wilson's Riverfront RV Park](https://www.campspot.com/book/wilsonsrvpark)
 225 Amboy Road, Asheville, NC 28806
 [map](https://goo.gl/maps/JmVAByJksneAfcZH9)
 <a href="tel:+18282544676">1.828.254.4676</a>
 (Confirmation: R00000004561)
+
+Gourmet Chip Company
+Heart of Downtown Asheville
 
 # Day 2 -- Tuesday -- Sept 14
 
@@ -24,6 +27,7 @@ Biltmore Estate
 $76 beginning admission ticket
 One Lodge Street Asheville, NC 28803
 <a href="tel:+18004113812">800.411.3812</a>
+Tour takes about 2 hours.
 
 # Day 3 -- Wednesday -- Sept 15
 
@@ -34,7 +38,6 @@ Michael Davis
 Asheville, NC 28801
 <a href="tel:+18286408877">828.640.8877</a>
 
-
 6:00 p.m
 [Jettie Rae's Oyster House](https://jettieraes.com/)
 143 Charlotte St
@@ -42,12 +45,20 @@ Asheville, NC 28801
 Reservation made via resy
 
 # Day 4 -- Thursday -- Sept 16
-Arrive Augusta, Georgia
-Mike Jackson, Manager
-[Heritage RV Park](https://www.heritagervpark.com)
-<a href="tel:+7068633333">706.863.3333</a>
-(Confirmation: R00022062)
+Arrive Supply, NC (5hrs, 18 min)
+Holden Beach RV Campground
+2650 Liberty Ln SW
+Supply,NC 28462
+<a href="tel:+19108421809">910.842.1809</a>
 
+Dinner at:
+[Provision Company at Holden](https://procohb.com/our-menu/)
+
+Walk:
+Holden Beach Fishing Pier
+
+
+Must cancel!!
 6:30 p.m.
 [Frog Hollow Tavern](https://froghollowtavern.com)
 1282 Broad St.
@@ -57,10 +68,13 @@ Reservation made via open table
 
 # Day 5 -- Friday -- Sept 17
 
-Open
+1:30 p.m.
+kmcalick@brunswickforest.Com
+
 
 # Day 6 -- Saturday -- Sept 18
 
+River Walk in Wilmington.
 Open
 
 # Day 7 -- Sunday -- Sept 19
@@ -106,6 +120,14 @@ Check in 2:00 p.m. to 8:00 p.m.
 # Day 11 -- Thursday -- Sept 23
 
 [Bonaventure Cemetary Tour](https://bonaventurecemeterytours.com)
+
+3:00 p.m.
+Anna Dinatali
+[Herb River Bluff](https://bit.ly/2X2UVi2)
+101 B Hope Lane
+Savannah, GA 31406
+<a href="tel:+9123135240">912.313.5240</a>
+
 
 # Day 12 -- Friday -- Sept 24
 
