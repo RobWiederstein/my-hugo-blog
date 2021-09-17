@@ -57,19 +57,15 @@ Dinner at:
 Walk:
 Holden Beach Fishing Pier
 
-
-Must cancel!!
-6:30 p.m.
-[Frog Hollow Tavern](https://froghollowtavern.com)
-1282 Broad St.
-Augusta, GA 30901
-<a href="tel:+7063646906">706.364.6906</a>
-Reservation made via open table
-
 # Day 5 -- Friday -- Sept 17
 
 1:30 p.m.
 kmcalick@brunswickforest.Com
+<!--Patrick Crean-->
+Brunswick Forest
+Welcome Center
+1007 Evangeline Dr.
+Leland, NC 28451 [map](https://www.google.com/maps/place/1007+Evangeline+Dr,+Leland,+NC+28451/@34.1965897,-78.0464519,17z/data=!3m1!4b1!4m5!3m4!1s0x89aa1967a4c8c2e9:0x53121516cb3ee43d!8m2!3d34.1965853!4d-78.0442632)
 
 
 # Day 6 -- Saturday -- Sept 18
