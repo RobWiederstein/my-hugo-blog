@@ -115,7 +115,10 @@ Check in 2:00 p.m. to 8:00 p.m.
 
 # Day 11 -- Thursday -- Sept 23
 
-[Bonaventure Cemetary Tour](https://bonaventurecemeterytours.com)
+Lunch at:
+The Public Kitchen & Bar
+1 W Liberty St.
+Savannah, GA 31401
 
 3:00 p.m.
 Anna Dinatali
@@ -124,10 +127,14 @@ Anna Dinatali
 Savannah, GA 31406
 <a href="tel:+9123135240">912.313.5240</a>
 
-
 # Day 12 -- Friday -- Sept 24
 
-[Savannah Southern Flavors Food, Pub Crawl, and History Combo Walking Tour](https://www.tripadvisor.com/AttractionProductReview-g60814-d15016590-Savannah_Southern_Flavors_Food_Pub_Crawl_and_History_Combo_Walking_Tour-Savannah_Ge.html)
+1:45 p.m.
+[Bonaventure Cemetary Tour](https://bonaventurecemeterytours.com)
+Welcome Center & Gift Shop
+415-B Bonaventure Rd.,
+Savannah, GA 31404
+<a href="tel:9122920960">912.292.0960</a>
 
 # Day 13 -- Saturday -- Sept 25
 

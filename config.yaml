@@ -2,7 +2,7 @@ baseurl: https://keen-noether-7d2e44.netlify.app/
 languageCode: en-us
 title: Rob Wiederstein - a blog about coding, data and public policy
 theme: hugo-lithium
-author: 
+author:
   name: Rob Wiederstein
   email: rob@robwiederstein.org
 googleAnalytics: 'UA-59724072-1'
@@ -27,6 +27,8 @@ menu:
       url: /trip/
     - name: Recipes
       url: /recipe/
+    - name: Dashboards
+      url: /dashboard/
 params:
   author: Rob Wiederstein
   MathJaxCDN: //cdnjs.cloudflare.com/ajax/libs
