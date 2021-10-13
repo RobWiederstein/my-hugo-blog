@@ -14,7 +14,7 @@ bibliography:
 csl: ../ieee-with-url.csl
 link-citations: yes
 nocite: |
-  @R-base, @R-blogdown, @R-tidyverse @R-golem, @R-shiny @R-usethis
+  @R-base, @R-blogdown, @R-tidyverse, @R-golem, @R-shiny, @R-usethis
 header:
   image: feature.jpg
   alt: retirement location dashboard
@@ -93,9 +93,7 @@ Locator Dashboard</a>
 
 This blog post was made possible thanks to:
 
-[@R-golem]Golem
-
-[@R-shiny]Shiny
+Colin Fay, one of the co-authors, of `golem`.
 
 # [References](#reference)
 
