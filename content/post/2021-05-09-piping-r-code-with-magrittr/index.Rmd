@@ -334,6 +334,8 @@ The inimitable Hadley Wickham and another of his books, "[R for Data Science](ht
 
 [Simpler R coding with pipes > the present and future of the magrittr package](https://www.r-bloggers.com/2014/08/simpler-r-coding-with-pipes-the-present-and-future-of-the-magrittr-package/)
 
+In September, 2021, a detailed [history](http://adolfoalvarez.cl/blog/2021-09-16-plumbers-chains-and-famous-painters-the-history-of-the-pipe-operator-in-r/) on piping was written by Adolpho Alvarez, "Plumbers, chains, and famous painters: The (updated) history of the pipe operator in R".
+
 # [References](#reference)
 
 <div id="refs"></div>

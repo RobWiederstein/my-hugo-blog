@@ -9,7 +9,16 @@
     <managingEditor>rob@robwiederstein.org (Rob Wiederstein)</managingEditor>
     <webMaster>rob@robwiederstein.org (Rob Wiederstein)</webMaster>
     <copyright>2021 Rob Wiederstein All rights reserved</copyright>
-    <lastBuildDate>Mon, 09 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 29 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Prepend or Pad Character to String</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/08/29/prepend-character-to-string/</link>
+      <pubDate>Sun, 29 Aug 2021 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/08/29/prepend-character-to-string/</guid>
+      <description>With the ubiquitous &amp;ldquo;FIPS&amp;rdquo; codes, there is no consistency in how they are formatted.  It seems like on every project, the merge is dependent upon the format matching in the datasets and then I&amp;rsquo;ve usually got a mess on my hands.  A missing &amp;ldquo;0&amp;rdquo; is often the problem.</description>
+    </item>
+    
     <item>
       <title>Motorcycle and Moped Accidents in Florida</title>
       <link>https://keen-noether-7d2e44.netlify.app/2021/08/09/motorcycle-and-moped-accidents-in-florida/</link>
@@ -179,15 +188,6 @@
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
       <guid>https://keen-noether-7d2e44.netlify.app/2021/03/10/nav-aid-characteristics/</guid>
       <description>There is a wide variety of navigational aids and they are classified according to an international system.</description>
-    </item>
-    
-    <item>
-      <title>Lighthouses of the Great Lakes</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/03/07/great-lakes-lighthouses/</link>
-      <pubDate>Sun, 07 Mar 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/03/07/great-lakes-lighthouses/</guid>
-      <description>This post uses the United States Coast Guard data to plot navigation aides.  Many observations were dropped for incomplete data, but those with a dwelling were colored differently.  Buoys were omitted too.</description>
     </item>
     
   </channel>

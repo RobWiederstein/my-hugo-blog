@@ -9,7 +9,25 @@
     <managingEditor>rob@robwiederstein.org (Rob Wiederstein)</managingEditor>
     <webMaster>rob@robwiederstein.org (Rob Wiederstein)</webMaster>
     <copyright>2021 Rob Wiederstein All rights reserved</copyright>
-    <lastBuildDate>Mon, 09 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 29 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Dashboards</title>
+      <link>https://keen-noether-7d2e44.netlify.app/dashboard/</link>
+      <pubDate>Sat, 18 Sep 2021 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://keen-noether-7d2e44.netlify.app/dashboard/</guid>
+      <description>     Retirement Locator        Retirement Locator         Retirement Locator        Retirement Locator      </description>
+    </item>
+    
+    <item>
+      <title>Prepend or Pad Character to String</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/08/29/prepend-character-to-string/</link>
+      <pubDate>Sun, 29 Aug 2021 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/08/29/prepend-character-to-string/</guid>
+      <description>With the ubiquitous &amp;ldquo;FIPS&amp;rdquo; codes, there is no consistency in how they are formatted.  It seems like on every project, the merge is dependent upon the format matching in the datasets and then I&amp;rsquo;ve usually got a mess on my hands.  A missing &amp;ldquo;0&amp;rdquo; is often the problem.</description>
+    </item>
+    
     <item>
       <title>Motorcycle and Moped Accidents in Florida</title>
       <link>https://keen-noether-7d2e44.netlify.app/2021/08/09/motorcycle-and-moped-accidents-in-florida/</link>
@@ -47,22 +65,21 @@ Day 3 &amp;ndash; Thursday &amp;ndash; July 7 Open</description>
       <pubDate>Sun, 01 Aug 2021 00:00:00 +0000</pubDate>
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
       <guid>https://keen-noether-7d2e44.netlify.app/trip/savannah/savannah/</guid>
-      <description>Day 1 &amp;ndash; Monday &amp;ndash; Sept 13 Arrive Asheville, North Carolina
+      <description>Day 1 &amp;ndash; Monday &amp;ndash; Sept 13 Arrive Asheville, North Carolina (6 hrs.)
 Wilson&amp;rsquo;s Riverfront RV Park
 225 Amboy Road, Asheville, NC 28806
 map
 1.828.254.4676
 (Confirmation: R00000004561)
+Gourmet Chip Company
+Heart of Downtown Asheville
 Day 2 &amp;ndash; Tuesday &amp;ndash; Sept 14 Biltmore Estate
 $76 beginning admission ticket
 One Lodge Street Asheville, NC 28803
 800.411.3812
-Day 3 &amp;ndash; Wednesday &amp;ndash; Sept 15 Open
-6:00 p.m
-Jettie Rae&amp;rsquo;s Oyster House
-143 Charlotte St
-Asheville, NC 28801
-Reservation made via resy</description>
+Tour takes about 2 hours.
+Day 3 &amp;ndash; Wednesday &amp;ndash; Sept 15 3:00 p.m.
+Michael Davis</description>
     </item>
     
     <item>
@@ -209,24 +226,6 @@ Day 4 &amp;ndash; Tuesday &amp;ndash; August 3 Drive around</description>
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
       <guid>https://keen-noether-7d2e44.netlify.app/2021/04/01/us-immigration-policies-in-the-trump-administration/</guid>
       <description>This post presents a timeline of US immigration policy from the Immigration Policy Tracking Project and Professor Lucas Guttentag.</description>
-    </item>
-    
-    <item>
-      <title>Animal Ageing and Longevity</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/03/27/animal-ageing-and-longevity/</link>
-      <pubDate>Sat, 27 Mar 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/03/27/animal-ageing-and-longevity/</guid>
-      <description>This post uses a data set on animal ageing and longevity. It is compiled and maintained by the Human Ageing and Genomics Resources (&amp;ldquo;HAGR&amp;rdquo;) and is located at the  &lt;a href=&#34;https://www.senescence.info&#34;&gt;senescence.info website&lt;/a&gt; website.</description>
-    </item>
-    
-    <item>
-      <title>Lost Cargo in Wisconsin Shipwrecks</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/03/20/lost-cargo-in-wisconsin-shipwrecks/</link>
-      <pubDate>Sat, 20 Mar 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/03/20/lost-cargo-in-wisconsin-shipwrecks/</guid>
-      <description>The Wisconsin Historical Society created a database of shipwrecks in its waters.  The shipwrecks occurred between the years 1679 and 1981.  The total number of observations with location data was 615.  A text field was included describing the cargo of the ships.  A wordcloud of the most frequently used words is created from the text field.</description>
     </item>
     
   </channel>
