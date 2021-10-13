@@ -84,7 +84,7 @@ There's a lot to experiment with in the dashboard and I hope you enjoy it!
 
 # [Dashboard](#dashboard)
 
-<h4 align='center'><a href='https://rob-wiederstein.shinyapps.io/retirementdash/'><img src="./feature.png" align='center' width = "600px"></a>
+<h4 align='center'><a href='https://rob-wiederstein.shinyapps.io/retirementdash/'><img src="./retirement-dashboard.jpg" align='center' width = "600px"></a>
 <a href='https://rob-wiederstein.shinyapps.io/retirementdash'>Retirement
 Locator Dashboard</a>
 <h4>
