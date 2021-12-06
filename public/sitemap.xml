@@ -3,23 +3,58 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/dashboard/</loc>
-    <lastmod>2021-09-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://keen-noether-7d2e44.netlify.app/</loc>
-    <lastmod>2021-08-29T00:00:00+00:00</lastmod>
+    <lastmod>2021-10-13T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/categories/</loc>
-    <lastmod>2021-08-29T00:00:00+00:00</lastmod>
+    <lastmod>2021-10-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/tags/golem/</loc>
+    <lastmod>2021-10-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://keen-noether-7d2e44.netlify.app/post/</loc>
+    <lastmod>2021-10-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/categories/r/</loc>
+    <lastmod>2021-10-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/10/13/retirement-locations-dashboard/</loc>
+    <lastmod>2021-10-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/tags/shiny/</loc>
+    <lastmod>2021-10-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/tags/</loc>
+    <lastmod>2021-10-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/dashboard/</loc>
+    <lastmod>2021-09-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/tags/dplyr/</loc>
+    <lastmod>2021-08-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/08/29/merging-dataframes-with-crosswalk-in-r/</loc>
     <lastmod>2021-08-29T00:00:00+00:00</lastmod>
   </url>
   
@@ -29,17 +64,7 @@
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/categories/r/</loc>
-    <lastmod>2021-08-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://keen-noether-7d2e44.netlify.app/tags/stringr/</loc>
-    <lastmod>2021-08-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/</loc>
     <lastmod>2021-08-29T00:00:00+00:00</lastmod>
   </url>
   
@@ -329,6 +354,26 @@
   </url>
   
   <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/recipe/advocado-toast/</loc>
+    <lastmod>2021-03-01T06:38:58-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/categories/appetizer/</loc>
+    <lastmod>2021-03-01T06:38:58-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/categories/drink/</loc>
+    <lastmod>2021-03-01T06:38:58-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/categories/lunch/</loc>
+    <lastmod>2021-03-01T06:38:58-06:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://keen-noether-7d2e44.netlify.app/trip/ludington/luddington/</loc>
     <lastmod>2021-03-01T00:00:00+00:00</lastmod>
   </url>
@@ -414,7 +459,17 @@
   </url>
   
   <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/14/try-syntax-highlighting/</loc>
+    <lastmod>2021-02-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://keen-noether-7d2e44.netlify.app/datasets/</loc>
+    <lastmod>2021-02-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://keen-noether-7d2e44.netlify.app/tags/r-markdown/</loc>
     <lastmod>2021-02-14T00:00:00+00:00</lastmod>
   </url>
   

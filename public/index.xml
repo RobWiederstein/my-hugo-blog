@@ -9,7 +9,16 @@
     <managingEditor>rob@robwiederstein.org (Rob Wiederstein)</managingEditor>
     <webMaster>rob@robwiederstein.org (Rob Wiederstein)</webMaster>
     <copyright>2021 Rob Wiederstein All rights reserved</copyright>
-    <lastBuildDate>Sun, 29 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 13 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Retirement Locations Dashboard </title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/10/13/retirement-locations-dashboard/</link>
+      <pubDate>Wed, 13 Oct 2021 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/10/13/retirement-locations-dashboard/</guid>
+      <description>A dashboard to help find appealing retirement locations in the U.S.</description>
+    </item>
+    
     <item>
       <title>Dashboards</title>
       <link>https://keen-noether-7d2e44.netlify.app/dashboard/</link>
@@ -17,6 +26,15 @@
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
       <guid>https://keen-noether-7d2e44.netlify.app/dashboard/</guid>
       <description>     Retirement Locator        Retirement Locator         Retirement Locator        Retirement Locator      </description>
+    </item>
+    
+    <item>
+      <title>Merging Dataframes with Crosswalk in R</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2021/08/29/merging-dataframes-with-crosswalk-in-r/</link>
+      <pubDate>Sun, 29 Aug 2021 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://keen-noether-7d2e44.netlify.app/2021/08/29/merging-dataframes-with-crosswalk-in-r/</guid>
+      <description>By default, Hugo automatically takes the first 70 words of your content as its summary and stores it into the &lt;code&gt;.Summary&lt;/code&gt; page variable for use in your templates. You may customize the summary length by setting &lt;code&gt;summaryLength&lt;/code&gt; in your site configuration &lt;em&gt;or&lt;/em&gt; you can set it in the front matter.</description>
     </item>
     
     <item>
@@ -208,24 +226,6 @@ Day 4 &amp;ndash; Tuesday &amp;ndash; August 3 Drive around</description>
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
       <guid>https://keen-noether-7d2e44.netlify.app/2021/04/10/us-post-offices-in-kentucky/</guid>
       <description>Data can yield new insights and enrich our understanding of history.  A new book by historian Cameron Blevins takes the location of U.S. post offices from 1639 to 2000 and plots them on a map by date of their establishment. The visual display shows the expansion of the American colonies westward.</description>
-    </item>
-    
-    <item>
-      <title>Convert List of Unequal Length to Dataframe</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/04/04/convert-list-of-unequal-length-to-dataframe/</link>
-      <pubDate>Sun, 04 Apr 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/04/04/convert-list-of-unequal-length-to-dataframe/</guid>
-      <description>Lists as a data type can be confusing but also useful.  They can hold data of different types and lengths, making them very versatile.  Lists can be named or nested and have the same or different lengths. This post deals with converting a list to a dataframe when it has unequal lengths.</description>
-    </item>
-    
-    <item>
-      <title>US Immigration Policies in the Trump Administration</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/04/01/us-immigration-policies-in-the-trump-administration/</link>
-      <pubDate>Thu, 01 Apr 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/04/01/us-immigration-policies-in-the-trump-administration/</guid>
-      <description>This post presents a timeline of US immigration policy from the Immigration Policy Tracking Project and Professor Lucas Guttentag.</description>
     </item>
     
   </channel>
