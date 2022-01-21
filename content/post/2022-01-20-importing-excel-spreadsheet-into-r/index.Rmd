@@ -1,0 +1,180 @@
+---
+title: Freddie Mac Mortgage Rates in R
+author: Rob Wiederstein
+date: '2022-01-20'
+slug: freddie-mac-mortgage-rate-data
+categories:
+  - R
+tags:
+  - readxl
+  - rio
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-readxl, @R-rio, @R-cellranger, @R-dplyr, @R-tibble, @R-highcharter
+header:
+  image: feature.jpg
+  alt: houses
+  caption: Photo by Jeswin Thomas from Pexels
+repo: ~
+summary: Data is sometimes stored as an Excel spreadsheet.  To work with it in `R`, it must be imported using a package. This project imports an excel spreadsheet of Freddie Mac mortgage rates using the `rio` and `readxl` packages.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown', #for blog
+      'rio',
+      'readxl',
+      'cellranger',
+      'dplyr',
+      'tibble',
+      'highcharter'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
+library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+
+# [Overview](#overview)
+
+Much of the retrievable data on the web is either stored in tabular form, like a csv, or an Excel spreadsheet.  Excel spreadsheets have the extensions ".xls" or ".xlsm". Packages exist to import an Excel spreadsheets in `R`. This post illustrates `readxl` and `rio` for importing Freddie Mac historical mortgage rate data. 
+
+Freddie Mac, a home mortgage processor, provides historical data on mortgage rates in a file with an extension ".xls". As of Jnauary 13, 2022, Freddie Mac's take on the home market was that mortgage rates have risen over the past week and would "dampen demand in the near future."  They cited rising home prices and more restrictive monetary policy as factors. [Freddie Mac, Mortgage Rates Increase Significantly (January 13, 2022)](http://www.freddiemac.com/pmms/).
+
+# [Background](#background)
+
+The `readxl` package is part of the tidyverse and its documentation may be found [here](https://readxl.tidyverse.org). For additional information, see "R for Data Science" chapter 11: [Data Import](https://r4ds.had.co.nz/data-import.html).
+
+One challenge in using the `readxl` package was that the Excel file must be downloaded first to a temporary file.  In other packages, a data file can be directly read from a url address.  Jenny Bryan, a major contributor to the package, discussed direct import on [github](https://github.com/tidyverse/readxl/issues/278).
+
+One workaround, which saved a couple lines of code, was the `rio` [package](https://github.com/leeper/rio).
+
+# [Import Freddie Mac Data](#import)
+
+```{r import-freddie-mac, echo=T, pretty=T, warning=F, tidy=F}
+library(readxl)
+library(cellranger)
+library(rio, quietly = T)
+df <- rio::import(file = 'http://www.freddiemac.com/pmms/docs/historicalweeklydata.xls',
+		  which ='Full History',
+		  range = cell_limits(c(8, 1), c(NA, 7)),
+		  col_names = c('date',
+		  	      'fixed_30_rate',
+		  	      'fixed_30_points',
+		  	      'fixed_15_rate',
+		  	      'fixed_15_points',
+		  	      'float_arm_rate',
+		  	      'float_arm_points'
+		  	      ),
+		  col_types = c('date', rep('text', 6))
+		  )
+```
+
+# [Build Data Frame](#build)
+
+```{r build-data-frame, echo=T, tidy=F, warning=F}
+# build
+library(dplyr)
+library(tibble)
+df.1<-
+	df |>
+	dplyr::select(c(date, contains("rate"))) |>
+	dplyr::mutate(across(-date, as.numeric)) |>
+	dplyr::mutate(across(-date, ~ round(., 3))) |>
+	tidyr::pivot_longer(-date, names_to = 'mortgage') |>
+	dplyr::mutate(date = as.Date(date, format = "%Y-%m-%d")) |> 
+  na.omit()
+```
+
+
+# [Plot Mortgage Data](#plot)
+
+```{r plot-mortgage-data, echo=T, tidy=F}
+# plot
+library(highcharter)
+	hc <- df.1 |>
+			hchart("line", hcaes(x = date,
+					     y = value,
+					     group = mortgage,
+			)) |>
+	  hc_title(
+    text = "US Historical Mortgage Rates"
+    ) |> 
+  hc_subtitle(
+    text = "Source: Freddie Mac"
+    ) |> 
+			hc_xAxis(title = list(text = '')) |>
+			hc_yAxis(title = list(text = ''),
+				 labels = list(format = "{value}%"))
+		hc
+```
+
+
+# [Conclusion](#conclusion)
+
+Excel data was successfully imported using the `readxl` and `rio` package.  US bond markets have seen yields rise as the US Federal Reserve tightens monetary policy.  Freddie Mac data show mortgage rates have risen as well, but the change is hardly noticeable when viewed from a long term perspective.
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+- [Freddie Mac](http://www.freddiemac.com/pmms/)
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```
