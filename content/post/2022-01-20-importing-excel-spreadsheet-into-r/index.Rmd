@@ -80,9 +80,9 @@ knitr::write_bib(.packages(), "./packages.bib")
 
 # [Overview](#overview)
 
-Much of the retrievable data on the web is either stored in tabular form, like a csv, or an Excel spreadsheet.  Excel spreadsheets have the extensions ".xls" or ".xlsm". Packages exist to import an Excel spreadsheets in `R`. This post illustrates `readxl` and `rio` for importing Freddie Mac historical mortgage rate data. 
+Much of the retrievable data on the web is either stored in tabular form, like a csv, or an Excel spreadsheet.  Excel spreadsheets have the extensions ".xls" or ".xlsx". Packages exist to import an Excel spreadsheets in `R`. This post illustrates `readxl` and `rio` for importing Freddie Mac historical mortgage rate data. 
 
-Freddie Mac, a home mortgage processor, provides historical data on mortgage rates in a file with an extension ".xls". As of Jnauary 13, 2022, Freddie Mac's take on the home market was that mortgage rates have risen over the past week and would "dampen demand in the near future."  They cited rising home prices and more restrictive monetary policy as factors. [Freddie Mac, Mortgage Rates Increase Significantly (January 13, 2022)](http://www.freddiemac.com/pmms/).
+Freddie Mac, a home mortgage processor, provides historical data on mortgage rates in a file with an extension ".xls". As of January 13, 2022, Freddie Mac's take on the home market was that mortgage rates have risen over the past week and would "dampen demand in the near future."  They cited rising home prices and more restrictive monetary policy as factors. [Freddie Mac, Mortgage Rates Increase Significantly (January 13, 2022)](http://www.freddiemac.com/pmms/).
 
 # [Background](#background)
 
