@@ -9,7 +9,16 @@
     <managingEditor>rob@robwiederstein.org (Rob Wiederstein)</managingEditor>
     <webMaster>rob@robwiederstein.org (Rob Wiederstein)</webMaster>
     <copyright>2021 Rob Wiederstein All rights reserved</copyright>
-    <lastBuildDate>Wed, 13 Oct 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 20 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Freddie Mac Mortgage Rates in R</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2022/01/20/freddie-mac-mortgage-rate-data/</link>
+      <pubDate>Thu, 20 Jan 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://keen-noether-7d2e44.netlify.app/2022/01/20/freddie-mac-mortgage-rate-data/</guid>
+      <description>Data is sometimes stored as an Excel spreadsheet.  To work with it in &lt;code&gt;R&lt;/code&gt;, it must be imported using a package. This project imports an excel spreadsheet of Freddie Mac mortgage rates using the &lt;code&gt;rio&lt;/code&gt; and &lt;code&gt;readxl&lt;/code&gt; packages.</description>
+    </item>
+    
     <item>
       <title>Retirement Locations Dashboard </title>
       <link>https://keen-noether-7d2e44.netlify.app/2021/10/13/retirement-locations-dashboard/</link>
@@ -26,15 +35,6 @@
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
       <guid>https://keen-noether-7d2e44.netlify.app/dashboard/</guid>
       <description>     Retirement Locator        Retirement Locator         Retirement Locator        Retirement Locator      </description>
-    </item>
-    
-    <item>
-      <title>Merging Dataframes with Crosswalk in R</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/08/29/merging-dataframes-with-crosswalk-in-r/</link>
-      <pubDate>Sun, 29 Aug 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/08/29/merging-dataframes-with-crosswalk-in-r/</guid>
-      <description>By default, Hugo automatically takes the first 70 words of your content as its summary and stores it into the &lt;code&gt;.Summary&lt;/code&gt; page variable for use in your templates. You may customize the summary length by setting &lt;code&gt;summaryLength&lt;/code&gt; in your site configuration &lt;em&gt;or&lt;/em&gt; you can set it in the front matter.</description>
     </item>
     
     <item>

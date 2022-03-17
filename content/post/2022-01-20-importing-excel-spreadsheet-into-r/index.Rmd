@@ -86,7 +86,7 @@ Freddie Mac, a home mortgage processor, provides historical data on mortgage rat
 
 # [Background](#background)
 
-The `readxl` package is part of the tidyverse and its documentation may be found [here](https://readxl.tidyverse.org). For additional information, see "R for Data Science" chapter 11: [Data Import](https://r4ds.had.co.nz/data-import.html).  The `rio` package documentation can be found [here](https://thomasleeper.com/rio/reference/import.html).  The `import` function works in tandem with `readxl` so that `read_xls`varguments can be passed via `...`.
+The `readxl` package is part of the tidyverse and its documentation may be found [here](https://readxl.tidyverse.org). For additional information, see "R for Data Science" chapter 11: [Data Import](https://r4ds.had.co.nz/data-import.html).  The `rio` package documentation can be found [here](https://thomasleeper.com/rio/reference/import.html).  The `import` function works in tandem with `readxl` so that `read_xls` arguments can be passed via `...`.
 
 One challenge in using the `readxl` package was that the Excel file must be downloaded first to a temporary file.  In other packages, a data file can be directly read from a url address.  Jenny Bryan, a major contributor to the package, discussed direct import on [github](https://github.com/tidyverse/readxl/issues/278).
 

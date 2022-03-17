@@ -78,7 +78,46 @@ and/or
 
 # Day 7 -- Monday -- July 11
 
-Arrive Madison, Wisconsin
+Depart for South Baymouth, Ontario, Canada
+
+# Day 8 -- Tuesday -- July 12
+
+Depart for  Niagra Falls, Ontario, Canada
+
+[Owen Sound Transportation Company](https://www.ontarioferries.com/ms-chi-cheemaun/)
+Fare $204.17
+
+# Day 9 -- Wednesday -- July 13
+
+Maid of the Mist
+
+# Day 10 -- Thursday -- July 14
+
+See play.
+
+# Day 11 -- Friday -- July 15
+
+See play.
+
+# Day 12 -- Saturday -- July 16
+
+Depart for Seneca Falls, New York, USA
+
+# Day 13 -- Sunday -- July 17
+
+[Elizabeth Cady Stanton Home](https://www.nps.gov/wori/learn/historyculture/elizabeth-cady-stanton-house.htm)
+No fees.
+
+[Women's Rights National Historical Park](https://www.nps.gov/wori/index.htm)
+No fees.
+
+# Day 14 -- Monday -- July 18
+
+[George Eastman Museum](https://www.eastman.org)
+900 East Avenue
+Rochester, NY 14607
+Admission $18.00
+
 
 # Miscellaneous
 
