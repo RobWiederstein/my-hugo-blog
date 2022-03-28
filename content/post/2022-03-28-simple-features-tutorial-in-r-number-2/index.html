@@ -62,7 +62,7 @@ summary: This post is an introduction to working with the `sf` package.  "sf" is
 </div>
 <div id="introduction" class="section level1">
 <h1><a href="#overview">Introduction</a></h1>
-<p>This post is an introduction to working with the <code>sf</code> package. “sf” is short for “simple features” and is an open-source model and standard to interact with vector geometries. Downloads of the <code>sf</code> package now exceed other <code>R</code> packages dealing with spatial data.</p>
+<p>This post is an introduction to working with the <code>sf</code> package. “sf” is short for “simple features” and is an open-source model and standard to interact with vector geometries. Downloads of the <code>sf</code> package now exceed other <code>R</code> packages dealing with spatial data. And going forward, <code>sf</code> is likely to become the primary package in spatial analysis. According to Roger Bivand, an early pioneer in the use of R for spatial analysis, “the transition to sf from sp, rgdal and rgeos should be unproblematic. Shifting to new visualization packages like tmap, cartography and mapview should also be relatively easy, and use of sf and the new visualization packages should certainly become standard for new research and teaching.”<span class="citation"><a href="#ref-bivandProgressEcosystemRepresenting2021" role="doc-biblioref">[1]</a></span></p>
 <p>The simple features <a href="https://r-spatial.github.io/sf/">package</a> was first released in January 2017. Its design and philosophy mirror other packages included in the “tidyverse”. Thus, manipulating data in <code>sf</code> classed objects is similar to how it would be accomplished in <code>dplyr</code>.</p>
 <p>Robin Lovelace is an authority in the field who has been immensely active in geospatial development for R. He is a contributor to the <code>sf</code> package. His book, “<a href="https://geocompr.robinlovelace.net/index.html">Geocomputation with R</a>” is recommended. My first exposure to his work was a tutorial that used a previous package and his work was consulted every time I had to do a merge/join.</p>
 <p>This post extracts portions of his book that are most commonly performed in everyday spatial analysis. An excellent <a href="https://github.com/rstudio/cheatsheets/blob/main/sf.pdf">cheat sheet</a> is also available. Two sources of data are used: the US Census Bureau cartographic boundaries for counties and USDA county unemployment files.</p>
@@ -104,7 +104,7 @@ ca &lt;-
 </div>
 <div id="sanity-check" class="section level1">
 <h1><a href="#sanity-check">Sanity Check</a></h1>
-<p>Before proceeding futher, efficiency requires the collected data represents what we intended; namely, the state of California. After inspection, we appear headed on the right track.</p>
+<p>Before proceeding further, efficiency requires the collected data represents what we intended; namely, the state of California. After inspection, we appear headed on the right track.</p>
 <pre class="r"><code>plot(ca |&gt; dplyr::select(countyfp))</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/sanity-check-1.svg" width="576" style="display: block; margin: auto;" /></p>
 </div>
@@ -196,7 +196,7 @@ usda &lt;- rio::import(
         dplyr::filter(state == &quot;CA&quot;) |&gt; 
         tidyr::separate(fips_code, into = c(&quot;statefp&quot;, &quot;countyfp&quot;), sep = 2) |&gt; 
         dplyr::select(statefp, countyfp, unemployment_rate_2020)</code></pre>
-<p>The files’ order matters when perfoming the merge. By putting the “ca” simple feature class dataframe first, the subsequent “usda” dataframe morphs into the same simple feature class and is now combined. See Professor Lovelace’s Geospatial in R 3.2.4 <a href="https://geocompr.robinlovelace.net/attr.html#vector-attribute-joining">vector attribute joining</a> for more details.</p>
+<p>The files’ order matters when performing the merge. By putting the “ca” simple feature class dataframe first, the subsequent “usda” dataframe morphs into the same simple feature class and is now combined. See Professor Lovelace’s Geospatial in R 3.2.4 <a href="https://geocompr.robinlovelace.net/attr.html#vector-attribute-joining">vector attribute joining</a> for more details. “The most common type of attribute join on spatial data takes an sf object as the first argument and adds columns to it from a data.frame specified as the second argument.”<span class="citation"><a href="#ref-lovelaceGeocomputation2019" role="doc-biblioref">[2]</a></span></p>
 <pre class="r"><code>ca_choropleth &lt;-
         dplyr::left_join(ca, usda, by = c(&quot;statefp&quot;, &quot;countyfp&quot;))</code></pre>
 </div>
@@ -222,26 +222,32 @@ usda &lt;- rio::import(
 <div id="references" class="section level1">
 <h1><a href="#reference">References</a></h1>
 <div id="refs" class="references csl-bib-body">
+<div id="ref-bivandProgressEcosystemRepresenting2021" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R. S. Bivand, <span>“Progress in the <span>R</span> ecosystem for representing and handling spatial data,”</span> <em>Journal of Geographical Systems</em>, vol. 23, no. 4, pp. 515–546, 2021. </div>
+</div>
+<div id="ref-lovelaceGeocomputation2019" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">R. Lovelace, J. Nowosad, and J. Muenchow, <em>Geocomputation with <span>R</span></em>. <span>Chapman and Hall/CRC</span>, 2019. </div>
+</div>
 <div id="ref-R-base" class="csl-entry">
-<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2021 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2021 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
 </div>
 <div id="ref-R-blogdown" class="csl-entry">
-<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
 </div>
 <div id="ref-R-janitor" class="csl-entry">
-<div class="csl-left-margin">[3] </div><div class="csl-right-inline">S. Firke, <em>Janitor: Simple tools for examining and cleaning dirty data</em>. 2021 [Online]. Available: <a href="https://github.com/sfirke/janitor">https://github.com/sfirke/janitor</a></div>
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">S. Firke, <em>Janitor: Simple tools for examining and cleaning dirty data</em>. 2021 [Online]. Available: <a href="https://github.com/sfirke/janitor">https://github.com/sfirke/janitor</a></div>
 </div>
 <div id="ref-R-leaflet" class="csl-entry">
-<div class="csl-left-margin">[4] </div><div class="csl-right-inline">J. Cheng, B. Karambelkar, and Y. Xie, <em>Leaflet: Create interactive web maps with the JavaScript leaflet library</em>. 2022 [Online]. Available: <a href="https://rstudio.github.io/leaflet/">https://rstudio.github.io/leaflet/</a></div>
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">J. Cheng, B. Karambelkar, and Y. Xie, <em>Leaflet: Create interactive web maps with the JavaScript leaflet library</em>. 2022 [Online]. Available: <a href="https://rstudio.github.io/leaflet/">https://rstudio.github.io/leaflet/</a></div>
 </div>
 <div id="ref-R-RColorBrewer" class="csl-entry">
-<div class="csl-left-margin">[5] </div><div class="csl-right-inline">E. Neuwirth, <em>RColorBrewer: ColorBrewer palettes</em>. 2014 [Online]. Available: <a href="https://CRAN.R-project.org/package=RColorBrewer">https://CRAN.R-project.org/package=RColorBrewer</a></div>
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">E. Neuwirth, <em>RColorBrewer: ColorBrewer palettes</em>. 2014 [Online]. Available: <a href="https://CRAN.R-project.org/package=RColorBrewer">https://CRAN.R-project.org/package=RColorBrewer</a></div>
 </div>
 <div id="ref-R-rio" class="csl-entry">
-<div class="csl-left-margin">[6] </div><div class="csl-right-inline">C. Chan and T. J. Leeper, <em>Rio: A swiss-army knife for data i/o</em>. 2021 [Online]. Available: <a href="https://github.com/leeper/rio">https://github.com/leeper/rio</a></div>
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline">C. Chan and T. J. Leeper, <em>Rio: A swiss-army knife for data i/o</em>. 2021 [Online]. Available: <a href="https://github.com/leeper/rio">https://github.com/leeper/rio</a></div>
 </div>
 <div id="ref-R-sf" class="csl-entry">
-<div class="csl-left-margin">[7] </div><div class="csl-right-inline">E. Pebesma, <em>Sf: Simple features for r</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=sf">https://CRAN.R-project.org/package=sf</a></div>
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">E. Pebesma, <em>Sf: Simple features for r</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=sf">https://CRAN.R-project.org/package=sf</a></div>
 </div>
 </div>
 </div>
