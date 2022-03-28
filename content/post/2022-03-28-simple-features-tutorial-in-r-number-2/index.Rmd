@@ -1,0 +1,290 @@
+---
+title: Simple Features Tutorial in R Number 2
+author: Rob Wiederstein
+date: '2022-03-28'
+slug: simple-features-tutorial-in-r-number-2
+categories:
+  - R
+tags:
+  - sf
+  - leaflet
+layout: layouts/post/single
+draft: false
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-sf, @R-leaflet, @R-rio, @R-RColorBrewer,
+  @R-RColorBrewer, @R-janitor
+header:
+  image: banner.jpg
+  alt: sf_package
+  caption: logo for the sf package
+repo: ~
+summary: This post is an introduction to working with the `sf` package.  "sf" is short for "simple features" and is an open source standard to interact with vector geometries. Downloads of the `sf` package now exceed other R packages dealing with spatial data.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'blogdown',
+      'sf',
+      'leaflet',
+      'rio',
+      'RColorBrewer',
+      'janitor'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=F,
+  comment='',
+  cache=F,
+  dev='svg',
+  echo=F
+)
+```
+
+
+```{r write-package-bib, echo = F, cache=F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+# [Overview](#overview)
+
+# [Introduction](#overview)
+
+This post is an introduction to working with the `sf` package.  "sf" is short for "simple features" and is an open source model and standard to interact with vector geometries. Downloads of the `sf` package now exceed other `R` packages dealing with spatial data.
+
+The simple features [package](https://r-spatial.github.io/sf/) was first released in January, 2017. Its design and philosophy is to mirror other packages included in the "tidyverse".  Thus, manipulating data in  `sf` classed objects is similar to how it would be accomplished in `dplyr`.
+
+Robin Lovelace is an authority in the field who has been immensely active in geospatial development for R.  He is a contributor to the `sf` package.  His book, "[Geocomputation with R](https://geocompr.robinlovelace.net/index.html)" is recommended. My first exposure to his work was a tutorial that used a previous package and his work was consulted every time I had to do a merge/join.
+
+This post extracts portions of his book that are most commonly performed in everyday spatial analysis. An excellent [cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/sf.pdf) is also available.  Two sources of data are used: the US Census Bureau cartographic boundaries for counties and USDA county unememployment files.
+
+# [US Census Bureau](#uscb)
+
+The county geospatial [data](https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html) come from the US Census.
+
+```{r fetch-census-bureau, message = F, include = F}
+#download file to local drive
+url <- "https://www2.census.gov/geo/tiger/GENZ2020/shp/cb_2020_us_county_20m.zip"
+destfile <- "cb_2020_us_county_20m.zip"
+if(!file.exists(destfile)){download.file(url = url, destfile = destfile)}
+```
+
+```{r load-data, echo = T}
+#read in file
+library(sf)
+#all counties
+counties <- 
+  sf::st_read(
+    dsn = "cb_2020_us_county_20m",
+    #do not put file extentsion .shp on end!
+    layer = "cb_2020_us_county_20m"
+    ) |>
+  # convert coordinates to simple feature
+  sf::st_transform('+proj=longlat +datum=WGS84') |>
+  # reduce file size
+	sf::st_simplify() |> 
+  # convert variables to lowercase
+  dplyr::rename_all(~janitor::make_clean_names(.x))
+```
+
+# [Subset to State](#subset)
+
+Filter the dataframe to the state of interest. The result can be reached using a `dplyr` pipe.
+
+```{r subset-to-state, echo = T}
+#california fips is "06"
+ca <- 
+  counties |> 
+  dplyr::filter(grepl("06", statefp))
+```
+
+# [Sanity Check](#sanity-check)
+
+Before we get too much further down this rabbit hole, let's check and make sure we have something to plot. Good news!  That looks like California to me.
+
+```{r sanity-check, echo = T}
+plot(ca |> dplyr::select(countyfp))
+```
+
+
+# [Subset to Counties](#subset-counties)
+ 
+ Next, let's choose three random California counties and plot them using Leaflet.
+ 
+```{r subset-to-counties, echo = T}
+ca_counties <-
+  ca |> 
+  dplyr::filter(name %in% c("Los Angeles", "San Francisco", "Napa")) 
+
+library(leaflet)
+  leaflet() |> 
+    fitBounds(-122.6, 32.8, -117.6, 38.8) |> 
+    addTiles() |> 
+    addPolygons(data = ca_counties,
+                popup = ~name)
+```
+# [Group Counties by Dplyr](#group-counties-dplyr)
+
+```{r group-counties-by-dplyr, echo=T}
+counties_join_by_group <-
+	ca |>
+	dplyr::mutate(number = 1) |>
+	dplyr::group_by(statefp) |>
+	dplyr::summarize(tot = sum(number))
+```
+
+```{r map-counties-by-dplyr, echo = T}
+#map 
+leaflet() |> 
+    #fitBounds(-124.4, 32.5, -114.1,  42) |> 
+        setView(-120.52462403790528, 37.74238197955183, zoom = 5) |>
+    addTiles() |> 
+    addPolygons(data = counties_join_by_group)
+```
+
+
+# [Counties Join by Union](#counties-join-by-union)
+
+The other way to join geographic subdivisions together is through the use of `sf::st_union()`.
+
+```{r join-by-union, echo = T}
+# join counties into California
+counties_join_by_union <- sf::st_union(ca)
+# map
+leaflet() %>%
+	fitBounds(-124.4, 32.5, -114.1,  42) |> 
+	#base groups
+	addTiles(group = "OSM (default)") |>
+	addPolygons(
+		data = counties_join_by_union
+	)
+```
+
+# [Calculate Centroids](#centroids)
+
+```{r centroids, echo = T}
+centroids <- sf::st_centroid(ca)
+leaflet() |>
+	fitBounds(-122.6, 32.8, -117.6, 38.8) |> 
+	#base groups
+	addTiles(group = "OSM (default)") |>
+	#layer groups
+	addPolygons(data = sf::st_union(ca),
+		    group = "State") |>
+	addPolygons(data = ca,
+		    group = "Counties") |>
+	addMarkers(lat = unlist(lapply(centroids$geometry, "[[", 2)),
+		   lng = unlist(lapply(centroids$geometry, "[[", 1)),
+		   group = "Centroids"
+	) |>
+	#layer control
+	addLayersControl(
+		overlayGroups = c("State", "Counties", "Centroids"),
+		position = "topright",
+		options = layersControlOptions(collapsed = FALSE)
+	) |>
+	# hide
+	hideGroup(c("State", "Counties", "Centroids"))
+```
+
+# [Merge](#merge)
+
+Maps are commonly used as choropleths, i.e. the polygon is colored based on a another variable. Thus, spatial data are often merged with other data.  Here, the USDA compiles some data by county in the US. The data are winnowed to identification variables and a single numeric named "unemployment_rate_2020". Then the USDA data is merged with the California counties data.
+
+```{r fetch-usda, echo = T, cache = T}
+file <- 'https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.xlsx'
+usda <- rio::import(
+        file = file,
+        skip = 4
+) |> 
+        dplyr::rename_all(~janitor::make_clean_names(.x)) |> 
+        dplyr::select(fips_code:area_name, unemployment_rate_2020) |> 
+        dplyr::filter(state == "CA") |> 
+        tidyr::separate(fips_code, into = c("statefp", "countyfp"), sep = 2) |> 
+        dplyr::select(statefp, countyfp, unemployment_rate_2020)
+```
+
+The order that the files are included in the merge matters. By putting the "ca" simple feature class dataframe first, the subsequent "usda" dataframe morphes into the same simple feature class and is now combined. See Professor Lovelace's Geospatial in R 3.2.4 [vector attribute joining](https://geocompr.robinlovelace.net/attr.html#vector-attribute-joining) for more details.
+
+
+```{r merge-usda-uscb, echo = T}
+ca_choropleth <-
+        dplyr::left_join(ca, usda, by = c("statefp", "countyfp"))
+```
+
+
+# [Choropleth Map](#choropleth)
+
+California counties are shaded by the 2020 unemployment rate.
+
+
+```{r map-usda-uscb, eval = T, include = T}
+pal <- colorNumeric(palette = RColorBrewer::brewer.pal(5, "BrBG"),
+             domain = ca_choropleth$unemployment_rate_2020
+)
+leaflet() |>
+	fitBounds(-122.6, 32.8, -117.6, 38.8) |> 
+	#base groups
+	addTiles(group = "OSM (default)") |> 
+        addPolygons(data = ca_choropleth,
+                    color = ~pal(unemployment_rate_2020),
+                    label = ~unemployment_rate_2020)
+
+```
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+- [Robin Lovelace](https://www.robinlovelace.net)
+
+- [USDA](https://www.usda.gov)
+
+- [US Census Bureau](https://www.census.gov/en.html)
+
+# [Conclusion](#conclusion)
+
+This tutorial demonstrated how to: (1) read in, transform, and minimize a shape file; (2) how to select a single state's counties from the Census Bureau cartographic boundaries file; (3) plot a shapefile using the simple `plot()` function; (4) dissolve internal boundaries of a state using the `dplyr::group_by()` function and the `sf::st_union()` function; (5) calculate the geographic centers of polygons with the `sf::st_centroid()` function; (6) use the layers feature in `leaflet` to place multiple geographic datasets onto a map; (7) merge a dataframe/tibble/datatable with a simple feature collection; (8) create a choropleth map in leaflet using a divergent color palette from `RColorBrewer`.
+
+
+
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```

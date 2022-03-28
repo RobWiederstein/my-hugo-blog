@@ -80,12 +80,28 @@ and/or
 
 Depart for South Baymouth, Ontario, Canada
 
+[Sault Ste. Marie Crossing -- Tourism Bureau](https://saulttourism.com/plan/border-crossing/)
+Immigration Officer at the Sault Ste. Marie, Ontario Port of Entry 
+[1.800.461.9999](tel:+18004619999)
+
+[Batman's Cottages and Campground](https://batmanscamping.com)
+11408 ON-6
+Sheguiandah, ON P0P 1W0
+[info@batmanscamping.com](info@batmanscamping.com)
+
+
 # Day 8 -- Tuesday -- July 12
 
-Depart for  Niagra Falls, Ontario, Canada
+Depart for  Niagra Falls, Ontario
 
 [Owen Sound Transportation Company](https://www.ontarioferries.com/ms-chi-cheemaun/)
 Fare $204.17
+
+Campark Resorts 
+9387 Lundy's Lane 
+Niagara Falls, ON L2E 6S4 Canada
+[1.905.358.3873](tel:+19053583873)
+[info@campark.com](mail:info@campark.com)
 
 # Day 9 -- Wednesday -- July 13
 
@@ -103,12 +119,22 @@ See play.
 
 Depart for Seneca Falls, New York, USA
 
+[Twilight on the Erie](https://www.twilightrv.com/index.html)
+1100 Marina Pkwy
+Macedon, NY 14502
+[1.315.986.7337](tel:+13159867337)
+
+
 # Day 13 -- Sunday -- July 17
 
 [Elizabeth Cady Stanton Home](https://www.nps.gov/wori/learn/historyculture/elizabeth-cady-stanton-house.htm)
+32 Washington St. 
+Seneca Falls, NY 13148
 No fees.
 
 [Women's Rights National Historical Park](https://www.nps.gov/wori/index.htm)
+136 Fall Street 
+Seneca Falls, NY 13148
 No fees.
 
 # Day 14 -- Monday -- July 18
@@ -117,6 +143,15 @@ No fees.
 900 East Avenue
 Rochester, NY 14607
 Admission $18.00
+
+[Susan B. Anthony Museum and House](https://susanb.org)
+17 Madison Street
+Rochester,  NY 14608
+Admission $15.00
+
+# Day 15 -- Tuesday -- July 19
+
+Depart for Eddyville, Kentucky.
 
 
 # Miscellaneous

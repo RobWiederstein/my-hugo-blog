@@ -9,7 +9,16 @@
     <managingEditor>rob@robwiederstein.org (Rob Wiederstein)</managingEditor>
     <webMaster>rob@robwiederstein.org (Rob Wiederstein)</webMaster>
     <copyright>2021 Rob Wiederstein All rights reserved</copyright>
-    <lastBuildDate>Thu, 20 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 28 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Simple Features Tutorial in R Number 2</title>
+      <link>https://keen-noether-7d2e44.netlify.app/2022/03/28/simple-features-tutorial-in-r-number-2/</link>
+      <pubDate>Mon, 28 Mar 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://keen-noether-7d2e44.netlify.app/2022/03/28/simple-features-tutorial-in-r-number-2/</guid>
+      <description>By default, Hugo automatically takes the first 70 words of your content as its summary and stores it into the &lt;code&gt;.Summary&lt;/code&gt; page variable for use in your templates. You may customize the summary length by setting &lt;code&gt;summaryLength&lt;/code&gt; in your site configuration &lt;em&gt;or&lt;/em&gt; you can set it in the front matter.</description>
+    </item>
+    
     <item>
       <title>Freddie Mac Mortgage Rates in R</title>
       <link>https://keen-noether-7d2e44.netlify.app/2022/01/20/freddie-mac-mortgage-rate-data/</link>
@@ -217,15 +226,6 @@ Day 4 &amp;ndash; Tuesday &amp;ndash; August 3 Drive around</description>
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
       <guid>https://keen-noether-7d2e44.netlify.app/2021/04/19/commercial-fish-production-great-lakes/</guid>
       <description>The Great Lakes Fishery Commission (GLFC) published data on the commercial fish catch in the Great Lakes from 1867 to 2015. Each lake is unique and its features impact what fish are present, their composition over time and the overall volume of commercial fish catch.</description>
-    </item>
-    
-    <item>
-      <title>US Post Offices in Kentucky</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/04/10/us-post-offices-in-kentucky/</link>
-      <pubDate>Sat, 10 Apr 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/04/10/us-post-offices-in-kentucky/</guid>
-      <description>Data can yield new insights and enrich our understanding of history.  A new book by historian Cameron Blevins takes the location of U.S. post offices from 1639 to 2000 and plots them on a map by date of their establishment. The visual display shows the expansion of the American colonies westward.</description>
     </item>
     
   </channel>

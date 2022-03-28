@@ -1,0 +1,140 @@
+---
+title: Styling R Code for Better Development
+author: Rob Wiederstein
+date: '2022-03-09'
+slug: styling-r-code-for-better-development
+categories:
+  - R
+tags: []
+layout: layouts/post/single
+draft: yes
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: ~
+  alt: ~
+  caption: ~
+repo: ~
+summary: As a script grows in both length and complexity, it becomes difficult to see which parentheses and brackets match with one another.  Consistent styling is crucial to being able to debug problematic code.  This post offers some tips.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown',
+      'styler'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
+library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+# [Overview](#overview)
+
+Interactive programming with `shiny` can result in deep nesting of code.  A closing bracket or parentheses can either be mismatched or omitted completely. The solution is to style the code consistently. Yes.
+
+# [Background](#background)
+
+The `styler` package in R is designed to style R code. 
+
+```{r load-pkg, eval=FALSE}
+#install package
+install.packages("styler")
+library(styler)
+```
+
+The package [overview](https://styler.r-lib.org/index.html) details its main functions: `style_pkg()`, `style_file()` and `style_text()`. These functions are added to the "Addins" menu in Rstudio.
+
+```{r example-styler, echo = T}
+#example
+style_text("readr::read_csv('./my_table.csv',col_names=c('a','b'))")
+```
+
+The tidyverse style guide is a sensible default for writing R code.
+
+```{r example-tidyverse-style, echo = T}
+# example tidyverse style
+styler::style_text("call( 1)", style = tidyverse_style, scope = "spaces")
+
+```
+
+Space indentation is 2 spaces for tidyverse style.  This is problematic when writing deeply nested code and fails to provide enough contrast for bracket matching.  While everyone has an opinion, my preference is for code to be written with indentation of 6 spaces.
+
+```{r code-for-indentation, eval = F}
+#indent code by six spaces
+styler::style_file("./my_file.R", style = tidyverse_style(indent_by = 6))
+```
+
+
+  
+
+
+
+
+# [Conclusion](#conclusion)
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+[The `styler` package](https://styler.r-lib.org/index.html)
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```
