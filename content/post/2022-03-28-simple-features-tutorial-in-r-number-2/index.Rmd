@@ -1,5 +1,5 @@
 ---
-title: Simple Features Tutorial in R Number 2
+title: Simple Features Tutorial in R
 author: Rob Wiederstein
 date: '2022-03-28'
 slug: simple-features-tutorial-in-r-number-2
@@ -76,7 +76,7 @@ knitr::write_bib(.packages(), "./packages.bib")
 
 This post is an introduction to working with the `sf` package.  "sf" is short for "simple features" and is an open-source model and standard to interact with vector geometries. Downloads of the `sf` package now exceed other `R` packages dealing with spatial data. And going forward, `sf` is likely to become the primary package in spatial analysis.  
 
-According to Roger Bivand, an early pioneer in the use of R for spatial analysis, "the transition to sf from sp, rgdal and rgeos should be unproblematic. Shifting to new visualization packages like tmap, cartography and mapview should also be relatively easy, and use of sf and the new visualization packages should certainly become standard for new research and teaching."[@bivandProgressEcosystemRepresenting2021] 
+According to Roger Bivand, an early pioneer in the use of R for spatial analysis, "the transition to `sf` from `sp`, `rgdal`, and `rgeos` should be unproblematic. Shifting to new visualization packages like `tmap`, `cartography` and `mapview` should also be relatively easy, and use of `sf` and the new visualization packages should certainly become standard for new research and teaching."[@bivandProgressEcosystemRepresenting2021] 
 
 The simple features [package](https://r-spatial.github.io/sf/) was first released in January 2017. Its design and philosophy mirror other packages included in the "tidyverse".  Thus, manipulating data in  `sf` classed objects is similar to how it would be accomplished in `dplyr`.
 
