@@ -74,13 +74,13 @@ knitr::write_bib(.packages(), "./packages.bib")
 
 # [Introduction](#overview)
 
-This post is an introduction to working with the `sf` package.  "sf" is short for "simple features" and is an open source model and standard to interact with vector geometries. Downloads of the `sf` package now exceed other `R` packages dealing with spatial data.
+This post is an introduction to working with the `sf` package.  "sf" is short for "simple features" and is an open-source model and standard to interact with vector geometries. Downloads of the `sf` package now exceed other `R` packages dealing with spatial data.
 
-The simple features [package](https://r-spatial.github.io/sf/) was first released in January, 2017. Its design and philosophy is to mirror other packages included in the "tidyverse".  Thus, manipulating data in  `sf` classed objects is similar to how it would be accomplished in `dplyr`.
+The simple features [package](https://r-spatial.github.io/sf/) was first released in January 2017. Its design and philosophy mirror other packages included in the "tidyverse".  Thus, manipulating data in  `sf` classed objects is similar to how it would be accomplished in `dplyr`.
 
 Robin Lovelace is an authority in the field who has been immensely active in geospatial development for R.  He is a contributor to the `sf` package.  His book, "[Geocomputation with R](https://geocompr.robinlovelace.net/index.html)" is recommended. My first exposure to his work was a tutorial that used a previous package and his work was consulted every time I had to do a merge/join.
 
-This post extracts portions of his book that are most commonly performed in everyday spatial analysis. An excellent [cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/sf.pdf) is also available.  Two sources of data are used: the US Census Bureau cartographic boundaries for counties and USDA county unememployment files.
+This post extracts portions of his book that are most commonly performed in everyday spatial analysis. An excellent [cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/sf.pdf) is also available.  Two sources of data are used: the US Census Bureau cartographic boundaries for counties and USDA county unemployment files.
 
 # [US Census Bureau](#uscb)
 
@@ -124,7 +124,7 @@ ca <-
 
 # [Sanity Check](#sanity-check)
 
-Before we get too much further down this rabbit hole, let's check and make sure we have something to plot. Good news!  That looks like California to me.
+Before proceeding futher, efficiency requires the collected data represents what we intended; namely, the state of California.  After inspection, we appear headed on the right track.
 
 ```{r sanity-check, echo = T}
 plot(ca |> dplyr::select(countyfp))
@@ -213,7 +213,7 @@ leaflet() |>
 
 # [Merge](#merge)
 
-Maps are commonly used as choropleths, i.e. the polygon is colored based on a another variable. Thus, spatial data are often merged with other data.  Here, the USDA compiles some data by county in the US. The data are winnowed to identification variables and a single numeric named "unemployment_rate_2020". Then the USDA data is merged with the California counties data.
+Maps are commonly used as choropleths, i.e. the polygon is colored based on another variable. Thus, spatial data are often merged with other data.  Here, the USDA compiles some data by county in the US. The data are winnowed to identification variables and a single numeric named "unemployment_rate_2020". Then the USDA data is merged with the California counties' data.
 
 ```{r fetch-usda, echo = T, cache = T}
 file <- 'https://www.ers.usda.gov/webdocs/DataFiles/48747/Unemployment.xlsx'
@@ -228,7 +228,7 @@ usda <- rio::import(
         dplyr::select(statefp, countyfp, unemployment_rate_2020)
 ```
 
-The order that the files are included in the merge matters. By putting the "ca" simple feature class dataframe first, the subsequent "usda" dataframe morphes into the same simple feature class and is now combined. See Professor Lovelace's Geospatial in R 3.2.4 [vector attribute joining](https://geocompr.robinlovelace.net/attr.html#vector-attribute-joining) for more details.
+The files' order matters when perfoming the merge. By putting the "ca" simple feature class dataframe first, the subsequent "usda" dataframe morphs into the same simple feature class and is now combined. See Professor Lovelace's Geospatial in R 3.2.4 [vector attribute joining](https://geocompr.robinlovelace.net/attr.html#vector-attribute-joining) for more details.
 
 
 ```{r merge-usda-uscb, echo = T}
@@ -268,7 +268,7 @@ This blog post was made possible thanks to:
 
 # [Conclusion](#conclusion)
 
-This tutorial demonstrated how to: (1) read in, transform, and minimize a shape file; (2) how to select a single state's counties from the Census Bureau cartographic boundaries file; (3) plot a shapefile using the simple `plot()` function; (4) dissolve internal boundaries of a state using the `dplyr::group_by()` function and the `sf::st_union()` function; (5) calculate the geographic centers of polygons with the `sf::st_centroid()` function; (6) use the layers feature in `leaflet` to place multiple geographic datasets onto a map; (7) merge a dataframe/tibble/datatable with a simple feature collection; (8) create a choropleth map in leaflet using a divergent color palette from `RColorBrewer`.
+This tutorial demonstrated how to: (1) read in, transform, and minimize a shapefile; (2) select a single state's counties from the Census Bureau cartographic boundaries file; (3) plot a shapefile using the simple `plot()` function; (4) dissolve internal boundaries of a state using the `dplyr::group_by()` function and the `sf::st_union()` function; (5) calculate the geographic centers of polygons with the `sf::st_centroid()` function; (6) use the layers feature in `leaflet` to place multiple geographic datasets onto a map; (7) merge a dataframe/tibble/datatable with a simple feature collection; and (8) create a choropleth map in leaflet using a divergent color palette from `RColorBrewer`.
 
 
 
@@ -279,7 +279,7 @@ This tutorial demonstrated how to: (1) read in, transform, and minimize a shape 
 
 # [Disclaimer](#disclaimer)
 
-The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+The views, analysis, and conclusions presented within this post represent the author alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies, and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
 
 # [Reproducibility](#reproduce)
 
