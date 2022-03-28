@@ -25,7 +25,6 @@ repo: ~
 summary: Data is sometimes stored as an Excel spreadsheet.  To work with it in `R`, it must be imported using a package. This project imports an excel spreadsheet of Freddie Mac mortgage rates using the `rio` and `readxl` packages.
 ---
 
-<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 <script src="{{< blogdown/postref >}}index_files/htmlwidgets/htmlwidgets.js"></script>
 <script src="{{< blogdown/postref >}}index_files/jquery/jquery.min.js"></script>
 <script src="{{< blogdown/postref >}}index_files/proj4js/proj4.js"></script>
@@ -87,12 +86,12 @@ summary: Data is sometimes stored as an Excel spreadsheet.  To work with it in `
 
 <div id="overview" class="section level1">
 <h1><a href="#overview">Overview</a></h1>
-<p>Much of the retrievable data on the web is either stored in tabular form, like a csv, or an Excel spreadsheet. Excel spreadsheets have the extensions “.xls” or “.xlsm”. Packages exist to import an Excel spreadsheets in <code>R</code>. This post illustrates <code>readxl</code> and <code>rio</code> for importing Freddie Mac historical mortgage rate data.</p>
-<p>Freddie Mac, a home mortgage processor, provides historical data on mortgage rates in a file with an extension “.xls”. As of Jnauary 13, 2022, Freddie Mac’s take on the home market was that mortgage rates have risen over the past week and would “dampen demand in the near future.” They cited rising home prices and more restrictive monetary policy as factors. <a href="http://www.freddiemac.com/pmms/">Freddie Mac, Mortgage Rates Increase Significantly (January 13, 2022)</a>.</p>
+<p>Much of the retrievable data on the web is either stored in tabular form, like a csv, or an Excel spreadsheet. Excel spreadsheets have the extensions “.xls” or “.xlsx”. Packages exist to import an Excel spreadsheets in <code>R</code>. This post illustrates <code>readxl</code> and <code>rio</code> for importing Freddie Mac historical mortgage rate data.</p>
+<p>Freddie Mac, a home mortgage processor, provides historical data on mortgage rates in a file with an extension “.xls”. As of January 13, 2022, Freddie Mac’s take on the home market was that mortgage rates have risen over the past week and would “dampen demand in the near future.” They cited rising home prices and more restrictive monetary policy as factors. <a href="http://www.freddiemac.com/pmms/">Freddie Mac, Mortgage Rates Increase Significantly (January 13, 2022)</a>.</p>
 </div>
 <div id="background" class="section level1">
 <h1><a href="#background">Background</a></h1>
-<p>The <code>readxl</code> package is part of the tidyverse and its documentation may be found <a href="https://readxl.tidyverse.org">here</a>. For additional information, see “R for Data Science” chapter 11: <a href="https://r4ds.had.co.nz/data-import.html">Data Import</a>.</p>
+<p>The <code>readxl</code> package is part of the tidyverse and its documentation may be found <a href="https://readxl.tidyverse.org">here</a>. For additional information, see “R for Data Science” chapter 11: <a href="https://r4ds.had.co.nz/data-import.html">Data Import</a>. The <code>rio</code> package documentation can be found <a href="https://thomasleeper.com/rio/reference/import.html">here</a>. The <code>import</code> function works in tandem with <code>readxl</code> so that <code>read_xls</code> arguments can be passed via <code>...</code>.</p>
 <p>One challenge in using the <code>readxl</code> package was that the Excel file must be downloaded first to a temporary file. In other packages, a data file can be directly read from a url address. Jenny Bryan, a major contributor to the package, discussed direct import on <a href="https://github.com/tidyverse/readxl/issues/278">github</a>.</p>
 <p>One workaround, which saved a couple lines of code, was the <code>rio</code> <a href="https://github.com/leeper/rio">package</a>.</p>
 </div>
