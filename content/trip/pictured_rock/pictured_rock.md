@@ -105,15 +105,19 @@ Niagara Falls, ON L2E 6S4 Canada
 
 # Day 9 -- Wednesday -- July 13
 
-Maid of the Mist
+2:00 Gaslight
+Royal George Theatre
+Seats AA-8 & AA-9
 
 # Day 10 -- Thursday -- July 14
 
-See play.
+2:00 Everybody
+Studio Theatre
+Seats AA-40 & AA-41
 
 # Day 11 -- Friday -- July 15
 
-See play.
+Maid of the Mist
 
 # Day 12 -- Saturday -- July 16
 
