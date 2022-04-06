@@ -46,7 +46,6 @@ General
 *   [U.S. Census.](http://www.census.gov/data.html)
 *   [U.S. Government’s Open Data Portal.](http://www.data.gov)
 *   [Xiaming Chen's Repo on Github](https://github.com/caesar0301/awesome-public-datasets)
-*   [Quartz Directory of Essential Data](https://docs.google.com/spreadsheets/d/1hU7Snj4KZ-ppyy388l-sV4I26n4yGVb8xYnygPOS-5k/edit#gid=0)
 
 Health
 ======
@@ -83,7 +82,7 @@ Municipal
 
 *   [Chicago Open Data Portal.](https://data.cityofchicago.org)
 *   [Cincinnati Open Data Portal.](https://data.cincinnati-oh.gov)
-*   [Louisville Open Data Portal.](http://portal.louisvilleky.gov/service/data/all/Datasets#content)
+*   [Louisville Open Data Portal.](https://data.louisvilleky.gov/)
 
 Politics
 ========
@@ -100,6 +99,6 @@ State & Local Financial Data
 
 *   [NASBO: Fiscal Survey of the States.](https://www.nasbo.org/reports-data/fiscal-survey-of-states)
 *   [Pew Center for the States: States' Fiscal Health.](http://www.pewtrusts.org/en/projects/states-fiscal-health)
-*   [U.S. Census: Gov't Finance Statistics.](https://www.census.gov/govs/financegen/index.html)
+*   [U.S. Census: Gov't Finance Statistics.](https://www.census.gov/programs-surveys/gov-finances.html)
 *   [George Mason Univ Mercatus Ctr: State Fiscal Rankings.](https://www.mercatus.org/statefiscalrankings)
 *   [Rockefellar Inst. of Gov't: State & Local Finance.](http://www.rockinst.org/government_finance/)
