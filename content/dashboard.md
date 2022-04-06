@@ -35,7 +35,7 @@ layouts: "simple-static"
 </tr>
 <td>5</td>
 <td>Economics</td>
-<td><a href="https://rob-wiederstein.shinyapps.io/retirement-dashboard/"><img src="/images/dashboard/us_econ_dash.png" width = 300/></a></td>
+<td><a href="https://econ-vt6dj.ondigitalocean.app"><img src="/images/dashboard/us_econ_dash.png" width = 300/></a></td>
 </tr>
 </tr>
 <td>6</td>
