@@ -1,0 +1,382 @@
+---
+title: List Basics-Part-01
+author: Rob Wiederstein
+date: '2022-04-11'
+slug: list-basics-part-01
+categories:
+  - R
+tags:
+  - list
+layout: layouts/post/single
+draft: TRUE
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: feature.png
+  alt: ~
+  caption: ~
+repo: ~
+summary: This post deals with list basics.
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction"><span>Introduction</span></a></li>
+<li><a href="#definitions"><span>Definitions</span></a></li>
+<li><a href="#key-terms"><span>Key Terms</span></a></li>
+<li><a href="#why-lists-are-important"><span>Why Lists Are Important</span></a></li>
+<li><a href="#create-a-list"><span>Create a list</span></a></li>
+<li><a href="#create-a-nested-list"><span>Create a nested list</span></a></li>
+<li><a href="#create-an-empty-list"><span>Create an empty list</span></a></li>
+<li><a href="#name-a-list"><span>Name a list</span></a></li>
+<li><a href="#subsetextract-list-element"><span>Subset/Extract list element</span></a>
+<ul>
+<li><a href="#single-bracket">Single bracket “[”</a></li>
+<li><a href="#double-bracket">Double bracket “[[”</a></li>
+<li><a href="#dollar-sign">Dollar Sign “$”</a></li>
+<li><a href="#extract-by-name">Extract by name</a></li>
+<li><a href="#extract-by-position">Extract by position</a></li>
+</ul></li>
+<li><a href="#append-a-list"><span>Append a list</span></a></li>
+<li><a href="#convert-list-to-vector"><span>Convert list to vector</span></a></li>
+<li><a href="#review"><span>Review</span></a></li>
+<li><a href="#conclusion"><span>Conclusion</span></a></li>
+<li><a href="#acknowledgements"><span>Acknowledgements</span></a></li>
+<li><a href="#references"><span>References</span></a></li>
+<li><a href="#disclaimer"><span>Disclaimer</span></a></li>
+<li><a href="#reproducibility"><span>Reproducibility</span></a></li>
+</ul>
+</div>
+
+<div id="introduction" class="section level1">
+<h1><a href="#introduction">Introduction</a></h1>
+<p>For a thorough review of vectors and lists, I’d recommend starting with Hadley Wickham &amp; Garret Grolemund, R for Data Science, <a href="https://r4ds.had.co.nz/vectors.html?q=list#naming-vectors">Chapter 20</a>.</p>
+</div>
+<div id="definitions" class="section level1">
+<h1><a href="#definitions">Definitions</a></h1>
+<p>From the R Programming Manual 2.1.2: “<em>Lists</em> (“generic vectors”) are another kind of data storage. Lists have elements, each of which can contain any type of R object, i.e. the elements of a list do not have to be of the same type. List elements are accessed through three different indexing operations. Lists are vectors, and the basic vector types are referred to as atomic vectors where it is necessary to exclude lists.”</p>
+<p>A dataframe is considered to be a special kind of list. Again, from the R Programming Manual, “[a] data frame is a list of vectors, factors, and/or matrices all having the same length (number of rows in the case of matrices). In addition, a data frame generally has a names attribute labeling the variables and a row.names attribute for labeling the cases. A data frame can contain a list that is the same length as the other components. The list can contain elements of differing lengths thereby providing a data structure for ragged arrays. However, as of this writing such arrays are not generally handled correctly.”</p>
+</div>
+<div id="key-terms" class="section level1">
+<h1><a href="#key-terms">Key Terms</a></h1>
+<ul>
+<li><p>a <strong>named</strong> list is one where the name attribute is set whereas an <strong>unnamed</strong> list is where the name attribute is “NULL”.</p></li>
+<li><p>a <strong>nested</strong> list is a list which is the child of another list like <code>my.list &lt;- list(a = list(b = 1))</code>.</p></li>
+<li><p>an <strong>atomic</strong> vector is the most basic building block in R. There are six types of atomic vectors: logical, integer, double, character, complex, and raw. Its expression may take the form of <code>c(1, 2, 3, 4)</code> or <code>c(TRUE, FALSE)</code>. Each element of the vector is of the same type. Where the elements are mixed, i.e. <code>c(1, "a")</code>, they will be implicitly coerced to a character type.</p></li>
+<li><p>a <strong>generic</strong> vector or list is one that can contain data of different types like <code>list(1, "a", TRUE, 1 + 4i)</code>.</p></li>
+<li><p>a <strong>homogenous</strong> vector is one where all elements of the vector are the same type.</p></li>
+<li><p>a <strong>heterogenous</strong> vector is one where the elements are of different types and by definition must be a list.</p></li>
+<li><p>a <strong>recursive vector</strong> is another name for a list. It is considered recursive because a list can contain another list.</p></li>
+</ul>
+</div>
+<div id="why-lists-are-important" class="section level1">
+<h1><a href="#importance">Why Lists Are Important</a></h1>
+<ol style="list-style-type: decimal">
+<li><p>Because lists can contain a variety of data types, function results are often returned in
+a list. Examples include the function returns from <code>ggplot</code>, <code>lm</code>, and <code>str_split</code>.</p></li>
+<li><p>Importing data in chunks is often easier when appending to a list rather
+than a dataframe.</p></li>
+<li><p>.json and .xml are scraped as lists.</p></li>
+</ol>
+</div>
+<div id="create-a-list" class="section level1">
+<h1><a href="#list-creation">Create a list</a></h1>
+<pre class="r"><code># create
+ll &lt;- list(a = 1)</code></pre>
+<pre class="r"><code>#print 
+ll</code></pre>
+<pre><code>$a
+[1] 1</code></pre>
+</div>
+<div id="create-a-nested-list" class="section level1">
+<h1><a href="#nested-list">Create a nested list</a></h1>
+<pre class="r"><code>#nested
+ll &lt;- list(list(a = 1))</code></pre>
+<pre class="r"><code>#print
+ll</code></pre>
+<pre><code>[[1]]
+[[1]]$a
+[1] 1</code></pre>
+</div>
+<div id="create-an-empty-list" class="section level1">
+<h1><a href="#empty-list">Create an empty list</a></h1>
+<pre class="r"><code>#empty
+ll &lt;- vector(&quot;list&quot;, length = 3)</code></pre>
+<pre class="r"><code>#print
+ll</code></pre>
+<pre><code>[[1]]
+NULL
+
+[[2]]
+NULL
+
+[[3]]
+NULL</code></pre>
+</div>
+<div id="name-a-list" class="section level1">
+<h1><a href="#name-list">Name a list</a></h1>
+<pre class="r"><code>#explicit
+ll &lt;- list(a = 1, b = 2, c = 3)</code></pre>
+<pre><code>$a
+[1] 1
+
+$b
+[1] 2
+
+$c
+[1] 3</code></pre>
+<p>or</p>
+<pre class="r"><code>#via names
+names(ll) &lt;- letters[1:3]</code></pre>
+<pre><code>$a
+[1] 1
+
+$b
+[1] 2
+
+$c
+[1] 3</code></pre>
+<p>or</p>
+<pre class="r"><code>#via attr
+attr(ll, which = &quot;names&quot;) &lt;- letters[4:6]</code></pre>
+<pre><code>$names
+[1] &quot;d&quot; &quot;e&quot; &quot;f&quot;</code></pre>
+</div>
+<div id="subsetextract-list-element" class="section level1">
+<h1><a href="#extract-element">Subset/Extract list element</a></h1>
+<p>Here are five ways to subset a list or extract an element from a list.</p>
+<div id="single-bracket" class="section level2">
+<h2>Single bracket “[”</h2>
+<p>The single bracket <code>[</code> extracts a sub-list. The result will always be a list.</p>
+<pre class="r"><code>ll[1]</code></pre>
+<pre><code>$d
+[1] 1</code></pre>
+</div>
+<div id="double-bracket" class="section level2">
+<h2>Double bracket “[[”</h2>
+<p>The double bracket <code>[[</code> extracts a single component from a list. It removes a level of
+hierarchy from the list.</p>
+<pre class="r"><code>ll[[1]]</code></pre>
+<pre><code>[1] 1</code></pre>
+</div>
+<div id="dollar-sign" class="section level2">
+<h2>Dollar Sign “$”</h2>
+<p>The dollar sign <code>$</code> is shorthand for extracting a named element of a list. It works
+similarly to <code>[[</code> except that you don’t need to use quotes.</p>
+<pre class="r"><code>ll$e</code></pre>
+<pre><code>[1] 2</code></pre>
+</div>
+<div id="extract-by-name" class="section level2">
+<h2>Extract by name</h2>
+<p>A list can be extracted by name using the syntax: <code>[["name"]]</code>.</p>
+<pre class="r"><code>ll[[&quot;e&quot;]]</code></pre>
+<pre><code>[1] 2</code></pre>
+</div>
+<div id="extract-by-position" class="section level2">
+<h2>Extract by position</h2>
+<p>An element can be extracted by position using the syntax: <code>[[1]]</code>.</p>
+<pre class="r"><code>ll[[3]]</code></pre>
+<pre><code>[1] 3</code></pre>
+</div>
+</div>
+<div id="append-a-list" class="section level1">
+<h1><a href="#append">Append a list</a></h1>
+<pre class="r"><code>#append
+ll &lt;- append(ll, values = list(z = 6))</code></pre>
+<pre><code>$d
+[1] 1
+
+$e
+[1] 2
+
+$f
+[1] 3
+
+$z
+[1] 6</code></pre>
+</div>
+<div id="convert-list-to-vector" class="section level1">
+<h1><a href="#unlist">Convert list to vector</a></h1>
+<pre class="r"><code>#unlist
+unlist(ll)</code></pre>
+<pre><code>d e f z 
+1 2 3 6 </code></pre>
+</div>
+<div id="review" class="section level1">
+<h1><a href="#review">Review</a></h1>
+<pre class="r"><code>#new list
+ll &lt;- list(list(list(named = 1, 2)))</code></pre>
+<pre><code>[[1]]
+[[1]][[1]]
+[[1]][[1]]$named
+[1] 1
+
+[[1]][[1]][[2]]
+[1] 2</code></pre>
+<pre class="r"><code># [[ and $ return value 
+all.equal(
+    ll[[1]][[1]][[&quot;named&quot;]] |&gt; class(),
+    ll[[1]][[1]]$named |&gt; class(),
+    ll[[1]][[1]][[2]] |&gt; class()
+)</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<pre class="r"><code># return value 
+all.equal(
+    ll[[1]][[1]][[&quot;named&quot;]] |&gt; class(),
+    ll[[1]][[1]]$named |&gt; class(),
+    ll[[1]][[1]][[2]] |&gt; class()
+)</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<pre class="r"><code># return list 
+all.equal(
+    ll[[1]][[1]][&quot;named&quot;] |&gt; class(),
+    ll[[1]][[1]][2] |&gt; class()
+)</code></pre>
+<pre><code>[1] TRUE</code></pre>
+<pre class="r"><code>## rename 
+names(ll) &lt;- &quot;nest_level_1&quot;
+names(ll[[1]]) &lt;- &quot;nest_level_2&quot;
+names(ll[[1]][[1]]) &lt;- c(&quot;name_1&quot;, &quot;name_2&quot;)</code></pre>
+<pre><code>$nest_level_1
+$nest_level_1$nest_level_2
+$nest_level_1$nest_level_2$name_1
+[1] 1
+
+$nest_level_1$nest_level_2$name_2
+[1] 2</code></pre>
+<pre><code>$nest_level_1
+$nest_level_1$nest_level_2
+$nest_level_1$nest_level_2$name_1
+[1] 1
+
+$nest_level_1$nest_level_2$name_2
+[1] 2</code></pre>
+<pre class="r"><code>## extract with $ 
+ll$nest_level_1$nest_level_2$name_2</code></pre>
+<pre><code>[1] 2</code></pre>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+<p>This post discussed what a list is and how it is described. You should be able to create a list, subset and extract lists, append to a list and convert a list to an array.</p>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to:</p>
+<ul>
+<li><a href="https://cran.r-project.org/doc/manuals/R-lang.html#List-objects">R Programming Manual</a></li>
+<li><a href="https://data-flair.training/blogs/r-list-tutorial/">R List – Learn what all you can do with Lists in R!</a></li>
+<li><a href="https://www.r-bloggers.com/2015/08/how-to-use-lists-in-r/">How to use lists in R</a></li>
+<li><a href="https://www.tutorialspoint.com/r/r_lists.htm">Tutorial Point: R-lists</a></li>
+<li><a href="https://bioconnector.github.io/workshops/r-lists.html">BIMS 8382–List Manipulation</a></li>
+<li><a href="https://r4ds.had.co.nz/vectors.html?q=list#lists">R for Data Science</a></li>
+<li><a href="https://bookdown.org/rdpeng/rprogdatascience/">R Programming for Data Science</a></li>
+<li><a href="https://github.com/info201-w17/module8-lists">Module 8: Introduction to Lists</a></li>
+<li><a href="http://www.r-tutor.com/r-introduction/list">R Tutorial</a></li>
+<li><a href="https://github.com/jennybc/repurrrsive">jennybc/repurrrsive</a></li>
+<li><a href="https://jennybc.github.io/purrr-tutorial/bk00_vectors-and-lists.html">purrr Tutorial: Vectors and Lists</a></li>
+</ul>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2022 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value
+ version  R version 4.1.3 (2022-03-10)
+ os       macOS Big Sur/Monterey 10.16
+ system   x86_64, darwin17.0
+ ui       X11
+ language (EN)
+ collate  en_US.UTF-8
+ ctype    en_US.UTF-8
+ tz       America/Chicago
+ date     2022-04-11
+ pandoc   2.14.1 @ /usr/local/bin/ (via rmarkdown)
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version    date (UTC) lib source
+ assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.1.0)
+ blogdown    * 1.9        2022-03-28 [1] CRAN (R 4.1.2)
+ bookdown      0.25       2022-03-16 [1] CRAN (R 4.1.2)
+ brio          1.1.3      2021-11-30 [1] CRAN (R 4.1.0)
+ bslib         0.3.1.9000 2022-03-04 [1] Github (rstudio/bslib@888fbe0)
+ cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.0)
+ callr         3.7.0      2021-04-20 [1] CRAN (R 4.1.0)
+ cli           3.2.0      2022-02-14 [1] CRAN (R 4.1.2)
+ colorspace    2.0-3      2022-02-21 [1] CRAN (R 4.1.2)
+ crayon        1.5.1      2022-03-26 [1] CRAN (R 4.1.0)
+ DBI           1.1.2      2021-12-20 [1] CRAN (R 4.1.0)
+ desc          1.4.1      2022-03-06 [1] CRAN (R 4.1.2)
+ devtools    * 2.4.3      2021-11-30 [1] CRAN (R 4.1.0)
+ digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.0)
+ dplyr         1.0.8      2022-02-08 [1] CRAN (R 4.1.2)
+ ellipsis      0.3.2      2021-04-29 [1] CRAN (R 4.1.0)
+ evaluate      0.15       2022-02-18 [1] CRAN (R 4.1.2)
+ fansi         1.0.3      2022-03-24 [1] CRAN (R 4.1.2)
+ fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.0)
+ fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.0)
+ generics      0.1.2      2022-01-31 [1] CRAN (R 4.1.2)
+ ggplot2       3.3.5      2021-06-25 [1] CRAN (R 4.1.0)
+ ggthemes    * 4.2.4      2021-01-20 [1] CRAN (R 4.1.0)
+ glue          1.6.2      2022-02-24 [1] CRAN (R 4.1.2)
+ gtable        0.3.0      2019-03-25 [1] CRAN (R 4.1.0)
+ htmltools     0.5.2      2021-08-25 [1] CRAN (R 4.1.0)
+ jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.0)
+ jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)
+ knitr         1.38       2022-03-25 [1] CRAN (R 4.1.0)
+ lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.0)
+ magrittr      2.0.3      2022-03-30 [1] CRAN (R 4.1.2)
+ memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.0)
+ munsell       0.5.0.9000 2021-10-19 [1] Github (cwickham/munsell@e539541)
+ pillar        1.7.0      2022-02-01 [1] CRAN (R 4.1.2)
+ pkgbuild      1.3.1      2021-12-20 [1] CRAN (R 4.1.0)
+ pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.1.0)
+ pkgload       1.2.4      2021-11-30 [1] CRAN (R 4.1.0)
+ prettyunits   1.1.1      2020-01-24 [1] CRAN (R 4.1.0)
+ processx      3.5.3      2022-03-25 [1] CRAN (R 4.1.0)
+ ps            1.6.0      2021-02-28 [1] CRAN (R 4.1.0)
+ purrr         0.3.4      2020-04-17 [1] CRAN (R 4.1.0)
+ R6            2.5.1      2021-08-19 [1] CRAN (R 4.1.0)
+ remotes       2.4.2      2021-11-30 [1] CRAN (R 4.1.0)
+ rlang         1.0.2      2022-03-04 [1] CRAN (R 4.1.2)
+ rmarkdown     2.13       2022-03-10 [1] CRAN (R 4.1.2)
+ rprojroot     2.0.3      2022-04-02 [1] CRAN (R 4.1.0)
+ rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.0)
+ sass          0.4.1      2022-03-23 [1] CRAN (R 4.1.2)
+ scales        1.1.1      2020-05-11 [1] CRAN (R 4.1.0)
+ sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.0)
+ stringi       1.7.6      2021-11-29 [1] CRAN (R 4.1.0)
+ stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.0)
+ testthat      3.1.3      2022-03-29 [1] CRAN (R 4.1.2)
+ tibble        3.1.6      2021-11-07 [1] CRAN (R 4.1.0)
+ tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.1.2)
+ usethis     * 2.1.5      2021-12-09 [1] CRAN (R 4.1.0)
+ utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.0)
+ vctrs         0.4.0      2022-03-30 [1] CRAN (R 4.1.2)
+ withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.0)
+ xfun          0.30       2022-03-02 [1] CRAN (R 4.1.2)
+ yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)
+
+ [1] /Library/Frameworks/R.framework/Versions/4.1/Resources/library
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>

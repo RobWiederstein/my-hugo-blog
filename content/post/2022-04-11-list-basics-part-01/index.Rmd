@@ -1,0 +1,345 @@
+---
+title: List Basics-Part-01
+author: Rob Wiederstein
+date: '2022-04-11'
+slug: list-basics-part-01
+categories:
+  - R
+tags:
+  - list
+layout: layouts/post/single
+draft: TRUE
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: feature.png
+  alt: ~
+  caption: ~
+repo: ~
+summary: This post deals with list basics.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=F,
+  comment='',
+  cache=F,
+  dev='svg',
+  echo=F
+)
+```
+
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+# [Introduction](#introduction)
+
+For a thorough review of vectors and lists, I'd recommend starting with Hadley Wickham & Garret Grolemund, R for Data Science, [Chapter 20](https://r4ds.had.co.nz/vectors.html?q=list#naming-vectors).
+
+# [Definitions](#definitions) 
+
+From the R Programming Manual 2.1.2:  "*Lists* (“generic vectors”) are another kind of data storage. Lists have elements, each of which can contain any type of R object, i.e. the elements of a list do not have to be of the same type. List elements are accessed through three different indexing operations. Lists are vectors, and the basic vector types are referred to as atomic vectors where it is necessary to exclude lists."
+
+A dataframe is considered to be a special kind of list.  Again, from the R Programming Manual, "[a] data frame is a list of vectors, factors, and/or matrices all having the same length (number of rows in the case of matrices). In addition, a data frame generally has a names attribute labeling the variables and a row.names attribute for labeling the cases. A data frame can contain a list that is the same length as the other components. The list can contain elements of differing lengths thereby providing a data structure for ragged arrays. However, as of this writing such arrays are not generally handled correctly."
+
+# [Key Terms](#key-terms)
+
+- a **named** list is one where the name attribute is set whereas an **unnamed** list is where the name attribute is "NULL".
+
+- a **nested** list is a list which is the child of another list like `my.list <- list(a = list(b = 1))`.
+
+- an **atomic** vector is the most basic building block in R.  There are six types of atomic vectors: logical, integer, double, character, complex, and raw. Its expression may take the form of `c(1, 2, 3, 4)` or `c(TRUE, FALSE)`. Each element of the vector is of the same type.  Where the elements are mixed, i.e. `c(1, "a")`, they will be implicitly coerced to a character type.
+
+- a **generic** vector or list is one that can contain data of different types like `list(1, "a", TRUE, 1 + 4i)`.
+
+- a **homogenous** vector is one where all elements of the vector are the same type.
+
+- a **heterogenous** vector is one where the elements are of different types and by definition must be a list. 
+
+- a **recursive vector** is another name for a list.  It is considered recursive because a list can contain another list. 
+
+# [Why Lists Are Important](#importance)
+
+1. Because lists can contain a variety of data types, function results are often returned in
+a list. Examples include the function returns from `ggplot`, `lm`, and `str_split`.
+
+2. Importing data in chunks is often easier when appending to a list rather 
+than a dataframe.
+
+3. .json and .xml are scraped as lists.
+
+# [Create a list](#list-creation)
+
+```{r list-creation, echo=T}
+# create
+ll <- list(a = 1)
+```
+
+```{r list-creation-print, echo=T}
+#print 
+ll
+```
+
+
+
+# [Create a nested list](#nested-list)
+
+```{r nested-list, echo=T}
+#nested
+ll <- list(list(a = 1))
+```
+
+```{r nested-list-print, echo=T}
+#print
+ll
+```
+
+
+# [Create an empty list](#empty-list)
+
+```{r empty-list, echo=T}
+#empty
+ll <- vector("list", length = 3)
+```
+
+```{r empty-list-print, echo=T}
+#print
+ll
+```
+
+# [Name a list](#name-list)
+
+```{r name-list-explicit, echo=T}
+#explicit
+ll <- list(a = 1, b = 2, c = 3)
+```
+
+```{r name-list-explicit-print}
+#print
+ll
+```
+
+or
+
+```{r name-list, echo=T}
+#via names
+names(ll) <- letters[1:3]
+```
+
+```{r name-list-print}
+#print
+ll
+```
+
+or
+
+```{r name-list-attr, echo=T}
+#via attr
+attr(ll, which = "names") <- letters[4:6]
+```
+
+```{r name-list-attr-print}
+attributes(ll)
+```
+
+
+# [Subset/Extract list element](#extract-element)
+
+Here are five ways to subset a list or extract an element from a list.
+
+
+## Single bracket "["
+
+The single bracket `[` extracts a sub-list. The result will always be a list. 
+
+```{r single-bracket, echo=T}
+ll[1]
+```
+
+## Double bracket "[["
+
+The double bracket `[[` extracts a single component from a list. It removes a level of
+hierarchy from the list.
+
+```{r double-bracket, echo=T}
+ll[[1]]
+```
+
+## Dollar Sign "$"
+
+The dollar sign `$` is shorthand for extracting a named element of a list. It works
+similarly to `[[` except that you don’t need to use quotes.
+
+```{r dollar-sign, echo=T}
+ll$e
+```
+
+
+## Extract by name 
+
+A list can be extracted by name using the syntax: `[["name"]]`.
+
+```{r extract-by-name, echo=T}
+ll[["e"]]
+```
+
+
+## Extract by position
+
+An element can be extracted by position using the syntax: `[[1]]`.
+
+```{r extract-by-position, echo=T}
+ll[[3]]
+```
+
+
+# [Append a list](#append)
+
+```{r append-list, echo=T}
+#append
+ll <- append(ll, values = list(z = 6))
+```
+
+```{r append-list-print}
+#print
+ll
+```
+
+# [Convert list to vector](#unlist)
+
+```{r unlist-list, echo=T}
+#unlist
+unlist(ll)
+```
+
+
+# [Review](#review)
+
+```{r review-create-list, echo=T}
+#new list
+ll <- list(list(list(named = 1, 2)))
+```
+
+```{r review-create-list-print}
+#print
+ll
+```
+
+
+```{r review-subset-list, echo=T}
+# [[ and $ return value 
+all.equal(
+    ll[[1]][[1]][["named"]] |> class(),
+    ll[[1]][[1]]$named |> class(),
+    ll[[1]][[1]][[2]] |> class()
+)
+```
+
+```{r review-subset-named, echo=T}
+# return value 
+all.equal(
+    ll[[1]][[1]][["named"]] |> class(),
+    ll[[1]][[1]]$named |> class(),
+    ll[[1]][[1]][[2]] |> class()
+)
+```
+
+```{r review-subset-single-bracket, echo=T}
+# return list 
+all.equal(
+    ll[[1]][[1]]["named"] |> class(),
+    ll[[1]][[1]][2] |> class()
+)
+```
+
+
+```{r review-subset-rename, echo=T}
+## rename 
+names(ll) <- "nest_level_1"
+names(ll[[1]]) <- "nest_level_2"
+names(ll[[1]][[1]]) <- c("name_1", "name_2")
+```
+
+```{r review-renamed-list}
+#print
+ll
+```
+
+
+```{r review-subset-rename-print}
+# print
+ll
+```
+
+```{r review-extract-dollar-sign, echo = T}
+## extract with $ 
+ll$nest_level_1$nest_level_2$name_2
+```
+
+# [Conclusion](#conclusion)
+
+This post discussed what a list is and how it is described.   You should be able to create a list, subset and extract lists, append to a list and convert a list to an array.
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+-  [R Programming Manual](https://cran.r-project.org/doc/manuals/R-lang.html#List-objects)
+-  [R List – Learn what all you can do with Lists in R!](https://data-flair.training/blogs/r-list-tutorial/)
+-  [How to use lists in R](https://www.r-bloggers.com/2015/08/how-to-use-lists-in-r/)
+-  [Tutorial Point: R-lists](https://www.tutorialspoint.com/r/r_lists.htm)
+-  [BIMS 8382--List Manipulation](https://bioconnector.github.io/workshops/r-lists.html)
+-  [R for Data Science](https://r4ds.had.co.nz/vectors.html?q=list#lists) 
+-  [R Programming for Data Science](https://bookdown.org/rdpeng/rprogdatascience/) 
+-  [Module 8: Introduction to Lists](https://github.com/info201-w17/module8-lists)
+-  [R Tutorial](http://www.r-tutor.com/r-introduction/list)
+-  [jennybc/repurrrsive](https://github.com/jennybc/repurrrsive)
+-  [purrr Tutorial: Vectors and Lists](https://jennybc.github.io/purrr-tutorial/bk00_vectors-and-lists.html)
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```
