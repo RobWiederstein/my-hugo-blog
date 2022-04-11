@@ -16,7 +16,7 @@ bibliography:
 csl: ../ieee-with-url.csl
 link-citations: yes
 nocite: |
-  @R-base, @R-blogdown, @R-tidyverse
+  @R-base, @R-blogdown, @R-ggthemes, @R-kableExtra, @R-ggplot2
 header:
   image: ~
   alt: ~
@@ -25,11 +25,17 @@ repo: ~
 summary: This post examines trends in student enrollments for Indiana public schools.
 ---
 
+<script src="{{< blogdown/postref >}}index_files/kePrint/kePrint.js"></script>
+<link href="{{< blogdown/postref >}}index_files/lightable/lightable.css" rel="stylesheet" />
 
 <div id="TOC">
 <ul>
 <li><a href="#overview"><span>Overview</span></a></li>
 <li><a href="#background"><span>Background</span></a></li>
+<li><a href="#indiana-total-enrollment"><span>Indiana Total Enrollment</span></a></li>
+<li><a href="#top-10-indiana-school-corporations-by-enrollment-change-2006-to-2022">Top 10 Indiana School Corporations by Enrollment Change 2006 to 2022</a></li>
+<li><a href="#bottom-10-indiana-school-corporations-by-enrollment-change-2006-to-2022">Bottom 10 Indiana School Corporations by Enrollment Change 2006 to 2022</a></li>
+<li><a href="#indiana-student-enrollment-dashboard"><span>Indiana Student Enrollment Dashboard</span></a></li>
 <li><a href="#data-and-model"><span>Data and model</span></a></li>
 <li><a href="#results"><span>Results</span></a></li>
 <li><a href="#conclusion"><span>Conclusion</span></a></li>
@@ -42,13 +48,417 @@ summary: This post examines trends in student enrollments for Indiana public sch
 
 <div id="overview" class="section level1">
 <h1><a href="#overview">Overview</a></h1>
-<iframe height="800" width="100%" frameborder="no" src="https://robwiederstein.github.io/in_enrollments/">
-</iframe>
-<p>(Describe the problem.)</p>
+<p>This post examines Indiana Student Enrollments from 2006 through 2022.</p>
 </div>
 <div id="background" class="section level1">
 <h1><a href="#background">Background</a></h1>
-<p>(Who else has worked on this problem? What did they find?)</p>
+<p>The National Center for Education Statistics (NCES) described national trends as growing through the 1950s and 1960s as a result of the “baby boom” after World War 2, declining from 1971 through 1984, increasing once again from 1985 throught 2006. Enrollments again declined between 2006 through 2011 and started growing again after 2011. The NCES predicts that enrollment changes would be relatively small through 2029.<span class="citation"><a href="#ref-debreyDigestEducationStatistics2021" role="doc-biblioref">[1]</a></span></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:nces-enrollment-chart"></span>
+<img src="nces_enrollment.png" alt="U.S. Department of Education, National Center for Education Statistics. (2021). Digest of Education Statistics, 2019 (NCES 2021-009), Chapter 1." width="100%" />
+<p class="caption">
+Figure 1: U.S. Department of Education, National Center for Education Statistics. (2021). Digest of Education Statistics, 2019 (NCES 2021-009), Chapter 1.
+</p>
+</div>
+</div>
+<div id="indiana-total-enrollment" class="section level1">
+<h1><a href="#indiana_tot_enrollment">Indiana Total Enrollment</a></h1>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/indiana_total_entrollment-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="top-10-indiana-school-corporations-by-enrollment-change-2006-to-2022" class="section level1">
+<h1>Top 10 Indiana School Corporations by Enrollment Change 2006 to 2022</h1>
+<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+corp_id
+</th>
+<th style="text-align:left;">
+corp_name
+</th>
+<th style="text-align:right;">
+students_2006
+</th>
+<th style="text-align:right;">
+students_2022
+</th>
+<th style="text-align:right;">
+pct_change
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+6795
+</td>
+<td style="text-align:left;">
+Union School Corporation
+</td>
+<td style="text-align:right;">
+476
+</td>
+<td style="text-align:right;">
+6338
+</td>
+<td style="text-align:right;">
+1231.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9325
+</td>
+<td style="text-align:left;">
+Options Charter Schools
+</td>
+<td style="text-align:right;">
+128
+</td>
+<td style="text-align:right;">
+776
+</td>
+<td style="text-align:right;">
+506.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9545
+</td>
+<td style="text-align:left;">
+21st Century Charter Sch of Gary
+</td>
+<td style="text-align:right;">
+264
+</td>
+<td style="text-align:right;">
+1330
+</td>
+<td style="text-align:right;">
+403.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9485
+</td>
+<td style="text-align:left;">
+SE Neighborhood Sch of Excellence
+</td>
+<td style="text-align:right;">
+178
+</td>
+<td style="text-align:right;">
+627
+</td>
+<td style="text-align:right;">
+252.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9535
+</td>
+<td style="text-align:left;">
+Gary Lighthouse Charter School
+</td>
+<td style="text-align:right;">
+376
+</td>
+<td style="text-align:right;">
+1196
+</td>
+<td style="text-align:right;">
+218.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9575
+</td>
+<td style="text-align:left;">
+Victory College Prep Academy
+</td>
+<td style="text-align:right;">
+297
+</td>
+<td style="text-align:right;">
+940
+</td>
+<td style="text-align:right;">
+216.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9330
+</td>
+<td style="text-align:left;">
+Irvington Community School
+</td>
+<td style="text-align:right;">
+362
+</td>
+<td style="text-align:right;">
+978
+</td>
+<td style="text-align:right;">
+170.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9400
+</td>
+<td style="text-align:left;">
+KIPP Indy College Prep Middle
+</td>
+<td style="text-align:right;">
+166
+</td>
+<td style="text-align:right;">
+377
+</td>
+<td style="text-align:right;">
+127.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1000
+</td>
+<td style="text-align:left;">
+Clarksville Community School Corp
+</td>
+<td style="text-align:right;">
+1503
+</td>
+<td style="text-align:right;">
+3129
+</td>
+<td style="text-align:right;">
+108.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9380
+</td>
+<td style="text-align:left;">
+Christel House Academy South
+</td>
+<td style="text-align:right;">
+358
+</td>
+<td style="text-align:right;">
+738
+</td>
+<td style="text-align:right;">
+106.1
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="bottom-10-indiana-school-corporations-by-enrollment-change-2006-to-2022" class="section level1">
+<h1>Bottom 10 Indiana School Corporations by Enrollment Change 2006 to 2022</h1>
+<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+corp_id
+</th>
+<th style="text-align:left;">
+corp_name
+</th>
+<th style="text-align:right;">
+students_2006
+</th>
+<th style="text-align:right;">
+students_2022
+</th>
+<th style="text-align:right;">
+pct_change
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+4690
+</td>
+<td style="text-align:left;">
+Gary Community School Corp
+</td>
+<td style="text-align:right;">
+15119
+</td>
+<td style="text-align:right;">
+4374
+</td>
+<td style="text-align:right;">
+-71.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9610
+</td>
+<td style="text-align:left;">
+Indiana School For The Deaf
+</td>
+<td style="text-align:right;">
+310
+</td>
+<td style="text-align:right;">
+138
+</td>
+<td style="text-align:right;">
+-55.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+7645
+</td>
+<td style="text-align:left;">
+Northeast School Corp
+</td>
+<td style="text-align:right;">
+1496
+</td>
+<td style="text-align:right;">
+786
+</td>
+<td style="text-align:right;">
+-47.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3640
+</td>
+<td style="text-align:left;">
+Medora Community School Corp
+</td>
+<td style="text-align:right;">
+299
+</td>
+<td style="text-align:right;">
+161
+</td>
+<td style="text-align:right;">
+-46.2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+7610
+</td>
+<td style="text-align:left;">
+Hamilton Community Schools
+</td>
+<td style="text-align:right;">
+659
+</td>
+<td style="text-align:right;">
+359
+</td>
+<td style="text-align:right;">
+-45.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4670
+</td>
+<td style="text-align:left;">
+School City of East Chicago
+</td>
+<td style="text-align:right;">
+6017
+</td>
+<td style="text-align:right;">
+3379
+</td>
+<td style="text-align:right;">
+-43.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+5910
+</td>
+<td style="text-align:left;">
+Eminence Community School Corp
+</td>
+<td style="text-align:right;">
+551
+</td>
+<td style="text-align:right;">
+318
+</td>
+<td style="text-align:right;">
+-42.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+5385
+</td>
+<td style="text-align:left;">
+Indianapolis Public Schools
+</td>
+<td style="text-align:right;">
+37554
+</td>
+<td style="text-align:right;">
+22126
+</td>
+<td style="text-align:right;">
+-41.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4455
+</td>
+<td style="text-align:left;">
+Whitko Community School Corp
+</td>
+<td style="text-align:right;">
+1999
+</td>
+<td style="text-align:right;">
+1243
+</td>
+<td style="text-align:right;">
+-37.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+7515
+</td>
+<td style="text-align:left;">
+North Judson-San Pierre Sch Corp
+</td>
+<td style="text-align:right;">
+1462
+</td>
+<td style="text-align:right;">
+914
+</td>
+<td style="text-align:right;">
+-37.5
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="indiana-student-enrollment-dashboard" class="section level1">
+<h1><a href="#dashboard">Indiana Student Enrollment Dashboard</a></h1>
+<p><a href="https://robwiederstein.github.io/in_enrollments/"><img src="in_enrollment_dashboard.png"/></a></p>
 </div>
 <div id="data-and-model" class="section level1">
 <h1><a href="#data">Data and model</a></h1>
@@ -63,15 +473,22 @@ summary: This post examines trends in student enrollments for Indiana public sch
 <div id="acknowledgements" class="section level1">
 <h1><a href="#acknowledge">Acknowledgements</a></h1>
 <p>This blog post was made possible thanks to:</p>
+<p><a href="https://www.in.gov/doe/">Indiana Department of Education</a></p>
 </div>
 <div id="references" class="section level1">
 <h1><a href="#reference">References</a></h1>
 <div id="refs" class="references csl-bib-body">
+<div id="ref-debreyDigestEducationStatistics2021" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">C. de Brey, T. D. Snyder, A. Zhang, and S. A. Dillow, <span>“Digest of <span>Education Statistics</span> 2019. <span>NCES</span> 2021-009.”</span> <em>National Center for Education Statistics</em>, 2021. </div>
+</div>
 <div id="ref-R-base" class="csl-entry">
-<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2022 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2022 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
 </div>
 <div id="ref-R-blogdown" class="csl-entry">
-<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+</div>
+<div id="ref-R-ggthemes" class="csl-entry">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">J. B. Arnold, <em>Ggthemes: Extra themes, scales and geoms for ggplot2</em>. 2021 [Online]. Available: <a href="https://github.com/jrnold/ggthemes">https://github.com/jrnold/ggthemes</a></div>
 </div>
 </div>
 </div>
