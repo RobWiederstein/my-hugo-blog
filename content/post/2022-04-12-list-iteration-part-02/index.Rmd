@@ -1,0 +1,319 @@
+---
+title: List Iteration-Part-02
+author: Rob Wiederstein
+date: '2022-04-12'
+slug: list-iteration-part-02
+categories:
+  - R
+tags:
+  - purrr
+  - list
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-purrr
+header:
+  image: feature.png
+  alt: iterating over a list in R
+  caption: Iterating and extracting from a list
+repo: ~
+summary: This post is about how to iterate over and extract from a list.  It begins with the function lapply() since many people are familiar with it and then expounds on functions in the purrr package.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+    "devtools", # for session info
+    "ggthemes", # for plots
+    "blogdown",
+    "purrr"
+)
+lapply(packages, function(x) {
+    if (!requireNamespace(x)) install.packages(x)
+    library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+    comment = "",
+    fig.width = 6,
+    fig.asp = .8,
+    fig.align = "center",
+    message = F,
+    error = F,
+    warning = F,
+    tidy = F,
+    comment = "",
+    cache = F,
+    dev = "svg",
+    echo = F
+)
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+# [Overview](#overview)
+
+This post addresses a common task of iterating over a list. Standard iteration relies heavily on the "apply" family of function in the `base` package.  The method for iterating over a list in the base package is `base::lapply()` and the newer, tidyverse method is `purrr::map()`. The two are similar but `purrr` allows for more flexibility and its syntax is more concise and consistent. 
+
+The post will show how to iterate over a list, convert a list to a vector, extract elements from a list by both name and position, flatten a list, transpose  a list and simplify a list.  The emphasis and goal is to incorporate the newer `purrr` functions into future workflows.  (After package install, see `?purrr::map` for more information).
+
+One quote to remember as you begin this tutorial is from "R for Data Science": "[Y]ou should never feel bad about using a for loop instead of a map function. The map functions are a step up a tower of abstraction, and it can take a long time to get your head around how they work."
+
+# [Key terms](#key-terms)
+
+In addition to the key terms in List Basics-Part 01, the following terms are also useful:
+
+- a **named function** is one of the form:
+```{r named-function, echo=T, eval=F}
+addition_function <- function(x) {
+    x + 1
+}
+```
+
+-  **lambda** or **anonymous functions** are ones that are not important enough to be named, but instead are created "on-the-fly" like `function(.x) .x + 1`. Lambda/anonymous functions are considered to be verbose in R.  
+
+- a **purrr-style lambda function, formula** is a convenience or shortcut function taking the form `~ .x + 1`.  It is available for use in the `purrr` package. This form should be reserved for short and simple functions.
+
+# [map() distinguished from lapply()](#distinguished)
+
+While `map()` and `lapply()` are similar , the `map()` function accepts a purrr-style lambda function where the `lapply()` function does not.
+
+## The lapply() method
+
+```{r lapply-method-function, echo=T}
+# apply function
+list(letters[5:9]) |> lapply(paste0, "<==")
+```
+
+```{r lapply-method-anonymous, echo=T}
+# apply anonymous function
+list(letters[5:9]) |> lapply(function(x) paste0(x, "<=="))
+```
+
+```{r lapply-method-purr-style, echo = T, error=T}
+# apply purr-style lambda function
+list(letters[5:9]) |> lapply(~ paste0(x, "<=="))
+```
+
+a purrr-style lambda function will not work in `lapply()`.
+
+## The map() method
+
+A basic template for `map()` usage is `map(YOUR_LIST, YOUR_FUNCTION)` or if you're piping, it would be modified to `YOUR_LIST |> map(YOUR_FUNCTION)`.
+
+```{r map-method-function, echo=T}
+# map function
+list(letters[5:9]) |> map(paste0, "<==")
+```
+
+```{r map-method-anonymous, echo = T}
+# map anonymous function
+list(letters[5:9]) |> map(function(x) paste0(x, "<=="))
+```
+
+```{r map-purr-style-function, echo = T}
+# map purr-style lambda function
+list(letters[5:9]) |> map(~ paste0(.x, "<=="))
+```
+
+Having shown the similarity between `map()` and `lapply()`, the balance of the post is dedicated to the `purrr` package.
+
+# [List to vector](#list-to-vector)
+
+`map()` always returns a list.  After iterating over a list with the `map()` function, the result can be returned as a user-defined data type, using the `map_lgl` (logical), `map_chr()` (character), `map_int()` (integer), `map_dbl()` (double), `map_raw()` (raw), `map_df()` (data frame), `map_dfr()` (data frame), or `map_dfc()` (data frame) functions.
+
+## Output -- Double
+```{r list-to-vector-map-dbl, echo=T}
+1:3 |>
+    map(~ rnorm(.x, n = 100, sd = .5)) |> # output a list
+    map_dbl(mean) # output an atomic vector
+```
+
+## Output -- Character
+
+```{r list-to-vector-map-chr, echo = T}
+goldilocks <- list(mamma_bear = "bed_1", papa_bear = "bed_2", baby_bear = "bed_3")
+goldilocks |>
+    map_chr(~ paste0("Who's been sleeping in ", .x, "?"))
+```
+
+## Output -- Dataframe
+
+The "c" in `map_dfc()` stands for "column", the "r" in `map_dfr()` stands for "row". (Conversion of lists to data frames and vice versa is the topic of the next post).
+
+```{r list-to-dataframe, echo=T}
+list(a = c(1, 2), b = c(3, 4)) |>
+    map_dfc(~ as.data.frame(.)) |>
+    setNames(c("a", "b"))
+```
+# [Extract element(s) from list](#extract)
+
+## Single nested list
+```{r extract-single-nested-list, echo = T}
+# create
+l1 <- list(list(a = 1), list(a = NULL, b = 2), list(b = 3))
+l1
+```
+
+### By position
+
+```{r extract-single-nested-list-position, echo=T}
+l1 |> map_dbl(2, .default = NA)
+```
+
+### By name 
+
+```{r extract-single-nested-list-1, echo=T}
+map(l1, "a", .default = "???")
+```
+
+```{r extract-single-nested-list-2, echo=T}
+l1 |> map("b", .default = NA)
+```
+
+## Multi nested list 
+
+```{r create-multi-nested-list, echo = T}
+l2 <- list(
+    list(num = 1:3, let = letters[1:3]),
+    list(num = 101:103, let = letters[4:6]),
+    list()
+)
+l2
+```
+
+### By position 
+
+```{r extract-multi-nested-list-position-1, echo=T}
+l2 |> map(c(1, 3))
+```
+
+```{r extract-multi-nested-list-position-2, echo=T}
+l2 |> map(c(2, 2))
+```
+
+
+### By name & position 
+
+```{r extract-multi-nested-list-name-pos-1, echo=T}
+l2 |> map(list("num", 3))
+```
+
+```{r extract-multi-nested-list-name-pos-2, echo=T}
+l2 |> map(list("let", 1))
+```
+
+```{r extract-multi-nested-list-name-pos-3, echo=T}
+l2 |> map_int(list("num", 3), .default = NA)
+```
+
+# [Flatten list](#flatten-list)
+
+`flatten()` is similar to `unlist()`, but it only removes a single layer and returns the same type as the input.
+
+```{r flatten-list, echo=T}
+l2 |> flatten()
+```
+
+Also, a list can be subset and then flattened with `map()`.
+
+```{r flatten-list-map, echo=T}
+# flatten with map
+l2 |>
+    map(list("let", 1)) |>
+    flatten_chr()
+```
+
+# [Transpose list](#transpose)
+
+`transpose()` turns a list-of-lists "inside-out"; it turns a pair of lists into a list of pairs, or a list of pairs into pair of lists.
+
+```{r transpose-list-create, echo=T}
+# create list
+x <- rerun(3, x = runif(1), y = runif(5))
+x
+```
+
+```{r transpose-list-transpose, echo=T}
+x |> transpose()
+```
+
+
+# [Simplify list](#simplify-list)
+
+Use `simplify_all()` to reduce to atomic vectors where possible.
+
+```{r simplify-all-list, echo=T}
+x <- list(list(a = 1, b = 2), list(a = 3, b = 4), list(a = 5, b = 6))
+x
+```
+
+Then, transpose the above list.
+
+```{r simplify-all-transpose, echo=T}
+x |> transpose()
+```
+
+Finally, simplify the list.
+
+```{r simplify-all-simplify, echo=T}
+## helpful
+x |>
+    transpose() |>
+    simplify_all()
+```
+
+
+# [Conclusion](#conclusion)
+
+You should now know how to iterate over a list, convert a list to a vector, extract elements from a list by both name and position, flatten, transpose, and simplify a list.  These are only some of the highlights within the `purrr` package and there are many more variants and functions available. Rstudio published a "must-have" [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/purrr.pdf) for `purrr`.
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+- [Advanced R -- Chapter 9 -- Functionals](https://adv-r.hadley.nz/functionals.html#functionals)
+
+- [R for Data Science -- Chapter 21 -- Iteration](https://r4ds.had.co.nz/iteration.html#the-map-functions)
+
+-  [UVA -- Getting started with the purrr package in R](https://data.library.virginia.edu/getting-started-with-the-purrr-package-in-r/)
+
+-  [Functional Programming](https://dcl-prog.stanford.edu)
+
+-  [Rebecca Barter -- Learn to purrr](https://www.rebeccabarter.com/blog/2019-08-19_purrr/)
+
+-  [Josh McCrain --purrr: Introduction and Application](http://joshuamccrain.com/tutorials/purrr/purrr_introduction.html)
+
+-  [Jenny Bryan -- purrr Tutorial](https://jennybc.github.io/purrr-tutorial/index.html)
+
+-  [Colin Fay -- purrr](https://colinfay.me/tags/#purrr)
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```
