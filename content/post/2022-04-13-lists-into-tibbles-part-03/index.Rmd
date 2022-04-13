@@ -1,0 +1,111 @@
+---
+title: Lists into Tibbles Part 03
+author: Rob Wiederstein
+date: '2022-04-13'
+slug: lists-into-tibbles-part-03
+categories:
+  - R
+tags:
+  - tibble
+  - list
+layout: layouts/post/single
+draft: TRUE
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: feature.png
+  alt: lists into tibbles
+  caption: Lesson on how to convert a list to a tibble.
+repo: ~
+summary: By default, Hugo automatically takes the first 70 words of your content as
+  its summary and stores it into the `.Summary` page variable for use in your templates.
+  You may customize the summary length by setting `summaryLength` in your site configuration
+  *or* you can set it in the front matter.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+
+# [Overview](#overview)
+
+(Describe the problem.)
+
+# [Conclusion](#conclusion)
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+- [Advanced R -- Chapter 9 -- Functionals](https://adv-r.hadley.nz/functionals.html#functionals)
+
+- [R for Data Science -- Chapter 21 -- Iteration](https://r4ds.had.co.nz/iteration.html#the-map-functions)
+
+-  [UVA -- Getting started with the purrr package in R](https://data.library.virginia.edu/getting-started-with-the-purrr-package-in-r/)
+
+-  [Functional Programming](https://dcl-prog.stanford.edu)
+
+-  [Rebecca Barter -- Learn to purrr](https://www.rebeccabarter.com/blog/2019-08-19_purrr/)
+
+-  [Josh McCrain --purrr: Introduction and Application](http://joshuamccrain.com/tutorials/purrr/purrr_introduction.html)
+
+-  [Jenny Bryan -- purrr Tutorial](https://jennybc.github.io/purrr-tutorial/index.html)
+
+-  [Colin Fay -- purrr](https://colinfay.me/tags/#purrr)
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```
