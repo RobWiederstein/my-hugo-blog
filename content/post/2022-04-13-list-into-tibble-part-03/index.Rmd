@@ -1,0 +1,349 @@
+---
+title: List into Tibble-Part-03
+author: Rob Wiederstein
+date: '2022-04-13'
+slug: lists-into-tibbles-part-03
+categories:
+  - R
+tags:
+  - tibble
+  - list
+layout: layouts/post/single
+draft: TRUE
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-purrr, @R-tidyr, @R-tibble
+header:
+  image: feature.png
+  alt: lists into tibbles
+  caption: Lesson on how to convert a list to a tibble.
+repo: ~
+summary: Function returns and data are often in list form.  Some, like myself, prefer to convert them to a table or data frame to perform computations.  Lists of equal lengths are easy to convert to a table, but lists of unequal lengths are problematic.  The tibble package allows for lists to be stored in the column of the dataframe.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+    "devtools", # for session info
+    "ggthemes", # for plots
+    "blogdown",
+    "tibble",
+    "purrr",
+    "tidyr"
+)
+lapply(packages, function(x) {
+    if (!requireNamespace(x)) install.packages(x)
+    library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+    comment = "",
+    fig.width = 6,
+    fig.asp = .8,
+    fig.align = "center",
+    message = F,
+    error = F,
+    warning = F,
+    tidy = F,
+    comment = "",
+    cache = F,
+    dev = "svg",
+    echo = F
+)
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+
+# [Overview](#overview)
+
+This post discusses inserting a list into a data frame or converting one to a data frame.  While it may be achieved within the traditional data frame, we will use the tibble package to accomplish the task.  
+
+Converting a list to a tibble will require the some knowledge of three packages: `tibble`, `tidyr`, and `purrr` package. Here, the workflow will be introduced touching upon the most common approaches with simple exercises. More rigorous examples of lists to tibbles are reserved for [Rectangling - Part 04](https://robwiederstein.org) and [Use Cases - Part 05](https://robwiederstein.org).  The concept of a "list-column" figures prominently in the discussion.  It is a powerful method for storing one or more lists within a single tibble.
+
+
+According to the `tibble` package details, "[t]ibble is the central data structure for the set of packages known as the `tidyverse`. Tidyverse packages include `dplyr`, `ggplot2` and `tidyr`. The objective is to have a data frame where a list can be stored in a column and `tibble` provides this functionality. ("tibble" and "data frame" are often used interchangeably.)
+
+# [tibbles](#tibbles)
+
+A tibble is a new take on data frames.  A tibble is a data frame but it changes the default behaviors of R's older data frame type. A tibble is different from the traditional data frame in the following ways:
+
+-  does not change an input's type
+-  it makes it easier to use with list-columns
+-  variable names are not changed
+-  it evaluates its arguments lazily and sequentially,
+-  it never uses `row.names()`
+-  it only recycles vectors of length 1
+
+A [R for Data Science](https://r4ds.had.co.nz/tibbles.html) devotes a Chapter 10 to tibbles.
+
+## Create via as_tibble()
+
+```{r tibble-iris-df, echo=T}
+tibble::as_tibble(iris[1:5, ])
+```
+
+## Create via tribble()
+
+When entering data by hand, it may be easier to create the table using `tribble()`, short for "transposed table."
+
+```{r tribble-df, echo=T, tidy=T}
+tibble::tribble(
+    ~x, ~y, ~z,
+    #--|--|-- <--Hadley Wickham does this!
+    "a", 1, 1.1,
+    "b", 2, 2.1
+)
+```
+
+# [Key Point](#key-point)
+
+Lists can be described as having equal lengths or varying lengths.  A list in the form `list(a = 1, b =1)` is a list where there is one element to each named list. Thus, the list is one where the elements are of equal lengths.
+
+```{r list-equal-lengths-illustration, echo=T}
+list(a = 1, b = 1) |> map_dbl(length)
+```
+
+However, lists are commonly of varying lengths like `list(a = 1, b = c(1, 2))`.  Such a list would be described as having unequal or varying lengths.
+
+```{r list-unequal-lengths-illustration, echo=T}
+list(a = 1, b = c(1, 2)) |> map_dbl(length)
+```
+
+Where a list contains the same number of elements as rows in a data frame, it is both conceptually easy to visualize and, with some creativity, to assign it to a column.
+
+```{r tibble-equal-lengths-illustration, echo=T}
+ll <- list(a = c(1, 2), b = c(1, 2))
+dt <- tibble(
+    names = c("a", "b"),
+    a = ll[["a"]],
+    b = ll[["b"]]
+)
+dt
+```
+
+However, when lists are of unequal lengths, the solution is not as apparent.
+
+```{r tibble-unequal-lengths-illustration, echo=T}
+ll <- list(a = 1, b = 1:5)
+dt <- tibble(
+    names = c("a", "b"),
+    lists = ll
+)
+dt
+```
+
+Rather than the values of the list being added, tibble created a column by default to store lists. This is extremely convenient, but a little confusing to get used to. Lists of unequal lengths are the most likely, but not exclusively, candidates to be stored within a tibble list-column.
+
+# [List-columns](#list-columns)
+
+The columns of a tibble are usually an atomic vector, with each column sharing the same length and data type. However, a tibble can have a column that contains a list, also known as a "list-column". List-columns can contain any of the different data types, making them extremely useful within a tibble.
+
+A list-column can be created in several ways. List-columns are addressed in the context of models in [R for Data Science--Chapter 25--Many Models](https://r4ds.had.co.nz/many-models.html?q=list-c#list-columns-1) and also in an evolving text, [Functional Programming](https://dcl-prog.stanford.edu/list-columns.html)
+
+## With tibble()
+
+```{r tibble-list-column, echo=T}
+tibble(x = 1:3, y = list(1:5, 1:10, 1:20))
+```
+
+## With enframe()
+
+### Example 1
+
+```{r enframe-list-column-1, echo=T}
+list(1:3) |> enframe(name = NULL)
+```
+### Example 2
+
+```{r enframe-list-column-2, echo=T}
+list(a = 1, b = 2, c = c(3, 4)) |> enframe(name = "name")
+```
+## With tidyr::nest()
+
+```{r nest-list-column, echo=T}
+x_data <- tibble(x = c(1, 1, 1, 2, 2, 3), y = 1:6, z = 6:1) |>
+    nest(data = c(y, z))
+x_data
+```
+
+## Unnest list-column
+```{r unnest-list-column, echo=T}
+x_data |> unnest(data)
+```
+
+
+# [list of equal lengths](#equal-lengths)
+
+There are a variety of ways to convert lists of equal lengths to a data frame. Here are three potential solutions. There are many others suggested in the StackOverflow question:
+[Convert a list to a data frame](https://stackoverflow.com/questions/4227223/convert-a-list-to-a-data-frame).
+
+```{r list-equal-lengths, echo=T}
+# create list
+ll <- list(a = c(1, 2), b = c(3, 4), c = c("x", "y"))
+```
+
+
+## Solution 1 - tibble
+
+```{r list-equal-lengths-solution-1, echo=T}
+# as tibble
+tibble(
+    a = ll[["a"]],
+    b = ll[["b"]],
+    c = ll$c
+)
+```
+## Solution 2 - dplyr
+
+```{r lists-equal-lengths-solution-2, echo=T}
+# as tibble
+dplyr::bind_rows(ll)
+```
+
+## Solution 3 - purrr
+
+```{r lists-equal-lengths-solution-3, echo = T}
+ll |>
+    map_dfc(~ as_tibble(.x)) |>
+    setNames(c("a", "b", "c"))
+```
+
+```{r}
+ll |>
+    simplify_all()
+```
+
+# [Prelude to Rectangling](#prelude)
+
+Before leaping into the dense vignette on "rectangling", I thought we'd ease in to the topic with some short, easy-to-inspect data.
+
+## JSON List
+
+This json snippet represents the contact information for a single person, "Joe Jackson." Note that the "address" and "phoneNumbers" fields are nested.
+
+```{r json-list, echo=T}
+jsonList <- list(rjson::fromJSON('
+{
+   "firstName": "Joe",
+   "lastName": "Jackson",
+   "gender": "male",
+   "age": 28,
+   "address": {
+       "streetAddress": "101",
+       "city": "San Diego",
+       "state": "CA"
+   },
+   "phoneNumbers": [
+       { "type": "home", "number": "7349282382" }
+   ]
+}
+'))
+```
+
+First, assign the json list to a tibble.  The resulting tibble is a single list-column and the variable is named "contact."
+
+```{r json-list-tibble, echo=T}
+contacts <- tibble(contact = jsonList)
+# tibble with single list column
+contacts
+```
+
+
+Finally, unnest the different columns.  This was accomplished only after several attempts.
+
+```{r json-list-unnested, echo=T}
+contacts |>
+    unnest_wider(contact) |>
+    unnest_wider(address) |>
+    unnest_wider(phoneNumbers) |>
+    unnest_wider(`...1`)
+```
+
+## XML list
+
+This is the same Joe Jackson data as before but in XML.
+
+```{r xml-list, echo=T}
+library(xml2)
+xmlList <- as_list(read_xml(
+    '<?xml version="1.0" encoding="UTF-8" ?>
+        <root>
+        <firstName>Joe</firstName>
+        <lastName>Jackson</lastName>
+        <gender>male</gender>
+        <age>28</age>
+        <address>
+        <streetAddress>101</streetAddress>
+        <city>San Diego</city>
+        <state>CA</state>
+        </address>
+        <phoneNumbers>
+        <type>home</type>
+        <number>7349282382</number>
+        </phoneNumbers>
+        </root>
+        '
+) |> xml_ns_strip())
+```
+
+```{r xml-list-tibble, echo=T}
+# tibble with single nested column
+contacts <- tibble(contact = xmlList)
+contacts
+```
+
+```{r xml-list-tibble-unnested, echo = T}
+
+df <- contacts |>
+    unnest_wider(contact) |>
+    unnest_wider(address) |>
+    unnest_wider(phoneNumbers) |>
+    mutate(across(everything(), unlist))
+```
+
+
+# [Conclusion](#conclusion)
+
+In this post, we learned about the the tibble package and how to include or convert a list to a column in a tibble.  Lists can either be of equal or unequal lengths.  Where lists are of unequal lengths, a simple strategy is to include them in a tibble as a list-column.  We also looked at how .json and .xml data is imported as a list and how to convert the list to a tibble using the `tidyr` function `unnest_wider()`.
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+- [Advanced R -- Chapter 9 -- Functionals](https://adv-r.hadley.nz/functionals.html#functionals)
+
+- [R for Data Science -- Chapter 21 -- Iteration](https://r4ds.had.co.nz/iteration.html#the-map-functions)
+
+-  [Functional Programming](https://dcl-prog.stanford.edu)
+
+-  [Jenny Bryan -- purrr Tutorial](https://jennybc.github.io/purrr-tutorial/index.html)
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```
