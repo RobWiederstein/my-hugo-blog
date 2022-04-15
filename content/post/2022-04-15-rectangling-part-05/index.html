@@ -1,0 +1,545 @@
+---
+title: Rectangling-Part-05
+author: Rob Wiederstein
+date: '2022-04-15'
+slug: rectangling-part-05
+categories:
+  - R
+tags:
+  - list
+  - purrr
+  - tidyr
+layout: layouts/post/single
+draft: TRUE
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-purrr, @R-tidyr, @R-repurrrsive, @R-dplyr
+header:
+  image: feature.png
+  alt: rectangling
+  caption: Rectangling is the process of untangling lists into tables
+repo: ~
+summary: Rectangling is the process of untangling lists into tables.
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#overview"><span>Overview</span></a></li>
+<li><a href="#github-users-unnest_wider"><span>GitHub users – unnest_wider()</span></a>
+<ul>
+<li><a href="#insert-into-tibble">Insert into tibble</a></li>
+<li><a href="#inspect">Inspect</a></li>
+<li><a href="#unnest_wider">unnest_wider()</a></li>
+<li><a href="#hoist">hoist()</a></li>
+</ul></li>
+<li><a href="#github-repos---unnest_longer"><span>GitHub repos - unnest_longer()</span></a>
+<ul>
+<li><a href="#insert-into-tibble-1">Insert into tibble</a></li>
+<li><a href="#inspect-1">Inspect</a></li>
+<li><a href="#unnest_longer">unnest_longer()</a></li>
+<li><a href="#hoist-1">hoist()</a></li>
+</ul></li>
+<li><a href="#game-of-throne-characters"><span>Game of Throne Characters</span></a>
+<ul>
+<li><a href="#insert-into-tibble-2">Insert into tibble</a></li>
+<li><a href="#inspect-2">Inspect</a></li>
+<li><a href="#unnest_wider-1">unnest_wider()</a></li>
+<li><a href="#build-table">Build table</a></li>
+</ul></li>
+<li><a href="#sharla-gelfands-discography"><span>Sharla Gelfand’s Discography</span></a>
+<ul>
+<li><a href="#insert-into-tibble-3">Insert into tibble</a></li>
+<li><a href="#inspect-3">Inspect</a></li>
+<li><a href="#fix-duplicate-names">Fix duplicate names</a></li>
+<li><a href="#drop-id-column">drop id column</a></li>
+<li><a href="#hoist-alternative"><code>hoist()</code> alternative</a></li>
+<li><a href="#better-alternative">Better alternative</a></li>
+</ul></li>
+<li><a href="#conclusion"><span>Conclusion</span></a></li>
+<li><a href="#acknowledgements"><span>Acknowledgements</span></a></li>
+<li><a href="#references"><span>References</span></a></li>
+<li><a href="#disclaimer"><span>Disclaimer</span></a></li>
+<li><a href="#reproducibility"><span>Reproducibility</span></a></li>
+</ul>
+</div>
+
+<div id="overview" class="section level1">
+<h1><a href="#overview">Overview</a></h1>
+<p>This post is an abbreviated version of the <code>tidyr</code> vignette on rectangling. According to the vignette, “[r]ectangling is the art and craft of taking a deeply nested list (often sourced from wild caught JSON or XML) and taming it into a tidy data set of rows and columns.” If you prefer to interactively explore the vignette from the command line, you’ll need to install <code>tidyr</code>, <code>dplyr</code> and <code>repurrrsive</code> packages.</p>
+<pre class="r"><code>#load packages
+library(tidyr)
+library(dplyr)
+library(repurrrsive)
+#load vignette in help window
+vignette(&quot;rectangle&quot;, package = &quot;tidyr&quot;)</code></pre>
+<p>Or the vignette is available on its own web <a href="https://tidyr.tidyverse.org/articles/rectangle.html">page</a>. The workhorse of the effort are permutations of the <code>unnest_*</code> function and <code>hoist()</code>. Both are in the <code>tidyr</code> package.</p>
+<p>The general workfow of rectangling is to populate a tibble with a list. Nested lists will be converted to list-columns whereby the various “unnest” function can be applied like <code>unnest_wider</code>, <code>unnest_longer</code> and <code>unnest_auto</code> can be used. Where only small portions of a list are to be retained, <code>hoist()</code> may be a more efficient alternative.</p>
+</div>
+<div id="github-users-unnest_wider" class="section level1">
+<h1><a href="#gh_users">GitHub users – unnest_wider()</a></h1>
+<div id="insert-into-tibble" class="section level2">
+<h2>Insert into tibble</h2>
+<pre class="r"><code>users &lt;- tibble(user = gh_users)</code></pre>
+</div>
+<div id="inspect" class="section level2">
+<h2>Inspect</h2>
+<pre class="r"><code>names(users$user[[1]])</code></pre>
+<pre><code> [1] &quot;login&quot;               &quot;id&quot;                  &quot;avatar_url&quot;         
+ [4] &quot;gravatar_id&quot;         &quot;url&quot;                 &quot;html_url&quot;           
+ [7] &quot;followers_url&quot;       &quot;following_url&quot;       &quot;gists_url&quot;          
+[10] &quot;starred_url&quot;         &quot;subscriptions_url&quot;   &quot;organizations_url&quot;  
+[13] &quot;repos_url&quot;           &quot;events_url&quot;          &quot;received_events_url&quot;
+[16] &quot;type&quot;                &quot;site_admin&quot;          &quot;name&quot;               
+[19] &quot;company&quot;             &quot;blog&quot;                &quot;location&quot;           
+[22] &quot;email&quot;               &quot;hireable&quot;            &quot;bio&quot;                
+[25] &quot;public_repos&quot;        &quot;public_gists&quot;        &quot;followers&quot;          
+[28] &quot;following&quot;           &quot;created_at&quot;          &quot;updated_at&quot;         </code></pre>
+</div>
+<div id="unnest_wider" class="section level2">
+<h2>unnest_wider()</h2>
+<pre class="r"><code>users |&gt; unnest_wider(user)</code></pre>
+<pre><code># A tibble: 6 × 30
+  login     id avatar_url gravatar_id url   html_url followers_url following_url
+  &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt;        
+1 gabo… 6.60e5 https://a… &quot;&quot;          http… https:/… https://api.… https://api.…
+2 jenn… 5.99e5 https://a… &quot;&quot;          http… https:/… https://api.… https://api.…
+3 jtle… 1.57e6 https://a… &quot;&quot;          http… https:/… https://api.… https://api.…
+4 juli… 1.25e7 https://a… &quot;&quot;          http… https:/… https://api.… https://api.…
+5 leep… 3.51e6 https://a… &quot;&quot;          http… https:/… https://api.… https://api.…
+6 masa… 8.36e6 https://a… &quot;&quot;          http… https:/… https://api.… https://api.…
+# … with 22 more variables: gists_url &lt;chr&gt;, starred_url &lt;chr&gt;,
+#   subscriptions_url &lt;chr&gt;, organizations_url &lt;chr&gt;, repos_url &lt;chr&gt;,
+#   events_url &lt;chr&gt;, received_events_url &lt;chr&gt;, type &lt;chr&gt;, site_admin &lt;lgl&gt;,
+#   name &lt;chr&gt;, company &lt;chr&gt;, blog &lt;chr&gt;, location &lt;chr&gt;, email &lt;chr&gt;,
+#   hireable &lt;lgl&gt;, bio &lt;chr&gt;, public_repos &lt;int&gt;, public_gists &lt;int&gt;,
+#   followers &lt;int&gt;, following &lt;int&gt;, created_at &lt;chr&gt;, updated_at &lt;chr&gt;</code></pre>
+</div>
+<div id="hoist" class="section level2">
+<h2>hoist()</h2>
+<pre class="r"><code>users %&gt;% hoist(
+    user,
+    followers = &quot;followers&quot;,
+    login = &quot;login&quot;,
+    url = &quot;html_url&quot;
+)</code></pre>
+<pre><code># A tibble: 6 × 4
+  followers login       url                            user             
+      &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;                          &lt;list&gt;           
+1       303 gaborcsardi https://github.com/gaborcsardi &lt;named list [27]&gt;
+2       780 jennybc     https://github.com/jennybc     &lt;named list [27]&gt;
+3      3958 jtleek      https://github.com/jtleek      &lt;named list [27]&gt;
+4       115 juliasilge  https://github.com/juliasilge  &lt;named list [27]&gt;
+5       213 leeper      https://github.com/leeper      &lt;named list [27]&gt;
+6        34 masalmon    https://github.com/masalmon    &lt;named list [27]&gt;</code></pre>
+</div>
+</div>
+<div id="github-repos---unnest_longer" class="section level1">
+<h1><a href="#gh-repos">GitHub repos - unnest_longer()</a></h1>
+<div id="insert-into-tibble-1" class="section level2">
+<h2>Insert into tibble</h2>
+<pre class="r"><code>repos &lt;- tibble(repo = repurrrsive::gh_repos)</code></pre>
+</div>
+<div id="inspect-1" class="section level2">
+<h2>Inspect</h2>
+<pre class="r"><code>repos</code></pre>
+<pre><code># A tibble: 6 × 1
+  repo       
+  &lt;list&gt;     
+1 &lt;list [30]&gt;
+2 &lt;list [30]&gt;
+3 &lt;list [30]&gt;
+4 &lt;list [26]&gt;
+5 &lt;list [30]&gt;
+6 &lt;list [30]&gt;</code></pre>
+</div>
+<div id="unnest_longer" class="section level2">
+<h2>unnest_longer()</h2>
+<pre class="r"><code>repos &lt;- repos %&gt;% unnest_longer(repo)
+repos</code></pre>
+<pre><code># A tibble: 176 × 1
+   repo             
+   &lt;list&gt;           
+ 1 &lt;named list [68]&gt;
+ 2 &lt;named list [68]&gt;
+ 3 &lt;named list [68]&gt;
+ 4 &lt;named list [68]&gt;
+ 5 &lt;named list [68]&gt;
+ 6 &lt;named list [68]&gt;
+ 7 &lt;named list [68]&gt;
+ 8 &lt;named list [68]&gt;
+ 9 &lt;named list [68]&gt;
+10 &lt;named list [68]&gt;
+# … with 166 more rows</code></pre>
+</div>
+<div id="hoist-1" class="section level2">
+<h2>hoist()</h2>
+<pre class="r"><code>repos %&gt;% hoist(
+    repo,
+    login = c(&quot;owner&quot;, &quot;login&quot;), #&lt;===
+    name = &quot;name&quot;,
+    homepage = &quot;homepage&quot;,
+    watchers = &quot;watchers_count&quot;
+)</code></pre>
+<pre><code># A tibble: 176 × 5
+   login       name        homepage watchers repo             
+   &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;int&gt; &lt;list&gt;           
+ 1 gaborcsardi after        &lt;NA&gt;           5 &lt;named list [65]&gt;
+ 2 gaborcsardi argufy       &lt;NA&gt;          19 &lt;named list [65]&gt;
+ 3 gaborcsardi ask          &lt;NA&gt;           5 &lt;named list [65]&gt;
+ 4 gaborcsardi baseimports  &lt;NA&gt;           0 &lt;named list [65]&gt;
+ 5 gaborcsardi citest       &lt;NA&gt;           0 &lt;named list [65]&gt;
+ 6 gaborcsardi clisymbols  &quot;&quot;             18 &lt;named list [65]&gt;
+ 7 gaborcsardi cmaker       &lt;NA&gt;           0 &lt;named list [65]&gt;
+ 8 gaborcsardi cmark        &lt;NA&gt;           0 &lt;named list [65]&gt;
+ 9 gaborcsardi conditions   &lt;NA&gt;           0 &lt;named list [65]&gt;
+10 gaborcsardi crayon       &lt;NA&gt;          52 &lt;named list [65]&gt;
+# … with 166 more rows</code></pre>
+</div>
+</div>
+<div id="game-of-throne-characters" class="section level1">
+<h1><a href="#got-chars">Game of Throne Characters</a></h1>
+<div id="insert-into-tibble-2" class="section level2">
+<h2>Insert into tibble</h2>
+</div>
+<div id="inspect-2" class="section level2">
+<h2>Inspect</h2>
+<pre><code># A tibble: 30 × 1
+   char             
+   &lt;list&gt;           
+ 1 &lt;named list [18]&gt;
+ 2 &lt;named list [18]&gt;
+ 3 &lt;named list [18]&gt;
+ 4 &lt;named list [18]&gt;
+ 5 &lt;named list [18]&gt;
+ 6 &lt;named list [18]&gt;
+ 7 &lt;named list [18]&gt;
+ 8 &lt;named list [18]&gt;
+ 9 &lt;named list [18]&gt;
+10 &lt;named list [18]&gt;
+# … with 20 more rows</code></pre>
+</div>
+<div id="unnest_wider-1" class="section level2">
+<h2>unnest_wider()</h2>
+<pre><code># A tibble: 30 × 18
+   url           id name  gender culture born  died  alive titles aliases father
+   &lt;chr&gt;      &lt;int&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;lgl&gt; &lt;list&gt; &lt;list&gt;  &lt;chr&gt; 
+ 1 https://w…  1022 Theo… Male   &quot;Ironb… &quot;In … &quot;&quot;    TRUE  &lt;chr&gt;  &lt;chr&gt;   &quot;&quot;    
+ 2 https://w…  1052 Tyri… Male   &quot;&quot;      &quot;In … &quot;&quot;    TRUE  &lt;chr&gt;  &lt;chr&gt;   &quot;&quot;    
+ 3 https://w…  1074 Vict… Male   &quot;Ironb… &quot;In … &quot;&quot;    TRUE  &lt;chr&gt;  &lt;chr&gt;   &quot;&quot;    
+ 4 https://w…  1109 Will  Male   &quot;&quot;      &quot;&quot;    &quot;In … FALSE &lt;chr&gt;  &lt;chr&gt;   &quot;&quot;    
+ 5 https://w…  1166 Areo… Male   &quot;Norvo… &quot;In … &quot;&quot;    TRUE  &lt;chr&gt;  &lt;chr&gt;   &quot;&quot;    
+ 6 https://w…  1267 Chett Male   &quot;&quot;      &quot;At … &quot;In … FALSE &lt;chr&gt;  &lt;chr&gt;   &quot;&quot;    
+ 7 https://w…  1295 Cres… Male   &quot;&quot;      &quot;In … &quot;In … FALSE &lt;chr&gt;  &lt;chr&gt;   &quot;&quot;    
+ 8 https://w…   130 Aria… Female &quot;Dorni… &quot;In … &quot;&quot;    TRUE  &lt;chr&gt;  &lt;chr&gt;   &quot;&quot;    
+ 9 https://w…  1303 Daen… Female &quot;Valyr… &quot;In … &quot;&quot;    TRUE  &lt;chr&gt;  &lt;chr&gt;   &quot;&quot;    
+10 https://w…  1319 Davo… Male   &quot;Weste… &quot;In … &quot;&quot;    TRUE  &lt;chr&gt;  &lt;chr&gt;   &quot;&quot;    
+# … with 20 more rows, and 7 more variables: mother &lt;chr&gt;, spouse &lt;chr&gt;,
+#   allegiances &lt;list&gt;, books &lt;list&gt;, povBooks &lt;list&gt;, tvSeries &lt;list&gt;,
+#   playedBy &lt;list&gt;</code></pre>
+<p>When the tibble was unnested, there are a collection of list-columns. To see which columns are of the class <code>list</code>, you can use dplyr’s <code>select_if</code> function.</p>
+<pre class="r"><code>chars2 %&gt;% select_if(is.list)</code></pre>
+<pre><code># A tibble: 30 × 7
+   titles    aliases    allegiances books     povBooks  tvSeries  playedBy 
+   &lt;list&gt;    &lt;list&gt;     &lt;list&gt;      &lt;list&gt;    &lt;list&gt;    &lt;list&gt;    &lt;list&gt;   
+ 1 &lt;chr [3]&gt; &lt;chr [4]&gt;  &lt;chr [1]&gt;   &lt;chr [3]&gt; &lt;chr [2]&gt; &lt;chr [6]&gt; &lt;chr [1]&gt;
+ 2 &lt;chr [2]&gt; &lt;chr [11]&gt; &lt;chr [1]&gt;   &lt;chr [2]&gt; &lt;chr [4]&gt; &lt;chr [6]&gt; &lt;chr [1]&gt;
+ 3 &lt;chr [2]&gt; &lt;chr [1]&gt;  &lt;chr [1]&gt;   &lt;chr [3]&gt; &lt;chr [2]&gt; &lt;chr [1]&gt; &lt;chr [1]&gt;
+ 4 &lt;chr [1]&gt; &lt;chr [1]&gt;  &lt;NULL&gt;      &lt;chr [1]&gt; &lt;chr [1]&gt; &lt;chr [1]&gt; &lt;chr [1]&gt;
+ 5 &lt;chr [1]&gt; &lt;chr [1]&gt;  &lt;chr [1]&gt;   &lt;chr [3]&gt; &lt;chr [2]&gt; &lt;chr [2]&gt; &lt;chr [1]&gt;
+ 6 &lt;chr [1]&gt; &lt;chr [1]&gt;  &lt;NULL&gt;      &lt;chr [2]&gt; &lt;chr [1]&gt; &lt;chr [1]&gt; &lt;chr [1]&gt;
+ 7 &lt;chr [1]&gt; &lt;chr [1]&gt;  &lt;NULL&gt;      &lt;chr [2]&gt; &lt;chr [1]&gt; &lt;chr [1]&gt; &lt;chr [1]&gt;
+ 8 &lt;chr [1]&gt; &lt;chr [1]&gt;  &lt;chr [1]&gt;   &lt;chr [4]&gt; &lt;chr [1]&gt; &lt;chr [1]&gt; &lt;chr [1]&gt;
+ 9 &lt;chr [5]&gt; &lt;chr [11]&gt; &lt;chr [1]&gt;   &lt;chr [1]&gt; &lt;chr [4]&gt; &lt;chr [6]&gt; &lt;chr [1]&gt;
+10 &lt;chr [4]&gt; &lt;chr [5]&gt;  &lt;chr [2]&gt;   &lt;chr [1]&gt; &lt;chr [3]&gt; &lt;chr [5]&gt; &lt;chr [1]&gt;
+# … with 20 more rows</code></pre>
+</div>
+<div id="build-table" class="section level2">
+<h2>Build table</h2>
+<pre><code># A tibble: 180 × 3
+   name             media    value            
+   &lt;chr&gt;            &lt;chr&gt;    &lt;chr&gt;            
+ 1 Theon Greyjoy    books    A Game of Thrones
+ 2 Theon Greyjoy    books    A Storm of Swords
+ 3 Theon Greyjoy    books    A Feast for Crows
+ 4 Theon Greyjoy    tvSeries Season 1         
+ 5 Theon Greyjoy    tvSeries Season 2         
+ 6 Theon Greyjoy    tvSeries Season 3         
+ 7 Theon Greyjoy    tvSeries Season 4         
+ 8 Theon Greyjoy    tvSeries Season 5         
+ 9 Theon Greyjoy    tvSeries Season 6         
+10 Tyrion Lannister books    A Feast for Crows
+# … with 170 more rows</code></pre>
+</div>
+</div>
+<div id="sharla-gelfands-discography" class="section level1">
+<h1><a href="#discography">Sharla Gelfand’s Discography</a></h1>
+<div id="insert-into-tibble-3" class="section level2">
+<h2>Insert into tibble</h2>
+<pre class="r"><code>discs &lt;- tibble(disc = discog) %&gt;%
+    unnest_wider(disc) %&gt;%
+    mutate(date_added = as.POSIXct(strptime(date_added, &quot;%Y-%m-%dT%H:%M:%S&quot;)))</code></pre>
+</div>
+<div id="inspect-3" class="section level2">
+<h2>Inspect</h2>
+<p>Examine data.</p>
+<pre class="r"><code>discs</code></pre>
+<pre><code># A tibble: 155 × 5
+   instance_id date_added          basic_information       id rating
+         &lt;int&gt; &lt;dttm&gt;              &lt;list&gt;               &lt;int&gt;  &lt;int&gt;
+ 1   354823933 2019-02-16 17:48:59 &lt;named list [11]&gt;  7496378      0
+ 2   354092601 2019-02-13 14:13:11 &lt;named list [11]&gt;  4490852      0
+ 3   354091476 2019-02-13 14:07:23 &lt;named list [11]&gt;  9827276      0
+ 4   351244906 2019-02-02 11:39:58 &lt;named list [11]&gt;  9769203      0
+ 5   351244801 2019-02-02 11:39:37 &lt;named list [11]&gt;  7237138      0
+ 6   351052065 2019-02-01 20:40:53 &lt;named list [11]&gt; 13117042      0
+ 7   350315345 2019-01-29 15:48:37 &lt;named list [11]&gt;  7113575      0
+ 8   350315103 2019-01-29 15:47:22 &lt;named list [11]&gt; 10540713      0
+ 9   350314507 2019-01-29 15:44:08 &lt;named list [11]&gt; 11260950      0
+10   350314047 2019-01-29 15:41:35 &lt;named list [11]&gt; 11726853      0
+# … with 145 more rows</code></pre>
+<p>The list-column “basic_information” needs to be unnested so the disc information can be viewed.</p>
+<pre class="r"><code>discs |&gt; unnest_wider(basic_information)</code></pre>
+<pre><code>Error in `unpack()`:
+! Names must be unique.
+x These names are duplicated:
+  * &quot;id&quot; at locations 7 and 14.
+ℹ Use argument `names_repair` to specify repair strategy.</code></pre>
+</div>
+<div id="fix-duplicate-names" class="section level2">
+<h2>Fix duplicate names</h2>
+<pre class="r"><code>discs %&gt;% unnest_wider(basic_information, names_repair = &quot;unique&quot;)</code></pre>
+<pre><code># A tibble: 155 × 15
+   instance_id date_added          labels  year master_url  artists id...7 thumb
+         &lt;int&gt; &lt;dttm&gt;              &lt;list&gt; &lt;int&gt; &lt;chr&gt;       &lt;list&gt;   &lt;int&gt; &lt;chr&gt;
+ 1   354823933 2019-02-16 17:48:59 &lt;list&gt;  2015 &lt;NA&gt;        &lt;list&gt;  7.50e6 &quot;htt…
+ 2   354092601 2019-02-13 14:13:11 &lt;list&gt;  2013 https://ap… &lt;list&gt;  4.49e6 &quot;htt…
+ 3   354091476 2019-02-13 14:07:23 &lt;list&gt;  2017 https://ap… &lt;list&gt;  9.83e6 &quot;htt…
+ 4   351244906 2019-02-02 11:39:58 &lt;list&gt;  2017 https://ap… &lt;list&gt;  9.77e6 &quot;htt…
+ 5   351244801 2019-02-02 11:39:37 &lt;list&gt;  2015 https://ap… &lt;list&gt;  7.24e6 &quot;htt…
+ 6   351052065 2019-02-01 20:40:53 &lt;list&gt;  2019 https://ap… &lt;list&gt;  1.31e7 &quot;htt…
+ 7   350315345 2019-01-29 15:48:37 &lt;list&gt;  2014 https://ap… &lt;list&gt;  7.11e6 &quot;htt…
+ 8   350315103 2019-01-29 15:47:22 &lt;list&gt;  2015 https://ap… &lt;list&gt;  1.05e7 &quot;htt…
+ 9   350314507 2019-01-29 15:44:08 &lt;list&gt;  2017 https://ap… &lt;list&gt;  1.13e7 &quot;&quot;   
+10   350314047 2019-01-29 15:41:35 &lt;list&gt;  2017 &lt;NA&gt;        &lt;list&gt;  1.17e7 &quot;htt…
+# … with 145 more rows, and 7 more variables: title &lt;chr&gt;, formats &lt;list&gt;,
+#   cover_image &lt;chr&gt;, resource_url &lt;chr&gt;, master_id &lt;int&gt;, id...14 &lt;int&gt;,
+#   rating &lt;int&gt;</code></pre>
+</div>
+<div id="drop-id-column" class="section level2">
+<h2>drop id column</h2>
+<p><code>basic-information</code> repeats the id column so drop it.</p>
+<pre class="r"><code>discs %&gt;%
+    select(!id) %&gt;%
+    unnest_wider(basic_information)</code></pre>
+<pre><code># A tibble: 155 × 14
+   instance_id date_added          labels  year master_url  artists     id thumb
+         &lt;int&gt; &lt;dttm&gt;              &lt;list&gt; &lt;int&gt; &lt;chr&gt;       &lt;list&gt;   &lt;int&gt; &lt;chr&gt;
+ 1   354823933 2019-02-16 17:48:59 &lt;list&gt;  2015 &lt;NA&gt;        &lt;list&gt;  7.50e6 &quot;htt…
+ 2   354092601 2019-02-13 14:13:11 &lt;list&gt;  2013 https://ap… &lt;list&gt;  4.49e6 &quot;htt…
+ 3   354091476 2019-02-13 14:07:23 &lt;list&gt;  2017 https://ap… &lt;list&gt;  9.83e6 &quot;htt…
+ 4   351244906 2019-02-02 11:39:58 &lt;list&gt;  2017 https://ap… &lt;list&gt;  9.77e6 &quot;htt…
+ 5   351244801 2019-02-02 11:39:37 &lt;list&gt;  2015 https://ap… &lt;list&gt;  7.24e6 &quot;htt…
+ 6   351052065 2019-02-01 20:40:53 &lt;list&gt;  2019 https://ap… &lt;list&gt;  1.31e7 &quot;htt…
+ 7   350315345 2019-01-29 15:48:37 &lt;list&gt;  2014 https://ap… &lt;list&gt;  7.11e6 &quot;htt…
+ 8   350315103 2019-01-29 15:47:22 &lt;list&gt;  2015 https://ap… &lt;list&gt;  1.05e7 &quot;htt…
+ 9   350314507 2019-01-29 15:44:08 &lt;list&gt;  2017 https://ap… &lt;list&gt;  1.13e7 &quot;&quot;   
+10   350314047 2019-01-29 15:41:35 &lt;list&gt;  2017 &lt;NA&gt;        &lt;list&gt;  1.17e7 &quot;htt…
+# … with 145 more rows, and 6 more variables: title &lt;chr&gt;, formats &lt;list&gt;,
+#   cover_image &lt;chr&gt;, resource_url &lt;chr&gt;, master_id &lt;int&gt;, rating &lt;int&gt;</code></pre>
+</div>
+<div id="hoist-alternative" class="section level2">
+<h2><code>hoist()</code> alternative</h2>
+<pre class="r"><code>discs %&gt;%
+    hoist(
+        basic_information,
+        title = &quot;title&quot;,
+        year = &quot;year&quot;,
+        label = list(&quot;labels&quot;, 1, &quot;name&quot;),
+        artist = list(&quot;artists&quot;, 1, &quot;name&quot;)
+    )</code></pre>
+<pre><code># A tibble: 155 × 9
+   instance_id date_added          title      year label artist basic_informati…
+         &lt;int&gt; &lt;dttm&gt;              &lt;chr&gt;     &lt;int&gt; &lt;chr&gt; &lt;chr&gt;  &lt;list&gt;          
+ 1   354823933 2019-02-16 17:48:59 Demo       2015 Tobi… Mollot &lt;named list [9]&gt;
+ 2   354092601 2019-02-13 14:13:11 Observan…  2013 La V… Una B… &lt;named list [9]&gt;
+ 3   354091476 2019-02-13 14:07:23 I          2017 La V… S.H.I… &lt;named list [9]&gt;
+ 4   351244906 2019-02-02 11:39:58 Oído Abs…  2017 La V… Rata … &lt;named list [9]&gt;
+ 5   351244801 2019-02-02 11:39:37 A Cat&#39;s …  2015 Kato… Ivy (… &lt;named list [9]&gt;
+ 6   351052065 2019-02-01 20:40:53 Tashme     2019 High… Tashme &lt;named list [9]&gt;
+ 7   350315345 2019-01-29 15:48:37 Demo       2014 Mind… Desgr… &lt;named list [9]&gt;
+ 8   350315103 2019-01-29 15:47:22 Let The …  2015 Not … Phant… &lt;named list [9]&gt;
+ 9   350314507 2019-01-29 15:44:08 Sub Space  2017 Not … Sub S… &lt;named list [9]&gt;
+10   350314047 2019-01-29 15:41:35 Demo       2017 Pres… Small… &lt;named list [9]&gt;
+# … with 145 more rows, and 2 more variables: id &lt;int&gt;, rating &lt;int&gt;</code></pre>
+</div>
+<div id="better-alternative" class="section level2">
+<h2>Better alternative</h2>
+<p>A better alternative would be to create separate tables for artist and label:</p>
+<pre class="r"><code># artist
+discs %&gt;%
+    hoist(basic_information, artist = &quot;artists&quot;) %&gt;%
+    select(disc_id = id, artist) %&gt;%
+    unnest_longer(artist) %&gt;%
+    unnest_wider(artist)</code></pre>
+<pre><code># A tibble: 167 × 8
+    disc_id join  name                    anv   tracks role  resource_url     id
+      &lt;int&gt; &lt;chr&gt; &lt;chr&gt;                   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;         &lt;int&gt;
+ 1  7496378 &quot;&quot;    Mollot                  &quot;&quot;    &quot;&quot;     &quot;&quot;    https://api… 4.62e6
+ 2  4490852 &quot;&quot;    Una Bèstia Incontrolab… &quot;&quot;    &quot;&quot;     &quot;&quot;    https://api… 3.19e6
+ 3  9827276 &quot;&quot;    S.H.I.T. (3)            &quot;&quot;    &quot;&quot;     &quot;&quot;    https://api… 2.77e6
+ 4  9769203 &quot;&quot;    Rata Negra              &quot;&quot;    &quot;&quot;     &quot;&quot;    https://api… 4.28e6
+ 5  7237138 &quot;&quot;    Ivy (18)                &quot;&quot;    &quot;&quot;     &quot;&quot;    https://api… 3.60e6
+ 6 13117042 &quot;&quot;    Tashme                  &quot;&quot;    &quot;&quot;     &quot;&quot;    https://api… 5.21e6
+ 7  7113575 &quot;&quot;    Desgraciados            &quot;&quot;    &quot;&quot;     &quot;&quot;    https://api… 4.45e6
+ 8 10540713 &quot;&quot;    Phantom Head            &quot;&quot;    &quot;&quot;     &quot;&quot;    https://api… 4.27e6
+ 9 11260950 &quot;&quot;    Sub Space (2)           &quot;&quot;    &quot;&quot;     &quot;&quot;    https://api… 5.69e6
+10 11726853 &quot;&quot;    Small Man (2)           &quot;&quot;    &quot;&quot;     &quot;&quot;    https://api… 6.37e6
+# … with 157 more rows</code></pre>
+<pre class="r"><code>#discs
+discs %&gt;%
+    hoist(basic_information, format = &quot;formats&quot;) %&gt;%
+    select(disc_id = id, format) %&gt;%
+    unnest_longer(format) %&gt;%
+    unnest_wider(format) %&gt;%
+    unnest_longer(descriptions)</code></pre>
+<pre><code># A tibble: 281 × 5
+    disc_id descriptions text  name     qty  
+      &lt;int&gt; &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;
+ 1  7496378 &quot;Numbered&quot;   Black Cassette 1    
+ 2  4490852 &quot;LP&quot;         &lt;NA&gt;  Vinyl    1    
+ 3  9827276 &quot;7\&quot;&quot;        &lt;NA&gt;  Vinyl    1    
+ 4  9827276 &quot;45 RPM&quot;     &lt;NA&gt;  Vinyl    1    
+ 5  9827276 &quot;EP&quot;         &lt;NA&gt;  Vinyl    1    
+ 6  9769203 &quot;LP&quot;         &lt;NA&gt;  Vinyl    1    
+ 7  9769203 &quot;Album&quot;      &lt;NA&gt;  Vinyl    1    
+ 8  7237138 &quot;7\&quot;&quot;        &lt;NA&gt;  Vinyl    1    
+ 9  7237138 &quot;45 RPM&quot;     &lt;NA&gt;  Vinyl    1    
+10 13117042 &quot;7\&quot;&quot;        &lt;NA&gt;  Vinyl    1    
+# … with 271 more rows</code></pre>
+</div>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+<p>This post closely followed the <code>tidyr</code> vignette “Rectangling.” That said, the section on google geocoding was omitted. The vignette demonstrated the use of <code>unnest_wider()</code>, <code>unnest_longer()</code>, and <code>hoist()</code>. It also showed how to solve an error when names in a list are duplicated by adding the argument <code>names_repair = "unique"</code>.</p>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to:</p>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2022 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+</div>
+<div id="ref-R-dplyr" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">H. Wickham, R. François, L. Henry, and K. Müller, <em>Dplyr: A grammar of data manipulation</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a></div>
+</div>
+<div id="ref-R-purrr" class="csl-entry">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">L. Henry and H. Wickham, <em>Purrr: Functional programming tools</em>. 2020 [Online]. Available: <a href="https://CRAN.R-project.org/package=purrr">https://CRAN.R-project.org/package=purrr</a></div>
+</div>
+<div id="ref-R-repurrrsive" class="csl-entry">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">J. Bryan, <em>Repurrrsive: Examples of recursive lists and nested or split data frames</em>. 2019 [Online]. Available: <a href="https://github.com/jennybc/repurrrsive">https://github.com/jennybc/repurrrsive</a></div>
+</div>
+<div id="ref-R-tidyr" class="csl-entry">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">H. Wickham and M. Girlich, <em>Tidyr: Tidy messy data</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=tidyr">https://CRAN.R-project.org/package=tidyr</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value
+ version  R version 4.1.3 (2022-03-10)
+ os       macOS Big Sur/Monterey 10.16
+ system   x86_64, darwin17.0
+ ui       X11
+ language (EN)
+ collate  en_US.UTF-8
+ ctype    en_US.UTF-8
+ tz       America/Chicago
+ date     2022-04-15
+ pandoc   2.14.1 @ /usr/local/bin/ (via rmarkdown)
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version    date (UTC) lib source
+ assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.1.0)
+ blogdown    * 1.9        2022-03-28 [1] CRAN (R 4.1.2)
+ bookdown      0.25       2022-03-16 [1] CRAN (R 4.1.2)
+ brio          1.1.3      2021-11-30 [1] CRAN (R 4.1.0)
+ bslib         0.3.1.9000 2022-03-04 [1] Github (rstudio/bslib@888fbe0)
+ cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.0)
+ callr         3.7.0      2021-04-20 [1] CRAN (R 4.1.0)
+ cli           3.2.0      2022-02-14 [1] CRAN (R 4.1.2)
+ colorspace    2.0-3      2022-02-21 [1] CRAN (R 4.1.2)
+ crayon        1.5.1      2022-03-26 [1] CRAN (R 4.1.0)
+ DBI           1.1.2      2021-12-20 [1] CRAN (R 4.1.0)
+ desc          1.4.1      2022-03-06 [1] CRAN (R 4.1.2)
+ devtools    * 2.4.3      2021-11-30 [1] CRAN (R 4.1.0)
+ digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.0)
+ dplyr       * 1.0.8      2022-02-08 [1] CRAN (R 4.1.2)
+ ellipsis      0.3.2      2021-04-29 [1] CRAN (R 4.1.0)
+ evaluate      0.15       2022-02-18 [1] CRAN (R 4.1.2)
+ fansi         1.0.3      2022-03-24 [1] CRAN (R 4.1.2)
+ fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.0)
+ fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.0)
+ generics      0.1.2      2022-01-31 [1] CRAN (R 4.1.2)
+ ggplot2       3.3.5      2021-06-25 [1] CRAN (R 4.1.0)
+ ggthemes    * 4.2.4      2021-01-20 [1] CRAN (R 4.1.0)
+ glue          1.6.2      2022-02-24 [1] CRAN (R 4.1.2)
+ gtable        0.3.0      2019-03-25 [1] CRAN (R 4.1.0)
+ htmltools     0.5.2      2021-08-25 [1] CRAN (R 4.1.0)
+ jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.0)
+ jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)
+ knitr         1.38       2022-03-25 [1] CRAN (R 4.1.0)
+ lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.0)
+ magrittr      2.0.3      2022-03-30 [1] CRAN (R 4.1.2)
+ memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.0)
+ munsell       0.5.0.9000 2021-10-19 [1] Github (cwickham/munsell@e539541)
+ pillar        1.7.0      2022-02-01 [1] CRAN (R 4.1.2)
+ pkgbuild      1.3.1      2021-12-20 [1] CRAN (R 4.1.0)
+ pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.1.0)
+ pkgload       1.2.4      2021-11-30 [1] CRAN (R 4.1.0)
+ prettyunits   1.1.1      2020-01-24 [1] CRAN (R 4.1.0)
+ processx      3.5.3      2022-03-25 [1] CRAN (R 4.1.0)
+ ps            1.6.0      2021-02-28 [1] CRAN (R 4.1.0)
+ purrr       * 0.3.4      2020-04-17 [1] CRAN (R 4.1.0)
+ R6            2.5.1      2021-08-19 [1] CRAN (R 4.1.0)
+ remotes       2.4.2      2021-11-30 [1] CRAN (R 4.1.0)
+ repurrrsive * 1.0.0      2019-07-15 [1] CRAN (R 4.1.0)
+ rlang         1.0.2      2022-03-04 [1] CRAN (R 4.1.2)
+ rmarkdown     2.13       2022-03-10 [1] CRAN (R 4.1.2)
+ rprojroot     2.0.3      2022-04-02 [1] CRAN (R 4.1.0)
+ rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.0)
+ sass          0.4.1      2022-03-23 [1] CRAN (R 4.1.2)
+ scales        1.1.1      2020-05-11 [1] CRAN (R 4.1.0)
+ sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.0)
+ stringi       1.7.6      2021-11-29 [1] CRAN (R 4.1.0)
+ stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.0)
+ testthat      3.1.3      2022-03-29 [1] CRAN (R 4.1.2)
+ tibble        3.1.6      2021-11-07 [1] CRAN (R 4.1.0)
+ tidyr       * 1.2.0      2022-02-01 [1] CRAN (R 4.1.2)
+ tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.1.2)
+ usethis     * 2.1.5      2021-12-09 [1] CRAN (R 4.1.0)
+ utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.0)
+ vctrs         0.4.0      2022-03-30 [1] CRAN (R 4.1.2)
+ withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.0)
+ xfun          0.30       2022-03-02 [1] CRAN (R 4.1.2)
+ yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)
+
+ [1] /Library/Frameworks/R.framework/Versions/4.1/Resources/library
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>

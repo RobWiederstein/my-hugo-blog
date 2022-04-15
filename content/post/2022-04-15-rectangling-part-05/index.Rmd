@@ -1,0 +1,290 @@
+---
+title: Rectangling-Part-05
+author: Rob Wiederstein
+date: '2022-04-15'
+slug: rectangling-part-05
+categories:
+  - R
+tags:
+  - list
+  - purrr
+  - tidyr
+layout: layouts/post/single
+draft: TRUE
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-purrr, @R-tidyr, @R-repurrrsive, @R-dplyr
+header:
+  image: feature.png
+  alt: rectangling
+  caption: Rectangling is the process of untangling lists into tables
+repo: ~
+summary: Rectangling is the process of untangling lists into tables.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown',
+      'purrr',
+      'repurrrsive',
+      'tidyr', 
+      'dplyr'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=F,
+  comment='',
+  cache=F,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+# [Overview](#overview)
+
+This post is an abbreviated version of  the `tidyr` vignette on rectangling. According to the vignette, "[r]ectangling is the art and craft of taking a deeply nested list (often sourced from wild caught JSON or XML) and taming it into a tidy data set of rows and columns." If you prefer to interactively explore the vignette from the command line, you'll need to install `tidyr`, `dplyr` and `repurrrsive` packages.
+
+```{r run-vignette, echo=T, eval=F}
+#load packages
+library(tidyr)
+library(dplyr)
+library(repurrrsive)
+#load vignette in help window
+vignette("rectangle", package = "tidyr")
+```
+
+Or the vignette is available on its own web [page](https://tidyr.tidyverse.org/articles/rectangle.html). The workhorse of the effort are permutations of the `unnest_*` function and `hoist()`.  Both are in the `tidyr` package.
+
+The general workfow of rectangling is to populate a tibble with a list.  Nested lists will be converted to list-columns whereby the various "unnest" function can be applied like `unnest_wider`, `unnest_longer` and `unnest_auto` can be used.  Where only small portions of a list are to be retained, `hoist()` may be a more efficient alternative.
+
+# [GitHub users -- unnest_wider()](#gh_users)
+
+## Insert into tibble
+
+```{r gh-users-insert, echo=T}
+users <- tibble(user = gh_users)
+```
+
+## Inspect
+
+```{r gh-users-inspect, echo=T}
+names(users$user[[1]])
+```
+
+
+## unnest_wider()
+
+```{r gh-users-unnest, echo=T}
+users |> unnest_wider(user)
+```
+
+## hoist()
+
+```{r gh-users-hoist, echo=T}
+users %>% hoist(
+    user,
+    followers = "followers",
+    login = "login",
+    url = "html_url"
+)
+```
+
+# [GitHub repos - unnest_longer()](#gh-repos)
+## Insert into tibble
+
+```{r rgh-repo-insert, echo=T}
+repos <- tibble(repo = repurrrsive::gh_repos)
+```
+
+## Inspect
+
+```{r gh-repo-inspect, echo=T}
+repos
+```
+
+## unnest_longer()
+
+```{r gh-repo-unnest-longer, echo=T}
+repos <- repos %>% unnest_longer(repo)
+repos
+```
+
+## hoist()
+
+```{r gh-repo-hoist, echo=T}
+repos %>% hoist(
+    repo,
+    login = c("owner", "login"), #<===
+    name = "name",
+    homepage = "homepage",
+    watchers = "watchers_count"
+)
+```
+
+# [Game of Throne Characters](#got-chars)
+
+## Insert into tibble
+
+```{r got-chars-insert}
+chars <- tibble(char = got_chars)
+```
+
+## Inspect
+
+```{r got-chars-inspect}
+chars
+```
+
+## unnest_wider()
+
+```{r got-chars-wider}
+chars2 <- chars %>% unnest_wider(char)
+chars2
+```
+
+When the tibble was unnested, there are a collection of list-columns. To see which columns are of the class `list`, you can use dplyr's   `select_if` function.
+
+```{r got-chars-list-columns, echo=T}
+chars2 %>% select_if(is.list)
+```
+
+## Build table
+
+```{r got-chars-table}
+chars2 %>% 
+  select(name, books, tvSeries) %>% 
+  pivot_longer(c(books, tvSeries), names_to = "media", values_to = "value") %>% 
+  unnest_longer(value)
+```
+
+# [Sharla Gelfand’s Discography](#discography)
+
+## Insert into tibble
+
+```{r disc-insert-tibble, echo=T}
+discs <- tibble(disc = discog) %>%
+    unnest_wider(disc) %>%
+    mutate(date_added = as.POSIXct(strptime(date_added, "%Y-%m-%dT%H:%M:%S")))
+```
+
+## Inspect
+
+Examine data.
+
+```{r disc-inspect, echo=T}
+discs
+```
+
+The list-column "basic_information" needs to be unnested so the disc information can be viewed.
+
+```{r disc-inspect-error, echo=T, error=TRUE}
+discs |> unnest_wider(basic_information)
+```
+
+
+## Fix duplicate names
+
+```{r disc-duplicate-names, echo=TRUE}
+discs %>% unnest_wider(basic_information, names_repair = "unique")
+```
+
+## drop id column
+
+`basic-information` repeats the id column so drop it.
+
+```{r disc-drop-id, echo=TRUE}
+discs %>%
+    select(!id) %>%
+    unnest_wider(basic_information)
+```
+
+## `hoist()` alternative
+
+```{r disc-hoist, echo=TRUE}
+discs %>%
+    hoist(
+        basic_information,
+        title = "title",
+        year = "year",
+        label = list("labels", 1, "name"),
+        artist = list("artists", 1, "name")
+    )
+```
+
+
+## Better alternative
+
+A better alternative would be to create separate tables for artist and label:
+
+```{r disc-alternative-artist, echo=TRUE}
+# artist
+discs %>%
+    hoist(basic_information, artist = "artists") %>%
+    select(disc_id = id, artist) %>%
+    unnest_longer(artist) %>%
+    unnest_wider(artist)
+```
+
+
+```{r disc-alternative-label, echo=TRUE}
+#discs
+discs %>%
+    hoist(basic_information, format = "formats") %>%
+    select(disc_id = id, format) %>%
+    unnest_longer(format) %>%
+    unnest_wider(format) %>%
+    unnest_longer(descriptions)
+```
+
+# [Conclusion](#conclusion)
+
+This post closely followed the `tidyr` vignette "Rectangling." That said, the section on google geocoding was omitted.  The vignette demonstrated the use of `unnest_wider()`, `unnest_longer()`, and `hoist()`.  It also showed how to solve an error when names in a list are duplicated by adding the argument `names_repair = "unique"`.
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```
