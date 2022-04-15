@@ -100,7 +100,7 @@ than a dataframe.
 
 3. .json and .xml are scraped as lists.
 
-# [Create a list](#list-creation)
+# [Create a named list](#list-creation)
 
 ```{r list-creation, echo=T}
 # create
@@ -118,7 +118,7 @@ ll
 
 ```{r nested-list, echo=T}
 #nested
-ll <- list(list(a = 1))
+ll <- list(list(b = 1))
 ```
 
 ```{r nested-list-print, echo=T}

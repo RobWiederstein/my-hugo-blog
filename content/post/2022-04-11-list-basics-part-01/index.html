@@ -31,7 +31,7 @@ summary: This post deals with list basics.
 <li><a href="#definitions"><span>Definitions</span></a></li>
 <li><a href="#key-terms"><span>Key Terms</span></a></li>
 <li><a href="#why-lists-are-important"><span>Why Lists Are Important</span></a></li>
-<li><a href="#create-a-list"><span>Create a list</span></a></li>
+<li><a href="#create-a-named-list"><span>Create a named list</span></a></li>
 <li><a href="#create-a-nested-list"><span>Create a nested list</span></a></li>
 <li><a href="#create-an-empty-list"><span>Create an empty list</span></a></li>
 <li><a href="#name-a-list"><span>Name a list</span></a></li>
@@ -85,8 +85,8 @@ than a dataframe.</p></li>
 <li><p>.json and .xml are scraped as lists.</p></li>
 </ol>
 </div>
-<div id="create-a-list" class="section level1">
-<h1><a href="#list-creation">Create a list</a></h1>
+<div id="create-a-named-list" class="section level1">
+<h1><a href="#list-creation">Create a named list</a></h1>
 <pre class="r"><code># create
 ll &lt;- list(a = 1)</code></pre>
 <pre class="r"><code>#print 
@@ -97,11 +97,11 @@ ll</code></pre>
 <div id="create-a-nested-list" class="section level1">
 <h1><a href="#nested-list">Create a nested list</a></h1>
 <pre class="r"><code>#nested
-ll &lt;- list(list(a = 1))</code></pre>
+ll &lt;- list(list(b = 1))</code></pre>
 <pre class="r"><code>#print
 ll</code></pre>
 <pre><code>[[1]]
-[[1]]$a
+[[1]]$b
 [1] 1</code></pre>
 </div>
 <div id="create-an-empty-list" class="section level1">
@@ -309,7 +309,7 @@ ll$nest_level_1$nest_level_2$name_2</code></pre>
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       America/Chicago
- date     2022-04-11
+ date     2022-04-14
  pandoc   2.14.1 @ /usr/local/bin/ (via rmarkdown)
 
 ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
