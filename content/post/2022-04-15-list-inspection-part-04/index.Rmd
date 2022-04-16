@@ -7,7 +7,7 @@ categories:
   - R
 tags: []
 layout: layouts/post/single
-draft: no
+draft: TRUE
 bibliography:
   - packages.bib
   - ../blog.bib
