@@ -22,7 +22,7 @@ header:
   alt: lists into tibbles
   caption: Lesson on how to convert a list to a tibble.
 repo: ~
-summary: Function returns and data are often in list form.  Some, like myself, prefer to convert them to a table or data frame to perform computations.  Lists of equal lengths are easy to convert to a table, but lists of unequal lengths are problematic.  The tibble package allows for lists to be stored in the column of the dataframe.
+summary: Function returns and data are often in list form.  Some, like myself, prefer to convert them to a table or data frame to perform computations.  Lists of equal lengths are easy to convert to a table, but lists of unequal lengths can be problematic.  The tibble package allows for lists to be stored in the column of a data frame.
 ---
 
 
@@ -70,9 +70,11 @@ knitr::write_bib(.packages(), "./packages.bib")
 
 # [Overview](#overview)
 
-This post discusses inserting a list into a data frame or converting one to a data frame.  While it may be achieved within the traditional data frame, we will use the tibble package to accomplish the task.  
+This post discusses inserting a list into a data frame or converting a list to a data frame.  While it may be achieved within the traditional data frame (the `base` package), we will use the `tibble` package to accomplish the task.  
 
-Converting a list to a tibble will require the some knowledge of three packages: `tibble`, `tidyr`, and `purrr` package. Here, the workflow will be introduced touching upon the most common approaches with simple exercises. More rigorous examples of lists to tibbles are reserved for [Rectangling - Part 04](https://robwiederstein.org) and [Use Cases - Part 05](https://robwiederstein.org).  The concept of a "list-column" figures prominently in the discussion.  It is a powerful method for storing one or more lists within a single tibble.
+Converting a list to a tibble will require some knowledge of three packages: `tibble`, `tidyr`, and `purrr` package. Here, the workflow will be introduced, using the most common approaches with simple exercises. 
+
+More rigorous examples of lists to tibbles are reserved for [Rectangling - Part 04](https://robwiederstein.org) and [Use Cases - Part 05](https://robwiederstein.org).  The concept of a "list-column" figures prominently in the discussion.  It is a powerful method for storing one or more lists within a single tibble.
 
 
 According to the `tibble` package details, "[t]ibble is the central data structure for the set of packages known as the `tidyverse`. Tidyverse packages include `dplyr`, `ggplot2` and `tidyr`. The objective is to have a data frame where a list can be stored in a column and `tibble` provides this functionality. ("tibble" and "data frame" are often used interchangeably.)
@@ -81,14 +83,16 @@ According to the `tibble` package details, "[t]ibble is the central data structu
 
 A tibble is a new take on data frames.  A tibble is a data frame but it changes the default behaviors of R's older data frame type. A tibble is different from the traditional data frame in the following ways:
 
--  does not change an input's type
--  it makes it easier to use with list-columns
--  variable names are not changed
--  it evaluates its arguments lazily and sequentially,
--  it never uses `row.names()`
--  it only recycles vectors of length 1
+>
+1.  it does not change an input's type;
+2.  it makes it easier to use with list-columns;
+3.  variable names are not changed;
+4.  it evaluates its arguments lazily and sequentially;
+5.  it never uses `row.names()`; and
+6.  it only recycles vectors of length 1
+>
 
-A [R for Data Science](https://r4ds.had.co.nz/tibbles.html) devotes a Chapter 10 to tibbles.
+"R for Data Science" devotes an entire chapter, [Chapter 10](https://r4ds.had.co.nz/tibbles.html), to tibbles.
 
 ## Create via as_tibble()
 
@@ -111,7 +115,7 @@ tibble::tribble(
 
 # [Key Point](#key-point)
 
-Lists can be described as having equal lengths or varying lengths.  A list in the form `list(a = 1, b =1)` is a list where there is one element to each named list. Thus, the list is one where the elements are of equal lengths.
+Lists can be described as having equal lengths or varying lengths.  A list in the form `list(a = 1, b = 1)` is a list where there is one element to each named list. Thus, the list is one where the elements are of equal lengths.
 
 ```{r list-equal-lengths-illustration, echo=T}
 list(a = 1, b = 1) |> map_dbl(length)
@@ -152,15 +156,19 @@ Rather than the values of the list being added, tibble created a column by defau
 
 The columns of a tibble are usually an atomic vector, with each column sharing the same length and data type. However, a tibble can have a column that contains a list, also known as a "list-column". List-columns can contain any of the different data types, making them extremely useful within a tibble.
 
-A list-column can be created in several ways. List-columns are addressed in the context of models in [R for Data Science--Chapter 25--Many Models](https://r4ds.had.co.nz/many-models.html?q=list-c#list-columns-1) and also in an evolving text, [Functional Programming](https://dcl-prog.stanford.edu/list-columns.html)
+A list-column can be created in several ways. List-columns are addressed in the context of models in [R for Data Science--Chapter 25--Many Models](https://r4ds.had.co.nz/many-models.html?q=list-c#list-columns-1) and also in an evolving text, [Functional Programming](https://dcl-prog.stanford.edu/list-columns.html).
 
 ## With tibble()
+
+`tibble()` is used to construct a data frame.
 
 ```{r tibble-list-column, echo=T}
 tibble(x = 1:3, y = list(1:5, 1:10, 1:20))
 ```
 
 ## With enframe()
+
+`enframe()` converts named atoic vecotrs or lists to one or two column dataframes.  It's opposite is `deframe()`.
 
 ### Example 1
 
@@ -173,6 +181,8 @@ list(1:3) |> enframe(name = NULL)
 list(a = 1, b = 2, c = c(3, 4)) |> enframe(name = "name")
 ```
 ## With tidyr::nest()
+
+The function `nest()` creates a list-column of data frames and its opposite is `unnest()`. In the example below, the length of each atomic vector is 6.  (It's not clear to me why you'd want to nest two columns in the example below, but it is nonetheless possible).
 
 ```{r nest-list-column, echo=T}
 x_data <- tibble(x = c(1, 1, 1, 2, 2, 3), y = 1:6, z = 6:1) |>
@@ -306,7 +316,7 @@ contacts <- tibble(contact = xmlList)
 contacts
 ```
 
-```{r xml-list-tibble-unnested, echo = T}
+```{r xml-list-tibble-unnested, eval=F, echo = T}
 
 df <- contacts |>
     unnest_wider(contact) |>
