@@ -58,7 +58,7 @@ summary: This post is about how to iterate over and extract from a list.  It beg
 <li><a href="#transpose-list"><span>Transpose list</span></a></li>
 <li><a href="#simplify-list"><span>Simplify list</span></a></li>
 <li><a href="#conclusion"><span>Conclusion</span></a></li>
-<li><a href="#acknowledgements"><span>Acknowledgements</span></a></li>
+<li><a href="#acknowledgments"><span>Acknowledgments</span></a></li>
 <li><a href="#references"><span>References</span></a></li>
 <li><a href="#disclaimer"><span>Disclaimer</span></a></li>
 <li><a href="#reproducibility"><span>Reproducibility</span></a></li>
@@ -67,7 +67,7 @@ summary: This post is about how to iterate over and extract from a list.  It beg
 
 <div id="overview" class="section level1">
 <h1><a href="#overview">Overview</a></h1>
-<p>This post addresses a common task of iterating over a list. Standard iteration relies heavily on the “apply” family of function in the <code>base</code> package. The method for iterating over a list in the base package is <code>base::lapply()</code> and the newer, tidyverse method is <code>purrr::map()</code>. The two are similar but <code>purrr</code> allows for more flexibility and its syntax is more concise and consistent.</p>
+<p>This post addresses a common task of iterating over a list. Standard iteration relies heavily on the “apply” family of functions in the <code>base</code> package. The method for iterating over a list in the base package is <code>base::lapply()</code> and the newer, tidyverse method is <code>purrr::map()</code>. The two are similar but <code>purrr</code> allows for more flexibility and its syntax is more concise and consistent.</p>
 <p>The post will show how to iterate over a list, convert a list to a vector, extract elements from a list by both name and position, flatten a list, transpose a list and simplify a list. The emphasis and goal is to incorporate the newer <code>purrr</code> functions into future workflows. (After package install, see <code>?purrr::map</code> for more information).</p>
 <p>One quote to remember as you begin this tutorial is from “R for Data Science”: “[Y]ou should never feel bad about using a for loop instead of a map function. The map functions are a step up a tower of abstraction, and it can take a long time to get your head around how they work.”</p>
 </div>
@@ -81,7 +81,7 @@ summary: This post is about how to iterate over and extract from a list.  It beg
     x + 1
 }</code></pre>
 <ul>
-<li><p><strong>lambda</strong> or <strong>anonymous functions</strong> are ones that are not important enough to be named, but instead are created “on-the-fly” like <code>function(.x) .x + 1</code>. Lambda/anonymous functions are considered to be verbose in R.</p></li>
+<li><p><strong>lambda</strong> or <strong>anonymous functions</strong> are not important enough to be named but instead are created “on-the-fly” like <code>function(.x) .x + 1</code>. Lambda/anonymous functions are considered to be verbose in R.</p></li>
 <li><p>a <strong>purrr-style lambda function, formula</strong> is a convenience or shortcut function taking the form <code>~ .x + 1</code>. It is available for use in the <code>purrr</code> package. This form should be reserved for short and simple functions.</p></li>
 </ul>
 </div>
@@ -129,7 +129,7 @@ list(letters[5:9]) |&gt; map(~ paste0(.x, &quot;&lt;==&quot;))</code></pre>
 <pre class="r"><code>1:3 |&gt;
     map(~ rnorm(.x, n = 100, sd = .5)) |&gt; # output a list
     map_dbl(mean) # output an atomic vector</code></pre>
-<pre><code>[1] 1.038299 2.059786 2.961044</code></pre>
+<pre><code>[1] 1.011150 1.904328 2.963569</code></pre>
 </div>
 <div id="output-character" class="section level2">
 <h2>Output – Character</h2>
@@ -304,47 +304,47 @@ x &lt;- rerun(3, x = runif(1), y = runif(5))
 x</code></pre>
 <pre><code>[[1]]
 [[1]]$x
-[1] 0.5759546
+[1] 0.6144324
 
 [[1]]$y
-[1] 0.9382437 0.6326735 0.9617150 0.7059554 0.6930859
+[1] 0.9376661 0.3645545 0.2868984 0.3296377 0.2506082
 
 
 [[2]]
 [[2]]$x
-[1] 0.8738822
+[1] 0.7953249
 
 [[2]]$y
-[1] 0.1485326 0.8222676 0.9628007 0.5642119 0.7941556
+[1] 0.5396381 0.7575524 0.8742919 0.4358229 0.1781616
 
 
 [[3]]
 [[3]]$x
-[1] 0.7183093
+[1] 0.8850181
 
 [[3]]$y
-[1] 0.3537394 0.3080906 0.3958815 0.0827374 0.6325134</code></pre>
+[1] 0.24007745 0.04736617 0.49432045 0.39004860 0.53293290</code></pre>
 <pre class="r"><code>x |&gt; transpose()</code></pre>
 <pre><code>$x
 $x[[1]]
-[1] 0.5759546
+[1] 0.6144324
 
 $x[[2]]
-[1] 0.8738822
+[1] 0.7953249
 
 $x[[3]]
-[1] 0.7183093
+[1] 0.8850181
 
 
 $y
 $y[[1]]
-[1] 0.9382437 0.6326735 0.9617150 0.7059554 0.6930859
+[1] 0.9376661 0.3645545 0.2868984 0.3296377 0.2506082
 
 $y[[2]]
-[1] 0.1485326 0.8222676 0.9628007 0.5642119 0.7941556
+[1] 0.5396381 0.7575524 0.8742919 0.4358229 0.1781616
 
 $y[[3]]
-[1] 0.3537394 0.3080906 0.3958815 0.0827374 0.6325134</code></pre>
+[1] 0.24007745 0.04736617 0.49432045 0.39004860 0.53293290</code></pre>
 </div>
 <div id="simplify-list" class="section level1">
 <h1><a href="#simplify-list">Simplify list</a></h1>
@@ -410,8 +410,8 @@ $b
 <h1><a href="#conclusion">Conclusion</a></h1>
 <p>You should now know how to iterate over a list, convert a list to a vector, extract elements from a list by both name and position, flatten, transpose, and simplify a list. These are only some of the highlights within the <code>purrr</code> package and there are many more variants and functions available. Rstudio published a “must-have” <a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/purrr.pdf">cheat sheet</a> for <code>purrr</code>.</p>
 </div>
-<div id="acknowledgements" class="section level1">
-<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<div id="acknowledgments" class="section level1">
+<h1><a href="#acknowledge">Acknowledgments</a></h1>
 <p>This blog post was made possible thanks to:</p>
 <ul>
 <li><p><a href="https://adv-r.hadley.nz/functionals.html#functionals">Advanced R – Chapter 9 – Functionals</a></p></li>
@@ -454,7 +454,7 @@ $b
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       America/Chicago
- date     2022-04-13
+ date     2022-04-21
  pandoc   2.14.1 @ /usr/local/bin/ (via rmarkdown)
 
 ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────

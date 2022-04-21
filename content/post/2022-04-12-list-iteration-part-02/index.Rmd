@@ -67,7 +67,7 @@ knitr::write_bib(.packages(), "./packages.bib")
 
 # [Overview](#overview)
 
-This post addresses a common task of iterating over a list. Standard iteration relies heavily on the "apply" family of function in the `base` package.  The method for iterating over a list in the base package is `base::lapply()` and the newer, tidyverse method is `purrr::map()`. The two are similar but `purrr` allows for more flexibility and its syntax is more concise and consistent. 
+This post addresses a common task of iterating over a list. Standard iteration relies heavily on the "apply" family of functions in the `base` package.  The method for iterating over a list in the base package is `base::lapply()` and the newer, tidyverse method is `purrr::map()`. The two are similar but `purrr` allows for more flexibility and its syntax is more concise and consistent. 
 
 The post will show how to iterate over a list, convert a list to a vector, extract elements from a list by both name and position, flatten a list, transpose  a list and simplify a list.  The emphasis and goal is to incorporate the newer `purrr` functions into future workflows.  (After package install, see `?purrr::map` for more information).
 
@@ -84,7 +84,7 @@ addition_function <- function(x) {
 }
 ```
 
--  **lambda** or **anonymous functions** are ones that are not important enough to be named, but instead are created "on-the-fly" like `function(.x) .x + 1`. Lambda/anonymous functions are considered to be verbose in R.  
+-  **lambda** or **anonymous functions** are not important enough to be named but instead are created "on-the-fly" like `function(.x) .x + 1`. Lambda/anonymous functions are considered to be verbose in R.  
 
 - a **purrr-style lambda function, formula** is a convenience or shortcut function taking the form `~ .x + 1`.  It is available for use in the `purrr` package. This form should be reserved for short and simple functions.
 
@@ -282,7 +282,7 @@ x |>
 
 You should now know how to iterate over a list, convert a list to a vector, extract elements from a list by both name and position, flatten, transpose, and simplify a list.  These are only some of the highlights within the `purrr` package and there are many more variants and functions available. Rstudio published a "must-have" [cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/purrr.pdf) for `purrr`.
 
-# [Acknowledgements](#acknowledge)
+# [Acknowledgments](#acknowledge)
 
 This blog post was made possible thanks to:
 
