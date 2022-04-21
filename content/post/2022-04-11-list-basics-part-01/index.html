@@ -61,17 +61,17 @@ summary: This post deals with list basics.
 <div id="definitions" class="section level1">
 <h1><a href="#definitions">Definitions</a></h1>
 <p>From the R Programming Manual 2.1.2: “<em>Lists</em> (“generic vectors”) are another kind of data storage. Lists have elements, each of which can contain any type of R object, i.e. the elements of a list do not have to be of the same type. List elements are accessed through three different indexing operations. Lists are vectors, and the basic vector types are referred to as atomic vectors where it is necessary to exclude lists.”</p>
-<p>A dataframe is considered to be a special kind of list. Again, from the R Programming Manual, “[a] data frame is a list of vectors, factors, and/or matrices all having the same length (number of rows in the case of matrices). In addition, a data frame generally has a names attribute labeling the variables and a row.names attribute for labeling the cases. A data frame can contain a list that is the same length as the other components. The list can contain elements of differing lengths thereby providing a data structure for ragged arrays. However, as of this writing such arrays are not generally handled correctly.”</p>
+<p>A data frame is considered to be a special kind of list. Again, from the R Programming Manual, “[a] data frame is a list of vectors, factors, and/or matrices all having the same length (number of rows in the case of matrices). In addition, a data frame generally has a names attribute labeling the variables and a row.names attribute for labeling the cases. A data frame can contain a list that is the same length as the other components. The list can contain elements of differing lengths thereby providing a data structure for ragged arrays. However, as of this writing, such arrays are not generally handled correctly.”</p>
 </div>
 <div id="key-terms" class="section level1">
 <h1><a href="#key-terms">Key Terms</a></h1>
 <ul>
 <li><p>a <strong>named</strong> list is one where the name attribute is set whereas an <strong>unnamed</strong> list is where the name attribute is “NULL”.</p></li>
 <li><p>a <strong>nested</strong> list is a list which is the child of another list like <code>my.list &lt;- list(a = list(b = 1))</code>.</p></li>
-<li><p>an <strong>atomic</strong> vector is the most basic building block in R. There are six types of atomic vectors: logical, integer, double, character, complex, and raw. Its expression may take the form of <code>c(1, 2, 3, 4)</code> or <code>c(TRUE, FALSE)</code>. Each element of the vector is of the same type. Where the elements are mixed, i.e. <code>c(1, "a")</code>, they will be implicitly coerced to a character type.</p></li>
+<li><p>an <strong>atomic</strong> vector is the most basic building block in R. There are six types of atomic vectors: logical, integer, double, character, complex, and raw. Its expression may take the form of <code>c(1, 2, 3, 4)</code> or <code>c(TRUE, FALSE)</code>. Each element of the vector is of the same type. Where the elements are mixed, i.e. <code>c(1, "a")</code>, they will be implicitly coerced into a character type.</p></li>
 <li><p>a <strong>generic</strong> vector or list is one that can contain data of different types like <code>list(1, "a", TRUE, 1 + 4i)</code>.</p></li>
-<li><p>a <strong>homogenous</strong> vector is one where all elements of the vector are the same type.</p></li>
-<li><p>a <strong>heterogenous</strong> vector is one where the elements are of different types and by definition must be a list.</p></li>
+<li><p>a <strong>homogenous</strong> vector is one where all elements of the vector are of the same type.</p></li>
+<li><p>a <strong>heterogeneous</strong> vector is one where the elements are of different types and by definition must be a list.</p></li>
 <li><p>a <strong>recursive vector</strong> is another name for a list. It is considered recursive because a list can contain another list.</p></li>
 </ul>
 </div>
@@ -80,8 +80,7 @@ summary: This post deals with list basics.
 <ol style="list-style-type: decimal">
 <li><p>Because lists can contain a variety of data types, function results are often returned in
 a list. Examples include the function returns from <code>ggplot</code>, <code>lm</code>, and <code>str_split</code>.</p></li>
-<li><p>Importing data in chunks is often easier when appending to a list rather
-than a dataframe.</p></li>
+<li><p>Importing data in chunks is often easier when appending to a list rather than a data frame.</p></li>
 <li><p>.json and .xml are scraped as lists.</p></li>
 </ol>
 </div>
@@ -263,7 +262,7 @@ ll$nest_level_1$nest_level_2$name_2</code></pre>
 </div>
 <div id="conclusion" class="section level1">
 <h1><a href="#conclusion">Conclusion</a></h1>
-<p>This post discussed what a list is and how it is described. You should be able to create a list, subset and extract lists, append to a list and convert a list to an array.</p>
+<p>This post discussed what a list is and how it is described. You should be able to create a list; subset and extract list; append to a list; and convert a list to an array.</p>
 </div>
 <div id="acknowledgements" class="section level1">
 <h1><a href="#acknowledge">Acknowledgements</a></h1>
@@ -309,7 +308,7 @@ ll$nest_level_1$nest_level_2$name_2</code></pre>
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       America/Chicago
- date     2022-04-14
+ date     2022-04-21
  pandoc   2.14.1 @ /usr/local/bin/ (via rmarkdown)
 
 ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────

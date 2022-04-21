@@ -72,7 +72,7 @@ For a thorough review of vectors and lists, I'd recommend starting with Hadley W
 
 From the R Programming Manual 2.1.2:  "*Lists* (“generic vectors”) are another kind of data storage. Lists have elements, each of which can contain any type of R object, i.e. the elements of a list do not have to be of the same type. List elements are accessed through three different indexing operations. Lists are vectors, and the basic vector types are referred to as atomic vectors where it is necessary to exclude lists."
 
-A dataframe is considered to be a special kind of list.  Again, from the R Programming Manual, "[a] data frame is a list of vectors, factors, and/or matrices all having the same length (number of rows in the case of matrices). In addition, a data frame generally has a names attribute labeling the variables and a row.names attribute for labeling the cases. A data frame can contain a list that is the same length as the other components. The list can contain elements of differing lengths thereby providing a data structure for ragged arrays. However, as of this writing such arrays are not generally handled correctly."
+A data frame is considered to be a special kind of list.  Again, from the R Programming Manual, "[a] data frame is a list of vectors, factors, and/or matrices all having the same length (number of rows in the case of matrices). In addition, a data frame generally has a names attribute labeling the variables and a row.names attribute for labeling the cases. A data frame can contain a list that is the same length as the other components. The list can contain elements of differing lengths thereby providing a data structure for ragged arrays. However, as of this writing, such arrays are not generally handled correctly."
 
 # [Key Terms](#key-terms)
 
@@ -80,13 +80,13 @@ A dataframe is considered to be a special kind of list.  Again, from the R Progr
 
 - a **nested** list is a list which is the child of another list like `my.list <- list(a = list(b = 1))`.
 
-- an **atomic** vector is the most basic building block in R.  There are six types of atomic vectors: logical, integer, double, character, complex, and raw. Its expression may take the form of `c(1, 2, 3, 4)` or `c(TRUE, FALSE)`. Each element of the vector is of the same type.  Where the elements are mixed, i.e. `c(1, "a")`, they will be implicitly coerced to a character type.
+- an **atomic** vector is the most basic building block in R.  There are six types of atomic vectors: logical, integer, double, character, complex, and raw. Its expression may take the form of `c(1, 2, 3, 4)` or `c(TRUE, FALSE)`. Each element of the vector is of the same type.  Where the elements are mixed, i.e. `c(1, "a")`, they will be implicitly coerced into a character type.
 
 - a **generic** vector or list is one that can contain data of different types like `list(1, "a", TRUE, 1 + 4i)`.
 
-- a **homogenous** vector is one where all elements of the vector are the same type.
+- a **homogenous** vector is one where all elements of the vector are of the same type.
 
-- a **heterogenous** vector is one where the elements are of different types and by definition must be a list. 
+- a **heterogeneous** vector is one where the elements are of different types and by definition must be a list. 
 
 - a **recursive vector** is another name for a list.  It is considered recursive because a list can contain another list. 
 
@@ -95,8 +95,7 @@ A dataframe is considered to be a special kind of list.  Again, from the R Progr
 1. Because lists can contain a variety of data types, function results are often returned in
 a list. Examples include the function returns from `ggplot`, `lm`, and `str_split`.
 
-2. Importing data in chunks is often easier when appending to a list rather 
-than a dataframe.
+2. Importing data in chunks is often easier when appending to a list rather than a data frame.
 
 3. .json and .xml are scraped as lists.
 
@@ -310,7 +309,7 @@ ll$nest_level_1$nest_level_2$name_2
 
 # [Conclusion](#conclusion)
 
-This post discussed what a list is and how it is described.   You should be able to create a list, subset and extract lists, append to a list and convert a list to an array.
+This post discussed what a list is and how it is described.   You should be able to create a list; subset and extract list; append to a list; and convert a list to an array.
 
 # [Acknowledgements](#acknowledge)
 
