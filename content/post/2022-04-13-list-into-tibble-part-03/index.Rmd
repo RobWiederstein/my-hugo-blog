@@ -9,7 +9,7 @@ tags:
   - tibble
   - list
 layout: layouts/post/single
-draft: TRUE
+draft: FALSE
 bibliography:
   - packages.bib
   - ../blog.bib
@@ -107,7 +107,7 @@ When entering data by hand, it may be easier to create the table using `tribble(
 ```{r tribble-df, echo=T, tidy=T}
 tibble::tribble(
     ~x, ~y, ~z,
-    #--|--|-- <--Hadley Wickham does this!
+    #--|--|--
     "a", 1, 1.1,
     "b", 2, 2.1
 )
