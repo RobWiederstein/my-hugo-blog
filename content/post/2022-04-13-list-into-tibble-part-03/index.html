@@ -9,7 +9,7 @@ tags:
   - tibble
   - list
 layout: layouts/post/single
-draft: TRUE
+draft: FALSE
 bibliography:
   - packages.bib
   - ../blog.bib
@@ -103,7 +103,7 @@ summary: Function returns and data are often in list form.  Some, like myself, p
 <p>When entering data by hand, it may be easier to create the table using <code>tribble()</code>, short for “transposed table.”</p>
 <pre class="r"><code>tibble::tribble(
     ~x, ~y, ~z,
-    #--|--|-- &lt;--Hadley Wickham does this!
+    #--|--|--
     &quot;a&quot;, 1, 1.1,
     &quot;b&quot;, 2, 2.1
 )</code></pre>
