@@ -19,7 +19,7 @@ header:
   image: feature.png
   alt: list inspection
   caption: Before you can apply a function to every element of a list, you’d better understand the list! Dr. Jenny Bryan, Professor of Biostatistics.
-repo: ~
+repo: https://github.com/RobWiederstein/my-hugo-blog/blob/main/content/post/2022-04-15-list-inspection-part-04/index.Rmd
 summary: List inspection is key to the effective manipulation and transformation of the data.
 ---
 

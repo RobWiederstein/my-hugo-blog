@@ -20,7 +20,7 @@ header:
   image: feature.png
   alt: ~
   caption: ~
-repo: ~
+repo: https://raw.githubusercontent.com/RobWiederstein/my-hugo-blog/main/content/post/2022-04-11-list-basics-part-01/index.Rmd
 summary: This post deals with list basics.
 ---
 

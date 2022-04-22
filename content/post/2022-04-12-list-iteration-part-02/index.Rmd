@@ -21,7 +21,7 @@ header:
   image: feature.png
   alt: iterating over a list in R
   caption: Iterating and extracting from a list
-repo: ~
+repo: https://raw.githubusercontent.com/RobWiederstein/my-hugo-blog/main/content/post/2022-04-12-list-iteration-part-02/index.Rmd
 summary: This post is about how to iterate over and extract from a list.  It begins with the function lapply() since many people are familiar with it and then expounds on functions in the purrr package.
 ---
 
