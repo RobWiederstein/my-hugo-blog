@@ -22,7 +22,7 @@ header:
   image: feature.png
   alt: rectangling
   caption: Rectangling is the process of untangling lists into tables
-repo: ~
+repo: https://github.com/RobWiederstein/my-hugo-blog/blob/main/content/post/2022-04-15-rectangling-part-05/index.Rmd
 summary: Rectangling is the process of untangling lists into tables.
 ---
 
