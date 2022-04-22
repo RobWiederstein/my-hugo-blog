@@ -51,7 +51,7 @@ knitr::opts_chunk$set(
   message=F,
   error=F,
   warning=F,
-  tidy=T,
+  tidy=F,
   comment='',
   cache=T,
   dev='svg',
@@ -66,9 +66,9 @@ knitr::write_bib(.packages(), "./packages.bib")
 
 # [Overview](#overview)
 
-Professor Bryan's full quote on list inspection is actually that "[l]ist inspection is very important and also fairly miserable. Before you can apply a function to every element of a list, you’d better understand the list!" Originally, I didn't think this post was necessary and then I ran into some garguantuan lists and also discovered some nice features in the Rstudio development environment.  
+Professor Bryan's full quote on list inspection is: "[l]ist inspection is very important and also fairly miserable. Before you can apply a function to every element of a list, you’d better understand the list!" Originally, I didn't think this post was necessary until I ran into some large lists and also discovered some nice features in the Rstudio development environment.  
 
-Additionally Professor Bryan also committed to a tutorial to inspecting lists [here](https://jennybc.github.io/purrr-tutorial/ls00_inspect-explore.html) which suggest that the topic is important. For the duration, we'll be trying out the functions using the `gh_repos` list in the `repurrrsive`package. In the past lists have made me miserable because you can't see what your're working with in the environment window, a window that we'll talk about below.
+Additionally, Professor Bryan also created a tutorial dedicated to inspecting lists [here](https://jennybc.github.io/purrr-tutorial/ls00_inspect-explore.html). For the rest of the post, we'll be trying out functions using the `gh_repos` list in the `repurrrsive` package. In the past, lists made me miserable because I couldn't see what I was working with in the environment window.
 
 # [Basics](#basics)
 
@@ -87,12 +87,17 @@ is.list(gh_repos)
 str(gh_repos); head(gh_repos); summary(gh_repos)
 ```
 
+The return from `str()` function can be narrowed through use of string subsetting. For example, `str(gh_repos[[1]]` will only return information from the first element of the `gh_repos` data. A second way to limit output from the `str()` function is through use of the `max.level` argument and the `list.len` argument.  
 
-# [Rstudio Tools](#rstudio-tools)
+```{r gh-repos-str-narrow, echo=TRUE, eval=TRUE}
+str(gh_repos[[1]][[1]], max.level = 1, list.len = 10)
+```
 
-The Rstudio environment offers a number of helpful tools. In the course of writing this, I discovered a very helpful feature.
+# [Rstudio tools](#rstudio-tools)
 
-```{r str-screenshot, fig.cap="A large list.  The red arrow on the left points to the blue drop down to see the list.  The red arrow on the right shows the magnifying glass to inspect the list."}
+The Rstudio environment offers a several helpful tools. In the course of writing this, I discovered some very helpful features.
+
+```{r str-screenshot, fig.cap="A large list.  The red arrow on the left points to the blue drop-down to see the list.  The red arrow on the right shows the magnifying glass to inspect the list."}
 knitr::include_graphics("str-environment.png")
 ```
 
@@ -121,7 +126,7 @@ knitr::include_graphics("listviewer-user-interface.png")
 
 # [Conclusion](#conclusion)
 
-Being able to manipulate and transform lists effectively requires a working knowledge of its contents.  Function commands like `str()` can be helpful, but be sure to employ Rstudio's native GUI functionalities as well.  They can be a big productivity boost.
+Being able to manipulate and transform lists effectively requires a working knowledge of their contents.  Function commands like `str()` can be helpful but be sure to employ Rstudio's native GUI functionalities as well.  They can be a big productivity boost.
 
 # [Acknowledgements](#acknowledge)
 
