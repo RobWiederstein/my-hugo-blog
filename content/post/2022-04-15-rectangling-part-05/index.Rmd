@@ -10,7 +10,7 @@ tags:
   - purrr
   - tidyr
 layout: layouts/post/single
-draft: TRUE
+draft: FALSE
 bibliography:
   - packages.bib
   - ../blog.bib
@@ -71,7 +71,7 @@ knitr::write_bib(.packages(), "./packages.bib")
 
 # [Overview](#overview)
 
-This post is an abbreviated version of  the `tidyr` vignette on rectangling. According to the vignette, "[r]ectangling is the art and craft of taking a deeply nested list (often sourced from wild caught JSON or XML) and taming it into a tidy data set of rows and columns." If you prefer to interactively explore the vignette from the command line, you'll need to install `tidyr`, `dplyr` and `repurrrsive` packages.
+This post is an abbreviated version of  the `tidyr` vignette on rectangling, along with a few diversions. According to the vignette, "[r]ectangling is the art and craft of taking a deeply nested list (often sourced from wild caught JSON or XML) and taming it into a tidy data set of rows and columns." If you prefer to interactively explore the vignette from the command line, you'll need to install `tidyr`, `dplyr` and `repurrrsive` packages and call the vignette.
 
 ```{r run-vignette, echo=T, eval=F}
 #load packages
@@ -84,7 +84,71 @@ vignette("rectangle", package = "tidyr")
 
 Or the vignette is available on its own web [page](https://tidyr.tidyverse.org/articles/rectangle.html). The workhorse of the effort are permutations of the `unnest_*` function and `hoist()`.  Both are in the `tidyr` package.
 
-The general workfow of rectangling is to populate a tibble with a list.  Nested lists will be converted to list-columns whereby the various "unnest" function can be applied like `unnest_wider`, `unnest_longer` and `unnest_auto` can be used.  Where only small portions of a list are to be retained, `hoist()` may be a more efficient alternative.
+The general workfow of rectangling is to populate a tibble with a list.  Nested lists will be converted to list-columns whereby the various "unnest" functions can be applied like `unnest_wider`, `unnest_longer` and `unnest_auto`.  When only small portions of a list are to be retained, `hoist()` may be a more efficient alternative.
+
+# [Dragons -- Base Case](#dragons)
+
+The examples under `?tidyr::hoist()` are a good place to start for rectangling. Here, we'll begin with the "dragon" example.  The data set is a two-column tibble with the first column being an atomic vector of character type.  The second column is a list-column.
+
+## Insert into tibble
+
+```{r dragons, echo=T}
+df <- tibble(
+  character = c("Toothless", "Dory"),
+  metadata = list(
+    list(
+      species = "dragon",
+      color = "black",
+      films = c(
+        "How to Train Your Dragon",
+        "How to Train Your Dragon 2",
+        "How to Train Your Dragon: The Hidden World"
+       )
+    ),
+    list(
+      species = "blue tang",
+      color = "blue",
+      films = c("Finding Nemo", "Finding Dory")
+    )
+  )
+)
+```
+
+## Inspect
+
+```{r dragons-inspect}
+df
+```
+
+## unnest_wider()
+
+
+The first step is to use `tidyr::unnest_wider()`.
+
+
+```{r dragons-unnest-wider, echo=T}
+df %>% unnest_wider(metadata)
+```
+
+## hoist()
+
+The `hoist()` function is helpful when you want to extract specific components.
+
+```{r dragons-hoist, echo=T}
+df %>% hoist(metadata,
+  "species",
+  first_film = list("films", 1L),
+  third_film = list("films", 3L)
+)
+```
+
+## Full tibble
+
+```{r dragons-fully-unnested, echo=T}
+df %>%
+  unnest_wider(metadata) %>%
+  unnest_longer(films)
+```
 
 # [GitHub users -- unnest_wider()](#gh_users)
 
@@ -267,11 +331,13 @@ discs %>%
 
 # [Conclusion](#conclusion)
 
-This post closely followed the `tidyr` vignette "Rectangling." That said, the section on google geocoding was omitted.  The vignette demonstrated the use of `unnest_wider()`, `unnest_longer()`, and `hoist()`.  It also showed how to solve an error when names in a list are duplicated by adding the argument `names_repair = "unique"`.
+This post loosely followed the `tidyr` vignette "Rectangling." That said, the section on google geocoding was omitted.  The vignette demonstrated the use of `unnest_wider()`, `unnest_longer()`, and `hoist()`.  It also showed how to solve an error when names in a list are duplicated by adding the argument `names_repair = "unique"`.
 
 # [Acknowledgements](#acknowledge)
 
 This blog post was made possible thanks to:
+
+-  Jenny Bryan, the maintainer of the `repurrrsive` package.
 
 # [References](#reference)
 
