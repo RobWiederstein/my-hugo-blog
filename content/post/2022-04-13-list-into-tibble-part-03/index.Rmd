@@ -74,7 +74,7 @@ This post discusses inserting a list into a data frame or converting a list to a
 
 Converting a list to a tibble will require some knowledge of three packages: `tibble`, `tidyr`, and `purrr` package. Here, the workflow will be introduced, using the most common approaches with simple exercises. 
 
-More rigorous examples of lists to tibbles are reserved for [Rectangling - Part 04](https://robwiederstein.org) and [Use Cases - Part 05](https://robwiederstein.org).  The concept of a "list-column" figures prominently in the discussion.  It is a powerful method for storing one or more lists within a single tibble.
+More rigorous examples of lists to tibbles are reserved for [Rectangling - Part 05](https://robwiederstein.org) and [Use Cases - Part 06](https://robwiederstein.org).  The concept of a "list-column" figures prominently in the discussion.  It is a powerful method for storing one or more lists within a single tibble.
 
 
 According to the `tibble` package details, "[t]ibble is the central data structure for the set of packages known as the `tidyverse`. Tidyverse packages include `dplyr`, `ggplot2`, and `tidyr`. The objective is to have a data frame where a list can be stored in a column and `tibble` provides this functionality. ("tibble" and "data frame" are often used interchangeably.)
@@ -90,7 +90,6 @@ A tibble is a new take on data frames.  A tibble is a data frame but it changes 
 4.  it evaluates its arguments lazily and sequentially;
 5.  it never uses `row.names()`; and
 6.  it only recycles vectors of length 1
->
 
 "R for Data Science" devotes an entire chapter, [Chapter 10](https://r4ds.had.co.nz/tibbles.html), to tibbles.
 
