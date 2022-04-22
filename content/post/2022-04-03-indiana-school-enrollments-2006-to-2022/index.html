@@ -25,6 +25,49 @@ repo: ~
 summary: This post examines trends in student enrollments for Indiana public schools.
 ---
 
+<script src="{{< blogdown/postref >}}index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="{{< blogdown/postref >}}index_files/jquery/jquery.min.js"></script>
+<script src="{{< blogdown/postref >}}index_files/proj4js/proj4.js"></script>
+<link href="{{< blogdown/postref >}}index_files/highcharts/css/motion.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/highcharts/highcharts.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/highcharts-3d.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/highcharts-more.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/stock.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/map.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/data.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/exporting.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/offline-exporting.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/drilldown.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/item-series.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/overlapping-datalabels.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/annotations.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/export-data.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/funnel.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/heatmap.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/treemap.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/sankey.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/dependency-wheel.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/organization.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/solid-gauge.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/streamgraph.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/sunburst.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/vector.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/wordcloud.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/xrange.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/tilemap.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/venn.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/gantt.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/timeline.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/parallel-coordinates.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/bullet.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/coloraxis.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/dumbbell.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/lollipop.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/series-label.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/plugins/motion.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/custom/reset.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highcharts/modules/boost.js"></script>
+<script src="{{< blogdown/postref >}}index_files/highchart-binding/highchart.js"></script>
 <script src="{{< blogdown/postref >}}index_files/kePrint/kePrint.js"></script>
 <link href="{{< blogdown/postref >}}index_files/lightable/lightable.css" rel="stylesheet" />
 
@@ -36,8 +79,6 @@ summary: This post examines trends in student enrollments for Indiana public sch
 <li><a href="#top-10-indiana-school-corporations-by-enrollment-change-2006-to-2022">Top 10 Indiana School Corporations by Enrollment Change 2006 to 2022</a></li>
 <li><a href="#bottom-10-indiana-school-corporations-by-enrollment-change-2006-to-2022">Bottom 10 Indiana School Corporations by Enrollment Change 2006 to 2022</a></li>
 <li><a href="#indiana-student-enrollment-dashboard"><span>Indiana Student Enrollment Dashboard</span></a></li>
-<li><a href="#data-and-model"><span>Data and model</span></a></li>
-<li><a href="#results"><span>Results</span></a></li>
 <li><a href="#conclusion"><span>Conclusion</span></a></li>
 <li><a href="#acknowledgements"><span>Acknowledgements</span></a></li>
 <li><a href="#references"><span>References</span></a></li>
@@ -52,7 +93,7 @@ summary: This post examines trends in student enrollments for Indiana public sch
 </div>
 <div id="background" class="section level1">
 <h1><a href="#background">Background</a></h1>
-<p>The National Center for Education Statistics (NCES) described national trends as growing through the 1950s and 1960s as a result of the “baby boom” after World War 2, declining from 1971 through 1984, increasing once again from 1985 throught 2006. Enrollments again declined between 2006 through 2011 and started growing again after 2011. The NCES predicts that enrollment changes would be relatively small through 2029.<span class="citation"><a href="#ref-debreyDigestEducationStatistics2021" role="doc-biblioref">[1]</a></span></p>
+<p>The National Center for Education Statistics (NCES) described national student enrollment trends. They were growing through the 1950s and 1960s as a result of the “baby boom” after World War 2, declined from 1971 through 1984, and increased once again from 1985 through 2006. Enrollments again declined between 2006 through 2011 and started growing again after 2011. The NCES predicts that enrollment changes would be relatively small through 2029.<span class="citation"><a href="#ref-debreyDigestEducationStatistics2021" role="doc-biblioref">[1]</a></span></p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:nces-enrollment-chart"></span>
 <img src="nces_enrollment.png" alt="U.S. Department of Education, National Center for Education Statistics. (2021). Digest of Education Statistics, 2019 (NCES 2021-009), Chapter 1." width="100%" />
 <p class="caption">
@@ -62,7 +103,8 @@ Figure 1: U.S. Department of Education, National Center for Education Statistics
 </div>
 <div id="indiana-total-enrollment" class="section level1">
 <h1><a href="#indiana_tot_enrollment">Indiana Total Enrollment</a></h1>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/indiana_total_entrollment-1.svg" width="576" style="display: block; margin: auto;" /></p>
+<div id="htmlwidget-1" style="width:576px;height:460.8px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":"Total Indiana Student Enrollments by School District"},"yAxis":{"title":"","type":"linear","labels":{"format":"{value:,.0f}"}},"credits":{"enabled":true,"text":"Indiana Department of Education","href":"https://www.in.gov/doe/it/data-center-and-reports/"},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":false},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}}},"series":[{"group":"group","data":[{"year":2006,"in_total_students":1015949,"x":2006,"y":1015949},{"year":2007,"in_total_students":1024761,"x":2007,"y":1024761},{"year":2008,"in_total_students":1023964,"x":2008,"y":1023964},{"year":2009,"in_total_students":1019297,"x":2009,"y":1019297},{"year":2010,"in_total_students":1017139,"x":2010,"y":1017139},{"year":2011,"in_total_students":1016802,"x":2011,"y":1016802},{"year":2012,"in_total_students":1002539,"x":2012,"y":1002539},{"year":2013,"in_total_students":998370,"x":2013,"y":998370},{"year":2014,"in_total_students":1002618,"x":2014,"y":1002618},{"year":2015,"in_total_students":999574,"x":2015,"y":999574},{"year":2016,"in_total_students":998069,"x":2016,"y":998069},{"year":2017,"in_total_students":997444,"x":2017,"y":997444},{"year":2018,"in_total_students":997972,"x":2018,"y":997972},{"year":2019,"in_total_students":997027,"x":2019,"y":997027},{"year":2020,"in_total_students":997869,"x":2020,"y":997869},{"year":2021,"in_total_students":977867,"x":2021,"y":977867},{"year":2022,"in_total_students":980291,"x":2022,"y":980291}],"type":"line","name":"Student Enrollments"}],"xAxis":{"type":"linear","title":""},"subtitle":{"text":"2006 - 2022"}},"theme":{"chart":{"backgroundColor":"transparent"},"colors":["#7cb5ec","#434348","#90ed7d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"]},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":",","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="top-10-indiana-school-corporations-by-enrollment-change-2006-to-2022" class="section level1">
 <h1>Top 10 Indiana School Corporations by Enrollment Change 2006 to 2022</h1>
@@ -460,15 +502,12 @@ North Judson-San Pierre Sch Corp
 <h1><a href="#dashboard">Indiana Student Enrollment Dashboard</a></h1>
 <p><a href="https://robwiederstein.github.io/in_enrollments/"><img src="in_enrollment_dashboard.png"/></a></p>
 </div>
-<div id="data-and-model" class="section level1">
-<h1><a href="#data">Data and model</a></h1>
-<p>(What data did you use, where did you get it?)</p>
-</div>
-<div id="results" class="section level1">
-<h1><a href="#results">Results</a></h1>
-</div>
 <div id="conclusion" class="section level1">
 <h1><a href="#conclusion">Conclusion</a></h1>
+<p>Indiana’s public school enrollments reached a high in 2007 at 1,024,761 students. Since then enrollments have trended down, reaching a low in 2021 at 977,867. The observations of student enrollments were limited to school corporations with geographic boundaries within the US Census Cartographic Boundaries file.</p>
+<p>Possible explanations for Indiana’s declining public school district enrollments may include parents and students choosing religious and charter schools over traditional public schools. Or Indiana’s population could be declining overall. Comparisons to population trends as reported by the US Census would be helpful.</p>
+<p>Another factor that may complicate comparisons over time is that school districts’ boundaries may have changed. In other words, some school districts may have consolidated or divided. Union School Corporation showed a 1231% increase in student enrollments which is difficult to explain through population growth alone.</p>
+<p>Other trends are notable as well. Urban and inner city school districts lost students whereas satellite/suburban communities around the urban core gained students. This was most obvious in and around the Indianapolis Public School District and the Gary Community School Corporation.</p>
 </div>
 <div id="acknowledgements" class="section level1">
 <h1><a href="#acknowledge">Acknowledgements</a></h1>

@@ -73,8 +73,6 @@ knitr::write_bib(.packages(), "./packages.bib")
 ```{r load-data, cache=T, include=F, echo=F}
 enrollments <- readRDS("./in_student_enrollments_2006_2022.rds")
 public_schools <- readRDS("./uscb_in_unsd.rds")
-enrollments$public <- "no"
-table(enrollments$nces_id == public_schools)
 ```
 
 # [Overview](#overview)
@@ -83,7 +81,7 @@ This post examines Indiana Student Enrollments from 2006 through 2022.
 
 # [Background](#background)
 
-The National Center for Education Statistics (NCES) described national trends as growing through the 1950s and 1960s as a result of the "baby boom" after World War 2, declining from 1971 through 1984, increasing once again from 1985 throught 2006. Enrollments again declined between 2006 through 2011 and started growing again after 2011.  The NCES predicts that enrollment changes would be relatively small through 2029.[@debreyDigestEducationStatistics2021]
+The National Center for Education Statistics (NCES) described national student enrollment trends.  They were growing through the 1950s and 1960s as a result of the "baby boom" after World War 2, declined from 1971 through 1984, and increased once again from 1985 through 2006. Enrollments again declined between 2006 through 2011 and started growing again after 2011.  The NCES predicts that enrollment changes would be relatively small through 2029.[@debreyDigestEducationStatistics2021]
 
 ```{r nces-enrollment-chart, out.width="100%", fig.cap="U.S. Department of Education, National Center for Education Statistics. (2021). Digest of Education Statistics, 2019 (NCES 2021-009), Chapter 1."}
 knitr::include_graphics("./nces_enrollment.png")
@@ -91,31 +89,39 @@ knitr::include_graphics("./nces_enrollment.png")
 
 # [Indiana Total Enrollment](#indiana_tot_enrollment)
 
-```{r indiana_total_entrollment}
-library(ggplot2)
-library(ggthemes)
-library(dplyr)
-enrollments |> 
+
+```{r indiana-total-enrollment-highcharter}
+data <- enrollments |> 
   group_by(year) |> 
   filter(nces_id %in% public_schools) |> 
-  summarize(in_total_students = sum(tot_students, na.rm = T)) |> 
-  ggplot() +
-  aes(year, in_total_students) +
-  geom_line() +
-  geom_point() +
-  scale_y_continuous(
-    name = "",
-    limits = c(9e5, 1.2e6),
-    breaks = c(9e5, 1e6, 1.1e6, 1.2e6),
-    labels = c("0.9m", "1.0m", "1.1m", "1.2m")) +
-  scale_x_continuous(
-    name = ""
-  ) +
-  labs(
-    title = "Indiana Public School Enrollment",
-    subtitle = "2006 - 2022"
-  ) +
-  ggthemes::theme_fivethirtyeight()
+  summarize(in_total_students = sum(tot_students, na.rm = T)) #|> 
+
+library(highcharter)
+# set options
+hcoptslang <- getOption("highcharter.lang")
+hcoptslang$thousandsSep <- ","
+options(highcharter.lang = hcoptslang)
+# plot
+data |> 
+  hchart(
+    "line",
+    hcaes(year, in_total_students),
+    name = "Student Enrollments"
+  ) |> 
+  hc_yAxis(title = "",
+           labels = list(format = "{value:,.0f}")) |> 
+  hc_xAxis(title = "") |> 
+   hc_title(
+    text = "Total Indiana Student Enrollments by School District"
+  ) |> 
+  hc_subtitle(
+    text = "2006 - 2022"
+  ) |> 
+  hc_credits(
+    enabled = TRUE,
+    text = "Indiana Department of Education",
+    href = "https://www.in.gov/doe/it/data-center-and-reports/"
+  )
   
 ```
 
@@ -168,13 +174,15 @@ enrollments |>
 
 <a href="https://robwiederstein.github.io/in_enrollments/"><img src="./in_enrollment_dashboard.png"/></a>
 
-# [Data and model](#data)
-
-(What data did you use, where did you get it?)
-
-# [Results](#results)
-
 # [Conclusion](#conclusion)
+
+Indiana's public school enrollments reached a high in 2007 at `r max(data$in_total_students) |> prettyNum(big.mark = ",")` students.  Since then enrollments have trended down, reaching a low in 2021 at `r min(data$in_total_students) |> prettyNum(big.mark = ",")`.  The observations of student enrollments were limited to school corporations with geographic boundaries within the US Census Cartographic Boundaries file.
+
+Possible explanations for Indiana's declining public school district enrollments may include parents and students choosing religious and charter schools over traditional public schools. Or Indiana's population could be declining overall. Comparisons to population trends as reported by the US Census would be helpful.
+
+Another factor that may complicate comparisons over time is that school districts' boundaries may have changed. In other words, some school districts may have consolidated or divided. Union School Corporation showed a 1231% increase in student enrollments which is difficult to explain through population growth alone.
+
+Other trends are notable as well.  Urban and inner city school districts lost students whereas satellite/suburban communities around the urban core gained students.  This was most obvious in and around the Indianapolis Public School District and the Gary Community School Corporation.
 
 # [Acknowledgements](#acknowledge)
 
