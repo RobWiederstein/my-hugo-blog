@@ -10,7 +10,7 @@ tags:
   - purrr
   - tidyr
 layout: layouts/post/single
-draft: TRUE
+draft: FALSE
 bibliography:
   - packages.bib
   - ../blog.bib
@@ -22,7 +22,7 @@ header:
   image: feature.png
   alt: rectangling
   caption: Rectangling is the process of untangling lists into tables
-repo: ~
+repo: https://github.com/RobWiederstein/my-hugo-blog/blob/main/content/post/2022-04-15-rectangling-part-05/index.Rmd
 summary: Rectangling is the process of untangling lists into tables.
 ---
 
@@ -30,31 +30,39 @@ summary: Rectangling is the process of untangling lists into tables.
 <div id="TOC">
 <ul>
 <li><a href="#overview"><span>Overview</span></a></li>
-<li><a href="#github-users-unnest_wider"><span>GitHub users – unnest_wider()</span></a>
+<li><a href="#dragons-base-case"><span>Dragons – Base Case</span></a>
 <ul>
 <li><a href="#insert-into-tibble">Insert into tibble</a></li>
 <li><a href="#inspect">Inspect</a></li>
 <li><a href="#unnest_wider">unnest_wider()</a></li>
 <li><a href="#hoist">hoist()</a></li>
+<li><a href="#full-tibble">Full tibble</a></li>
 </ul></li>
-<li><a href="#github-repos---unnest_longer"><span>GitHub repos - unnest_longer()</span></a>
+<li><a href="#github-users-unnest_wider"><span>GitHub users – unnest_wider()</span></a>
 <ul>
 <li><a href="#insert-into-tibble-1">Insert into tibble</a></li>
 <li><a href="#inspect-1">Inspect</a></li>
-<li><a href="#unnest_longer">unnest_longer()</a></li>
+<li><a href="#unnest_wider-1">unnest_wider()</a></li>
 <li><a href="#hoist-1">hoist()</a></li>
 </ul></li>
-<li><a href="#game-of-throne-characters"><span>Game of Throne Characters</span></a>
+<li><a href="#github-repos---unnest_longer"><span>GitHub repos - unnest_longer()</span></a>
 <ul>
 <li><a href="#insert-into-tibble-2">Insert into tibble</a></li>
 <li><a href="#inspect-2">Inspect</a></li>
-<li><a href="#unnest_wider-1">unnest_wider()</a></li>
+<li><a href="#unnest_longer">unnest_longer()</a></li>
+<li><a href="#hoist-2">hoist()</a></li>
+</ul></li>
+<li><a href="#game-of-throne-characters"><span>Game of Throne Characters</span></a>
+<ul>
+<li><a href="#insert-into-tibble-3">Insert into tibble</a></li>
+<li><a href="#inspect-3">Inspect</a></li>
+<li><a href="#unnest_wider-2">unnest_wider()</a></li>
 <li><a href="#build-table">Build table</a></li>
 </ul></li>
 <li><a href="#sharla-gelfands-discography"><span>Sharla Gelfand’s Discography</span></a>
 <ul>
-<li><a href="#insert-into-tibble-3">Insert into tibble</a></li>
-<li><a href="#inspect-3">Inspect</a></li>
+<li><a href="#insert-into-tibble-4">Insert into tibble</a></li>
+<li><a href="#inspect-4">Inspect</a></li>
 <li><a href="#fix-duplicate-names">Fix duplicate names</a></li>
 <li><a href="#drop-id-column">drop id column</a></li>
 <li><a href="#hoist-alternative"><code>hoist()</code> alternative</a></li>
@@ -70,7 +78,7 @@ summary: Rectangling is the process of untangling lists into tables.
 
 <div id="overview" class="section level1">
 <h1><a href="#overview">Overview</a></h1>
-<p>This post is an abbreviated version of the <code>tidyr</code> vignette on rectangling. According to the vignette, “[r]ectangling is the art and craft of taking a deeply nested list (often sourced from wild caught JSON or XML) and taming it into a tidy data set of rows and columns.” If you prefer to interactively explore the vignette from the command line, you’ll need to install <code>tidyr</code>, <code>dplyr</code> and <code>repurrrsive</code> packages.</p>
+<p>This post is an abbreviated version of the <code>tidyr</code> vignette on rectangling, along with a few diversions. According to the vignette, “[r]ectangling is the art and craft of taking a deeply nested list (often sourced from wild caught JSON or XML) and taming it into a tidy data set of rows and columns.” If you prefer to interactively explore the vignette from the command line, you’ll need to install <code>tidyr</code>, <code>dplyr</code> and <code>repurrrsive</code> packages and call the vignette.</p>
 <pre class="r"><code>#load packages
 library(tidyr)
 library(dplyr)
@@ -78,15 +86,87 @@ library(repurrrsive)
 #load vignette in help window
 vignette(&quot;rectangle&quot;, package = &quot;tidyr&quot;)</code></pre>
 <p>Or the vignette is available on its own web <a href="https://tidyr.tidyverse.org/articles/rectangle.html">page</a>. The workhorse of the effort are permutations of the <code>unnest_*</code> function and <code>hoist()</code>. Both are in the <code>tidyr</code> package.</p>
-<p>The general workfow of rectangling is to populate a tibble with a list. Nested lists will be converted to list-columns whereby the various “unnest” function can be applied like <code>unnest_wider</code>, <code>unnest_longer</code> and <code>unnest_auto</code> can be used. Where only small portions of a list are to be retained, <code>hoist()</code> may be a more efficient alternative.</p>
+<p>The general workfow of rectangling is to populate a tibble with a list. Nested lists will be converted to list-columns whereby the various “unnest” functions can be applied like <code>unnest_wider</code>, <code>unnest_longer</code> and <code>unnest_auto</code>. When only small portions of a list are to be retained, <code>hoist()</code> may be a more efficient alternative.</p>
+</div>
+<div id="dragons-base-case" class="section level1">
+<h1><a href="#dragons">Dragons – Base Case</a></h1>
+<p>The examples under <code>?tidyr::hoist()</code> are a good place to start for rectangling. Here, we’ll begin with the “dragon” example. The data set is a two-column tibble with the first column being an atomic vector of character type. The second column is a list-column.</p>
+<div id="insert-into-tibble" class="section level2">
+<h2>Insert into tibble</h2>
+<pre class="r"><code>df &lt;- tibble(
+  character = c(&quot;Toothless&quot;, &quot;Dory&quot;),
+  metadata = list(
+    list(
+      species = &quot;dragon&quot;,
+      color = &quot;black&quot;,
+      films = c(
+        &quot;How to Train Your Dragon&quot;,
+        &quot;How to Train Your Dragon 2&quot;,
+        &quot;How to Train Your Dragon: The Hidden World&quot;
+       )
+    ),
+    list(
+      species = &quot;blue tang&quot;,
+      color = &quot;blue&quot;,
+      films = c(&quot;Finding Nemo&quot;, &quot;Finding Dory&quot;)
+    )
+  )
+)</code></pre>
+</div>
+<div id="inspect" class="section level2">
+<h2>Inspect</h2>
+<pre><code># A tibble: 2 × 2
+  character metadata        
+  &lt;chr&gt;     &lt;list&gt;          
+1 Toothless &lt;named list [3]&gt;
+2 Dory      &lt;named list [3]&gt;</code></pre>
+</div>
+<div id="unnest_wider" class="section level2">
+<h2>unnest_wider()</h2>
+<p>The first step is to use <code>tidyr::unnest_wider()</code>.</p>
+<pre class="r"><code>df %&gt;% unnest_wider(metadata)</code></pre>
+<pre><code># A tibble: 2 × 4
+  character species   color films    
+  &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt; &lt;list&gt;   
+1 Toothless dragon    black &lt;chr [3]&gt;
+2 Dory      blue tang blue  &lt;chr [2]&gt;</code></pre>
+</div>
+<div id="hoist" class="section level2">
+<h2>hoist()</h2>
+<p>The <code>hoist()</code> function is helpful when you want to extract specific components.</p>
+<pre class="r"><code>df %&gt;% hoist(metadata,
+  &quot;species&quot;,
+  first_film = list(&quot;films&quot;, 1L),
+  third_film = list(&quot;films&quot;, 3L)
+)</code></pre>
+<pre><code># A tibble: 2 × 5
+  character species   first_film               third_film           metadata    
+  &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;                    &lt;chr&gt;                &lt;list&gt;      
+1 Toothless dragon    How to Train Your Dragon How to Train Your D… &lt;named list&gt;
+2 Dory      blue tang Finding Nemo             &lt;NA&gt;                 &lt;named list&gt;</code></pre>
+</div>
+<div id="full-tibble" class="section level2">
+<h2>Full tibble</h2>
+<pre class="r"><code>df %&gt;%
+  unnest_wider(metadata) %&gt;%
+  unnest_longer(films)</code></pre>
+<pre><code># A tibble: 5 × 4
+  character species   color films                                     
+  &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;                                     
+1 Toothless dragon    black How to Train Your Dragon                  
+2 Toothless dragon    black How to Train Your Dragon 2                
+3 Toothless dragon    black How to Train Your Dragon: The Hidden World
+4 Dory      blue tang blue  Finding Nemo                              
+5 Dory      blue tang blue  Finding Dory                              </code></pre>
+</div>
 </div>
 <div id="github-users-unnest_wider" class="section level1">
 <h1><a href="#gh_users">GitHub users – unnest_wider()</a></h1>
-<div id="insert-into-tibble" class="section level2">
+<div id="insert-into-tibble-1" class="section level2">
 <h2>Insert into tibble</h2>
 <pre class="r"><code>users &lt;- tibble(user = gh_users)</code></pre>
 </div>
-<div id="inspect" class="section level2">
+<div id="inspect-1" class="section level2">
 <h2>Inspect</h2>
 <pre class="r"><code>names(users$user[[1]])</code></pre>
 <pre><code> [1] &quot;login&quot;               &quot;id&quot;                  &quot;avatar_url&quot;         
@@ -100,7 +180,7 @@ vignette(&quot;rectangle&quot;, package = &quot;tidyr&quot;)</code></pre>
 [25] &quot;public_repos&quot;        &quot;public_gists&quot;        &quot;followers&quot;          
 [28] &quot;following&quot;           &quot;created_at&quot;          &quot;updated_at&quot;         </code></pre>
 </div>
-<div id="unnest_wider" class="section level2">
+<div id="unnest_wider-1" class="section level2">
 <h2>unnest_wider()</h2>
 <pre class="r"><code>users |&gt; unnest_wider(user)</code></pre>
 <pre><code># A tibble: 6 × 30
@@ -119,7 +199,7 @@ vignette(&quot;rectangle&quot;, package = &quot;tidyr&quot;)</code></pre>
 #   hireable &lt;lgl&gt;, bio &lt;chr&gt;, public_repos &lt;int&gt;, public_gists &lt;int&gt;,
 #   followers &lt;int&gt;, following &lt;int&gt;, created_at &lt;chr&gt;, updated_at &lt;chr&gt;</code></pre>
 </div>
-<div id="hoist" class="section level2">
+<div id="hoist-1" class="section level2">
 <h2>hoist()</h2>
 <pre class="r"><code>users %&gt;% hoist(
     user,
@@ -140,11 +220,11 @@ vignette(&quot;rectangle&quot;, package = &quot;tidyr&quot;)</code></pre>
 </div>
 <div id="github-repos---unnest_longer" class="section level1">
 <h1><a href="#gh-repos">GitHub repos - unnest_longer()</a></h1>
-<div id="insert-into-tibble-1" class="section level2">
+<div id="insert-into-tibble-2" class="section level2">
 <h2>Insert into tibble</h2>
 <pre class="r"><code>repos &lt;- tibble(repo = repurrrsive::gh_repos)</code></pre>
 </div>
-<div id="inspect-1" class="section level2">
+<div id="inspect-2" class="section level2">
 <h2>Inspect</h2>
 <pre class="r"><code>repos</code></pre>
 <pre><code># A tibble: 6 × 1
@@ -176,7 +256,7 @@ repos</code></pre>
 10 &lt;named list [68]&gt;
 # … with 166 more rows</code></pre>
 </div>
-<div id="hoist-1" class="section level2">
+<div id="hoist-2" class="section level2">
 <h2>hoist()</h2>
 <pre class="r"><code>repos %&gt;% hoist(
     repo,
@@ -203,10 +283,10 @@ repos</code></pre>
 </div>
 <div id="game-of-throne-characters" class="section level1">
 <h1><a href="#got-chars">Game of Throne Characters</a></h1>
-<div id="insert-into-tibble-2" class="section level2">
+<div id="insert-into-tibble-3" class="section level2">
 <h2>Insert into tibble</h2>
 </div>
-<div id="inspect-2" class="section level2">
+<div id="inspect-3" class="section level2">
 <h2>Inspect</h2>
 <pre><code># A tibble: 30 × 1
    char             
@@ -223,7 +303,7 @@ repos</code></pre>
 10 &lt;named list [18]&gt;
 # … with 20 more rows</code></pre>
 </div>
-<div id="unnest_wider-1" class="section level2">
+<div id="unnest_wider-2" class="section level2">
 <h2>unnest_wider()</h2>
 <pre><code># A tibble: 30 × 18
    url           id name  gender culture born  died  alive titles aliases father
@@ -278,13 +358,13 @@ repos</code></pre>
 </div>
 <div id="sharla-gelfands-discography" class="section level1">
 <h1><a href="#discography">Sharla Gelfand’s Discography</a></h1>
-<div id="insert-into-tibble-3" class="section level2">
+<div id="insert-into-tibble-4" class="section level2">
 <h2>Insert into tibble</h2>
 <pre class="r"><code>discs &lt;- tibble(disc = discog) %&gt;%
     unnest_wider(disc) %&gt;%
     mutate(date_added = as.POSIXct(strptime(date_added, &quot;%Y-%m-%dT%H:%M:%S&quot;)))</code></pre>
 </div>
-<div id="inspect-3" class="section level2">
+<div id="inspect-4" class="section level2">
 <h2>Inspect</h2>
 <p>Examine data.</p>
 <pre class="r"><code>discs</code></pre>
@@ -425,11 +505,14 @@ discs %&gt;%
 </div>
 <div id="conclusion" class="section level1">
 <h1><a href="#conclusion">Conclusion</a></h1>
-<p>This post closely followed the <code>tidyr</code> vignette “Rectangling.” That said, the section on google geocoding was omitted. The vignette demonstrated the use of <code>unnest_wider()</code>, <code>unnest_longer()</code>, and <code>hoist()</code>. It also showed how to solve an error when names in a list are duplicated by adding the argument <code>names_repair = "unique"</code>.</p>
+<p>This post loosely followed the <code>tidyr</code> vignette “Rectangling.” That said, the section on google geocoding was omitted. The vignette demonstrated the use of <code>unnest_wider()</code>, <code>unnest_longer()</code>, and <code>hoist()</code>. It also showed how to solve an error when names in a list are duplicated by adding the argument <code>names_repair = "unique"</code>.</p>
 </div>
 <div id="acknowledgements" class="section level1">
 <h1><a href="#acknowledge">Acknowledgements</a></h1>
 <p>This blog post was made possible thanks to:</p>
+<ul>
+<li>Jenny Bryan, the maintainer of the <code>repurrrsive</code> package.</li>
+</ul>
 </div>
 <div id="references" class="section level1">
 <h1><a href="#reference">References</a></h1>
@@ -470,7 +553,7 @@ discs %&gt;%
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       America/Chicago
- date     2022-04-15
+ date     2022-04-22
  pandoc   2.14.1 @ /usr/local/bin/ (via rmarkdown)
 
 ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
