@@ -339,6 +339,14 @@ This blog post was made possible thanks to:
 
 -  Jenny Bryan, the maintainer of the `repurrrsive` package.
 
+- [Luis D. Verde - Data Rectangling Resource Roundup](https://luisdva.github.io/rectangling/)
+
+- [Jenny Bryan - Data Rectangling](https://speakerdeck.com/jennybc/data-rectangling?slide=59)
+
+- [Garrick Aden-Buie -- XML: The Recursive Programming Workout](https://www.garrickadenbuie.com/blog/recursive-xml-workout/)
+
+- [Computing for the Social Sciences -- Simplifying lists](https://cfss.uchicago.edu/notes/simplify-nested-lists/)
+
 # [References](#reference)
 
 <div id="refs"></div>
