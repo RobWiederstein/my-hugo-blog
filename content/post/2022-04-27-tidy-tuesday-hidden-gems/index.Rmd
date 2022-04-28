@@ -89,7 +89,7 @@ hg <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytue
 
 # [Overview](#overview)
 
-Begun in 2018, "tidy Tuesday" releases a dataset weekly and challenges the R community to provide insight, doing what data analysts do.  For the week of April 26, the challenge was the "Kaggle Hidden Gems" dataset. Hidden gems are items that are good, but unrecognized or overlooked by others.  In this same spirit, Martin Henze of Heads or Tails finds and promotes three underrated notebooks (formerly "kernels") that he believes are deserving of a wider audience.  The Kaggle Hidden Gems dataset is comprised of 300 notebooks compiled over 100 episodes.
+Begun in 2018, "tidy Tuesday" releases a dataset weekly and challenges the R community to provide insight, doing what data analysts do.  For the week of April 26, the challenge was the "Kaggle Hidden Gems" dataset. "Hidden gems" are items that are good, but unrecognized or overlooked by others.  In this same spirit, Martin Henze of Heads or Tails finds and promotes three underrated notebooks (formerly "kernels") that he believes are deserving of a wider audience.  The Kaggle Hidden Gems dataset is comprised of 300 notebooks compiled over 100 episodes.
 
 # [Background](#background)
 
@@ -230,6 +230,7 @@ highchart() %>%
 table <- 
   hg1 |> 
   select(date, author_name, link, review, sentiment_afinn) |> 
+  arrange(desc(sentiment_afinn))
 DT::datatable(escape = FALSE)
 table
 ```
