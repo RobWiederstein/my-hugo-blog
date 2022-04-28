@@ -230,7 +230,6 @@ highchart() %>%
 table <- 
   hg1 |> 
   select(date, author_name, link, review, sentiment_afinn) |> 
-  arrange(desc(sentiment_afinn))
 DT::datatable(escape = FALSE)
 table
 ```
