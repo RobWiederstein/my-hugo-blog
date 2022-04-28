@@ -1,0 +1,263 @@
+---
+title: 'Tidy Tuesday Hidden Gems '
+author: Rob Wiederstein
+date: '2022-04-27'
+slug: tidy-tuesday-hidden-gems
+categories:
+  - R
+tags:
+  - tidytext
+  - igraph
+layout: layouts/post/single
+draft: FALSE
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-dplyr, @R-tidytext, @R-highcharter, @R-DT
+header:
+  image: feature.jpg
+  alt: broken stone revealing jeweled interior
+  caption: What looks like a rock could be a hidden gem. Photo by "lilartsy" on Unsplash.
+repo: ~
+summary: The \#tidytuesday release was the hidden gems project, a collection of notebook reviews from Kaggle.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown',
+      'tidytext',
+      'igraph',
+      'dplyr',
+      'highcharter',
+      'DT'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=F,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+
+```{r load-libraries, include=FALSE}
+library(dplyr)
+library(stringr)
+library(ggplot2)
+library(tidytext)
+library(textdata)
+library(widyr)
+library(ggplot2)
+library(igraph)
+library(ggraph)
+library(DT)
+```
+
+```{r load-data}
+hg <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-04-26/hidden_gems.csv")
+```
+
+# [Overview](#overview)
+
+Begun in 2018, "tidy Tuesday" releases a dataset weekly and challenges the R community to provide insight, doing what data analysts do.  For the week of April 26, the challenge was the "Kaggle Hidden Gems" dataset. Hidden gems are items that are good, but unrecognized or overlooked by others.  In this same spirit, Martin Henze of Heads or Tails finds and promotes three underrated notebooks (formerly "kernels") that he believes are deserving of a wider audience.  The Kaggle Hidden Gems dataset is comprised of 300 notebooks compiled over 100 episodes.
+
+# [Background](#background)
+
+The original dataset is twelve columns and 300 observations:
+
+```{r background-view-data}
+dplyr::glimpse(hg)
+```
+
+The most interesting variables were the `title` and Martin Henze's `review`.  These variables were comprised of text so I went in search of some continuous variables and potentially categorical ones too. The note's field also had some interesting items.  At regular intervals, users got to choose outstanding notebooks.
+
+```{r background-add-features, include=FALSE}
+review_sentiment <-
+    tibble(id = 1:nrow(hg), text = hg$review) |>
+    unnest_tokens(word, text) |>
+    anti_join(stop_words) |>
+    inner_join(get_sentiments("afinn"), by = "word") |>
+    group_by(id) |>
+    summarize(sentiment_afinn = sum(value))
+
+hg1 <-
+    hg |>
+    mutate(title_length = str_count(title)) |>
+    mutate(review_length = str_count(review)) |>
+    mutate(id = 1:nrow(hg)) |>
+    mutate(special = grepl("special", hg$notes)) |>
+    mutate(community = grepl("Community", hg$notes)) |>
+    select(id, everything()) |>
+    left_join(review_sentiment, by = "id")
+# add author frequency column
+author_freq <-
+    hg1 |>
+    select(author_name) |>
+    group_by(author_name) |>
+    count() |>
+    rename(frequency = n)
+# merge
+hg1 <- left_join(hg1, author_freq, by = "author_name")
+# previous kaggle notebook
+hg1 <-
+    hg1 |>
+    mutate(prior_submission = frequency > 1)
+hg1$link <-
+    paste0("<a href=\'", 
+           hg1$notebook, 
+           "\'>",
+           hg1$title,
+           "</a>")
+# make factor
+hg1$frequency <- as.factor(hg1$frequency)
+```
+
+
+# [Feature Creation](#feature-creation)
+
+With some wrangling, additional features were constructed: (1)`title_length` in words; (2) `review_length` in words; (3) `special` for notebooks chosen for a special milestone; (4) `community` for notebooks chosen by users; (6) `sentiment_afinn` for a sentiment score on the review; (7) `frequency` the number of notebooks submitted by a single author; (8) `prior_submission` a logical value for users that submitted more than one notebook and (9) a `link` for the actual Kaggle notebook. 
+
+```{r background-glimpse-features}
+hg1 |> select(title_length:link) |> glimpse()
+```
+
+# [Sentiment Indicator](#sentiment-indicator)
+
+The sentiment indicator was created using the `tidytext` package and following the methodology described in [Text Mining with R--Chapter 2](https://www.tidytextmining.com/sentiment.html) by Julia Silge and David Robinson.  Text mining can be used to provide the "emotional content" of a text programmatically.  Here, the `AFINN` sentiment dictionary was applied to the review field. Words are assigned a score between -5 and 5. Illustrating the extreme sentiment within the dictionary yields the following examples:
+
+## Words of Negative Sentiment
+```{r afinn-negative-sentiment}
+get_sentiments("afinn") |> filter(value == -5) |> slice_head(n = 10)
+```
+
+## Words of Positive Sentiment
+
+```{r afinn-positive-sentiment}
+get_sentiments("afinn") |> filter(value == 5) |> slice_head(n = 10)
+```
+
+
+"Dictionary-based methods like the ones we are discussing find the total sentiment of a piece of text by adding up the individual sentiment scores for each word in the text," according to Silge and Robinson. The individual word scores were then summarized by their title resulting in the `sentiment_afinn` variable. The `afinn` dictionary contains 2,477 words and "NA" was returned on `r hg1$sentiment_afinn |> is.na() |> sum()` of the 300 entries.  Presumably, 87 reviews did not contain any words within the dictionary.
+
+# [Hidden Gems Plot](#plot)
+
+```{r plot-sentiment-frequency, cache=FALSE, out.width='100%'}
+library(highcharter)
+dat <- data_to_boxplot(
+    hg1,
+    variable = sentiment_afinn,
+    group_var = frequency
+)
+highchart() %>%
+    hc_xAxis(
+        type = "category",
+        title = list(text = "submissions")
+    ) %>%
+    hc_yAxis(
+        type = "numeric",
+        title = list(text = "sentiment")
+    ) %>%
+    hc_add_series_list(
+        dat
+    ) |>
+    hc_add_series(
+        data = hg1,
+        type = "scatter",
+        hcaes(
+            x = frequency,
+            y = sentiment_afinn,
+            group = frequency
+        ),
+        name = "notebook",
+        label = "xyz",
+        tooltip = list(
+            useHTML = TRUE,
+            pointFormat = paste0(
+                "date: <b>{point.date}</b></br>",
+                "author: <b>{point.author_name}</b></br>",
+                "title: <b>{point.title}</b></br>",
+                "submissions: <b>{point.frequency}</b><br>",
+                "sentiment: <b>{point.sentiment_afinn}</b><br>"
+            )
+        )
+    ) |>
+    hc_plotOptions(
+        scatter = list(jitter = list(x = .2, y = .2))
+    ) |>
+   hc_title(
+    text = "Kaggle Hidden Gems"
+   ) |> 
+  hc_subtitle(
+    text = "#tidytuesday Project"
+  ) |> 
+    hc_legend(enabled = F)
+#add labels 
+```
+
+# [Hidden Gems Table](#table)
+
+```{r table-hidden-gems}
+table <- 
+  hg1 |> 
+  select(date, author_name, link, review, sentiment_afinn) |> 
+DT::datatable(escape = FALSE)
+table
+```
+
+# [Conclusion](#conclusion)
+
+All of the 300 notebooks were considered to be overlooked and among the best.  There was very little correlation among the variables, but  sentiment tended to be higher where Martin Henze was familiar with an author's past work. It could also mean that Kagglers' notebook skills increased with additional submissions. By creating the plot and table, I have a nice index of outstanding Kaggle notebooks to consult in the future.
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+- [Tidy Tuesday - A weekly social data project in R](https://github.com/rfordatascience/tidytuesday)
+
+- [Martin Henze - Heads or Tails](https://twitter.com/heads0rtai1s)
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```
