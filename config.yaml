@@ -1,4 +1,5 @@
-baseurl: https://keen-noether-7d2e44.netlify.app/
+baseurl: https://robwiederstein.org/
+#baseurl: https://keen-noether-7d2e44.netlify.app/
 languageCode: en-us
 title: Rob Wiederstein - a blog about coding, data and public policy
 theme: hugo-lithium
