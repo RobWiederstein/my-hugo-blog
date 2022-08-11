@@ -8,7 +8,7 @@ categories:
 tags:
   - ggplot2
 layout: layouts/post/single
-draft: no
+draft: yes
 bibliography:
   - packages.bib
   - ../blog.bib
