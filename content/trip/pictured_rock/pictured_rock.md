@@ -16,6 +16,7 @@ Arrive Mackinaw City, Michigan (11 hrs)
 Mackinaw City , MI 49701
 <a href="tel:+8005621738">800.562.1738</a>
 (Confirmation no: 9156770 & 9156801)
+Confirmed.
 
 # Day 2 -- Wednesday -- July 6
 [Mackinac Island Star Line Ferry](https://www.mackinacferry.com)
@@ -45,7 +46,7 @@ Lunch at
 [Tahquamenon Falls Brewery and Pub](https://www.tahquamenonfallsbrewery.com/index.php?page=Home)
 24019 Upper Falls Drive
 Paradise, MI 49768
-Must confirm RV parking.
+There is parking for RVs.
 <a href="tel:+9064923415">906.492.3300</a>
 
 Arrive Munising, Michigan (3 hrs)
@@ -84,10 +85,13 @@ Depart for South Baymouth, Ontario, Canada
 Immigration Officer at the Sault Ste. Marie, Ontario Port of Entry 
 [1.800.461.9999](tel:+18004619999)
 
+Get and fill out the "ArriveCan" app.
+
 [Batman's Cottages and Campground](https://batmanscamping.com)
 11408 ON-6
 Sheguiandah, ON P0P 1W0
 [info@batmanscamping.com](info@batmanscamping.com)
+[1.705.368.2180](tel:+17053682180)
 
 
 # Day 8 -- Tuesday -- July 12
@@ -95,7 +99,8 @@ Sheguiandah, ON P0P 1W0
 Depart for  Niagra Falls, Ontario
 
 [Owen Sound Transportation Company](https://www.ontarioferries.com/ms-chi-cheemaun/)
-Fare $204.17
+Booking Reference: 178131
+Fare: $284.00 (50ft)
 
 Campark Resorts 
 9387 Lundy's Lane 
@@ -121,41 +126,7 @@ Maid of the Mist
 
 # Day 12 -- Saturday -- July 16
 
-Depart for Seneca Falls, New York, USA
-
-[Twilight on the Erie](https://www.twilightrv.com/index.html)
-1100 Marina Pkwy
-Macedon, NY 14502
-[1.315.986.7337](tel:+13159867337)
-
-
-# Day 13 -- Sunday -- July 17
-
-[Elizabeth Cady Stanton Home](https://www.nps.gov/wori/learn/historyculture/elizabeth-cady-stanton-house.htm)
-32 Washington St. 
-Seneca Falls, NY 13148
-No fees.
-
-[Women's Rights National Historical Park](https://www.nps.gov/wori/index.htm)
-136 Fall Street 
-Seneca Falls, NY 13148
-No fees.
-
-# Day 14 -- Monday -- July 18
-
-[George Eastman Museum](https://www.eastman.org)
-900 East Avenue
-Rochester, NY 14607
-Admission $18.00
-
-[Susan B. Anthony Museum and House](https://susanb.org)
-17 Madison Street
-Rochester,  NY 14608
-Admission $15.00
-
-# Day 15 -- Tuesday -- July 19
-
-Depart for Eddyville, Kentucky.
+Depart for Evansville, Indiana.
 
 
 # Miscellaneous

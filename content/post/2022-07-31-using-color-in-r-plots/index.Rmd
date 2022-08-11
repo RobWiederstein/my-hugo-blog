@@ -1,0 +1,180 @@
+---
+title: Using Color in R Plots
+author: Rob Wiederstein
+date: '2022-07-31'
+slug: using-color-in-r-plots
+categories:
+  - R
+tags:
+  - ggplot2
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-colorspace, @R-RColorBrewer
+header:
+  image: ~
+  alt: ~
+  caption: ~
+repo: ~
+summary: Using color effectively is key for informative and accurate plots. A number of R packages can provide tried-and-true palettes to ease the process.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown',
+      'RColorBrewer',
+      'colorspace',
+      'tibble'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
+library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+# [Overview](#overview)
+
+# [Sample Palettes](#palettes)
+
+```{r sample-palettes}
+cs <- tibble(x = 1:5,
+             y = .5,
+             color = colorspace::qualitative_hcl(5, palette = "dark2"),
+             package = "colorspace"
+             )
+br <- tibble(x = 1:5,
+             y = .5,
+             color = RColorBrewer::brewer.pal(5, name = "Set1"),
+             package = "brewer"
+)
+rb <- tibble(x = 1:5,
+             y = .5,
+             color = rainbow(5),
+             package = "rainbow"
+)
+hcl <- tibble(x = 1:5,
+             y = .5,
+             color = hcl.colors(5),
+             package = "hcl_set_1"
+)
+vir <- tibble::tibble(x = 1:5,
+              y = .5,
+              color = hcl.colors(5, palette = "viridis"),
+              package = "viridis"
+)
+mun <- tibble(
+        x = 1:5,
+        y = .5,
+        color = 
+)
+library(dplyr)
+dt <- dplyr::bind_rows(br, cs, rb, hcl, vir) |> 
+        group_by(package) |> 
+        arrange(color)
+#munsell::value_slice(value_name = 1)
+dt |> 
+        ggplot() +
+        aes(x, y, fill = color) +
+        geom_tile() +
+        geom_text(data = dt, label = dt$color, color = "white") +
+        facet_grid(vars(package)) +
+        theme_void() +
+        theme(legend.position = "none") 
+```
+
+# [Sample Plots](#plots)
+
+```{r sample-plots}
+plot_iris <- function(color, title){
+        iris |> 
+        ggplot() +
+        aes(Sepal.Length, Petal.Length, group = Species, color = Species) +
+        geom_point() +
+        geom_rangeframe() +
+        scale_color_manual(values = color) +
+        theme_tufte() +
+        scale_x_continuous(name = "") +
+        scale_y_continuous(name = "") +
+        theme(legend.position = "none") +
+        labs(title = title)
+}
+p1 <- plot_iris(color = RColorBrewer::brewer.pal(3, "Dark2"),
+                title = "RColor Brewer")
+p2 <- plot_iris(color = hcl.colors(3, palette = "viridis"),
+                title = "Viridis")
+p3 <- plot_iris(color = colorspace::qualitative_hcl(3, palette = "dark2"),
+                title = "Colorspace")
+p4 <- plot_iris(color = rainbow(3),
+                title = "Rainbow")
+p5 <- plot_iris(color = hcl.colors(3),
+                title = "hcl.colors(3)")
+library(patchwork)
+(p1 + p2 + p3) / (p4 + p5)
+```
+
+
+# [Conclusion](#conclusion)
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```

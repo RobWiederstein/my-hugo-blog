@@ -3,513 +3,593 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/</loc>
-    <lastmod>2022-03-28T00:00:00+00:00</lastmod>
+    <loc>https://robwiederstein.org/</loc>
+    <lastmod>2022-07-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/categories/</loc>
+    <loc>https://robwiederstein.org/categories/</loc>
+    <lastmod>2022-07-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2022/07/27/laser-incidents-on-u-s-airplanes/</loc>
+    <lastmod>2022-07-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/post/</loc>
+    <lastmod>2022-07-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/categories/r/</loc>
+    <lastmod>2022-07-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/igraph/</loc>
+    <lastmod>2022-04-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/</loc>
+    <lastmod>2022-04-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2022/04/27/tidy-tuesday-hidden-gems/</loc>
+    <lastmod>2022-04-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/tidytext/</loc>
+    <lastmod>2022-04-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/list/</loc>
+    <lastmod>2022-04-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/purrr/</loc>
+    <lastmod>2022-04-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2022/04/25/rectangling-irs-990s-part-06/</loc>
+    <lastmod>2022-04-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/tidyr/</loc>
+    <lastmod>2022-04-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/xml/</loc>
+    <lastmod>2022-04-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2022/04/15/list-inspection-part-04/</loc>
+    <lastmod>2022-04-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2022/04/15/rectangling-part-05/</loc>
+    <lastmod>2022-04-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2022/04/13/lists-into-tibbles-part-03/</loc>
+    <lastmod>2022-04-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/tibble/</loc>
+    <lastmod>2022-04-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2022/04/12/list-iteration-part-02/</loc>
+    <lastmod>2022-04-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2022/04/11/list-basics-part-01/</loc>
+    <lastmod>2022-04-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/dt/</loc>
+    <lastmod>2022-04-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2022/04/03/indiana-school-enrollments-2006-to-2022/</loc>
+    <lastmod>2022-04-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/leaflet/</loc>
+    <lastmod>2022-04-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/sf/</loc>
     <lastmod>2022-03-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/leaflet/</loc>
+    <loc>https://robwiederstein.org/2022/03/28/simple-features-tutorial-in-r-number-2/</loc>
     <lastmod>2022-03-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/post/</loc>
-    <lastmod>2022-03-28T00:00:00+00:00</lastmod>
+    <loc>https://robwiederstein.org/2022/02/28/styling-r-code-for-better-development/</loc>
+    <lastmod>2022-02-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/categories/r/</loc>
-    <lastmod>2022-03-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/sf/</loc>
-    <lastmod>2022-03-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2022/03/28/simple-features-tutorial-in-r-number-2/</loc>
-    <lastmod>2022-03-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/</loc>
-    <lastmod>2022-03-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2022/01/20/freddie-mac-mortgage-rate-data/</loc>
+    <loc>https://robwiederstein.org/2022/01/20/freddie-mac-mortgage-rate-data/</loc>
     <lastmod>2022-01-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/readxl/</loc>
+    <loc>https://robwiederstein.org/tags/readxl/</loc>
     <lastmod>2022-01-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/rio/</loc>
+    <loc>https://robwiederstein.org/tags/rio/</loc>
     <lastmod>2022-01-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/golem/</loc>
+    <loc>https://robwiederstein.org/tags/golem/</loc>
     <lastmod>2021-10-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/10/13/retirement-locations-dashboard/</loc>
+    <loc>https://robwiederstein.org/2021/10/13/retirement-locations-dashboard/</loc>
     <lastmod>2021-10-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/shiny/</loc>
+    <loc>https://robwiederstein.org/tags/shiny/</loc>
     <lastmod>2021-10-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/dashboard/</loc>
+    <loc>https://robwiederstein.org/dashboard/</loc>
     <lastmod>2021-09-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/08/29/prepend-character-to-string/</loc>
+    <loc>https://robwiederstein.org/2021/08/29/prepend-character-to-string/</loc>
     <lastmod>2021-08-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/stringr/</loc>
+    <loc>https://robwiederstein.org/tags/stringr/</loc>
     <lastmod>2021-08-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/categories/health/</loc>
+    <loc>https://robwiederstein.org/categories/health/</loc>
     <lastmod>2021-08-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/08/09/motorcycle-and-moped-accidents-in-florida/</loc>
+    <loc>https://robwiederstein.org/2021/08/09/motorcycle-and-moped-accidents-in-florida/</loc>
     <lastmod>2021-08-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/trip/</loc>
+    <loc>https://robwiederstein.org/trip/</loc>
     <lastmod>2021-08-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/trip/pictured_rock/pictured_rock/</loc>
+    <loc>https://robwiederstein.org/trip/pictured_rock/pictured_rock/</loc>
     <lastmod>2021-08-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/trip/savannah/savannah/</loc>
+    <loc>https://robwiederstein.org/trip/savannah/savannah/</loc>
     <lastmod>2021-08-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/07/20/staying-organized/</loc>
+    <loc>https://robwiederstein.org/2021/07/20/staying-organized/</loc>
     <lastmod>2021-07-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/flexdashboard/</loc>
+    <loc>https://robwiederstein.org/tags/flexdashboard/</loc>
     <lastmod>2021-07-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/07/05/footer-for-flexdashboard/</loc>
+    <loc>https://robwiederstein.org/2021/07/05/footer-for-flexdashboard/</loc>
     <lastmod>2021-07-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/trip/key_west/key_west/</loc>
+    <loc>https://robwiederstein.org/trip/key_west/key_west/</loc>
     <lastmod>2021-07-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/06/25/indiana-birth-outcomes/</loc>
+    <loc>https://robwiederstein.org/2021/06/25/indiana-birth-outcomes/</loc>
     <lastmod>2021-06-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/ggplot2/</loc>
+    <loc>https://robwiederstein.org/tags/ggplot2/</loc>
     <lastmod>2021-06-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/06/22/women-justices/</loc>
+    <loc>https://robwiederstein.org/2021/06/22/women-justices/</loc>
     <lastmod>2021-06-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/06/05/us-lynchings/</loc>
+    <loc>https://robwiederstein.org/2021/06/05/us-lynchings/</loc>
     <lastmod>2021-06-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/05/30/tidymodel-tutorial-scripts/</loc>
+    <loc>https://robwiederstein.org/2021/05/30/tidymodel-tutorial-scripts/</loc>
     <lastmod>2021-05-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/05/17/2020-law-school-attrition-rates-part-2/</loc>
+    <loc>https://robwiederstein.org/2021/05/17/2020-law-school-attrition-rates-part-2/</loc>
     <lastmod>2021-05-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/categories/education/</loc>
+    <loc>https://robwiederstein.org/categories/education/</loc>
     <lastmod>2021-05-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/05/12/2020-law-school-attrition-rates/</loc>
+    <loc>https://robwiederstein.org/2021/05/12/2020-law-school-attrition-rates/</loc>
     <lastmod>2021-05-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/magrittr/</loc>
+    <loc>https://robwiederstein.org/tags/magrittr/</loc>
     <lastmod>2021-05-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/05/09/piping-r-code-with-magrittr/</loc>
+    <loc>https://robwiederstein.org/2021/05/09/piping-r-code-with-magrittr/</loc>
     <lastmod>2021-05-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/05/06/first-predictive-shiny-app/</loc>
+    <loc>https://robwiederstein.org/2021/05/06/first-predictive-shiny-app/</loc>
     <lastmod>2021-05-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/categories/shiny/</loc>
+    <loc>https://robwiederstein.org/categories/shiny/</loc>
     <lastmod>2021-05-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/04/19/commercial-fish-production-great-lakes/</loc>
+    <loc>https://robwiederstein.org/2021/04/19/commercial-fish-production-great-lakes/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/plotly/</loc>
+    <loc>https://robwiederstein.org/tags/plotly/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/gganimate/</loc>
+    <loc>https://robwiederstein.org/tags/gganimate/</loc>
     <lastmod>2021-04-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/categories/maps/</loc>
+    <loc>https://robwiederstein.org/categories/maps/</loc>
     <lastmod>2021-04-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/04/10/us-post-offices-in-kentucky/</loc>
+    <loc>https://robwiederstein.org/2021/04/10/us-post-offices-in-kentucky/</loc>
     <lastmod>2021-04-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/04/04/convert-list-of-unequal-length-to-dataframe/</loc>
+    <loc>https://robwiederstein.org/2021/04/04/convert-list-of-unequal-length-to-dataframe/</loc>
     <lastmod>2021-04-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/list/</loc>
-    <lastmod>2021-04-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/categories/immigration/</loc>
+    <loc>https://robwiederstein.org/categories/immigration/</loc>
     <lastmod>2021-04-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/rvest/</loc>
+    <loc>https://robwiederstein.org/tags/rvest/</loc>
     <lastmod>2021-04-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/04/01/us-immigration-policies-in-the-trump-administration/</loc>
+    <loc>https://robwiederstein.org/2021/04/01/us-immigration-policies-in-the-trump-administration/</loc>
     <lastmod>2021-04-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/03/27/animal-ageing-and-longevity/</loc>
+    <loc>https://robwiederstein.org/2021/03/27/animal-ageing-and-longevity/</loc>
     <lastmod>2021-03-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/biology/</loc>
+    <loc>https://robwiederstein.org/tags/biology/</loc>
     <lastmod>2021-03-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/03/20/lost-cargo-in-wisconsin-shipwrecks/</loc>
+    <loc>https://robwiederstein.org/2021/03/20/lost-cargo-in-wisconsin-shipwrecks/</loc>
     <lastmod>2021-03-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/wordcloud/</loc>
+    <loc>https://robwiederstein.org/tags/wordcloud/</loc>
     <lastmod>2021-03-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/03/19/shipwrecks-of-wisconsin/</loc>
+    <loc>https://robwiederstein.org/2021/03/19/shipwrecks-of-wisconsin/</loc>
     <lastmod>2021-03-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/butterscotch-apples/</loc>
+    <loc>https://robwiederstein.org/recipe/butterscotch-apples/</loc>
     <lastmod>2021-03-10T16:25:54-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/categories/dessert/</loc>
+    <loc>https://robwiederstein.org/categories/dessert/</loc>
     <lastmod>2021-03-10T16:25:54-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/</loc>
+    <loc>https://robwiederstein.org/recipe/</loc>
     <lastmod>2021-03-10T16:25:54-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/categories/recipe/</loc>
+    <loc>https://robwiederstein.org/categories/recipe/</loc>
     <lastmod>2021-03-10T16:25:54-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/vegetarian/</loc>
+    <loc>https://robwiederstein.org/tags/vegetarian/</loc>
     <lastmod>2021-03-10T16:25:54-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/categories/dinner/</loc>
+    <loc>https://robwiederstein.org/categories/dinner/</loc>
     <lastmod>2021-03-10T14:23:51-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/olive-tapenade/</loc>
+    <loc>https://robwiederstein.org/recipe/olive-tapenade/</loc>
     <lastmod>2021-03-10T14:23:51-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/03/10/nav-aid-characteristics/</loc>
+    <loc>https://robwiederstein.org/2021/03/10/nav-aid-characteristics/</loc>
     <lastmod>2021-03-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/03/07/great-lakes-lighthouses/</loc>
+    <loc>https://robwiederstein.org/2021/03/07/great-lakes-lighthouses/</loc>
     <lastmod>2021-03-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/blogdown/</loc>
+    <loc>https://robwiederstein.org/tags/blogdown/</loc>
     <lastmod>2021-03-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/categories/hugo/</loc>
+    <loc>https://robwiederstein.org/categories/hugo/</loc>
     <lastmod>2021-03-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/03/06/my-hugo-archetype-for-r-blogdown/</loc>
+    <loc>https://robwiederstein.org/2021/03/06/my-hugo-archetype-for-r-blogdown/</loc>
     <lastmod>2021-03-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/03/05/xml-to-dataframe/</loc>
+    <loc>https://robwiederstein.org/2021/03/05/xml-to-dataframe/</loc>
     <lastmod>2021-03-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/xlm2/</loc>
+    <loc>https://robwiederstein.org/tags/xlm2/</loc>
     <lastmod>2021-03-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/pumpkin-pudding/</loc>
+    <loc>https://robwiederstein.org/recipe/pumpkin-pudding/</loc>
     <lastmod>2021-03-02T20:27:21-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/butternut-and-leeks-rissoto/</loc>
+    <loc>https://robwiederstein.org/recipe/butternut-and-leeks-rissoto/</loc>
     <lastmod>2021-03-02T19:54:06-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/twice-baked-spaghetti/</loc>
+    <loc>https://robwiederstein.org/recipe/twice-baked-spaghetti/</loc>
     <lastmod>2021-03-02T19:54:06-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/categories/breakfast/</loc>
+    <loc>https://robwiederstein.org/categories/breakfast/</loc>
     <lastmod>2021-03-01T19:23:23-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/brussel-sprout-hash/</loc>
+    <loc>https://robwiederstein.org/recipe/brussel-sprout-hash/</loc>
     <lastmod>2021-03-01T19:23:23-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/greek-pasta-salad/</loc>
+    <loc>https://robwiederstein.org/recipe/greek-pasta-salad/</loc>
     <lastmod>2021-03-01T10:03:13-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/categories/salad/</loc>
+    <loc>https://robwiederstein.org/categories/salad/</loc>
     <lastmod>2021-03-01T10:03:13-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/trip/ludington/luddington/</loc>
+    <loc>https://robwiederstein.org/trip/ludington/luddington/</loc>
     <lastmod>2021-03-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/gin-and-raisins/</loc>
+    <loc>https://robwiederstein.org/recipe/gin-and-raisins/</loc>
     <lastmod>2021-02-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/basic-vinegrettes/</loc>
+    <loc>https://robwiederstein.org/recipe/basic-vinegrettes/</loc>
     <lastmod>2021-02-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/tortellini-butternut/recipe/</loc>
+    <loc>https://robwiederstein.org/recipe/tortellini-butternut/recipe/</loc>
     <lastmod>2021-02-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/kitchen-sink-soup/recipe/</loc>
+    <loc>https://robwiederstein.org/recipe/kitchen-sink-soup/recipe/</loc>
     <lastmod>2021-02-21T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/categories/go/</loc>
+    <loc>https://robwiederstein.org/categories/go/</loc>
     <lastmod>2021-02-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/19/hugo-variables/</loc>
+    <loc>https://robwiederstein.org/2021/02/19/hugo-variables/</loc>
     <lastmod>2021-02-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/italian/</loc>
+    <loc>https://robwiederstein.org/tags/italian/</loc>
     <lastmod>2021-02-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/italian-baked-beans/</loc>
+    <loc>https://robwiederstein.org/recipe/italian-baked-beans/</loc>
     <lastmod>2021-02-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/italian-wedding/recipe/</loc>
+    <loc>https://robwiederstein.org/recipe/italian-wedding/recipe/</loc>
     <lastmod>2021-02-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/19/primer-on-working-with-go-templates/</loc>
+    <loc>https://robwiederstein.org/2021/02/19/primer-on-working-with-go-templates/</loc>
     <lastmod>2021-02-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/aloo-matar/recipe/</loc>
+    <loc>https://robwiederstein.org/recipe/aloo-matar/recipe/</loc>
     <lastmod>2021-02-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/indian/</loc>
+    <loc>https://robwiederstein.org/tags/indian/</loc>
     <lastmod>2021-02-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/cv/</loc>
+    <loc>https://robwiederstein.org/cv/</loc>
     <lastmod>2021-02-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/dt/</loc>
+    <loc>https://robwiederstein.org/tags/htmlwidget/</loc>
     <lastmod>2021-02-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/htmlwidget/</loc>
+    <loc>https://robwiederstein.org/2021/02/15/insert_htmlwidget/</loc>
     <lastmod>2021-02-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/15/insert_htmlwidget/</loc>
+    <loc>https://robwiederstein.org/tags/sigmajs/</loc>
     <lastmod>2021-02-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/sigmajs/</loc>
-    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/datasets/</loc>
+    <loc>https://robwiederstein.org/datasets/</loc>
     <lastmod>2021-02-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/beluga-chili/recipe/</loc>
+    <loc>https://robwiederstein.org/recipe/beluga-chili/recipe/</loc>
     <lastmod>2021-02-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/christmas-cornbread/recipe/</loc>
+    <loc>https://robwiederstein.org/recipe/christmas-cornbread/recipe/</loc>
     <lastmod>2021-02-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/hugo-theme/</loc>
+    <loc>https://robwiederstein.org/tags/hugo-theme/</loc>
     <lastmod>2021-02-11T15:00:25-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/pistachio-pineapple/recipe/</loc>
+    <loc>https://robwiederstein.org/recipe/pistachio-pineapple/recipe/</loc>
     <lastmod>2021-02-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/tags/southern/</loc>
+    <loc>https://robwiederstein.org/tags/southern/</loc>
     <lastmod>2021-02-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/brocolli-casserole/recipe/</loc>
+    <loc>https://robwiederstein.org/recipe/brocolli-casserole/recipe/</loc>
     <lastmod>2021-02-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/2021/02/11/ten-tips-to-working-with-blogdown/</loc>
+    <loc>https://robwiederstein.org/2021/02/11/ten-tips-to-working-with-blogdown/</loc>
     <lastmod>2021-02-11T15:00:25-06:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/recipe/waldorf-salad/recipe/</loc>
+    <loc>https://robwiederstein.org/recipe/waldorf-salad/recipe/</loc>
     <lastmod>2021-02-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://keen-noether-7d2e44.netlify.app/about/</loc>
+    <loc>https://robwiederstein.org/about/</loc>
     <lastmod>2016-05-05T21:48:51-07:00</lastmod>
   </url>
   

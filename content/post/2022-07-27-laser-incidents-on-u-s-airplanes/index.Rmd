@@ -1,0 +1,497 @@
+---
+title: Laser Incidents on U.S. Aircraft
+author: Rob Wiederstein
+date: '2022-07-27'
+slug: laser-incidents-on-u-s-airplanes
+categories:
+  - R
+tags: []
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-lubridate, @R-dplyr, @R-ggplot2, @R-scales, @R-fable, @R-colorspace
+header:
+  image: feature.jpg
+  alt: green laser
+  caption: Green lasers are commonly used in targeting U.S. aircraft
+repo: ~
+summary: U.S. pilots have reported an increasing number of laser incidents in the last few years. The Federal Aviation Administration (FAA) collects the reports and publishes them in a database.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+        'colorspace',
+      'devtools', #for session info
+      'dplyr',
+      'ggthemes', #for plots
+      'ggplot2',
+      'blogdown',
+      'lubridate',
+      'lasers', 
+      'scales',
+      'fable',
+      'forecast',
+      'tsibble'
+)
+#devtools::install_github("robwiederstein/lasers")
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.height = 4,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
+library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+```{r write-package-bib, echo = FALSE, warning=FALSE}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+
+# [Overview](#overview)
+
+U.S. pilots have reported an increasing number of laser incidents in the last few years. 2021 was a record breaking year with 9,700 incidents, a 41% increase over 2020. [@albeck-ripkaPilotsContendRecord2022] The Federal Aviation Administration (FAA) collects pilot/crew reports and publishes them in a database. When the term "incident" is used, it includes both interactions with and injuries from a laser. When the term "accident" is used, it refers to an event involving a laser where an individual was physically injured.
+
+## Threat
+
+When lasers are pointed at aircraft, passenger and cockpit safety are jeopardized. Pilots' eyesight supplies the "vast majority" of information for safe airplane operation.[@nakagawaraEffectsLaserIllumination2004]  Lasers can (1) cause distraction, (2) result in glare, (3) temporarily blind people and (4) injure the eyes.[@murphyLasersAviationSafety2009] The risk of injury is a function of the type, power and use of the laser; flight characteristics of the airplane, and pilot awareness and response. [@murphyLasersAviationSafety2009]
+
+Aviators' "principal concern is the possibility of being illuminated by a laser during terminal operations, which include approach, landing, takeoff, and departure maneuvers" with "low-level flight operations at night" being particularly vulnerable.[@nakagawaraEffectsLaserIllumination2004] Pilots are required to communicate only about operationally relevant details below altitudes of 10,000 feet.[@nakagawaraEffectsLaserIllumination2004] "Laser exposure has proven most disruptive when it occurs at low altitude during critical phases of flight."[@nakagawaraEffectsLaserIllumination2004]  Pilot injuries from lasers are rare.[@montgomeryLaserIlluminationHelicopters2013a] When injury occurs, it is frequently at night when pilot's eyes have adjusted to dim lighting.[@montgomeryLaserIlluminationHelicopters2013a] Helicopters are at higher risk.[@murphyLasersAviationSafety2009] [@montgomeryLaserIlluminationHelicopters2013a]
+
+## Availability
+
+"Irresponsible users of low-cost, high-visibility, hard-to-regulate laser pointers" are the primary culprits.[@murphyLasersAviationSafety2009]. Laser pointers can be easily obtained via online shops. [@aerzteblattRetinalInjuryFollowing] Laser technology and affordability has advanced rapidly. In 2010, an industry expert noted that "[t]wenty years ago, 10 mW of coherent green light could be obtained only from research laboratory-grade lasers that cost over \$100,000 and occupied much of an experimental laser table. Today's green laser pointer delivers much the same performance for less than \$20, in a package the size of a slim cigar, powered by two AAA batteries."[@galangGreenLaserPointer2011]
+
+## Injury
+
+A laser pointer can cause "extensive photothermal injury" to the eye and specifically the retina.[@aerzteblattRetinalInjuryFollowing]  Injury severity depends on the wavelength, radiation power, exposure time, localization, and spot size.[@aerzteblattRetinalInjuryFollowing] Blinking or looking away can prevent injury when radiation output is less than 1mW and exposure is less than .25 of a second. [@aerzteblattRetinalInjuryFollowing] Exposure to 1mW or less is harmless under most conditions.[@aerzteblattRetinalInjuryFollowing] Users of lasers should view manufacturer advertising and product descriptions with skepticism as examples exist where lasers were incorrectly classified and labeled.[@aerzteblattRetinalInjuryFollowing] [@galangGreenLaserPointer2011]
+
+Photothermal damage is more pronounced with shortwave green laser pointers (490 - 575 nm) than longwave red laser pointers (635 - 750 nm). Photocoagulation can be induced with exposure of 10 seconds and a power of 5mW.[@aerzteblattRetinalInjuryFollowing] Treatment options are described as limited. [@aerzteblattRetinalInjuryFollowing] Surgery is an option for patients suffering from macular foramina and hemorrhages. [@aerzteblattRetinalInjuryFollowing] Visual acuity tended to improve over time. [@aerzteblattRetinalInjuryFollowing]
+
+## Regulation
+
+
+In 2012, Congress criminalized pointing a laser at an aircraft.  The law states: “Whoever knowingly aims the beam of a laser pointer at an aircraft . . . in the United States, or at the flight path of such an aircraft, shall be fined under this title or imprisoned not more than 5 years, or both.”[@18Code39A] 
+
+# Plots
+
+## Total Laser Reports
+
+```{r lasers-overall}
+lasers |> 
+        mutate(month = floor_date(date_time, "month")) |> 
+        group_by(month) |> 
+        summarize(n = n()) |> 
+        ggplot() +
+        aes(month, n) +
+        geom_line() +
+        scale_x_datetime(name = "") +
+        scale_y_continuous(name = "",
+                           labels = label_comma(),
+                           limits = c(0, 1050)) +
+        labs(title = "Monthly Total U.S. Aircraft Laser Reports",
+             subtitle = "2010 - 2021",
+             caption = "Federal Aviation Admin.") +
+        ggthemes::theme_fivethirtyeight() +
+        geom_smooth(method = 'loess', 
+                    formula = 'y ~ x',
+                    color = cbPalette[2])
+```
+
+## Total Laser Injuries
+
+```{r lasers-injury}
+lasers |> 
+        mutate(year = floor_date(date_time, "year")) |> 
+        filter(injury == "yes") |> 
+        group_by(year) |> 
+        summarize(injury = n()) |> 
+        ggplot() +
+        aes(year, injury) +
+        geom_line(color = cbPalette[2],
+                  size = .9) +
+        geom_point(color = cbPalette[2],
+                   size = 2) +
+        scale_y_continuous(limits = c(0, 60),
+                           breaks = c(0, 20, 40, 60)) +
+        labs(title = "Total Annual U.S. Aircraft Laser Injuries",
+             subtitle = "2015 - 2021",
+             caption = "Federal Aviation Admin.") +
+        ggthemes::theme_fivethirtyeight()
+```
+
+
+## Total Laser Reports by Altitude
+
+```{r laser-reports-altitude}
+lasers |> 
+        mutate(month = floor_date(date_time, "month")) |> 
+        group_by(month) |> 
+        summarize(average_alt = mean(altitude, trim = .05)) |> 
+        ggplot() +
+        aes(month, average_alt) +
+        geom_line() +
+        scale_x_datetime(name = "") +
+        scale_y_continuous(name = "",
+                           labels = label_comma(),
+                           limits = c(0, 9000)) +
+        labs(title = "Monthly Laser Reports by Altitude",
+             subtitle = "2010 - 2021",
+             caption = "Federal Aviation Admin.") +
+        ggthemes::theme_fivethirtyeight() +
+        geom_smooth(method = 'loess', 
+                    formula = 'y ~ x',
+                    color = cbPalette[2]) +
+        ggthemes::theme_fivethirtyeight()
+```
+
+
+## Fixed-wing versus Helicopters
+
+The original boxplot contained so many outliers that it could not be displayed in an insightful way.  Since the altitude record for a fixed-wing, jet-propelled airplane was set in 1977 and was 123,520 feet and the altitude record for a rotorcraft or helicopter was set in 1972 and was 40,814 feet, it was obvious that the data included many errors. Outliers were omitted from the violin plot and the axis were rescaled to fit the .05 and .95 quantiles.
+
+```{r helo-vs-aircraft}
+lasers |> 
+        mutate(aircraft_type = 
+                       as.character(aircraft)) |> 
+        mutate(aircraft_type = 
+                       case_when(
+                               aircraft_type == "HELO" ~ "helicopter",
+                               aircraft_type != "HELO" ~ "fixed_wing"
+                       )
+               ) |> 
+        mutate(aircraft_type = factor(aircraft_type)) |> 
+        ggplot() +
+        aes(aircraft_type, altitude, group = aircraft_type, color = aircraft_type, fill = aircraft_type) +
+        geom_violin(outlier.shape = NA, alpha = .65, size = 1) +
+        coord_cartesian(ylim = quantile(lasers$altitude, c(0.05, 0.95))) +
+        scale_y_continuous(limits = c(0, 20000),
+                           labels = scales::label_comma()) +
+        labs(
+                title = "Altitude by Aircraft Type",
+                subtitle = "",
+                caption = "Federal Aviation Admin."
+        ) +
+        scale_color_manual(values = cbPalette[1:2]) + 
+        scale_fill_manual(values = cbPalette[1:2]) +
+        ggthemes::theme_fivethirtyeight() +
+        theme(legend.position = "none")  
+```
+
+## Total Laser Injuries
+
+```{r laser-incidents-injuries}
+lasers |> 
+        mutate(month = floor_date(date_time, "month")) |> 
+        mutate(injury = factor(injury)) |> 
+        group_by(month, injury) |> 
+        summarize(n = n()) |>
+          ggplot() +
+          aes(month, n, group = injury, color = injury) +
+          geom_line() +
+          scale_color_manual(values = cbPalette) +
+          scale_x_datetime(name = "") +
+          scale_y_continuous(name = "",
+                             labels = label_comma()) +
+          labs(title = "U.S. Aircraft Laser Injuries by Month",
+                subtitle = "2010 - 2021",
+               caption = "Federal Aviation Admin.") +
+          ggthemes::theme_fivethirtyeight()
+        
+```
+
+## Total Laser Injuries by Altitude and Color
+
+```{r laser-injuries-altitude-color}
+lasers |> 
+        filter(injury == "yes") |> 
+        mutate(laser_color = factor(laser_color,
+                                    levels = c("green", "blue", "white", "multi", "red", "purple"))) |> 
+        ggplot() +
+        aes(laser_color, altitude, color = laser_color, group = laser_color) +
+        geom_jitter(width = .3, alpha = .75) +
+        scale_color_manual(values = cbPalette[1:6])+
+        scale_y_continuous(labels = label_comma()) +
+        labs(title = "Injuries by Altitude and Laser Color",
+                subtitle = "2010 - 2021",
+               caption = "Federal Aviation Admin.")
+```
+
+## Calendar Heatmap
+
+The absolute values or laser report count by day did not work well.  Instead, the annual average was computed for each year and subtracted from the daily total. The difference was divided by the average incidents per day. In other words, the number was the number of deviations away from the mean.
+
+Days that are bright red are days where the daily count greatly exceeded the annual average.  November 5, 2020, was the day where the most laser incidents were reported over the entire period examined.  The 54 incidents occurred on the day prior to November 6, 2020.  That day was an election day for the U.S. presidency. (Trump-Biden).
+
+```{r calendar-heatmap, fig.width=6, fig.height=6, out.height="100%"}
+source("https://raw.githubusercontent.com/iascchen/VisHealth/master/R/calendarHeat.R")
+a <-
+        lasers |> 
+        filter(date_time > "2017-01-01") |> 
+        mutate(day = floor_date(date_time, "day")) |>
+        group_by(day) |> 
+        summarise(incidents_per_day = n()) |> 
+        mutate(year = floor_date(day, "year")) |> 
+        group_by(year) |> 
+        mutate(avg_incidents_per_day  = mean(incidents_per_day)) |> 
+        mutate(z_score = (incidents_per_day - avg_incidents_per_day)/
+        avg_incidents_per_day)
+r2b <- c("#611300", "#CC4E25", "#EBB0A8", "#F9F9F9", "#B3D0E4", "#008BBD", 
+"#003560")
+calendarHeat(a$day, a$z_score, ncolors = 99, color = "r2b", varname="Aircraft Laser Incidents")
+```
+
+## Seasonal Plot
+
+"A seasonal plot allows the underlying seasonal pattern to be seen more clearly, and is especially useful in identifying years in which the pattern changes." [@ForecastingPrinciplesPractice]Here, laser incidents increase throughout the year reaching a high in October before declining.
+
+```{r lasers-ggseason}
+library(forecast)
+lasers_mon <- 
+        lasers |> 
+        mutate(month = floor_date(date_time, "month")) |>
+        group_by(month) |> 
+        summarise(incidents_per_month = n()) |> 
+        filter(month >= "2017-01-01")
+lasers_ts <-
+        ts(lasers_mon$incidents_per_month,
+           start = 2017, 
+           frequency = 12
+        )
+lasers_ts |> 
+ggseasonplot(
+        year.labels = TRUE, 
+        year.labels.left = TRUE) +
+        labs(title = "Seasonal Plot Laser Incidents",
+             subtitle = "2017 - 2021",
+             caption = "Federal Aviation Admin.") +
+        #scale_color_manual(values = colorspace::qualitative_hcl(n = 5))+
+        scale_color_manual(values = cbPalette[1:5]) +
+        ggthemes::theme_fivethirtyeight()
+
+```
+
+## Laser Incidents - Time of Day
+
+```{r lasers-time-of-day}
+lasers_day <-
+    lasers |>
+    filter(date_time >= "2017-01-01") |> 
+    mutate(hour = hour(date_time)) |>
+    mutate(year = year(date_time)) |> 
+    mutate(year = factor(year)) |> 
+    group_by(year, hour) |>
+    summarise(incidents_per_hour = n())
+lasers_day |> 
+        ggplot() +
+        aes(hour, incidents_per_hour, group = year, color = year) +
+        geom_line() +
+        geom_point() +
+        scale_color_manual(values = cbPalette[1:5]) +
+        scale_y_continuous(name = "", labels = scales::label_comma()) +
+        scale_x_continuous(
+                breaks = seq(0, 23, by = 6),
+                labels = paste0(seq(0, 23 , by = 6), ":00")
+        ) +
+        labs(title = "Laser Incidents by Hour",
+             subtitle = "2017-2021",
+             caption = "Federal Aviation Admin.")+
+        ggthemes::theme_fivethirtyeight()
+```
+
+## Additive Decomposition
+
+The method used for estimating components in this example is "STL" from the `stats` package. STL is a "versatile and robust method" for decomposing time series.[@ForecastingPrinciplesPractice] STL is an acronym for “Seasonal and Trend decomposition using Loess”. 
+
+The three components--trend, seasonal, and remainder-- are shown separately in the bottom three panels. The components can be added together to obtain the data shown in the top panel.
+
+The grey bars to the right of each panel show the relative scales of the components. Each grey bar represents the same length but because the plots are on different scales, the bars vary in size.  If the bottom three panels were reduced until their size was identical to the bar in the data panel, then all the panels would be scaled the same.[@ForecastingPrinciplesPractice]
+
+
+```{r laser-decomposition}
+library(tsibble)
+lasers_mon <- 
+        lasers |> 
+        mutate(month = floor_date(date_time, "month")) |>
+        group_by(month) |> 
+        summarise(incidents_per_month = n()) 
+lasers_mon |> 
+        mutate(month = yearmonth(month)) |> 
+        as_tsibble(index = month) |>
+        stl(t.window = 13, s.window = "periodic", robust = TRUE) |> 
+        forecast::autoplot() +
+        labs(title = "Decomposition of Laser Incidents",
+             subtitle = "2010 - 2021",
+             caption = "Federal Aviation Admin.") +
+        ggthemes::theme_fivethirtyeight()
+```
+
+
+## [Forecast](#forecast)
+
+Five forecasting models were fit to the data. The models were naive, seasonal naive, mean, ets and arima.  When ranked by the mean average error, the ets model had the best fit. The forecast for the next 12 months of laser incidents yielded the following plot:
+
+```{r forecast-ets-model, include=F, eval=F}
+library(tibble)
+library(tsibble)
+library(tsibbledata)
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(ggplot2)
+library(feasts)
+library(fable)
+library(lasers)
+data(lasers)
+lasers_mon <- 
+        lasers |> 
+        mutate(month = floor_date(date_time, "month")) |>
+        group_by(month) |> 
+        summarise(incidents_per_month = n()) |> 
+        filter(month >= "2010-01-01") |> 
+        mutate(month = yearmonth(month)) |> 
+        as_tsibble(index = month)
+#lag plot
+lasers_mon |> 
+        gg_lag(incidents_per_month, geom = "point", lags = 1:6) +
+        labs("lag(lasers, k")
+#train
+train <- 
+        lasers_mon |> 
+        filter_index(~ "2021-01")
+train |> str()
+# Fit the models
+lasers_fit <- train %>%
+        model(
+                Mean = MEAN(incidents_per_month),
+                `Naive` = NAIVE(incidents_per_month),
+                `Seasonal naïve` = SNAIVE(incidents_per_month),
+                `ETS` = ETS(incidents_per_month),
+                `ARIMA` = ARIMA(incidents_per_month)
+        )
+lasers_fc <- lasers_fit |> forecast(h = 12)
+lasers_fc |> 
+        autoplot(train, level = NULL) +
+        autolayer(
+        filter_index(lasers_mon, "2021-01" ~ .),
+        color = "black") +
+        labs(
+                y = "incidents",
+                title = "Forecasts for monthly laser incidents"
+        ) +
+        guides(colour = guide_legend(title = "Forecast"))
+fit_naive <- train |> model(NAIVE(incidents_per_month))
+fit_mean <- train |> model(MEAN(incidents_per_month))#Comparing ARIMA() and ETS() on seasonal data
+fit_s_naive <- train |> model(SNAIVE(incidents_per_month))
+fit_ets = train |> model(ETS(incidents_per_month))
+fit_arima <- train |> model(ARIMA(incidents_per_month))
+# results
+bind_rows(
+        fit_naive |> accuracy(),
+        fit_mean |> accuracy(),
+        fit_s_naive |> accuracy(),
+        fit_ets |>  accuracy(),
+        fit_arima |> accuracy(),
+        fit_naive |> forecast(h = 6) |> accuracy(lasers_mon),
+        fit_mean |> forecast(h = 6) |> accuracy(lasers_mon),
+        fit_s_naive |> forecast(h = 6) |> accuracy(lasers_mon),
+        fit_ets |> forecast(h = 6) |> accuracy(lasers_mon),
+        fit_arima |> forecast(h = 6) |> accuracy(lasers_mon)
+) |> 
+        select(-ME, -MPE, -ACF1) |> 
+        arrange(.type, MAE)
+
+laser_fc <- 
+        lasers_mon |>
+        model(ETS(incidents_per_month)) |> 
+        forecast(h = 12)
+laser_fc |> 
+        autoplot(
+                filter_index(lasers_mon, "2017-01" ~ .)) +
+        ggthemes::theme_fivethirtyeight() +
+        scale_y_continuous(labels = scales::label_comma()) +
+        labs(title = "2022 Forecast for U.S. Laser Incidents",
+             subtitle = "ETS model",
+             caption = "") +
+        theme(legend.position = "none")
+filename <- "./content/post/2022-07-27-laser-incidents-on-u-s-airplanes/forecast.png"
+ggplot2::ggsave(p, filename = filename, height = 4, width = 6, unit = "in")
+
+```
+
+```{r forecast-ets-image, out.width="90%"}
+knitr::include_graphics("./forecast.png")
+```
+
+# [Conclusion](#conclusion)
+
+Total laser incidents continue to increase, reaching a high in 2021 with 9,316 incidents. While total annual incidents have continued to grow, injuries remain range bound between 20 and 40 per year and a small portion of the overall incidents. 
+
+The average monthly altitude for a laser incident was 8,405 feet in 2021 climbing from 5,462 feet in 2010. The higher altitudes suggest that more powerful lasers may be utilized but greater pilot awareness could be a cause as well.
+
+Helicopters are targeted in lower altitudes than fixed-wing aircraft. Helicopter flight patterns may make them more suceptible to lasers as they tend to spend greater time in proximity to the ground.  When it comes to the color of lasers in injuries, green is the most prevalent by far.
+
+An evaluation of seasonal patterns show that laser incidents tend to grow monthly topping out in October before declining over the holidays.  November 5, 2020 saw the highest single-day laser occurrences which was the day prior to the general election in 2020. 0:00 to 6:00 hours are when laser strikes are most likely to occur.
+
+A forecast for 2022 was completed but the confidence intervals were extremely wide suggesting that it is difficult to forecast laser incidents using historical data.
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+- [LaserIncidents.com](https://www.laserincidents.com)
+
+- [laserpointersafety.com](https://www.laserpointersafety.com)
+
+- [The Laser Institute](https://www.lia.org)
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```

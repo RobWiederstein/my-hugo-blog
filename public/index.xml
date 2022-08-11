@@ -2,96 +2,186 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Rob Wiederstein - a blog about coding, data and public policy</title>
-    <link>https://keen-noether-7d2e44.netlify.app/</link>
+    <link>https://robwiederstein.org/</link>
     <description>Recent content on Rob Wiederstein - a blog about coding, data and public policy</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <managingEditor>rob@robwiederstein.org (Rob Wiederstein)</managingEditor>
     <webMaster>rob@robwiederstein.org (Rob Wiederstein)</webMaster>
     <copyright>2021 Rob Wiederstein All rights reserved</copyright>
-    <lastBuildDate>Mon, 28 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://keen-noether-7d2e44.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 27 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://robwiederstein.org/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Simple Features Tutorial in R Number 2</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2022/03/28/simple-features-tutorial-in-r-number-2/</link>
+      <title>Laser Incidents on U.S. Airplanes</title>
+      <link>https://robwiederstein.org/2022/07/27/laser-incidents-on-u-s-airplanes/</link>
+      <pubDate>Wed, 27 Jul 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2022/07/27/laser-incidents-on-u-s-airplanes/</guid>
+      <description>Pilots have reported an increasing number of laser incidents in the last few years. The Federal Aviation Administration (FAA) collects the reports and publishes them in a database.</description>
+    </item>
+    
+    <item>
+      <title>Tidy Tuesday Hidden Gems </title>
+      <link>https://robwiederstein.org/2022/04/27/tidy-tuesday-hidden-gems/</link>
+      <pubDate>Wed, 27 Apr 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2022/04/27/tidy-tuesday-hidden-gems/</guid>
+      <description>The #tidytuesday release was the hidden gems project, a collection of notebook reviews from Kaggle.</description>
+    </item>
+    
+    <item>
+      <title>Rectangling IRS 990s-Part-06</title>
+      <link>https://robwiederstein.org/2022/04/25/rectangling-irs-990s-part-06/</link>
+      <pubDate>Mon, 25 Apr 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2022/04/25/rectangling-irs-990s-part-06/</guid>
+      <description>This posts converts an IRS 990 in xml format to tabular data.</description>
+    </item>
+    
+    <item>
+      <title>List Inspection-Part-04</title>
+      <link>https://robwiederstein.org/2022/04/15/list-inspection-part-04/</link>
+      <pubDate>Fri, 15 Apr 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2022/04/15/list-inspection-part-04/</guid>
+      <description>List inspection is key to the effective manipulation and transformation of the data.</description>
+    </item>
+    
+    <item>
+      <title>Rectangling-Part-05</title>
+      <link>https://robwiederstein.org/2022/04/15/rectangling-part-05/</link>
+      <pubDate>Fri, 15 Apr 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2022/04/15/rectangling-part-05/</guid>
+      <description>Rectangling is the process of untangling lists into tables.</description>
+    </item>
+    
+    <item>
+      <title>List into Tibble-Part-03</title>
+      <link>https://robwiederstein.org/2022/04/13/lists-into-tibbles-part-03/</link>
+      <pubDate>Wed, 13 Apr 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2022/04/13/lists-into-tibbles-part-03/</guid>
+      <description>Function returns and data are often in list form.  Some, like myself, prefer to convert them to a table or data frame to perform computations.  Lists of equal lengths are easy to convert to a table, but lists of unequal lengths can be problematic.  The tibble package allows for lists to be stored in the column of a data frame.</description>
+    </item>
+    
+    <item>
+      <title>List Iteration-Part-02</title>
+      <link>https://robwiederstein.org/2022/04/12/list-iteration-part-02/</link>
+      <pubDate>Tue, 12 Apr 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2022/04/12/list-iteration-part-02/</guid>
+      <description>This post is about how to iterate over and extract from a list.  It begins with the function lapply() since many people are familiar with it and then expounds on functions in the purrr package.</description>
+    </item>
+    
+    <item>
+      <title>List Basics-Part-01</title>
+      <link>https://robwiederstein.org/2022/04/11/list-basics-part-01/</link>
+      <pubDate>Mon, 11 Apr 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2022/04/11/list-basics-part-01/</guid>
+      <description>This post deals with list basics.</description>
+    </item>
+    
+    <item>
+      <title>Indiana School Enrollments 2006 to 2022</title>
+      <link>https://robwiederstein.org/2022/04/03/indiana-school-enrollments-2006-to-2022/</link>
+      <pubDate>Sun, 03 Apr 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2022/04/03/indiana-school-enrollments-2006-to-2022/</guid>
+      <description>This post examines trends in student enrollments for Indiana public schools.</description>
+    </item>
+    
+    <item>
+      <title>Simple Features Tutorial in R</title>
+      <link>https://robwiederstein.org/2022/03/28/simple-features-tutorial-in-r-number-2/</link>
       <pubDate>Mon, 28 Mar 2022 00:00:00 +0000</pubDate>
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2022/03/28/simple-features-tutorial-in-r-number-2/</guid>
-      <description>By default, Hugo automatically takes the first 70 words of your content as its summary and stores it into the &lt;code&gt;.Summary&lt;/code&gt; page variable for use in your templates. You may customize the summary length by setting &lt;code&gt;summaryLength&lt;/code&gt; in your site configuration &lt;em&gt;or&lt;/em&gt; you can set it in the front matter.</description>
+      <guid>https://robwiederstein.org/2022/03/28/simple-features-tutorial-in-r-number-2/</guid>
+      <description>This post is an introduction to working with the &lt;code&gt;sf&lt;/code&gt; package.  &amp;ldquo;sf&amp;rdquo; is short for &amp;ldquo;simple features&amp;rdquo; and is an open source standard to interact with vector geometries. Downloads of the &lt;code&gt;sf&lt;/code&gt; package now exceed other R packages dealing with spatial data.</description>
+    </item>
+    
+    <item>
+      <title>Styling R Code for Better Development</title>
+      <link>https://robwiederstein.org/2022/02/28/styling-r-code-for-better-development/</link>
+      <pubDate>Mon, 28 Feb 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2022/02/28/styling-r-code-for-better-development/</guid>
+      <description>As a script grows in both length and complexity, it can become a maze unless there are well-marked paths to aid understanding. Consistent styling is crucial to being able to debug problematic code and can help one find the way.  This post offers some tips.</description>
     </item>
     
     <item>
       <title>Freddie Mac Mortgage Rates in R</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2022/01/20/freddie-mac-mortgage-rate-data/</link>
+      <link>https://robwiederstein.org/2022/01/20/freddie-mac-mortgage-rate-data/</link>
       <pubDate>Thu, 20 Jan 2022 00:00:00 +0000</pubDate>
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2022/01/20/freddie-mac-mortgage-rate-data/</guid>
+      <guid>https://robwiederstein.org/2022/01/20/freddie-mac-mortgage-rate-data/</guid>
       <description>Data is sometimes stored as an Excel spreadsheet.  To work with it in &lt;code&gt;R&lt;/code&gt;, it must be imported using a package. This project imports an excel spreadsheet of Freddie Mac mortgage rates using the &lt;code&gt;rio&lt;/code&gt; and &lt;code&gt;readxl&lt;/code&gt; packages.</description>
     </item>
     
     <item>
       <title>Retirement Locations Dashboard </title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/10/13/retirement-locations-dashboard/</link>
+      <link>https://robwiederstein.org/2021/10/13/retirement-locations-dashboard/</link>
       <pubDate>Wed, 13 Oct 2021 00:00:00 +0000</pubDate>
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/10/13/retirement-locations-dashboard/</guid>
+      <guid>https://robwiederstein.org/2021/10/13/retirement-locations-dashboard/</guid>
       <description>A dashboard to help find appealing retirement locations in the U.S.</description>
     </item>
     
     <item>
       <title>Dashboards</title>
-      <link>https://keen-noether-7d2e44.netlify.app/dashboard/</link>
+      <link>https://robwiederstein.org/dashboard/</link>
       <pubDate>Sat, 18 Sep 2021 00:00:00 +0000</pubDate>
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/dashboard/</guid>
-      <description>     Retirement Locator        Retirement Locator         Retirement Locator        Retirement Locator      </description>
+      <guid>https://robwiederstein.org/dashboard/</guid>
+      <description>   Number Title Link     1 Retirement Dash    2 Sarasota   3 US Senator Investments    4 Indiana Student Enrollment    5 Economics    6 Indiana Early Childhood    7 Shipwrecks of Wisconsin     </description>
     </item>
     
     <item>
       <title>Prepend or Pad Character to String</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/08/29/prepend-character-to-string/</link>
+      <link>https://robwiederstein.org/2021/08/29/prepend-character-to-string/</link>
       <pubDate>Sun, 29 Aug 2021 00:00:00 +0000</pubDate>
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/08/29/prepend-character-to-string/</guid>
+      <guid>https://robwiederstein.org/2021/08/29/prepend-character-to-string/</guid>
       <description>With the ubiquitous &amp;ldquo;FIPS&amp;rdquo; codes, there is no consistency in how they are formatted.  It seems like on every project, the merge is dependent upon the format matching in the datasets and then I&amp;rsquo;ve usually got a mess on my hands.  A missing &amp;ldquo;0&amp;rdquo; is often the problem.</description>
     </item>
     
     <item>
       <title>Motorcycle and Moped Accidents in Florida</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/08/09/motorcycle-and-moped-accidents-in-florida/</link>
+      <link>https://robwiederstein.org/2021/08/09/motorcycle-and-moped-accidents-in-florida/</link>
       <pubDate>Mon, 09 Aug 2021 00:00:00 +0000</pubDate>
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/08/09/motorcycle-and-moped-accidents-in-florida/</guid>
+      <guid>https://robwiederstein.org/2021/08/09/motorcycle-and-moped-accidents-in-florida/</guid>
       <description>Florida is the destination for many vacationers.  Different transportation modes are available like cars, motorcycles, scooters, mopeds and golf carts.  This post explores the accident rate of motorcyles and mopeds at the city level.</description>
     </item>
     
     <item>
       <title>Trip to Pictured Rock</title>
-      <link>https://keen-noether-7d2e44.netlify.app/trip/pictured_rock/pictured_rock/</link>
+      <link>https://robwiederstein.org/trip/pictured_rock/pictured_rock/</link>
       <pubDate>Mon, 02 Aug 2021 00:00:00 +0000</pubDate>
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/trip/pictured_rock/pictured_rock/</guid>
+      <guid>https://robwiederstein.org/trip/pictured_rock/pictured_rock/</guid>
       <description>Day 1 &amp;ndash; Tuesday &amp;ndash; July 5 Arrive Mackinaw City, Michigan (11 hrs)
 Mackinac Island KOA Journey
 566 Trailsend Road
 Mackinaw City , MI 49701
 800.562.1738
 (Confirmation no: 9156770 &amp;amp; 9156801)
+Confirmed.
 Day 2 &amp;ndash; Wednesday &amp;ndash; July 6 Mackinac Island Star Line Ferry
 ($29 per person round trip)
 First trip 7:30 a.m. Last trip 9:00 p.m.
 Mackinac Island
 Mackinac Carriage Tours
 Sightseeing Tour $34/person
-Grand Hotel Mackinac Island
-Day 3 &amp;ndash; Thursday &amp;ndash; July 7 Open</description>
+Grand Hotel Mackinac Island</description>
     </item>
     
     <item>
       <title>Trip to Savannah</title>
-      <link>https://keen-noether-7d2e44.netlify.app/trip/savannah/savannah/</link>
+      <link>https://robwiederstein.org/trip/savannah/savannah/</link>
       <pubDate>Sun, 01 Aug 2021 00:00:00 +0000</pubDate>
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/trip/savannah/savannah/</guid>
+      <guid>https://robwiederstein.org/trip/savannah/savannah/</guid>
       <description>Day 1 &amp;ndash; Monday &amp;ndash; Sept 13 Arrive Asheville, North Carolina (6 hrs.)
 Wilson&amp;rsquo;s Riverfront RV Park
 225 Amboy Road, Asheville, NC 28806
@@ -111,121 +201,20 @@ Michael Davis</description>
     
     <item>
       <title>Staying Organized in R</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/07/20/staying-organized/</link>
+      <link>https://robwiederstein.org/2021/07/20/staying-organized/</link>
       <pubDate>Tue, 20 Jul 2021 00:00:00 +0000</pubDate>
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/07/20/staying-organized/</guid>
+      <guid>https://robwiederstein.org/2021/07/20/staying-organized/</guid>
       <description>When code starts to run into the dozens of lines, it can begin to look like a jumbled box of legos.  The parts all go together, but you can easily forget the order and the ultimate goal of the project.  Here&amp;rsquo;s a post to offer an organizational strategy for writing code in Rstudio.</description>
     </item>
     
     <item>
       <title>Footer for Flexdashboard</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/07/05/footer-for-flexdashboard/</link>
+      <link>https://robwiederstein.org/2021/07/05/footer-for-flexdashboard/</link>
       <pubDate>Mon, 05 Jul 2021 00:00:00 +0000</pubDate>
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/07/05/footer-for-flexdashboard/</guid>
+      <guid>https://robwiederstein.org/2021/07/05/footer-for-flexdashboard/</guid>
       <description>You can create a data dashboard in &lt;code&gt;R&lt;/code&gt; using the &lt;code&gt;flexdashboard&lt;/code&gt; package. In the background, there are a handful of other packages like bootstrap, bootswatch and fontawesome. The generated website did not have a footer though.  Here is a mashup of some html and css. The code was posted in a codepen repo.</description>
-    </item>
-    
-    <item>
-      <title>Trip to Key West</title>
-      <link>https://keen-noether-7d2e44.netlify.app/trip/key_west/key_west/</link>
-      <pubDate>Thu, 01 Jul 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/trip/key_west/key_west/</guid>
-      <description>Our trip photos
-Day 1 &amp;ndash; Arrive &amp;ndash; July 31 Arrive in Tampa
-Uber to Lori&amp;rsquo;s.
-Ate pizza at Leones.
-Day 2 &amp;ndash; Sunday &amp;ndash; August 1 Driving range
-Go to pool.
-Shrimp, salad, tater tots for dinner
-Day 3 &amp;ndash; Monday &amp;ndash; August 2 Key West Ferry
-Check in at Bay Suites.
-Pick up golf cart.
-Dinner at Thai cuisine.
-Day 4 &amp;ndash; Tuesday &amp;ndash; August 3 Drive around</description>
-    </item>
-    
-    <item>
-      <title>Indiana Birth Outcomes</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/06/25/indiana-birth-outcomes/</link>
-      <pubDate>Fri, 25 Jun 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/06/25/indiana-birth-outcomes/</guid>
-      <description>Indiana&amp;rsquo;s birth outcomes are examined using data from the Annie E. Casey foundation Kids Count website.</description>
-    </item>
-    
-    <item>
-      <title>Women Justices - An International Comparison</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/06/22/women-justices/</link>
-      <pubDate>Tue, 22 Jun 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/06/22/women-justices/</guid>
-      <description>Women serving on their country&amp;rsquo;s highest courts are a relatively new phenomena.  The trend accelerated beginning in the 1990s and now includes countries all over the world of differing economic levels. Women impact both the process and outcome of court decisions when appointed.  Additionally, women bolster court legitmacy among marginalized and unrepresented constituencies.</description>
-    </item>
-    
-    <item>
-      <title>US Lynchings</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/06/05/us-lynchings/</link>
-      <pubDate>Sat, 05 Jun 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/06/05/us-lynchings/</guid>
-      <description>4134 people were killed outside of the judicial process in the United States between 1882 and 1936.  Most of the victims were black males living in former slave states of the deep South and were killed by lynching. However, lynchings were not unique to the South and occurred in other places as well.</description>
-    </item>
-    
-    <item>
-      <title>Tidymodel Tutorials As Scripts</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/05/30/tidymodel-tutorial-scripts/</link>
-      <pubDate>Sun, 30 May 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/05/30/tidymodel-tutorial-scripts/</guid>
-      <description>This post is a distillation of the tidymodels tutorials on machine learning.  Formatting from the original was shortened and converted to a script with comments. Original tutorials are &lt;a href=&#34;https://www.tidymodels.org&#34;&gt;here&lt;/a&gt;. This post is basically my notes from the those tutorials.</description>
-    </item>
-    
-    <item>
-      <title>2020 Law School Attrition Rates Part 2</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/05/17/2020-law-school-attrition-rates-part-2/</link>
-      <pubDate>Mon, 17 May 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/05/17/2020-law-school-attrition-rates-part-2/</guid>
-      <description>This post is part 2 of the law student attrition numbers at ABA-accredited law schools.  It attempts to separate the law schools into clusters using principal component analysis, k-means, pam, and hierarchical algorithms.</description>
-    </item>
-    
-    <item>
-      <title>2020 Law School Attrition Rates Part 1</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/05/12/2020-law-school-attrition-rates/</link>
-      <pubDate>Wed, 12 May 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/05/12/2020-law-school-attrition-rates/</guid>
-      <description>This post explores the law student attrition numbers at ABA accredited law schools in the United States.</description>
-    </item>
-    
-    <item>
-      <title>Piping R Code with Magrittr</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/05/09/piping-r-code-with-magrittr/</link>
-      <pubDate>Sun, 09 May 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/05/09/piping-r-code-with-magrittr/</guid>
-      <description>I&amp;rsquo;ve been piping code with dplyr for several years now.  But because I use it so often, I thought it was time for a refresher and some renewed investigation.  Sometimes, revisiting a topic can help break me out of a programming funk.  And sure enough, some new methods were discovered.</description>
-    </item>
-    
-    <item>
-      <title>A First Predictive Shiny App</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/05/06/first-predictive-shiny-app/</link>
-      <pubDate>Thu, 06 May 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/05/06/first-predictive-shiny-app/</guid>
-      <description>This shiny app takes the speed in miles per hour of a car and estimates the distance in feet to stop, using data from the 1920s.</description>
-    </item>
-    
-    <item>
-      <title>Commercial Fish Production in the Great Lakes</title>
-      <link>https://keen-noether-7d2e44.netlify.app/2021/04/19/commercial-fish-production-great-lakes/</link>
-      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://keen-noether-7d2e44.netlify.app/2021/04/19/commercial-fish-production-great-lakes/</guid>
-      <description>The Great Lakes Fishery Commission (GLFC) published data on the commercial fish catch in the Great Lakes from 1867 to 2015. Each lake is unique and its features impact what fish are present, their composition over time and the overall volume of commercial fish catch.</description>
     </item>
     
   </channel>

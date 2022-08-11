@@ -1,0 +1,298 @@
+---
+title: Laser Incidents on U.S. Aircraft
+author: Rob Wiederstein
+date: '2022-07-27'
+slug: laser-incidents-on-u-s-airplanes
+categories:
+  - R
+tags: []
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-lubridate, @R-dplyr, @R-ggplot2, @R-scales, @R-fable, @R-colorspace
+header:
+  image: feature.jpg
+  alt: green laser
+  caption: Green lasers are commonly used in targeting U.S. aircraft
+repo: ~
+summary: U.S. pilots have reported an increasing number of laser incidents in the last few years. The Federal Aviation Administration (FAA) collects the reports and publishes them in a database.
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#overview" id="toc-overview"><span>Overview</span></a>
+<ul>
+<li><a href="#threat" id="toc-threat">Threat</a></li>
+<li><a href="#availability" id="toc-availability">Availability</a></li>
+<li><a href="#injury" id="toc-injury">Injury</a></li>
+<li><a href="#regulation" id="toc-regulation">Regulation</a></li>
+</ul></li>
+<li><a href="#plots" id="toc-plots">Plots</a>
+<ul>
+<li><a href="#total-laser-reports" id="toc-total-laser-reports">Total Laser Reports</a></li>
+<li><a href="#total-laser-injuries" id="toc-total-laser-injuries">Total Laser Injuries</a></li>
+<li><a href="#total-laser-reports-by-altitude" id="toc-total-laser-reports-by-altitude">Total Laser Reports by Altitude</a></li>
+<li><a href="#fixed-wing-versus-helicopters" id="toc-fixed-wing-versus-helicopters">Fixed-wing versus Helicopters</a></li>
+<li><a href="#total-laser-injuries-1" id="toc-total-laser-injuries-1">Total Laser Injuries</a></li>
+<li><a href="#total-laser-injuries-by-altitude-and-color" id="toc-total-laser-injuries-by-altitude-and-color">Total Laser Injuries by Altitude and Color</a></li>
+<li><a href="#calendar-heatmap" id="toc-calendar-heatmap">Calendar Heatmap</a></li>
+<li><a href="#seasonal-plot" id="toc-seasonal-plot">Seasonal Plot</a></li>
+<li><a href="#laser-incidents---time-of-day" id="toc-laser-incidents---time-of-day">Laser Incidents - Time of Day</a></li>
+<li><a href="#additive-decomposition" id="toc-additive-decomposition">Additive Decomposition</a></li>
+<li><a href="#forecast" id="toc-forecast"><span>Forecast</span></a></li>
+</ul></li>
+<li><a href="#conclusion" id="toc-conclusion"><span>Conclusion</span></a></li>
+<li><a href="#acknowledgements" id="toc-acknowledgements"><span>Acknowledgements</span></a></li>
+<li><a href="#references" id="toc-references"><span>References</span></a></li>
+<li><a href="#disclaimer" id="toc-disclaimer"><span>Disclaimer</span></a></li>
+<li><a href="#reproducibility" id="toc-reproducibility"><span>Reproducibility</span></a></li>
+</ul>
+</div>
+
+<div id="overview" class="section level1">
+<h1><a href="#overview">Overview</a></h1>
+<p>U.S. pilots have reported an increasing number of laser incidents in the last few years. 2021 was a record breaking year with 9,700 incidents, a 41% increase over 2020. <span class="citation"><a href="#ref-albeck-ripkaPilotsContendRecord2022" role="doc-biblioref">[1]</a></span> The Federal Aviation Administration (FAA) collects pilot/crew reports and publishes them in a database. When the term “incident” is used, it includes both interactions with and injuries from a laser. When the term “accident” is used, it refers to an event involving a laser where an individual was physically injured.</p>
+<div id="threat" class="section level2">
+<h2>Threat</h2>
+<p>When lasers are pointed at aircraft, passenger and cockpit safety are jeopardized. Pilots’ eyesight supplies the “vast majority” of information for safe airplane operation.<span class="citation"><a href="#ref-nakagawaraEffectsLaserIllumination2004" role="doc-biblioref">[2]</a></span> Lasers can (1) cause distraction, (2) result in glare, (3) temporarily blind people and (4) injure the eyes.<span class="citation"><a href="#ref-murphyLasersAviationSafety2009" role="doc-biblioref">[3]</a></span> The risk of injury is a function of the type, power and use of the laser; flight characteristics of the airplane, and pilot awareness and response. <span class="citation"><a href="#ref-murphyLasersAviationSafety2009" role="doc-biblioref">[3]</a></span></p>
+<p>Aviators’ “principal concern is the possibility of being illuminated by a laser during terminal operations, which include approach, landing, takeoff, and departure maneuvers” with “low-level flight operations at night” being particularly vulnerable.<span class="citation"><a href="#ref-nakagawaraEffectsLaserIllumination2004" role="doc-biblioref">[2]</a></span> Pilots are required to communicate only about operationally relevant details below altitudes of 10,000 feet.<span class="citation"><a href="#ref-nakagawaraEffectsLaserIllumination2004" role="doc-biblioref">[2]</a></span> “Laser exposure has proven most disruptive when it occurs at low altitude during critical phases of flight.”<span class="citation"><a href="#ref-nakagawaraEffectsLaserIllumination2004" role="doc-biblioref">[2]</a></span> Pilot injuries from lasers are rare.<span class="citation"><a href="#ref-montgomeryLaserIlluminationHelicopters2013a" role="doc-biblioref">[4]</a></span> When injury occurs, it is frequently at night when pilot’s eyes have adjusted to dim lighting.<span class="citation"><a href="#ref-montgomeryLaserIlluminationHelicopters2013a" role="doc-biblioref">[4]</a></span> Helicopters are at higher risk.<span class="citation"><a href="#ref-murphyLasersAviationSafety2009" role="doc-biblioref">[3]</a></span> <span class="citation"><a href="#ref-montgomeryLaserIlluminationHelicopters2013a" role="doc-biblioref">[4]</a></span></p>
+</div>
+<div id="availability" class="section level2">
+<h2>Availability</h2>
+<p>“Irresponsible users of low-cost, high-visibility, hard-to-regulate laser pointers” are the primary culprits.<span class="citation"><a href="#ref-murphyLasersAviationSafety2009" role="doc-biblioref">[3]</a></span>. Laser pointers can be easily obtained via online shops. <span class="citation"><a href="#ref-aerzteblattRetinalInjuryFollowing" role="doc-biblioref">[5]</a></span> Laser technology and affordability has advanced rapidly. In 2010, an industry expert noted that “[t]wenty years ago, 10 mW of coherent green light could be obtained only from research laboratory-grade lasers that cost over $100,000 and occupied much of an experimental laser table. Today’s green laser pointer delivers much the same performance for less than $20, in a package the size of a slim cigar, powered by two AAA batteries.”<span class="citation"><a href="#ref-galangGreenLaserPointer2011" role="doc-biblioref">[6]</a></span></p>
+</div>
+<div id="injury" class="section level2">
+<h2>Injury</h2>
+<p>A laser pointer can cause “extensive photothermal injury” to the eye and specifically the retina.<span class="citation"><a href="#ref-aerzteblattRetinalInjuryFollowing" role="doc-biblioref">[5]</a></span> Injury severity depends on the wavelength, radiation power, exposure time, localization, and spot size.<span class="citation"><a href="#ref-aerzteblattRetinalInjuryFollowing" role="doc-biblioref">[5]</a></span> Blinking or looking away can prevent injury when radiation output is less than 1mW and exposure is less than .25 of a second. <span class="citation"><a href="#ref-aerzteblattRetinalInjuryFollowing" role="doc-biblioref">[5]</a></span> Exposure to 1mW or less is harmless under most conditions.<span class="citation"><a href="#ref-aerzteblattRetinalInjuryFollowing" role="doc-biblioref">[5]</a></span> Users of lasers should view manufacturer advertising and product descriptions with skepticism as examples exist where lasers were incorrectly classified and labeled.<span class="citation"><a href="#ref-aerzteblattRetinalInjuryFollowing" role="doc-biblioref">[5]</a></span> <span class="citation"><a href="#ref-galangGreenLaserPointer2011" role="doc-biblioref">[6]</a></span></p>
+<p>Photothermal damage is more pronounced with shortwave green laser pointers (490 - 575 nm) than longwave red laser pointers (635 - 750 nm). Photocoagulation can be induced with exposure of 10 seconds and a power of 5mW.<span class="citation"><a href="#ref-aerzteblattRetinalInjuryFollowing" role="doc-biblioref">[5]</a></span> Treatment options are described as limited. <span class="citation"><a href="#ref-aerzteblattRetinalInjuryFollowing" role="doc-biblioref">[5]</a></span> Surgery is an option for patients suffering from macular foramina and hemorrhages. <span class="citation"><a href="#ref-aerzteblattRetinalInjuryFollowing" role="doc-biblioref">[5]</a></span> Visual acuity tended to improve over time. <span class="citation"><a href="#ref-aerzteblattRetinalInjuryFollowing" role="doc-biblioref">[5]</a></span></p>
+</div>
+<div id="regulation" class="section level2">
+<h2>Regulation</h2>
+<p>In 2012, Congress criminalized pointing a laser at an aircraft. The law states: “Whoever knowingly aims the beam of a laser pointer at an aircraft . . . in the United States, or at the flight path of such an aircraft, shall be fined under this title or imprisoned not more than 5 years, or both.”<span class="citation"><a href="#ref-18Code39A" role="doc-biblioref">[7]</a></span></p>
+</div>
+</div>
+<div id="plots" class="section level1">
+<h1>Plots</h1>
+<div id="total-laser-reports" class="section level2">
+<h2>Total Laser Reports</h2>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/lasers-overall-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="total-laser-injuries" class="section level2">
+<h2>Total Laser Injuries</h2>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/lasers-injury-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="total-laser-reports-by-altitude" class="section level2">
+<h2>Total Laser Reports by Altitude</h2>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/laser-reports-altitude-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="fixed-wing-versus-helicopters" class="section level2">
+<h2>Fixed-wing versus Helicopters</h2>
+<p>The original boxplot contained so many outliers that it could not be displayed in an insightful way. Since the altitude record for a fixed-wing, jet-propelled airplane was set in 1977 and was 123,520 feet and the altitude record for a rotorcraft or helicopter was set in 1972 and was 40,814 feet, it was obvious that the data included many errors. Outliers were omitted from the violin plot and the axis were rescaled to fit the .05 and .95 quantiles.</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/helo-vs-aircraft-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="total-laser-injuries-1" class="section level2">
+<h2>Total Laser Injuries</h2>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/laser-incidents-injuries-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="total-laser-injuries-by-altitude-and-color" class="section level2">
+<h2>Total Laser Injuries by Altitude and Color</h2>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/laser-injuries-altitude-color-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="calendar-heatmap" class="section level2">
+<h2>Calendar Heatmap</h2>
+<p>The absolute values or laser report count by day did not work well. Instead, the annual average was computed for each year and subtracted from the daily total. The difference was divided by the average incidents per day. In other words, the number was the number of deviations away from the mean.</p>
+<p>Days that are bright red are days where the daily count greatly exceeded the annual average. November 5, 2020, was the day where the most laser incidents were reported over the entire period examined. The 54 incidents occurred on the day prior to November 6, 2020. That day was an election day for the U.S. presidency. (Trump-Biden).</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/calendar-heatmap-1.svg" width="576" height="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="seasonal-plot" class="section level2">
+<h2>Seasonal Plot</h2>
+<p>“A seasonal plot allows the underlying seasonal pattern to be seen more clearly, and is especially useful in identifying years in which the pattern changes.” <span class="citation"><a href="#ref-ForecastingPrinciplesPractice" role="doc-biblioref">[8]</a></span>Here, laser incidents increase throughout the year reaching a high in October before declining.</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/lasers-ggseason-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="laser-incidents---time-of-day" class="section level2">
+<h2>Laser Incidents - Time of Day</h2>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/lasers-time-of-day-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="additive-decomposition" class="section level2">
+<h2>Additive Decomposition</h2>
+<p>The method used for estimating components in this example is “STL” from the <code>stats</code> package. STL is a “versatile and robust method” for decomposing time series.<span class="citation"><a href="#ref-ForecastingPrinciplesPractice" role="doc-biblioref">[8]</a></span> STL is an acronym for “Seasonal and Trend decomposition using Loess”.</p>
+<p>The three components–trend, seasonal, and remainder– are shown separately in the bottom three panels. The components can be added together to obtain the data shown in the top panel.</p>
+<p>The grey bars to the right of each panel show the relative scales of the components. Each grey bar represents the same length but because the plots are on different scales, the bars vary in size. If the bottom three panels were reduced until their size was identical to the bar in the data panel, then all the panels would be scaled the same.<span class="citation"><a href="#ref-ForecastingPrinciplesPractice" role="doc-biblioref">[8]</a></span></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/laser-decomposition-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="forecast" class="section level2">
+<h2><a href="#forecast">Forecast</a></h2>
+<p>Five forecasting models were fit to the data. The models were naive, seasonal naive, mean, ets and arima. When ranked by the mean average error, the ets model had the best fit. The forecast for the next 12 months of laser incidents yielded the following plot:</p>
+<p><img src="forecast.png" width="90%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+<p>Total laser incidents continue to increase, reaching a high in 2021 with 9,316 incidents. While total annual incidents have continued to grow, injuries remain range bound between 20 and 40 per year and a small portion of the overall incidents.</p>
+<p>The average monthly altitude for a laser incident was 8,405 feet in 2021 climbing from 5,462 feet in 2010. The higher altitudes suggest that more powerful lasers may be utilized but greater pilot awareness could be a cause as well.</p>
+<p>Helicopters are targeted in lower altitudes than fixed-wing aircraft. Helicopter flight patterns may make them more suceptible to lasers as they tend to spend greater time in proximity to the ground. When it comes to the color of lasers in injuries, green is the most prevalent by far.</p>
+<p>An evaluation of seasonal patterns show that laser incidents tend to grow monthly topping out in October before declining over the holidays. November 5, 2020 saw the highest single-day laser occurrences which was the day prior to the general election in 2020. 0:00 to 6:00 hours are when laser strikes are most likely to occur.</p>
+<p>A forecast for 2022 was completed but the confidence intervals were extremely wide suggesting that it is difficult to forecast laser incidents using historical data.</p>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to:</p>
+<ul>
+<li><p><a href="https://www.laserincidents.com">LaserIncidents.com</a></p></li>
+<li><p><a href="https://www.laserpointersafety.com">laserpointersafety.com</a></p></li>
+<li><p><a href="https://www.lia.org">The Laser Institute</a></p></li>
+</ul>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-albeck-ripkaPilotsContendRecord2022" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">L. Albeck-Ripka, <span>“Pilots <span>Contend With Record Number</span> of <span>Laser Strikes</span>, <span>F</span>.<span>A</span>.<span>A</span>. <span>Says</span>,”</span> <em>The New York Times</em>, May 2022 [Online]. Available: <a href="https://www.nytimes.com/2022/05/02/business/laser-strikes-airplane-pilots.html">https://www.nytimes.com/2022/05/02/business/laser-strikes-airplane-pilots.html</a>. [Accessed: 04-Aug-2022]</div>
+</div>
+<div id="ref-nakagawaraEffectsLaserIllumination2004" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">V. B. Nakagawara, R. W. Montgomery, A. Dillard, L. McLin, C. W. Connor, and United States. Department of Transportation. Federal Aviation Administration. Office of Aviation. Civil Aerospace Medical Institute, <span>“The <span>Effects</span> of <span>Laser Illumination</span> on <span>Operational</span> and <span>Visual Performance</span> of <span>Pilots</span> during <span>Final Approach</span>,”</span> DOT/FAA/AM-04/9, Jun. 2004 [Online]. Available: <a href="https://rosap.ntl.bts.gov/view/dot/58230">https://rosap.ntl.bts.gov/view/dot/58230</a>. [Accessed: 30-Jul-2022]</div>
+</div>
+<div id="ref-murphyLasersAviationSafety2009" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">P. Murphy, <span>“Lasers and aviation safety,”</span> <em>International Laser Safety Conference</em>, vol. 2009, no. 1, pp. 41–50, Mar. 2009, doi: <a href="https://doi.org/10.2351/1.5056720">10.2351/1.5056720</a>. [Online]. Available: <a href="https://lia.scitation.org/doi/abs/10.2351/1.5056720">https://lia.scitation.org/doi/abs/10.2351/1.5056720</a>. [Accessed: 30-Jul-2022]</div>
+</div>
+<div id="ref-montgomeryLaserIlluminationHelicopters2013a" class="csl-entry">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">R. W. Montgomery, K. J. Wood, and Civil Aerospace Medical Institute, <span>“Laser <span>Illumination</span> of <span>Helicopters</span>: <span>A Comparative Analysis</span> with <span>Fixed-Wing Aircraft</span> for the <span>Period</span> 1980 2011,”</span> DOT/FAA/AM-13/8, Apr. 2013 [Online]. Available: <a href="https://rosap.ntl.bts.gov/view/dot/23322">https://rosap.ntl.bts.gov/view/dot/23322</a>. [Accessed: 31-Jul-2022]</div>
+</div>
+<div id="ref-aerzteblattRetinalInjuryFollowing" class="csl-entry">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">D. Ä. G. Ärzteblatt Redaktion Deutsches, <span>“<span>Retinal Injury Following Laser Pointer Exposure (08.12.2017)</span>,”</span> <em>Deutsches Ärzteblatt</em>. [Online]. Available: <a href="https://www.aerzteblatt.de/int/archive/article?id=195090">https://www.aerzteblatt.de/int/archive/article?id=195090</a>. [Accessed: 31-Jul-2022]</div>
+</div>
+<div id="ref-galangGreenLaserPointer2011" class="csl-entry">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">J. Galang, A. Restelli, E. W. Hagley, J. Hadler, and C. W. Clark, <span>“A green laser pointer hazard,”</span> <em>International Laser Safety Conference</em>, vol. 2011, no. 1, pp. 296–300, Mar. 2011, doi: <a href="https://doi.org/10.2351/1.5056767">10.2351/1.5056767</a>. [Online]. Available: <a href="https://lia.scitation.org/doi/abs/10.2351/1.5056767">https://lia.scitation.org/doi/abs/10.2351/1.5056767</a>. [Accessed: 08-Aug-2022]</div>
+</div>
+<div id="ref-18Code39A" class="csl-entry">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline"><span>“18 <span>U</span>.<span>S</span>. <span>Code</span> <span>39A</span> - <span>Aiming</span> a laser pointer at an aircraft,”</span> <em>LII / Legal Information Institute</em>. [Online]. Available: <a href="https://www.law.cornell.edu/uscode/text/18/39A">https://www.law.cornell.edu/uscode/text/18/39A</a>. [Accessed: 04-Aug-2022]</div>
+</div>
+<div id="ref-ForecastingPrinciplesPractice" class="csl-entry">
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline"><em>Forecasting: <span>Principles</span> and <span>Practice</span> (3rd ed)</em>. [Online]. Available: <a href="https://otexts.com/fpp3/">https://otexts.com/fpp3/</a>. [Accessed: 04-Aug-2022]</div>
+</div>
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2022 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[10] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+</div>
+<div id="ref-R-colorspace" class="csl-entry">
+<div class="csl-left-margin">[11] </div><div class="csl-right-inline">R. Ihaka <em>et al.</em>, <em>Colorspace: A toolbox for manipulating and assessing colors and palettes</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=colorspace">https://CRAN.R-project.org/package=colorspace</a></div>
+</div>
+<div id="ref-R-dplyr" class="csl-entry">
+<div class="csl-left-margin">[12] </div><div class="csl-right-inline">H. Wickham, R. François, L. Henry, and K. Müller, <em>Dplyr: A grammar of data manipulation</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a></div>
+</div>
+<div id="ref-R-fable" class="csl-entry">
+<div class="csl-left-margin">[13] </div><div class="csl-right-inline">M. O’Hara-Wild, R. Hyndman, and E. Wang, <em>Fable: Forecasting models for tidy time series</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=fable">https://CRAN.R-project.org/package=fable</a></div>
+</div>
+<div id="ref-R-ggplot2" class="csl-entry">
+<div class="csl-left-margin">[14] </div><div class="csl-right-inline">H. Wickham <em>et al.</em>, <em>ggplot2: Create elegant data visualisations using the grammar of graphics</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=ggplot2">https://CRAN.R-project.org/package=ggplot2</a></div>
+</div>
+<div id="ref-R-lubridate" class="csl-entry">
+<div class="csl-left-margin">[15] </div><div class="csl-right-inline">V. Spinu, G. Grolemund, and H. Wickham, <em>Lubridate: Make dealing with dates a little easier</em>. 2021 [Online]. Available: <a href="https://CRAN.R-project.org/package=lubridate">https://CRAN.R-project.org/package=lubridate</a></div>
+</div>
+<div id="ref-R-scales" class="csl-entry">
+<div class="csl-left-margin">[16] </div><div class="csl-right-inline">H. Wickham and D. Seidel, <em>Scales: Scale functions for visualization</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=scales">https://CRAN.R-project.org/package=scales</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value
+ version  R version 4.1.3 (2022-03-10)
+ os       macOS Big Sur/Monterey 10.16
+ system   x86_64, darwin17.0
+ ui       X11
+ language (EN)
+ collate  en_US.UTF-8
+ ctype    en_US.UTF-8
+ tz       America/Chicago
+ date     2022-07-27
+ pandoc   2.17.1.1 @ /Applications/RStudio.app/Contents/MacOS/quarto/bin/ (via rmarkdown)
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version    date (UTC) lib source
+ assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.1.0)
+ blogdown    * 1.9        2022-03-28 [1] CRAN (R 4.1.2)
+ bookdown      0.25       2022-03-16 [1] CRAN (R 4.1.2)
+ bslib         0.4.0.9000 2022-07-27 [1] Github (rstudio/bslib@f33429b)
+ cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.0)
+ callr         3.7.0      2021-04-20 [1] CRAN (R 4.1.0)
+ chron       * 2.3-57     2022-05-30 [1] CRAN (R 4.1.2)
+ cli           3.3.0      2022-04-25 [1] CRAN (R 4.1.2)
+ codetools     0.2-18     2020-11-04 [1] CRAN (R 4.1.3)
+ colorspace    2.0-3      2022-02-21 [1] CRAN (R 4.1.2)
+ crayon        1.5.1      2022-03-26 [1] CRAN (R 4.1.0)
+ DBI           1.1.2      2021-12-20 [1] CRAN (R 4.1.0)
+ devtools    * 2.4.3      2021-11-30 [1] CRAN (R 4.1.0)
+ digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.0)
+ dplyr       * 1.0.9      2022-04-28 [1] CRAN (R 4.1.2)
+ ellipsis      0.3.2      2021-04-29 [1] CRAN (R 4.1.0)
+ evaluate      0.15       2022-02-18 [1] CRAN (R 4.1.2)
+ fansi         1.0.3      2022-03-24 [1] CRAN (R 4.1.2)
+ farver        2.1.0      2021-02-28 [1] CRAN (R 4.1.0)
+ fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.0)
+ fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.0)
+ generics      0.1.2      2022-01-31 [1] CRAN (R 4.1.2)
+ ggplot2     * 3.3.6      2022-05-03 [1] CRAN (R 4.1.2)
+ ggthemes    * 4.2.4      2021-01-20 [1] CRAN (R 4.1.0)
+ glue          1.6.2      2022-02-24 [1] CRAN (R 4.1.2)
+ gtable        0.3.0      2019-03-25 [1] CRAN (R 4.1.0)
+ highr         0.9        2021-04-16 [1] CRAN (R 4.1.0)
+ htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.2)
+ jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.0)
+ jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)
+ knitr         1.39       2022-04-26 [1] CRAN (R 4.1.2)
+ labeling      0.4.2      2020-10-20 [1] CRAN (R 4.1.0)
+ lasers      * 0.0.0.9000 2022-07-27 [1] Github (robwiederstein/lasers@de6997f)
+ lattice     * 0.20-45    2021-09-22 [1] CRAN (R 4.1.3)
+ lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.0)
+ lubridate   * 1.8.0      2021-10-07 [1] CRAN (R 4.1.0)
+ magrittr      2.0.3      2022-03-30 [1] CRAN (R 4.1.2)
+ Matrix        1.4-0      2021-12-08 [1] CRAN (R 4.1.3)
+ memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.0)
+ mgcv          1.8-39     2022-02-24 [1] CRAN (R 4.1.3)
+ munsell       0.5.0.9000 2021-10-19 [1] Github (cwickham/munsell@e539541)
+ nlme          3.1-155    2022-01-16 [1] CRAN (R 4.1.3)
+ pillar        1.7.0      2022-02-01 [1] CRAN (R 4.1.2)
+ pkgbuild      1.3.1      2021-12-20 [1] CRAN (R 4.1.0)
+ pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.1.0)
+ pkgload       1.3.0      2022-06-27 [1] CRAN (R 4.1.2)
+ prettyunits   1.1.1      2020-01-24 [1] CRAN (R 4.1.0)
+ processx      3.5.3      2022-03-25 [1] CRAN (R 4.1.0)
+ ps            1.7.0      2022-04-23 [1] CRAN (R 4.1.2)
+ purrr         0.3.4      2020-04-17 [1] CRAN (R 4.1.0)
+ R6            2.5.1      2021-08-19 [1] CRAN (R 4.1.0)
+ remotes       2.4.2      2021-11-30 [1] CRAN (R 4.1.0)
+ rlang         1.0.4      2022-07-12 [1] CRAN (R 4.1.2)
+ rmarkdown     2.14       2022-04-25 [1] CRAN (R 4.1.2)
+ rstudioapi    0.13       2020-11-12 [1] CRAN (R 4.1.3)
+ sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.2)
+ scales      * 1.2.0      2022-04-13 [1] CRAN (R 4.1.2)
+ sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.0)
+ stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.2)
+ stringr       1.4.0      2019-02-10 [1] CRAN (R 4.1.0)
+ tibble        3.1.7      2022-05-03 [1] CRAN (R 4.1.2)
+ tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.1.2)
+ usethis     * 2.1.6      2022-05-25 [1] CRAN (R 4.1.2)
+ utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.0)
+ vctrs         0.4.1      2022-04-13 [1] CRAN (R 4.1.2)
+ withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.0)
+ xfun          0.31       2022-05-10 [1] CRAN (R 4.1.2)
+ yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)
+
+ [1] /Library/Frameworks/R.framework/Versions/4.1/Resources/library
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
