@@ -1,0 +1,161 @@
+---
+title: Choropleth Map of Job Change by County
+author: Rob Wiederstein
+date: '2022-08-27'
+slug: choropleth-map-of-job-change-by-county
+categories:
+  - R
+tags:
+  - leaflet
+layout: layouts/post/single
+draft: false
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-leaflet, @R-sf, @R-RColorBrewer,
+  @R-widgetframe
+header:
+  image: feature.jpg
+  alt: People at computers in large work space
+  caption: Photo by Alex Kotliarskyi on Unsplash.
+  
+repo: ~
+summary: The annual employment data from the Bureau of Labor Statistics (BLS) was downloaded for the years 1990 through 2021.  The average annual growth rate was computed by county and plotted as a choropleth map.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+    "devtools", # for session info
+    "ggthemes", # for plots
+    "blogdown",
+    "leaflet",
+    "RColorBrewer",
+    "sf",
+    "dplyr",
+    "tibble",
+    "widgetframe"
+)
+lapply(packages, function(x) {
+    if (!requireNamespace(x)) install.packages(x)
+    library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+    comment = "",
+    fig.width = 6,
+    fig.asp = .8,
+    fig.align = "center",
+    message = F,
+    error = F,
+    warning = F,
+    tidy = T,
+    comment = "",
+    cache = T,
+    dev = "svg",
+    echo = F
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+# from ggthemes
+library(ggplot2)
+theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+```{r load-data, include=F}
+jobs <- readRDS("./jobs.rds")
+states <-
+    jobs |>
+    dplyr::select(state_name, geometry) |>
+    dplyr::group_by(state_name) |>
+    dplyr::summarize(geometry = sf::st_union(geometry))
+```
+
+# [Map](#map)
+
+```{r leaflet-jobs-map, out.width = "100%", fig.cap="The 48 contiguous states are included."}
+jobs_map <-
+    jobs |>
+    leaflet() |>
+    addProviderTiles(providers$CartoDB.Positron, group = "Positron") |>
+    setView(-77.301028, 38.849602, zoom = 7) |>
+    addPolygons(
+        data = jobs,
+        color = jobs$color,
+        stroke = FALSE,
+        smoothFactor = 0.2,
+        fillOpacity = .5,
+        label = paste0(
+            jobs$namelsad,
+            " ",
+            round(jobs$avg_ann_pct_change, 1),
+            "%"
+        )
+    ) |>
+    addPolygons(
+            data = states,
+            fill = FALSE,
+            weight = 1,
+            color = "black"
+    ) |> 
+    addLegend(
+        "bottomright",
+        colors = brewer.pal(7, "RdBu"),
+        labels = c(
+            "-3.2% to -0.5%",
+            "-0.5% to 0.0%",
+            "0.0% to 0.4%",
+            "0.4% to 0.8%",
+            "0.8% to 1.4%",
+            "1.4% to 2.5%",
+            "2.5% to 98.7%"
+        ),
+        # values = jobs$cut_pct,
+        title = "Avg. Annual Job <br> Growth 1990 - 2021",
+        labFormat = labelFormat(prefix = ""),
+        opacity = .9
+    )
+frameWidget(jobs_map)
+```
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+- The U.S. Bureau of Labor Statistics
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```
