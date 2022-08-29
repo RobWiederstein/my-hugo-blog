@@ -1,0 +1,238 @@
+---
+title: A Zotero Tutorial for Beginners
+author: Rob Wiederstein
+date: '2022-08-28'
+slug: a-zotero-tutorial-for-beginners
+categories: []
+tags: []
+layout: layouts/post/single
+draft: false
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: logo.png
+  alt: Zotero logo
+  caption: Zotero is for researchers!
+repo: ~
+summary: Zotero is a database for research. Authors use it to organize their citations and notes. Regardless of project size, Zotero facilitates recall, summarization, discoverability and reproducibility. This post explains the first steps in using Zotero for a research paper in LaTeX.
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#download" id="toc-download"><span>Download</span></a></li>
+<li><a href="#choose-by-computer-type" id="toc-choose-by-computer-type"><span>Choose by Computer Type</span></a></li>
+<li><a href="#choose-connector" id="toc-choose-connector"><span>Choose Connector</span></a></li>
+<li><a href="#download-plugins" id="toc-download-plugins"><span>Download Plugins</span></a></li>
+<li><a href="#launch-zotero" id="toc-launch-zotero"><span>Launch Zotero</span></a></li>
+<li><a href="#create-collection" id="toc-create-collection"><span>Create Collection</span></a></li>
+<li><a href="#retrieve-pdf" id="toc-retrieve-pdf"><span>Retrieve PDF</span></a></li>
+<li><a href="#sanity-check" id="toc-sanity-check"><span>Sanity-Check</span></a></li>
+<li><a href="#open-pdf" id="toc-open-pdf"><span>Open PDF</span></a></li>
+<li><a href="#extract-annotation" id="toc-extract-annotation"><span>Extract Annotation</span></a></li>
+<li><a href="#export-collection" id="toc-export-collection"><span>Export Collection</span></a></li>
+<li><a href="#export-format" id="toc-export-format"><span>Export Format</span></a></li>
+<li><a href="#check-format" id="toc-check-format"><span>Check Format</span></a></li>
+<li><a href="#conclusion" id="toc-conclusion"><span>Conclusion</span></a></li>
+<li><a href="#acknowledgements" id="toc-acknowledgements"><span>Acknowledgements</span></a></li>
+<li><a href="#references" id="toc-references"><span>References</span></a></li>
+<li><a href="#disclaimer" id="toc-disclaimer"><span>Disclaimer</span></a></li>
+<li><a href="#reproducibility" id="toc-reproducibility"><span>Reproducibility</span></a></li>
+</ul>
+</div>
+
+<div id="download" class="section level1">
+<h1><a href="#download">Download</a></h1>
+<p>Go to Zotero’s <a href="https://www.zotero.org">website</a> and download the lastest edition.</p>
+<p><img src="zotero-home-screen.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="choose-by-computer-type" class="section level1">
+<h1><a href="#choose">Choose by Computer Type</a></h1>
+<p>Choose the download for your computer. (My computer is a Mac).</p>
+<p><img src="zotero-download.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="choose-connector" class="section level1">
+<h1><a href="#choose-connector">Choose Connector</a></h1>
+<p>Choose a connector. A Zotero connector will make your life easy. The “connector” is a shortcut accessible via your browser window. Connectors are available for Safari, Chrome, Firefox and Edge. (My browser of choice is Chrome).</p>
+<p><img src="zotero-connector.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="download-plugins" class="section level1">
+<h1><a href="#download-plugins">Download Plugins</a></h1>
+<p>Plugins are third-party extensions for Zotero. Go to the plugins <a href="https://www.zotero.org/support/plugins">page</a>. For LaTeX, install the Better BibTeX plugin. The <a href="https://github.com/retorquere/zotero-better-bibtex">repository</a> comes with extensive <a href="https://retorque.re/zotero-better-bibtex/">documentation</a>.</p>
+<p><img src="better-bibtex-plugin.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>For those who use Word, choose the plugin for word processors.</p>
+<p><img src="word-plugin.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="launch-zotero" class="section level1">
+<h1><a href="#launch">Launch Zotero</a></h1>
+<p>Launch the Zotero Application. The window should be empty with a tab for “My Library”. (You won’t see the “Open Workspace” tab).</p>
+<iframe src="./zotero-app.png?showcase=0" width="100%" height="400px" data-external="1">
+</iframe>
+</div>
+<div id="create-collection" class="section level1">
+<h1><a href="#create-collection">Create Collection</a></h1>
+<p>Create a collection/folder. Let’s call it “00_game_theory”.</p>
+<p><img src="create-collection.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="retrieve-pdf" class="section level1">
+<h1><a href="#retrieve">Retrieve PDF</a></h1>
+<p>Go to the most <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1968579">downloaded paper</a> on SSRN (Social Science Research Network). Add it to the Zotero library collection “00_game_theory” using the Zotero Connector extension. In Chrome, I added the Zotero Connector to the extension bar because I use it often.</p>
+<p><img src="add-paper.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Highlight the collection of choice and click “Done”.</p>
+<p><img src="click-done.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="sanity-check" class="section level1">
+<h1><a href="#sanity-check">Sanity-Check</a></h1>
+<p>Open the Zotero window again and see if the connector added the paper to the intended collection.</p>
+<p><img src="sanity-check.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="open-pdf" class="section level1">
+<h1><a href="#open-pdf">Open PDF</a></h1>
+<p>Double click on the PDF. Highlight a portion of the text.</p>
+<p><img src="annotate-pdf.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="extract-annotation" class="section level1">
+<h1><a href="#extract-annotation">Extract Annotation</a></h1>
+<p>The crucial step is to extract the annotation such that you create an index of significant quotes. Also, you want to be able to find and cite them in your research.</p>
+<p><img src="add-annotation.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="export-collection" class="section level1">
+<h1><a href="#export-collection">Export Collection</a></h1>
+<p><img src="export-collection.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="export-format" class="section level1">
+<h1><a href="#export-format">Export Format</a></h1>
+<p>Export them using the better BibTeX format. That’s why we retrieved the plugin to begin the tutorial.</p>
+<p><img src="export-format.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="check-format" class="section level1">
+<h1><a href="#check-format">Check Format</a></h1>
+<p>Check the format. Typically, the <code>00_game_theory.bib</code> file should be exported to the root directory of your working folder. Notice the annotation is included. This is an extremely powerful tool. The fields contained within the <code>.bib</code> file are accessible in many other applications. The bibliography will be formed by selecting the different fields like <code>author</code>, <code>title</code>, <code>date</code> and journal. It’s always worth checking the export to make sure it’s generating a reasonable output.</p>
+<p><img src="bib-export.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+<p>That concludes the basic introduction to Zotero. This is just a glimpse of the potential that awaits authors willing to devote just a little time to it. Additional tools and plugins have taken Zotero’s potential even further. However, you have to know the basics first.</p>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to:</p>
+<ul>
+<li>Zotero</li>
+<li>better BibTeX</li>
+</ul>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2022 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value
+ version  R version 4.1.3 (2022-03-10)
+ os       macOS Big Sur/Monterey 10.16
+ system   x86_64, darwin17.0
+ ui       X11
+ language (EN)
+ collate  en_US.UTF-8
+ ctype    en_US.UTF-8
+ tz       America/New_York
+ date     2022-08-28
+ pandoc   2.18 @ /Applications/RStudio.app/Contents/MacOS/quarto/bin/tools/ (via rmarkdown)
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version    date (UTC) lib source
+ assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.1.0)
+ blogdown    * 1.11       2022-08-09 [1] CRAN (R 4.1.2)
+ bookdown      0.28       2022-08-09 [1] CRAN (R 4.1.2)
+ bslib         0.4.0.9000 2022-08-26 [1] Github (rstudio/bslib@fa2e03c)
+ cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.0)
+ callr         3.7.2      2022-08-22 [1] CRAN (R 4.1.2)
+ cli           3.3.0      2022-04-25 [1] CRAN (R 4.1.2)
+ codetools     0.2-18     2020-11-04 [1] CRAN (R 4.1.3)
+ colorspace    2.0-3      2022-02-21 [1] CRAN (R 4.1.2)
+ crayon        1.5.1      2022-03-26 [1] CRAN (R 4.1.0)
+ DBI           1.1.3      2022-06-18 [1] CRAN (R 4.1.2)
+ devtools    * 2.4.4      2022-07-20 [1] CRAN (R 4.1.2)
+ digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.0)
+ dplyr         1.0.9      2022-04-28 [1] CRAN (R 4.1.2)
+ ellipsis      0.3.2      2021-04-29 [1] CRAN (R 4.1.0)
+ evaluate      0.16       2022-08-09 [1] CRAN (R 4.1.2)
+ fansi         1.0.3      2022-03-24 [1] CRAN (R 4.1.2)
+ farver        2.1.1      2022-07-06 [1] CRAN (R 4.1.2)
+ fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.0)
+ fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.0)
+ generics      0.1.3      2022-07-05 [1] CRAN (R 4.1.2)
+ ggplot2     * 3.3.6      2022-05-03 [1] CRAN (R 4.1.2)
+ ggthemes    * 4.2.4      2021-01-20 [1] CRAN (R 4.1.0)
+ glue          1.6.2      2022-02-24 [1] CRAN (R 4.1.2)
+ gtable        0.3.0      2019-03-25 [1] CRAN (R 4.1.0)
+ highr         0.9        2021-04-16 [1] CRAN (R 4.1.0)
+ htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.2)
+ htmlwidgets   1.5.4      2021-09-08 [1] CRAN (R 4.1.0)
+ httpuv        1.6.5      2022-01-05 [1] CRAN (R 4.1.2)
+ jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.0)
+ jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)
+ knitr         1.40       2022-08-24 [1] CRAN (R 4.1.3)
+ labeling      0.4.2      2020-10-20 [1] CRAN (R 4.1.0)
+ later         1.3.0      2021-08-18 [1] CRAN (R 4.1.0)
+ lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.0)
+ magrittr      2.0.3      2022-03-30 [1] CRAN (R 4.1.2)
+ memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.0)
+ mime          0.12       2021-09-28 [1] CRAN (R 4.1.0)
+ miniUI        0.1.1.1    2018-05-18 [1] CRAN (R 4.1.0)
+ munsell       0.5.0      2018-06-12 [1] CRAN (R 4.1.0)
+ pillar        1.8.1      2022-08-19 [1] CRAN (R 4.1.2)
+ pkgbuild      1.3.1      2021-12-20 [1] CRAN (R 4.1.0)
+ pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.1.0)
+ pkgload       1.3.0      2022-06-27 [1] CRAN (R 4.1.2)
+ prettyunits   1.1.1      2020-01-24 [1] CRAN (R 4.1.0)
+ processx      3.7.0      2022-07-07 [1] CRAN (R 4.1.2)
+ profvis       0.3.7      2020-11-02 [1] CRAN (R 4.1.0)
+ promises      1.2.0.1    2021-02-11 [1] CRAN (R 4.1.0)
+ ps            1.7.1      2022-06-18 [1] CRAN (R 4.1.2)
+ purrr         0.3.4      2020-04-17 [1] CRAN (R 4.1.0)
+ R6            2.5.1      2021-08-19 [1] CRAN (R 4.1.0)
+ Rcpp          1.0.9      2022-07-08 [1] CRAN (R 4.1.2)
+ remotes       2.4.2      2021-11-30 [1] CRAN (R 4.1.0)
+ rlang         1.0.4      2022-07-12 [1] CRAN (R 4.1.2)
+ rmarkdown     2.16       2022-08-24 [1] CRAN (R 4.1.3)
+ rstudioapi    0.14       2022-08-22 [1] CRAN (R 4.1.2)
+ sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.2)
+ scales        1.2.1      2022-08-20 [1] CRAN (R 4.1.2)
+ sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.0)
+ shiny         1.7.2      2022-07-19 [1] CRAN (R 4.1.2)
+ stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.2)
+ stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.2)
+ tibble        3.1.8      2022-07-22 [1] CRAN (R 4.1.2)
+ tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.1.2)
+ urlchecker    1.0.1      2021-11-30 [1] CRAN (R 4.1.0)
+ usethis     * 2.1.6      2022-05-25 [1] CRAN (R 4.1.2)
+ utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.0)
+ vctrs         0.4.1      2022-04-13 [1] CRAN (R 4.1.2)
+ withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.0)
+ xfun          0.32       2022-08-10 [1] CRAN (R 4.1.2)
+ xtable        1.8-4      2019-04-21 [1] CRAN (R 4.1.0)
+ yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)
+
+ [1] /Library/Frameworks/R.framework/Versions/4.1/Resources/library
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
