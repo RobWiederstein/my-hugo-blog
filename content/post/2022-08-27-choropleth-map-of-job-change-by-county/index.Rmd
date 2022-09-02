@@ -98,7 +98,7 @@ jobs_map <-
     jobs |>
     leaflet() |>
     addProviderTiles(providers$CartoDB.Positron, group = "Positron") |>
-    setView(-77.301028, 38.849602, zoom = 7) |>
+    setView(-77.301028, 38.849602, zoom = 8) |>
     addPolygons(
         data = jobs,
         color = jobs$color,
@@ -115,7 +115,7 @@ jobs_map <-
     addPolygons(
             data = states,
             fill = FALSE,
-            weight = 1,
+            weight = 1.5,
             color = "black"
     ) |> 
     addLegend(
@@ -135,7 +135,7 @@ jobs_map <-
         labFormat = labelFormat(prefix = ""),
         opacity = .9
     )
-frameWidget(jobs_map)
+frameWidget(jobs_map, height = 500)
 ```
 
 # [Acknowledgements](#acknowledge)

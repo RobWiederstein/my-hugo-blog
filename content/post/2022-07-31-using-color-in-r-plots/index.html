@@ -8,7 +8,7 @@ categories:
 tags:
   - ggplot2
 layout: layouts/post/single
-draft: no
+draft: yes
 bibliography:
   - packages.bib
   - ../blog.bib
@@ -17,19 +17,39 @@ link-citations: yes
 nocite: |
   @R-base, @R-blogdown, @R-tidyverse, @R-colorspace, @R-RColorBrewer
 header:
-  image: ~
-  alt: ~
-  caption: ~
+  image: feature.jpg
+  alt: swirled primary colors
+  caption: Photo by Daniel Olah on Unsplash.
 repo: ~
-summary: Using color effectively is key for informative and accurate plots. A number of R packages can provide tried-and-true palettes to ease the process.
+summary: Using color effectively is key for informative and accurate plots. R packages can provide tried-and-true palettes to ease the process.
 ---
 
 
 <div id="TOC">
 <ul>
 <li><a href="#overview" id="toc-overview"><span>Overview</span></a></li>
-<li><a href="#sample-palettes" id="toc-sample-palettes"><span>Sample Palettes</span></a></li>
+<li><a href="#terms" id="toc-terms"><span>Terms</span></a>
+<ul>
+<li><a href="#general" id="toc-general">General</a></li>
+<li><a href="#color-blindness" id="toc-color-blindness">Color Blindness</a></li>
+<li><a href="#color-spaces" id="toc-color-spaces">Color Spaces</a></li>
+<li><a href="#palette-types" id="toc-palette-types">Palette Types</a></li>
+</ul></li>
+<li><a href="#hexadecimal-notation" id="toc-hexadecimal-notation"><span>Hexadecimal Notation</span></a></li>
+<li><a href="#conversion" id="toc-conversion"><span>Conversion</span></a>
+<ul>
+<li><a href="#rgb" id="toc-rgb"><span>RGB</span></a></li>
+<li><a href="#hsv" id="toc-hsv"><span>HSV</span></a></li>
+<li><a href="#hcl" id="toc-hcl"><span>HCL</span></a></li>
+</ul></li>
+<li><a href="#color-packages" id="toc-color-packages"><span>Color Packages</span></a>
+<ul>
+<li><a href="#grdevices" id="toc-grdevices"><span>grDevices</span></a></li>
+<li><a href="#rcolorbrewer" id="toc-rcolorbrewer">RColorBrewer</a></li>
+<li><a href="#colorspace" id="toc-colorspace"><span>colorspace</span></a></li>
+</ul></li>
 <li><a href="#sample-plots" id="toc-sample-plots"><span>Sample Plots</span></a></li>
+<li><a href="#accessibility" id="toc-accessibility"><span>Accessibility</span></a></li>
 <li><a href="#conclusion" id="toc-conclusion"><span>Conclusion</span></a></li>
 <li><a href="#acknowledgements" id="toc-acknowledgements"><span>Acknowledgements</span></a></li>
 <li><a href="#references" id="toc-references"><span>References</span></a></li>
@@ -40,30 +60,151 @@ summary: Using color effectively is key for informative and accurate plots. A nu
 
 <div id="overview" class="section level1">
 <h1><a href="#overview">Overview</a></h1>
+<p>Colors are hard. Beginners have two choices. They can rely on their intuition or a preselected palette from one of R’s many packages.<span class="citation"><a href="#ref-smart2020" role="doc-biblioref">[1]</a></span> The overwhelming consensus is that those lacking design experience should “instead draw from preconstructed ramps.” <span class="citation"><a href="#ref-smart2020" role="doc-biblioref">[1]</a></span> The good news is that “automatically generated color ramps” can perform at least as well as designer ramps in many circumstances. <span class="citation"><a href="#ref-smart2020" role="doc-biblioref">[1]</a></span> Fortunately, R has many options available.</p>
+<p>Some basic design principles should be kept at the forefront. An appropriate color selection should accomplish three things. First, the colors should not be unappealing. <span class="citation"><a href="#ref-colorspace2009a" role="doc-biblioref">[2]</a></span> Large areas of highly saturated colors should be avoided as viewers quickly tire and it can cause after-image effects.<span class="citation"><a href="#ref-colorspace2009a" role="doc-biblioref">[2]</a></span> Second, the colors should “cooperate” with each other, meaning that any one color should both be appealing by itself and when viewed with the others. <span class="citation"><a href="#ref-colorspace2009a" role="doc-biblioref">[2]</a></span> Third, “the colors should work everywhere”. <span class="citation"><a href="#ref-colorspace2009a" role="doc-biblioref">[2]</a></span> The colors should be distinguishable regardless of how they are displayed. The plot should convey the same meaning if it’s shown on a projector, a computer screen or a facsimile.</p>
+<p>You can find help if you know where to look. <code>?grDevices::hcl.colors</code> or <code>?grDevices::palette</code> are great places to start. For brevity, the post will only address a palette of five categorical/qualitative color choices from the <code>grDevices</code>, <code>RColorBrewer</code> and <code>colorspace</code> packages. The post concludes by recommending the <code>colorspace</code> package as an excellent starting point for most analysts.</p>
 </div>
-<div id="sample-palettes" class="section level1">
-<h1><a href="#palettes">Sample Palettes</a></h1>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/sample-palettes-1.svg" width="576" style="display: block; margin: auto;" /></p>
+<div id="terms" class="section level1">
+<h1><a href="#terms">Terms</a></h1>
+<p>In reviewing discussions about color, the following terms are helpful to know:</p>
+<div id="general" class="section level2">
+<h2>General</h2>
+<ul>
+<li><p><strong>Color palette</strong> is a collection of colors.</p></li>
+<li><p><strong>Color ramp</strong> is a synonym for a collection or palette of colors.</p></li>
+<li><p><strong>Color space</strong> is a specific organization of colors.</p></li>
+</ul>
+</div>
+<div id="color-blindness" class="section level2">
+<h2>Color Blindness</h2>
+<ul>
+<li><p><strong>Deuteranomaly</strong> is a type of color blindness from the defectiveness of green cone cells.</p></li>
+<li><p><strong>Protanomaly</strong> is a type of color blindness from the defectiveness of red cone cells.</p></li>
+<li><p><strong>Tritanomaly</strong> is a type of colorblindness from the defectiveness of blue cone cells.</p></li>
+</ul>
+</div>
+<div id="color-spaces" class="section level2">
+<h2>Color Spaces</h2>
+<ul>
+<li><p><strong>HSV</strong> is an acronym for “hue-saturation-value” and is a simple transformation of the RGB palette. HSV palletes are disfavored.</p></li>
+<li><p><strong>HCL</strong> is an acronym for “hue-chroma-luminance”. HCL palettes are preferred because they account for human color perception.</p></li>
+<li><p><strong>RGB</strong> is an acronym for “red-green-blue”.</p></li>
+</ul>
+</div>
+<div id="palette-types" class="section level2">
+<h2>Palette Types</h2>
+<ul>
+<li><p><strong>Qualitative</strong> palettes are used for categorical data “where no particular ordering of catgories is available and every color should receive the same perceptual weight.”</p></li>
+<li><p><strong>Sequential</strong> palettes are used for “coding ordered/numeric information where colors go from high to low or vice versa.”</p></li>
+<li><p><strong>Diverging</strong> palettes are “designed for coding numeric information around a central neutral value.” Their use shows contrasts between two extremes.</p></li>
+</ul>
+</div>
+</div>
+<div id="hexadecimal-notation" class="section level1">
+<h1><a href="#hexadecimal">Hexadecimal Notation</a></h1>
+<p>Colors are often described in their hexadecimal equivalent, often with a leading “#”. A hex triplet is a six-digit, three-byte hexadecimal number ranging from 00 to FF or 0 to 255 in decimal notation. The color intensity ranges from 0 (least intense) to 255 (most intense). A hexadecimal color is specified with #RRGGBB. RR (red), GG (green) and BB (blue) are hexadecimal integers between 00 and FF. The number of potential colors are 16,777,216. R uses hexadecimal notation for color. White, for example, is “#FFFFFF”. R also uses names for 657 colors like “olivedrab2.”</p>
+</div>
+<div id="conversion" class="section level1">
+<h1><a href="#conversion">Conversion</a></h1>
+<p>R translates color naming strategies into hexadecimal notation. Hexadecimal notation can contain an additional two digits for specifying transparency.</p>
+<div id="rgb" class="section level2">
+<h2><a href="#RGB">RGB</a></h2>
+<p><code>rgb</code> (red-blue-green) converts colors in the red, green and blue primaries to hexadecimal. A transparency argument can be set as well with the “alpha” argument. The specification refers to the “sRGB” where “s” represents “standard RGB” and is based on IEC standard 61966. (Disfavored).</p>
+<pre class="r"><code># usage rgb(r, g, b, maxColorValue=255, alpha=255)
+rgb(red = 0, green = 1, blue = 0, maxColorValue = 200, alpha = 50)</code></pre>
+<pre><code>[1] &quot;#00010040&quot;</code></pre>
+</div>
+<div id="hsv" class="section level2">
+<h2><a href="#HSV">HSV</a></h2>
+<p><code>hsv</code> (hue-saturation-value) creates a vector of hexadecimal values from hue, saturation, and value. It is a simple transformation of the RGB space. (Disfavored).</p>
+<pre class="r"><code># usage hsv(h = 1, s = 1, v = 1, alpha)
+hsv(0.5, 0.5, 0.5)</code></pre>
+<pre><code>[1] &quot;#408080&quot;</code></pre>
+</div>
+<div id="hcl" class="section level2">
+<h2><a href="#HCL">HCL</a></h2>
+<p><code>hcl</code> (hue-chroma-luminance) creates hexadecimal values from the hue, chroma, and luminance and is derived from human color perception. (Preferred).</p>
+<pre class="r"><code># usage hcl(h = 0, c = 35, l = 85, alpha, fixup = TRUE)
+hcl(h = 0, c = 35, l = 85)</code></pre>
+<pre><code>[1] &quot;#FFC5D0&quot;</code></pre>
+<p>Avoid the <code>rainbow</code> palette. Instead, use a palette from <code>hcl.colors()</code>.</p>
+</div>
+</div>
+<div id="color-packages" class="section level1">
+<h1><a href="#color-packages">Color Packages</a></h1>
+<p>There are many packages in R that can provide a color palette. A partial list includes: <code>RColorBrewer</code>, <code>viridis</code>, <code>rcartocolor</code>, <code>wesanderson</code>, and <code>scico</code>. Other packages like <code>pals</code> and <code>paletteer</code> combine the palettes from the different packages into a “unified interface.”</p>
+<p>Here, three packages will be used to generate palettes: <code>grDevices</code>, <code>RColorBrewer</code> and <code>colorspace</code>.</p>
+<div id="grdevices" class="section level2">
+<h2><a href="#colorRamps">grDevices</a></h2>
+<p>The <code>grDevices</code> package contains several palettes.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:graphic-devices"></span>
+<img src="{{< blogdown/postref >}}index_files/figure-html/graphic-devices-1.svg" alt="The hcl.colors palette was omitted because grDevices incorporates it from the colorspace package." width="576" />
+<p class="caption">
+Figure 1: The hcl.colors palette was omitted because grDevices incorporates it from the colorspace package.
+</p>
+</div>
+</div>
+<div id="rcolorbrewer" class="section level2">
+<h2>RColorBrewer</h2>
+<p><code>RColorBrewer</code> was my “go-to” color package for many years. The package is easy to use and the many palettes can be seen with the command <code>display.brewer.all()</code>.</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/rcolorbrewer-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="colorspace" class="section level2">
+<h2><a href="#palettes">colorspace</a></h2>
+<p>The “[C]olorspace package can derive general and adaptable strategies for color palettes; manipulate individual colors and color palettes; and assess and visualize the properties of color palettes (beyond simple color swatches).”<span class="citation"><a href="#ref-zeileis2019" role="doc-biblioref">[3]</a></span> Like other packages, <code>colorspace</code> provides qualitative, sequential and diverging palettes.</p>
+<p>The authors of <code>colorspace</code> have provided a suite of tools to assist in palette selection. To start, you can run the command <code>hcl_palettes(plot = TRUE)</code> and see the different color selections.</p>
+<p>Remember that the “HCL” space is “particularly useful for specifying individual colors and color palettes as its three axes match those of the human visual system very well”.<span class="citation"><a href="#ref-zeileis2019" role="doc-biblioref">[3]</a></span> A vector of HCL colors can be generated by specifying the (1) kind of palette desired, (2) the number of colors and (3) the name of the palette:</p>
+<pre class="r"><code>colorspace::qualitative_hcl(3, &quot;Set3&quot;)
+colorspace::sequential_hcl(4, &quot;Blues3&quot;)
+colorspace::diverge_hcl(5, &quot;Tropic&quot;)</code></pre>
+<p>For additional palettes, run <code>hcl_palettes()</code>.</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/colorspace-palettes-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
 </div>
 <div id="sample-plots" class="section level1">
 <h1><a href="#plots">Sample Plots</a></h1>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/sample-plots-1.svg" width="576" style="display: block; margin: auto;" /></p>
 </div>
+<div id="accessibility" class="section level1">
+<h1><a href="#accessibility">Accessibility</a></h1>
+<p>Color is helpful if the viewer can see it. However, many people have some form of color blindness with men at greater risk. Red–green color blindness affects up to 1 in 12 males (8%) and 1 in 200 females (0.5%). <a href="https://en.wikipedia.org/wiki/Color_blindness">Wikipedia, Color Blindness</a>.</p>
+<p><a href="https://www.colorblindnesstest.org/ishihara-test/"><img src="color_blind_test.png" width="90%" style="display: block; margin: auto;" /></a></p>
+<p>Generating palettes can accomodate color blind viewers. A graphical user interface at <a href="https://hclwizard.org">https://hclwizard.org</a> shows what colorblind viewers see.</p>
+</div>
 <div id="conclusion" class="section level1">
 <h1><a href="#conclusion">Conclusion</a></h1>
+<p>Do not handpick your palette. Instead, rely on a tried-and-true package. Avoid fully saturated or “loud” colors. The <code>colorspace</code> package can offer a wide variety of palettes that create attractive visualizations.</p>
 </div>
 <div id="acknowledgements" class="section level1">
 <h1><a href="#acknowledge">Acknowledgements</a></h1>
-<p>This blog post was made possible thanks to:</p>
+<p>In addition to the cited packages and journals, this post was made imminently better thanks to:</p>
+<ul>
+<li>Melanie Frazier at the National Center for Ecological Analysis and Synthesis. Dr. Frazier prepared a color “<a href="https://www.nceas.ucsb.edu/sites/default/files/2020-04/colorPaletteCheatsheet.pdf">cheat sheet</a>” that was extremely helpful.</li>
+</ul>
 </div>
 <div id="references" class="section level1">
 <h1><a href="#reference">References</a></h1>
 <div id="refs" class="references csl-bib-body">
+<div id="ref-smart2020" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">S. Smart, K. Wu, and D. A. Szafir, <span>“Color <span>Crafting</span>: <span>Automating</span> the <span>Construction</span> of <span>Designer Quality Color Ramps</span>,”</span> <em>IEEE Transactions on Visualization and Computer Graphics</em>, vol. 26, no. 1, pp. 1215–1225, Jan. 2020, doi: <a href="https://doi.org/10.1109/TVCG.2019.2934284">10.1109/TVCG.2019.2934284</a>. </div>
+</div>
+<div id="ref-colorspace2009a" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">A. Zeileis, K. Hornik, and P. Murrell, <span>“Escaping <span>RGB</span>land: Selecting colors for statistical graphics,”</span> <em>Computational Statistics &amp; Data Analysis</em>, vol. 53, no. 9, pp. 3259–3270, 2009, doi: <a href="https://doi.org/10.1016/j.csda.2008.11.033">10.1016/j.csda.2008.11.033</a>. </div>
+</div>
+<div id="ref-zeileis2019" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">A. Zeileis <em>et al.</em>, <span>“Colorspace: <span>A Toolbox</span> for <span>Manipulating</span> and <span>Assessing Colors</span> and <span>Palettes</span>.”</span> <span>arXiv</span>, 14-Mar-2019 [Online]. Available: <a href="http://arxiv.org/abs/1903.06490">http://arxiv.org/abs/1903.06490</a>. [Accessed: 16-Aug-2022]</div>
+</div>
 <div id="ref-R-base" class="csl-entry">
-<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2022 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2022 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
 </div>
 <div id="ref-R-blogdown" class="csl-entry">
-<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+</div>
+<div id="ref-R-colorspace" class="csl-entry">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">R. Ihaka <em>et al.</em>, <em>Colorspace: A toolbox for manipulating and assessing colors and palettes</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=colorspace">https://CRAN.R-project.org/package=colorspace</a></div>
+</div>
+<div id="ref-R-RColorBrewer" class="csl-entry">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">E. Neuwirth, <em>RColorBrewer: ColorBrewer palettes</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=RColorBrewer">https://CRAN.R-project.org/package=RColorBrewer</a></div>
 </div>
 </div>
 </div>
