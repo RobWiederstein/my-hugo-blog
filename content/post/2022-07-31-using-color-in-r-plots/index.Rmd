@@ -20,7 +20,7 @@ header:
   image: feature.jpg
   alt: swirled primary colors
   caption: Photo by Daniel Olah on Unsplash.
-repo: ~
+repo: https://github.com/RobWiederstein/my-hugo-blog/blob/main/content/post/2022-07-31-using-color-in-r-plots/index.Rmd
 summary: Using color effectively is key for informative and accurate plots. R packages can provide tried-and-true palettes to ease the process.
 ---
 

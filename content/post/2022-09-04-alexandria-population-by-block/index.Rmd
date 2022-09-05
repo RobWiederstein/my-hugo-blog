@@ -21,7 +21,7 @@ header:
   image: feature.jpg
   alt: Welcome to Alexandria Virginia
   caption: Welcome!
-repo: ~
+repo: https://github.com/RobWiederstein/my-hugo-blog/blob/main/content/post/2022-09-04-alexandria-population-by-block/index.Rmd
 summary: This post is a choropleth map of Alexandria, Virginia.  The project required a geographic file at the block level and a demographic file for population.  Both were downloaded from the US Census Bureau.
 ---
 
