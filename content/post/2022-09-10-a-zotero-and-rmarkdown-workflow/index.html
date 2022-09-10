@@ -1,0 +1,213 @@
+---
+title: A Zotero and Rmarkdown Workflow
+author: Rob Wiederstein
+date: '2022-09-10'
+slug: a-zotero-and-rmarkdown-workflow
+categories:
+  - R
+  - Zotero
+tags: []
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: feature.png
+  alt: rmarkdown plus zotero
+  caption: Rmarkdown plus Zotero
+repo: ~
+summary: You can use Rmarkdown to generate LaTeK documents and Zotero to track your citations.  This post explains a possible workflow.
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#overview" id="toc-overview"><span>Overview</span></a></li>
+<li><a href="#create-rmarkdown-document" id="toc-create-rmarkdown-document"><span>Create Rmarkdown document</span></a></li>
+<li><a href="#set-output" id="toc-set-output"><span>Set Output</span></a></li>
+<li><a href="#insert-yaml" id="toc-insert-yaml"><span>Insert YAML</span></a></li>
+<li><a href="#insert-markdown" id="toc-insert-markdown"><span>Insert Markdown</span></a></li>
+<li><a href="#export-zotero-collection" id="toc-export-zotero-collection"><span>Export Zotero Collection</span></a></li>
+<li><a href="#export-biblatex-format" id="toc-export-biblatex-format"><span>Export Biblatex Format</span></a></li>
+<li><a href="#download-zotero-style" id="toc-download-zotero-style"><span>Download Zotero Style</span></a></li>
+<li><a href="#save-.csl-and-.bib-to-root" id="toc-save-.csl-and-.bib-to-root"><span>Save <code>.csl</code> and <code>.bib</code> to root</span></a></li>
+<li><a href="#trigger-citr-menu" id="toc-trigger-citr-menu"><span>Trigger citr menu</span></a></li>
+<li><a href="#insert-citation" id="toc-insert-citation"><span>Insert Citation</span></a></li>
+<li><a href="#document" id="toc-document"><span>Document</span></a></li>
+<li><a href="#conclusion" id="toc-conclusion"><span>Conclusion</span></a></li>
+<li><a href="#acknowledgements" id="toc-acknowledgements"><span>Acknowledgements</span></a></li>
+<li><a href="#references" id="toc-references"><span>References</span></a></li>
+<li><a href="#disclaimer" id="toc-disclaimer"><span>Disclaimer</span></a></li>
+<li><a href="#reproducibility" id="toc-reproducibility"><span>Reproducibility</span></a></li>
+</ul>
+</div>
+
+<div id="overview" class="section level1">
+<h1><a href="#overview">Overview</a></h1>
+<p>You can use Rmarkdown to generate LaTeK documents and Zotero to track your citations. You need a working download of Zotero along with the add-in “Better Bibtex for Zotero”. I use the IDE Rstudio for R. You’ll need to install the “citr” and “rmarkdown” packages. Once you have these prerequisites, this post explains a possible workflow.</p>
+</div>
+<div id="create-rmarkdown-document" class="section level1">
+<h1><a href="#create-doc">Create Rmarkdown document</a></h1>
+<p><img src="create-rmarkdown.png" width="704" style="display: block; margin: auto;" /></p>
+</div>
+<div id="set-output" class="section level1">
+<h1><a href="#set-output">Set Output</a></h1>
+<p><img src="set-output-pdf.png" width="525" style="display: block; margin: auto;" /></p>
+</div>
+<div id="insert-yaml" class="section level1">
+<h1><a href="#insert-yaml">Insert YAML</a></h1>
+<p><img src="insert-yaml.png" width="698" style="display: block; margin: auto;" /></p>
+</div>
+<div id="insert-markdown" class="section level1">
+<h1><a href="#insert-md">Insert Markdown</a></h1>
+<p><img src="insert-markdown.png" width="700" style="display: block; margin: auto;" /></p>
+</div>
+<div id="export-zotero-collection" class="section level1">
+<h1><a href="#export-zotero">Export Zotero Collection</a></h1>
+<p><img src="export-zotero-collection.png" width="611" style="display: block; margin: auto;" /></p>
+</div>
+<div id="export-biblatex-format" class="section level1">
+<h1><a href="#export-biblatex">Export Biblatex Format</a></h1>
+<p><img src="export-better-biblatex-format.png" width="416" style="display: block; margin: auto;" /></p>
+</div>
+<div id="download-zotero-style" class="section level1">
+<h1><a href="#download-style">Download Zotero Style</a></h1>
+<p><img src="download-csl-file.png" width="689" style="display: block; margin: auto;" /></p>
+</div>
+<div id="save-.csl-and-.bib-to-root" class="section level1">
+<h1><a href="#save-csl">Save <code>.csl</code> and <code>.bib</code> to root</a></h1>
+<p><img src="bib-csl-in-root.png" width="609" style="display: block; margin: auto;" /></p>
+</div>
+<div id="trigger-citr-menu" class="section level1">
+<h1><a href="#include-citation">Trigger citr menu</a></h1>
+<p><img src="citr-menu.png" width="616" style="display: block; margin: auto;" /></p>
+</div>
+<div id="insert-citation" class="section level1">
+<h1><a href="#insert-citation">Insert Citation</a></h1>
+<p><img src="citr-insert.png" width="617" style="display: block; margin: auto;" /></p>
+</div>
+<div id="document" class="section level1">
+<h1><a href="#document">Document</a></h1>
+<p><img src="tufte-citation.png" width="703" style="display: block; margin: auto;" /></p>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+<p>The post describes a workflow where journal articles can be annotated/highlighted in Zotero and then inserted into Rmarkdown documents. Once the documents are “knit,” a PDF is created using LaTeK typography.</p>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to:</p>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2022 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value
+ version  R version 4.1.3 (2022-03-10)
+ os       macOS Big Sur/Monterey 10.16
+ system   x86_64, darwin17.0
+ ui       X11
+ language (EN)
+ collate  en_US.UTF-8
+ ctype    en_US.UTF-8
+ tz       America/New_York
+ date     2022-09-10
+ pandoc   2.18 @ /Applications/RStudio.app/Contents/MacOS/quarto/bin/tools/ (via rmarkdown)
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version    date (UTC) lib source
+ assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.1.0)
+ blogdown    * 1.11       2022-08-09 [1] CRAN (R 4.1.2)
+ bookdown      0.28       2022-08-09 [1] CRAN (R 4.1.2)
+ bslib         0.4.0.9000 2022-08-26 [1] Github (rstudio/bslib@fa2e03c)
+ cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.0)
+ callr         3.7.2      2022-08-22 [1] CRAN (R 4.1.2)
+ cli           3.3.0      2022-04-25 [1] CRAN (R 4.1.2)
+ codetools     0.2-18     2020-11-04 [1] CRAN (R 4.1.3)
+ colorspace    2.0-3      2022-02-21 [1] CRAN (R 4.1.2)
+ crayon        1.5.1      2022-03-26 [1] CRAN (R 4.1.0)
+ DBI           1.1.3      2022-06-18 [1] CRAN (R 4.1.2)
+ devtools    * 2.4.4      2022-07-20 [1] CRAN (R 4.1.2)
+ digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.0)
+ dplyr         1.0.9      2022-04-28 [1] CRAN (R 4.1.2)
+ ellipsis      0.3.2      2021-04-29 [1] CRAN (R 4.1.0)
+ evaluate      0.16       2022-08-09 [1] CRAN (R 4.1.2)
+ fansi         1.0.3      2022-03-24 [1] CRAN (R 4.1.2)
+ fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.0)
+ fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.0)
+ generics      0.1.3      2022-07-05 [1] CRAN (R 4.1.2)
+ ggplot2     * 3.3.6      2022-05-03 [1] CRAN (R 4.1.2)
+ ggthemes    * 4.2.4      2021-01-20 [1] CRAN (R 4.1.0)
+ glue          1.6.2      2022-02-24 [1] CRAN (R 4.1.2)
+ gtable        0.3.0      2019-03-25 [1] CRAN (R 4.1.0)
+ highr         0.9        2021-04-16 [1] CRAN (R 4.1.0)
+ htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.2)
+ htmlwidgets   1.5.4      2021-09-08 [1] CRAN (R 4.1.0)
+ httpuv        1.6.5      2022-01-05 [1] CRAN (R 4.1.2)
+ jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.0)
+ jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)
+ knitr         1.40       2022-08-24 [1] CRAN (R 4.1.3)
+ later         1.3.0      2021-08-18 [1] CRAN (R 4.1.0)
+ lifecycle     1.0.1      2021-09-24 [1] CRAN (R 4.1.0)
+ magrittr      2.0.3      2022-03-30 [1] CRAN (R 4.1.2)
+ memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.0)
+ mime          0.12       2021-09-28 [1] CRAN (R 4.1.0)
+ miniUI        0.1.1.1    2018-05-18 [1] CRAN (R 4.1.0)
+ munsell       0.5.0      2018-06-12 [1] CRAN (R 4.1.0)
+ pillar        1.8.1      2022-08-19 [1] CRAN (R 4.1.2)
+ pkgbuild      1.3.1      2021-12-20 [1] CRAN (R 4.1.0)
+ pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.1.0)
+ pkgload       1.3.0      2022-06-27 [1] CRAN (R 4.1.2)
+ png           0.1-7      2013-12-03 [1] CRAN (R 4.1.0)
+ prettyunits   1.1.1      2020-01-24 [1] CRAN (R 4.1.0)
+ processx      3.7.0      2022-07-07 [1] CRAN (R 4.1.2)
+ profvis       0.3.7      2020-11-02 [1] CRAN (R 4.1.0)
+ promises      1.2.0.1    2021-02-11 [1] CRAN (R 4.1.0)
+ ps            1.7.1      2022-06-18 [1] CRAN (R 4.1.2)
+ purrr         0.3.4      2020-04-17 [1] CRAN (R 4.1.0)
+ R6            2.5.1      2021-08-19 [1] CRAN (R 4.1.0)
+ Rcpp          1.0.9      2022-07-08 [1] CRAN (R 4.1.2)
+ remotes       2.4.2      2021-11-30 [1] CRAN (R 4.1.0)
+ rlang         1.0.4      2022-07-12 [1] CRAN (R 4.1.2)
+ rmarkdown     2.16       2022-08-24 [1] CRAN (R 4.1.3)
+ rstudioapi    0.14       2022-08-22 [1] CRAN (R 4.1.2)
+ sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.2)
+ scales        1.2.1      2022-08-20 [1] CRAN (R 4.1.2)
+ sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.0)
+ shiny         1.7.2      2022-07-19 [1] CRAN (R 4.1.2)
+ stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.2)
+ stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.2)
+ tibble        3.1.8      2022-07-22 [1] CRAN (R 4.1.2)
+ tidyselect    1.1.2      2022-02-21 [1] CRAN (R 4.1.2)
+ urlchecker    1.0.1      2021-11-30 [1] CRAN (R 4.1.0)
+ usethis     * 2.1.6      2022-05-25 [1] CRAN (R 4.1.2)
+ utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.0)
+ vctrs         0.4.1      2022-04-13 [1] CRAN (R 4.1.2)
+ withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.0)
+ xfun          0.32       2022-08-10 [1] CRAN (R 4.1.2)
+ xtable        1.8-4      2019-04-21 [1] CRAN (R 4.1.0)
+ yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)
+
+ [1] /Library/Frameworks/R.framework/Versions/4.1/Resources/library
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
