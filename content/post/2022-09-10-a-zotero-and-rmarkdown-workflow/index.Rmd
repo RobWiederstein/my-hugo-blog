@@ -152,10 +152,6 @@ knitr::include_graphics("./tufte-citation.png")
 
 The post describes a workflow where journal articles can be annotated/highlighted in Zotero and then inserted into Rmarkdown documents.  Once the documents are "knit," a PDF is created using LaTeK typography.
 
-# [Acknowledgements](#acknowledge)
-
-This blog post was made possible thanks to:
-
 # [References](#reference)
 
 <div id="refs"></div>
