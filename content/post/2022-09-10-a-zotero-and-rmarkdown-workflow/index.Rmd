@@ -15,7 +15,7 @@ bibliography:
 csl: ../ieee-with-url.csl
 link-citations: yes
 nocite: |
-  @R-base, @R-blogdown, @R-tidyverse
+  @R-base, @R-blogdown, @R-tidyverse, @R-citr, @R-rmarkdown
 header:
   image: feature.png
   alt: rmarkdown plus zotero
@@ -30,7 +30,9 @@ summary: You can use Rmarkdown to generate LaTeK documents and Zotero to track y
 packages <- c(
       'devtools', #for session info
       'ggthemes', #for plots
-      'blogdown'
+      'blogdown',
+      'citr',
+      'rmarkdown'
 )
 lapply(packages, function(x) {
   if (!requireNamespace(x)) install.packages(x)
@@ -75,7 +77,9 @@ knitr::write_bib(.packages(), "./packages.bib")
 
 # [Overview](#overview)
 
-You can use Rmarkdown to generate LaTeK documents and Zotero to track your citations.  You need a working download of Zotero along with the add-in "Better Bibtex for Zotero".  I use the IDE Rstudio for R.  You'll need to install the "citr" and "rmarkdown" packages. Once you have these prerequisites, this post explains a possible workflow.
+You can use Rmarkdown to generate LaTeK documents and Zotero to track your citations.  You need a working download of Zotero along with the add-in "Better Bibtex for Zotero".  I use the IDE Rstudio for R.  You'll need to install the "citr" and "rmarkdown" packages. Once you have these prerequisites, this post explains a possible workflow. I'd recommend and largely followed the ["R Markdown Cookbook"](https://bookdown.org/yihui/rmarkdown-cookbook/) for inserting a bibliography.
+
+
 
 # [Create Rmarkdown document](#create-doc)
 
