@@ -89,9 +89,7 @@ A "caesar cipher" is a simple shift of the alphabet to encode data.  If you shif
 
 # [Gutenbergr Package](#gutenbergr)
 
-With the `Gutenbergr` package in R, public domain texts are freely available.   The collection is large and contains 60,000+ free eBooks in different languages.  I chose four well-known works of literature one from English (en), Spanish (es), German (de), and French (fr).  The texts are "Moby Dick" by Herman Melville, Don Quijote by Cervantes, Faust by Goethe and Les Miserables by Victor Hugo.  
-
-These were in the original language. Only the ten most frequent letters from Moby Dick were included. There were similar distributions of the letters for the other languages.
+With the `Gutenbergr` package in R, public domain texts are freely available. The collection is large and contains 60,000+ free eBooks in different languages.  I chose four well-known works of literature one from English (en), Spanish (es), German (de), and French (fr).  The texts are "Moby Dick" by Herman Melville, Don Quijote by Cervantes, Faust by Goethe and Les Miserables by Victor Hugo.  These were in the original language.  There were similar distributions of the letters for the other languages.
 
 
 # [Letter Frequency](#letter-frequency)
