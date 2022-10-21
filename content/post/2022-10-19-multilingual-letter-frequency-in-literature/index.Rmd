@@ -89,36 +89,20 @@ A "caesar cipher" is a simple shift of the alphabet to encode data.  If you shif
 
 # [Gutenbergr Package](#gutenbergr)
 
-With the `Gutenbergr` package in R, public domain texts are freely available.   The collection is large and contains 60,000+ free eBooks in different languages.  I chose four well-known works of literature one from English (en), Spanish (es), German (de), and French (fr).  The texts are "Moby Dick" by Herman Melville, Don Quijote by Cervantes, Faust by Goethe and Les Miserables by Victor Hugo.  These were in the original language. Only the ten most frequent letters from Moby Dick were included. There were similar distributions of the letters for the other languages.
+With the `Gutenbergr` package in R, public domain texts are freely available.   The collection is large and contains 60,000+ free eBooks in different languages.  I chose four well-known works of literature one from English (en), Spanish (es), German (de), and French (fr).  The texts are "Moby Dick" by Herman Melville, Don Quijote by Cervantes, Faust by Goethe and Les Miserables by Victor Hugo.  
+
+These were in the original language. Only the ten most frequent letters from Moby Dick were included. There were similar distributions of the letters for the other languages.
 
 
 # [Letter Frequency](#letter-frequency)
 
-```{r load-plot, fig.fullwidth=T, cache=FALSE}
-data <- readRDS("./works_of_fiction.rds")
-colors <- qualitative_hcl(4, palette = "dark2")
-library(ggplot2)
-data |>
-  ggplot() +
-  aes(pct, characters, group = language, color = language) +
-  geom_point(size = 2) +
-  scale_color_manual(values = colors) +
-  scale_x_continuous(
-      limits = c(0, 16),
-      breaks = c(0, 5, 10, 15),
-      labels = paste0(seq(0, 15, 5), "%"),
-      name = "",
-      ) +
-  scale_y_discrete(name = "") +
-  facet_wrap(. ~ title) +
-  theme_minimal() +
-    theme(text = element_text(size = 14))
+```{r load-plot, out.width="90%", cache=FALSE}
+knitr::include_graphics("./plot.jpg")
 ```
 
 # [Code](#code)
 
 ```{r echo=T, eval=FALSE, tidy=TRUE}
-
 # devtools::install_github("ropensci/gutenbergr")
 library(dplyr)
 library(tidytext)
@@ -137,19 +121,19 @@ les_miserab <- gutenberg_download(
         meta_fields = c("title", "author", "language"),
         verbose = F
 )
-# Don Quijote - Cervantes - Spanish
+# Don Quijote - Cervantes
 don_quijote <- gutenberg_download(
     gutenberg_id = 2000,
     meta_fields = c("title", "author", "language"),
     verbose = F
 )
-# Faust - Goethe - German
+# Faust - Goethe
 faust <- gutenberg_download(
     gutenberg_id = 2229,
     meta_fields = c("title", "author", "language"),
     verbose = F
 )
-# function
+# build function
 find_letter_frequency <- function(book){
   book |>
   mutate(text = iconv(text, to = 'latin1')) |>
@@ -170,7 +154,7 @@ data <-
         find_letter_frequency(book = don_quijote),
         find_letter_frequency(book = faust)
     )
-#name table
+
 convert_names <-
     tribble(
     ~title, ~title1,
@@ -179,55 +163,46 @@ convert_names <-
     "Don Quijote", "Don Quijote",
     "Faust: Der Tragödie erster Teil", "Faust"
 )
-#merge and drop
 data <- dplyr::left_join(data, convert_names, by = "title") |>
     dplyr::select(-title) |>
     dplyr::rename(title = title1)
 
-#most common characters
-most_common_en_characters <-
+# reorder characters high --> low
+characters_reordered <-
     data |>
     filter(language == "en") |>
-    top_n(10, pct) |>
+    arrange(desc(pct)) |>
     select(characters) |>
     pull()
+data$characters <- factor(data$characters, levels = characters_reordered)
 
-#filter to top 10
-data <-
-    data |>
-    filter(characters %in% most_common_en_characters)
-# reorder characters high --> low
-data$characters <- factor(data$characters)
-data$characters <- forcats::fct_reorder(data$characters, data$pct)
-#reorder language
-data$language <- factor(data$language)
-data$language <- forcats::fct_relevel(
-    data$language,
-    "en", "es", "de", "fr",
-    )
-#reorder title
+
+# reorder plots
 data$title <- factor(data$title)
 data$title <- forcats::fct_relevel(data$title, "Moby Dick")
-#plot
+#reorder language
+data$language <- factor(data$language)
+data$language <- forcats::fct_relevel(data$language,
+                                      c("en", "es", "de", "fr"))
+#set colors
 colors <- colorspace::qualitative_hcl(4, palette = "dark2")
+#plot
 library(ggplot2)
 data |>
   ggplot() +
-  aes(pct, characters, group = language, color = language) +
-  geom_point(size = 2) +
+  aes(characters, pct, group = language, color = language) +
+  geom_point(size = 3.0, shape = 18) +
   scale_color_manual(values = colors) +
-  scale_x_continuous(
+  scale_y_continuous(
       limits = c(0, 16),
       breaks = c(0, 5, 10, 15),
       labels = paste0(seq(0, 15, 5), "%"),
       name = "",
       ) +
-  scale_y_discrete(name = "") +
-  facet_wrap(. ~ title) +
+  scale_x_discrete(name = "") +
+  facet_wrap(. ~ title, ncol = 1) +
   theme_minimal() +
     theme(text = element_text(size = 14))
-
-
 ```
 
 # [Acknowledgements](#acknowledge)
