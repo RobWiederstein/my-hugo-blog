@@ -2,7 +2,6 @@
 title: Multilingual Letter Frequency in Literature
 author: Rob Wiederstein
 date: '2022-10-19'
-#slug: multinational-letter-frequency-analysis-on-works-of-literature
 slug: multilingual-letter-frequency-in-literature
 categories:
   - R
