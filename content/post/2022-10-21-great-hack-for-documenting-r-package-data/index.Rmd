@@ -19,9 +19,8 @@ header:
   image: feature.jpg
   alt: confusing grid of white square tiles with black seams
   caption: Photo by Kiran K. on Unsplash
-  
 repo: ~
-summary: When creating a package, documenting your data is a crucial step.  While important, it can also be time consuming. A high-dimensional dataset would require describing each variable. This post gives a quick method to pass an R-CMD-check and document data. The method relies on using paste, cat and the multiple cursor feature to speed documentation. It reduces the number of mistakes made from manual entry and insures the inclusion of all variables.
+summary: When creating a package, documenting your data is a crucial step.  While important, it can also be time-consuming. A high-dimensional dataset would require describing each variable. This post gives a quick method to pass an R-CMD-check and document data.
 ---
 
 
