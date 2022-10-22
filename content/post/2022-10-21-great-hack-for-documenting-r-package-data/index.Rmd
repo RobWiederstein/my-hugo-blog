@@ -81,7 +81,7 @@ When creating a package, documenting your data is a crucial step.  While importa
 
 # [Roxygen for Package Documentation](#roxygen)
 
-Chapter 8 in the R-Packages book deals with data. This example deals with the situation where an author saves the data to the `data/` folder, meaning that it is "effectively exported". Only exported data is documented.
+[Chapter 8](https://r-pkgs.org/Data.html) in the R-Packages book deals with data. This example pertains to the situation where an author saves the data to the `data/` folder, meaning that it is "effectively exported". Only exported data is documented.
 
 ```{r, sample-exported-data, eval=F, include=T, echo=T}
 # the "usethis" package has a specific function
