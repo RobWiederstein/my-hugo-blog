@@ -1,0 +1,266 @@
+---
+title: Great Hack for Documenting R Package Data
+author: Rob Wiederstein
+date: '2022-10-21'
+slug: great-hack-for-documenting-r-package-data
+categories:
+  - R
+tags: []
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-roxygen2, @R-devtools, @R-usethis
+header:
+  image: feature.jpg
+  alt: confusing grid of white square tiles with black seams
+  caption: Photo by Kiran K. on Unsplash
+  
+repo: ~
+summary: When creating a package, documenting your data is a crucial step.  While important, it can also be time consuming. A high-dimensional dataset would require describing each variable. This post gives a quick method to pass an R-CMD-check and document data. The method relies on using paste, cat and the multiple cursor feature to speed documentation. It reduces the number of mistakes made from manual entry and insures the inclusion of all variables.
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#overview" id="toc-overview"><span>Overview</span></a></li>
+<li><a href="#roxygen-for-package-documentation" id="toc-roxygen-for-package-documentation"><span>Roxygen for Package Documentation</span></a></li>
+<li><a href="#create-sample-table" id="toc-create-sample-table"><span>Create Sample Table</span></a></li>
+<li><a href="#generate-entries" id="toc-generate-entries"><span>Generate Entries</span></a></li>
+<li><a href="#multiple-cursors" id="toc-multiple-cursors"><span>Multiple Cursors</span></a></li>
+<li><a href="#conclusion" id="toc-conclusion"><span>Conclusion</span></a></li>
+<li><a href="#acknowledgements" id="toc-acknowledgements"><span>Acknowledgements</span></a></li>
+<li><a href="#references" id="toc-references"><span>References</span></a></li>
+<li><a href="#disclaimer" id="toc-disclaimer"><span>Disclaimer</span></a></li>
+<li><a href="#reproducibility" id="toc-reproducibility"><span>Reproducibility</span></a></li>
+</ul>
+</div>
+
+<div id="overview" class="section level1">
+<h1><a href="#overview">Overview</a></h1>
+<p>When creating a package, documenting your data is a crucial step. While important, it can also be time-consuming. A high-dimensional dataset would require describing each variable. This post gives a quick method to pass an R-CMD-check and document data. The method relies on using paste, cat, and the multiple cursor feature to speed documentation. It reduces the number of mistakes made from manual entry and ensures the inclusion of all variables.</p>
+</div>
+<div id="roxygen-for-package-documentation" class="section level1">
+<h1><a href="#roxygen">Roxygen for Package Documentation</a></h1>
+<p>Chapter 8 in the R-Packages book deals with data. This example deals with the situation where an author saves the data to the <code>data/</code> folder, meaning that it is “effectively exported”. Only exported data is documented.</p>
+<pre class="r"><code># the &#39;usethis&#39; package has a specific function
+my_pkg_data &lt;- sample(1000)
+usethis::use_data(my_pkg_data)</code></pre>
+<p>Here’s some sample roxygen code taken from <a href="https://r-pkgs.org/Data.html#documenting-data">R-Packages</a>. Two roxygen tags are important to note. First, the <code>@format</code> tag describes the dataset. From R-Packages, “you should include a definition list that describes each variable. It’s usually a good idea to describe the variables’ units . . . .” Second, the <code>@source</code> tag reminds you where the data originated.</p>
+<pre class="r"><code>#&#39; World Health Organization TB data
+#&#39;
+#&#39; A subset of data from the World Health Organization Global Tuberculosis
+#&#39; Report ...
+#&#39;
+#&#39; @format ## `who`
+#&#39; A data frame with 7,240 rows and 60 columns:
+#&#39; \describe{
+#&#39;   \item{country}{Country name}
+#&#39;   \item{iso2, iso3}{2 &amp; 3 letter ISO country codes}
+#&#39;   \item{year}{Year}
+#&#39;   ...
+#&#39; }
+#&#39; @source &lt;https://www.who.int/teams/global-tuberculosis-programme/data&gt;
+&quot;my_pkg_data&quot;</code></pre>
+</div>
+<div id="create-sample-table" class="section level1">
+<h1><a href="#sample-table">Create Sample Table</a></h1>
+<p>To start, let’s create a sample table with 26 variables. (I chose 26 for the number of letters in the alphabet). Each column of the dataframe/tibble must be described so it gets a <code>\item{}</code> line. For a dataframe with a lot of columns, this is time-consuming. Here’s one way to get started.</p>
+<pre class="r"><code>library(tibble)
+df &lt;- tibble()
+df &lt;- rbind(1:26)
+# generate 26 variable names of character lengths of 5 to 20
+variable_names &lt;- function(x) {
+    paste0(sample(letters, x, replace = T), collapse = &quot;&quot;)
+}
+# assign
+names(df) &lt;- sample(5:20, 26, replace = T) |&gt;
+    purrr::map_chr(variable_names)
+df</code></pre>
+<pre><code>     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14]
+[1,]    1    2    3    4    5    6    7    8    9    10    11    12    13    14
+     [,15] [,16] [,17] [,18] [,19] [,20] [,21] [,22] [,23] [,24] [,25] [,26]
+[1,]    15    16    17    18    19    20    21    22    23    24    25    26
+attr(,&quot;names&quot;)
+ [1] &quot;zmrcdtyqpupbpzexf&quot;   &quot;tomeqbnwwwbbxkrh&quot;    &quot;dxnlulqrannhklhcg&quot;  
+ [4] &quot;mzpjnvzihayykrdeov&quot;  &quot;umbdfndihlrgngsxj&quot;   &quot;ribzrzlshevtorcchni&quot;
+ [7] &quot;qjpha&quot;               &quot;efpgomezmlrdv&quot;       &quot;hvicguldtcegmopbsme&quot;
+[10] &quot;ktxieovedtfbxypssqv&quot; &quot;lbahehftmxfdhpcb&quot;    &quot;potmymsftvhzxyp&quot;    
+[13] &quot;qrwfu&quot;               &quot;tegbrsjbvoqiprtc&quot;    &quot;adqgcascafcopar&quot;    
+[16] &quot;wbotzawrradsniozhoo&quot; &quot;xupzvlqtutkxfuka&quot;    &quot;xhangidttsgzpbdlntv&quot;
+[19] &quot;gaqnpmlxp&quot;           &quot;llybzoymeidhgehg&quot;    &quot;knrknkbxgdl&quot;        
+[22] &quot;llcwhgcymcveptsytu&quot;  &quot;wascpqsewkkrfxhczj&quot;  &quot;bidmngrrsjibdgfu&quot;   
+[25] &quot;wioubalfvexykmj&quot;     &quot;fvbdgozzybrojqly&quot;   </code></pre>
+</div>
+<div id="generate-entries" class="section level1">
+<h1><a href="#generate">Generate Entries</a></h1>
+<p>Each variable requires a description. If you send this code to the console, you can copy and paste the output into your documentation. The descriptions are not helpful, but you won’t miss any variables or spend a lot of time comparing your data to your documentation.</p>
+<pre class="r"><code>paste0(&quot;#&#39;   \\item{&quot;, names(df), &quot;}{&quot;, names(df), &quot;}&quot;) |&gt;
+    cat(sep = &quot;\n&quot;)</code></pre>
+<pre><code>#&#39;   \item{zmrcdtyqpupbpzexf}{zmrcdtyqpupbpzexf}
+#&#39;   \item{tomeqbnwwwbbxkrh}{tomeqbnwwwbbxkrh}
+#&#39;   \item{dxnlulqrannhklhcg}{dxnlulqrannhklhcg}
+#&#39;   \item{mzpjnvzihayykrdeov}{mzpjnvzihayykrdeov}
+#&#39;   \item{umbdfndihlrgngsxj}{umbdfndihlrgngsxj}
+#&#39;   \item{ribzrzlshevtorcchni}{ribzrzlshevtorcchni}
+#&#39;   \item{qjpha}{qjpha}
+#&#39;   \item{efpgomezmlrdv}{efpgomezmlrdv}
+#&#39;   \item{hvicguldtcegmopbsme}{hvicguldtcegmopbsme}
+#&#39;   \item{ktxieovedtfbxypssqv}{ktxieovedtfbxypssqv}
+#&#39;   \item{lbahehftmxfdhpcb}{lbahehftmxfdhpcb}
+#&#39;   \item{potmymsftvhzxyp}{potmymsftvhzxyp}
+#&#39;   \item{qrwfu}{qrwfu}
+#&#39;   \item{tegbrsjbvoqiprtc}{tegbrsjbvoqiprtc}
+#&#39;   \item{adqgcascafcopar}{adqgcascafcopar}
+#&#39;   \item{wbotzawrradsniozhoo}{wbotzawrradsniozhoo}
+#&#39;   \item{xupzvlqtutkxfuka}{xupzvlqtutkxfuka}
+#&#39;   \item{xhangidttsgzpbdlntv}{xhangidttsgzpbdlntv}
+#&#39;   \item{gaqnpmlxp}{gaqnpmlxp}
+#&#39;   \item{llybzoymeidhgehg}{llybzoymeidhgehg}
+#&#39;   \item{knrknkbxgdl}{knrknkbxgdl}
+#&#39;   \item{llcwhgcymcveptsytu}{llcwhgcymcveptsytu}
+#&#39;   \item{wascpqsewkkrfxhczj}{wascpqsewkkrfxhczj}
+#&#39;   \item{bidmngrrsjibdgfu}{bidmngrrsjibdgfu}
+#&#39;   \item{wioubalfvexykmj}{wioubalfvexykmj}
+#&#39;   \item{fvbdgozzybrojqly}{fvbdgozzybrojqly}</code></pre>
+</div>
+<div id="multiple-cursors" class="section level1">
+<h1><a href="#multi-cursor">Multiple Cursors</a></h1>
+<p>Once you’ve copied and pasted the console output into your documentation, you may have additional editing to do. One handy feature is the multiple cursor function. You can find it on a Mac with the keyboard shortcut option + mouse.</p>
+<div style="width:100%;height:0;padding-bottom:48%;position:relative;">
+<iframe src="https://giphy.com/embed/kgyRVgPnNmZ7HwYxII" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen>
+</iframe>
+</div>
+<p>
+<a href="https://giphy.com/gifs/r-programming-multi-cursor-kgyRVgPnNmZ7HwYxII">via GIPHY</a>
+</p>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+<p>Documenting your data is important. Many experts recommend the package form for programming because it makes you adhere to community norms and conform to good coding practices. When you are building a package, you may want to quickly document some data. This post can give you one strategy to program, cut, and paste your way to passing an R-CMD-check test and documenting your data.</p>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to:</p>
+<ul>
+<li><p><a href="https://r-pkgs.org/">R packages</a></p></li>
+<li><p><a href="https://roxygen2.r-lib.org/">Roxygen2</a></p></li>
+</ul>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2022 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+</div>
+<div id="ref-R-devtools" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">H. Wickham, J. Hester, W. Chang, and J. Bryan, <em>Devtools: Tools to make developing r packages easier</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=devtools">https://CRAN.R-project.org/package=devtools</a></div>
+</div>
+<div id="ref-R-usethis" class="csl-entry">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">H. Wickham, J. Bryan, and M. Barrett, <em>Usethis: Automate package and project setup</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=usethis">https://CRAN.R-project.org/package=usethis</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value
+ version  R version 4.1.3 (2022-03-10)
+ os       macOS Big Sur/Monterey 10.16
+ system   x86_64, darwin17.0
+ ui       X11
+ language (EN)
+ collate  en_US.UTF-8
+ ctype    en_US.UTF-8
+ tz       America/New_York
+ date     2022-10-21
+ pandoc   2.18 @ /Applications/RStudio.app/Contents/MacOS/quarto/bin/tools/ (via rmarkdown)
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version    date (UTC) lib source
+ assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.1.0)
+ blogdown    * 1.13       2022-09-24 [1] CRAN (R 4.1.2)
+ bookdown      0.29       2022-09-12 [1] CRAN (R 4.1.3)
+ bslib         0.4.0.9000 2022-08-26 [1] Github (rstudio/bslib@fa2e03c)
+ cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.0)
+ callr         3.7.2      2022-08-22 [1] CRAN (R 4.1.2)
+ cli           3.4.1      2022-09-23 [1] CRAN (R 4.1.2)
+ codetools     0.2-18     2020-11-04 [1] CRAN (R 4.1.3)
+ colorspace    2.0-3      2022-02-21 [1] CRAN (R 4.1.2)
+ crayon        1.5.2      2022-09-29 [1] CRAN (R 4.1.3)
+ DBI           1.1.3      2022-06-18 [1] CRAN (R 4.1.2)
+ devtools    * 2.4.4      2022-07-20 [1] CRAN (R 4.1.2)
+ digest        0.6.29     2021-12-01 [1] CRAN (R 4.1.0)
+ dplyr         1.0.10     2022-09-01 [1] CRAN (R 4.1.2)
+ ellipsis      0.3.2      2021-04-29 [1] CRAN (R 4.1.0)
+ evaluate      0.16       2022-08-09 [1] CRAN (R 4.1.2)
+ fansi         1.0.3      2022-03-24 [1] CRAN (R 4.1.2)
+ fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.0)
+ formatR       1.12       2022-03-31 [1] CRAN (R 4.1.2)
+ fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.0)
+ generics      0.1.3      2022-07-05 [1] CRAN (R 4.1.2)
+ ggplot2     * 3.3.6      2022-05-03 [1] CRAN (R 4.1.2)
+ ggthemes    * 4.2.4      2021-01-20 [1] CRAN (R 4.1.0)
+ glue          1.6.2      2022-02-24 [1] CRAN (R 4.1.2)
+ gtable        0.3.1      2022-09-01 [1] CRAN (R 4.1.2)
+ htmltools     0.5.3      2022-07-18 [1] CRAN (R 4.1.2)
+ htmlwidgets   1.5.4      2021-09-08 [1] CRAN (R 4.1.0)
+ httpuv        1.6.6      2022-09-08 [1] CRAN (R 4.1.2)
+ jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.0)
+ jsonlite      1.8.0      2022-02-22 [1] CRAN (R 4.1.2)
+ knitr         1.40       2022-08-24 [1] CRAN (R 4.1.3)
+ later         1.3.0      2021-08-18 [1] CRAN (R 4.1.0)
+ lifecycle     1.0.3      2022-10-07 [1] CRAN (R 4.1.2)
+ magrittr      2.0.3      2022-03-30 [1] CRAN (R 4.1.2)
+ memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.0)
+ mime          0.12       2021-09-28 [1] CRAN (R 4.1.0)
+ miniUI        0.1.1.1    2018-05-18 [1] CRAN (R 4.1.0)
+ munsell       0.5.0      2018-06-12 [1] CRAN (R 4.1.0)
+ pillar        1.8.1      2022-08-19 [1] CRAN (R 4.1.2)
+ pkgbuild      1.3.1      2021-12-20 [1] CRAN (R 4.1.0)
+ pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.1.0)
+ pkgload       1.3.0      2022-06-27 [1] CRAN (R 4.1.2)
+ prettyunits   1.1.1      2020-01-24 [1] CRAN (R 4.1.0)
+ processx      3.7.0      2022-07-07 [1] CRAN (R 4.1.2)
+ profvis       0.3.7      2020-11-02 [1] CRAN (R 4.1.0)
+ promises      1.2.0.1    2021-02-11 [1] CRAN (R 4.1.0)
+ ps            1.7.1      2022-06-18 [1] CRAN (R 4.1.2)
+ purrr         0.3.5      2022-10-06 [1] CRAN (R 4.1.2)
+ R6            2.5.1      2021-08-19 [1] CRAN (R 4.1.0)
+ Rcpp          1.0.9      2022-07-08 [1] CRAN (R 4.1.2)
+ remotes       2.4.2      2021-11-30 [1] CRAN (R 4.1.0)
+ rlang         1.0.6      2022-09-24 [1] CRAN (R 4.1.2)
+ rmarkdown     2.16       2022-08-24 [1] CRAN (R 4.1.2)
+ rstudioapi    0.14       2022-08-22 [1] CRAN (R 4.1.2)
+ sass          0.4.2      2022-07-16 [1] CRAN (R 4.1.2)
+ scales        1.2.1      2022-08-20 [1] CRAN (R 4.1.2)
+ sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.0)
+ shiny         1.7.2      2022-07-19 [1] CRAN (R 4.1.2)
+ stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.2)
+ stringr       1.4.1      2022-08-20 [1] CRAN (R 4.1.2)
+ tibble        3.1.8      2022-07-22 [1] CRAN (R 4.1.2)
+ tidyselect    1.2.0      2022-10-10 [1] CRAN (R 4.1.2)
+ urlchecker    1.0.1      2021-11-30 [1] CRAN (R 4.1.0)
+ usethis     * 2.1.6      2022-05-25 [1] CRAN (R 4.1.2)
+ utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.0)
+ vctrs         0.4.2      2022-09-29 [1] CRAN (R 4.1.3)
+ withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.0)
+ xfun          0.33       2022-09-12 [1] CRAN (R 4.1.2)
+ xtable        1.8-4      2019-04-21 [1] CRAN (R 4.1.0)
+ yaml          2.3.5      2022-02-21 [1] CRAN (R 4.1.2)
+
+ [1] /Library/Frameworks/R.framework/Versions/4.1/Resources/library
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>

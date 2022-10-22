@@ -1,0 +1,174 @@
+---
+title: Great Hack for Documenting R Package Data
+author: Rob Wiederstein
+date: '2022-10-21'
+slug: great-hack-for-documenting-r-package-data
+categories:
+  - R
+tags: []
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-roxygen2, @R-devtools, @R-usethis
+header:
+  image: feature.jpg
+  alt: confusing grid of white square tiles with black seams
+  caption: Photo by Kiran K. on Unsplash
+  
+repo: ~
+summary: When creating a package, documenting your data is a crucial step.  While important, it can also be time consuming. A high-dimensional dataset would require describing each variable. This post gives a quick method to pass an R-CMD-check and document data. The method relies on using paste, cat and the multiple cursor feature to speed documentation. It reduces the number of mistakes made from manual entry and insures the inclusion of all variables.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown',
+      'roxygen2',
+      'devtools',
+      'usethis'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
+library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+# [Overview](#overview)
+
+When creating a package, documenting your data is a crucial step.  While important, it can also be time-consuming. A high-dimensional dataset would require describing each variable. This post gives a quick method to pass an R-CMD-check and document data. The method relies on using paste, cat, and the multiple cursor feature to speed documentation. It reduces the number of mistakes made from manual entry and ensures the inclusion of all variables.
+
+# [Roxygen for Package Documentation](#roxygen)
+
+Chapter 8 in the R-Packages book deals with data. This example deals with the situation where an author saves the data to the `data/` folder, meaning that it is "effectively exported". Only exported data is documented.
+
+```{r, sample-exported-data, eval=F, include=T, echo=T}
+# the "usethis" package has a specific function
+my_pkg_data <- sample(1000)
+usethis::use_data(my_pkg_data)
+```
+
+
+Here's some sample roxygen code taken from [R-Packages](https://r-pkgs.org/Data.html#documenting-data). Two roxygen tags are important to note.  First, the `@format` tag describes the dataset. From R-Packages, "you should include a definition list that describes each variable.  It's usually a good idea to describe the variables' units . . . ." Second, the `@source` tag reminds you where the data originated.
+
+```{r data-doc, eval=FALSE, echo=TRUE}
+#' World Health Organization TB data
+#'
+#' A subset of data from the World Health Organization Global Tuberculosis
+#' Report ...
+#'
+#' @format ## `who`
+#' A data frame with 7,240 rows and 60 columns:
+#' \describe{
+#'   \item{country}{Country name}
+#'   \item{iso2, iso3}{2 & 3 letter ISO country codes}
+#'   \item{year}{Year}
+#'   ...
+#' }
+#' @source <https://www.who.int/teams/global-tuberculosis-programme/data>
+"my_pkg_data"
+```
+
+
+# [Create Sample Table](#sample-table) 
+
+To start, let's create a sample table with 26 variables. (I chose 26 for the number of letters in the alphabet).  Each column of the dataframe/tibble must be described so it gets a `\item{}` line. For a dataframe with a lot of columns, this is time-consuming. Here's one way to get started.
+
+```{r sample-df, echo=T, tidy=T}
+library(tibble)
+df <- tibble()
+df <- rbind(1:26)
+#generate 26 variable names of character 
+#lengths of 5 to 20 
+variable_names <- function(x){
+        paste0(sample(letters, x, replace = T), collapse = "")
+}
+# assign
+names(df) <- sample(5:20, 26, replace = T) |> 
+                purrr::map_chr(variable_names)
+df
+```
+
+# [Generate Entries](#generate)
+
+Each variable requires a description. If you send this code to the console, you can copy and paste the output into your documentation.  The descriptions are not helpful, but you won't miss any variables or spend a lot of time comparing your data to your documentation.
+
+```{r generate-roxygen, echo = T, cache=F}
+paste0("#'   \\item{", names(df), "}{", names(df), "}") |> cat(sep = "\n")
+```
+
+# [Multiple Cursors](#multi-cursor)
+
+Once you've copied and pasted the console output into your documentation, you may have additional editing to do.  One handy feature is the multiple cursor function. You can find it on a Mac with the keyboard shortcut option + mouse.
+
+<div style="width:100%;height:0;padding-bottom:48%;position:relative;"><iframe src="https://giphy.com/embed/kgyRVgPnNmZ7HwYxII" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/r-programming-multi-cursor-kgyRVgPnNmZ7HwYxII">via GIPHY</a></p>
+
+# [Conclusion](#conclusion)
+
+Documenting your data is important.  Many experts recommend the package form for programming because it makes you adhere to community norms and conform to good coding practices. When you are building a package, you may want to quickly document some data.  This post can give you one strategy to program, cut, and paste your way to passing an R-CMD-check test and documenting your data.
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+- [R packages](https://r-pkgs.org/)
+
+- [Roxygen2](https://roxygen2.r-lib.org/)
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```
