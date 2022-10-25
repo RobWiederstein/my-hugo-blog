@@ -1,0 +1,52 @@
+---
+title: Beets with Feta Salad
+author: Rob Wiederstein
+date: '2022-10-24'
+slug: beets-with-feta-salad
+categories:
+  - salad
+tags:
+  - vegetarian
+cook: Rob Wiederstein
+layout: layouts/recipe/single.html
+draft: yes
+image: /recipe/beets-with-feta-salad/beets.jpg
+caption: Beets with Feta Salad
+summary: Healthy pairing with beets and spring greens
+source: ~
+time: ~
+meal: ~
+---
+
+# Ingredients
+
+-  your favorite salad green
+
+- 4 medium beets, red or golden
+
+- feta cheese
+
+- can mandarin oranges
+
+- walnuts
+
+- two tbs. olive oil
+
+- two tbs. maple syrup
+
+- 1 tbs. balsalmic vinaigrette
+
+
+# Directions
+
+Preheat oven to 375 degrees. Roast beets covered in baking pan for 50 minutes or until firm, but not mushy.  Refriderate.  
+
+In large serving bowl, layer salad, peel and slice the beets, add mandarin oranges, feta cheese and walnuts.  Mix oil, maple syrup and balsalmic vinaigrette and pour over salad.
+
+# Notes
+
+I would have loved to mix red with golden beets but the grocery was out.
+
+# Nutrition
+
+Unknown.
