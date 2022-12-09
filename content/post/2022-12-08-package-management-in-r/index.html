@@ -1,0 +1,283 @@
+---
+title: Package Management in R
+author: Rob Wiederstein
+date: '2022-12-08'
+slug: package-management-in-r
+categories:
+  - R
+tags: []
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-renv, @R-devtools, @R-pak
+header:
+  image: feature.jpg
+  alt: dozens of cardboard boxes
+  caption: Manage your packages before they manage you.  Photo by CHUTTERSNAP on Unsplash.
+repo: ~
+summary: Managing dependencies is required when building packages. This post reviews some common functions and strategies. It doesn't discuss including packages in the description or namespaces.
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#overview" id="toc-overview">Overview</a></li>
+<li><a href="#what-packages-are-installed-and-where" id="toc-what-packages-are-installed-and-where">What packages are installed and where?</a></li>
+<li><a href="#package-management" id="toc-package-management">Package Management</a></li>
+<li><a href="#the-pak-package" id="toc-the-pak-package">The <code>pak</code> Package</a></li>
+<li><a href="#five-package-states---r-packages" id="toc-five-package-states---r-packages">Five Package States - R Packages</a></li>
+<li><a href="#the-renv-package" id="toc-the-renv-package">The <code>renv</code> package</a></li>
+<li><a href="#the-devtools-functions" id="toc-the-devtools-functions">The <code>devtools</code> functions</a></li>
+<li><a href="#system-files" id="toc-system-files">System Files</a></li>
+<li><a href="#sources-of-confusion" id="toc-sources-of-confusion">Sources of Confusion</a></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
+<li><a href="#acknowledgements" id="toc-acknowledgements">Acknowledgements</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+<li><a href="#disclaimer" id="toc-disclaimer">Disclaimer</a></li>
+<li><a href="#reproducibility" id="toc-reproducibility">Reproducibility</a></li>
+</ul>
+</div>
+
+<div id="overview" class="section level1">
+<h1><a href="#overview">Overview</a></h1>
+</div>
+<div id="what-packages-are-installed-and-where" class="section level1">
+<h1>What packages are installed and where?</h1>
+<pre class="r"><code>devtools::loaded_packages()[1:5, ]</code></pre>
+<pre><code>   package
+1  ggplot2
+2 blogdown
+3 ggthemes
+4 devtools
+5  usethis
+                                                                     path
+1  /Library/Frameworks/R.framework/Versions/4.1/Resources/library/ggplot2
+2 /Library/Frameworks/R.framework/Versions/4.1/Resources/library/blogdown
+3 /Library/Frameworks/R.framework/Versions/4.1/Resources/library/ggthemes
+4 /Library/Frameworks/R.framework/Versions/4.1/Resources/library/devtools
+5  /Library/Frameworks/R.framework/Versions/4.1/Resources/library/usethis</code></pre>
+</div>
+<div id="package-management" class="section level1">
+<h1>Package Management</h1>
+<ul>
+<li>from CRAN, <code>install.packages(pkgs = "dplyr")</code>.</li>
+<li>Development version from GitHub, <code>devtools::install_github("tidyverse/dplyr")</code></li>
+<li>attach library to search path with <code>library("dplyr")</code>.</li>
+<li>for paths, run <code>devtools::loaded_packages()</code></li>
+<li>see list of <strong>attached</strong> packages <code>search()</code>.</li>
+<li>detach is the opposite of library. <code>detach(package:dplyr)</code></li>
+<li>verify package detached <code>search()</code></li>
+<li>remove package <code>remove.packages("dplyr")</code>.</li>
+<li>see installed packages <code>installed.packages()</code></li>
+</ul>
+</div>
+<div id="the-pak-package" class="section level1">
+<h1>The <code>pak</code> Package</h1>
+<p>As of September 2022, Posit will probably recommend <code>pak</code> as its package installation tool, especially, for installing packages directly from GitHub.</p>
+<ul>
+<li><code>pak::pkg_install("tibble")</code></li>
+<li><code>pak::pkg_install("tidyverse/tibble")</code></li>
+<li><code>pak::pkg_deps_tree("tibble")</code></li>
+<li><code>pak::pkg_deps_explain("tibble", "rlang")</code></li>
+<li><code>pak::local_install("cli")</code></li>
+</ul>
+</div>
+<div id="five-package-states---r-packages" class="section level1">
+<h1>Five Package States - <a href="https://r-pkgs.org/structure.html">R Packages</a></h1>
+<p>When you create a package, you are working on its <strong>source</strong> code. An R package can be in one of five states:</p>
+<ul>
+<li><p><strong>source</strong>. Source is the thing that is on GitHub or the raw code that a developer is creating.</p></li>
+<li><p><strong>bundled</strong>. A package compressed into a single file. In R, a bundled package uses the extension <code>.tar.gz</code>.</p></li>
+<li><p><strong>binary</strong>. Like a package bundle, a binary is a single file. Binaries are either Mac (extension <code>.tgs</code>) or Windows (extension <code>zip</code>). CRAN makes binaries. A developer submits a bundle and CRAN convert it to a binary.</p></li>
+<li><p><strong>installed</strong>. An installed package is a binary package that was decompressed into a package library.</p></li>
+<li><p><strong>in-memory</strong>. The familiar <code>library(package)</code> command puts the package in memory and on the search path.</p></li>
+</ul>
+</div>
+<div id="the-renv-package" class="section level1">
+<h1>The <code>renv</code> package</h1>
+<p>The <code>renv</code> package is the successor to <code>packrat</code> and is available in Rstudio version RStudio 2022.07.2. When choosing to create a package, a checkbox will appear that allows for <code>renv</code> to be installed.</p>
+<p><img src="renv.png" width="477" style="display: block; margin: auto;" /></p>
+<p>More information is available on the <a href="https://rstudio.github.io/renv/">website</a>. I’m used to just calling <code>library(package)</code> or <code>package::function()</code>. When using <code>renv</code> you have to install it first even though it’s already in your local library.</p>
+<ul>
+<li>call <code>renv::init()</code> to begin.</li>
+<li>install and remove packages.</li>
+<li>call <code>renv::snapshot()</code>. It saves a file <code>renv.lock</code> in the root directory that contains an inventory of the packages used.</li>
+</ul>
+<p>The lockfile contents look like the code below:</p>
+<pre class="r"><code>{
+  &quot;R&quot;: {
+    &quot;Version&quot;: &quot;4.1.3&quot;,
+    &quot;Repositories&quot;: [
+      {
+        &quot;Name&quot;: &quot;CRAN&quot;,
+        &quot;URL&quot;: &quot;https://cran.rstudio.com&quot;
+      }
+    ]
+  },
+  &quot;Packages&quot;: {
+    &quot;R6&quot;: {
+      &quot;Package&quot;: &quot;R6&quot;,
+      &quot;Version&quot;: &quot;2.5.1&quot;,
+      &quot;Source&quot;: &quot;Repository&quot;,
+      &quot;Repository&quot;: &quot;CRAN&quot;,
+      &quot;Hash&quot;: &quot;470851b6d5d0ac559e9d01bb352b4021&quot;,
+      &quot;Requirements&quot;: []
+    },
+  }
+}</code></pre>
+</div>
+<div id="the-devtools-functions" class="section level1">
+<h1>The <code>devtools</code> functions</h1>
+<p>These are the tools from the <code>devtools</code> package that I use the most. Alot of them are available via the RStudio GUI.</p>
+<ul>
+<li><code>devtools::build()</code> - Build package</li>
+<li><code>devtools::build_rmd()</code> - Build a Rmarkdown files package</li>
+<li><code>devtools::build_site()</code> - Execute ‘pkgdown’ build_site in a package</li>
+<li><code>devtools::build_vignettes()</code> - Build package vignettes.</li>
+<li><code>devtools::check()</code> - Check a package</li>
+<li><code>devtools::document()</code> - Document a package</li>
+<li><code>devtools::load_all()</code> - Load packages</li>
+<li><code>devtools::spell_check()</code> - One I should run more!</li>
+</ul>
+</div>
+<div id="system-files" class="section level1">
+<h1>System Files</h1>
+<p>In building a package, I often include an rmarkdown document. The recommendation is for the document to be included in the <code>inst</code> folder. For example, the document would be included in the <code>inst\article\index.Rmd</code>. When the package is installed, the <code>inst</code> portion is omitted, leaving <code>article\index.Rmd</code>. Writing a function within the development version requires that it be referred to as a system file. The concept is detailed in the stackoverflow post: <a href="https://stackoverflow.com/questions/30377213/how-to-include-rmarkdown-file-in-r-package/30377598#30377598">How to include RMarkdown file in r package?</a>.</p>
+<pre class="r"><code>system.file(&quot;article&quot;, &quot;index.Rmd&quot;, package = &quot;myPackage&quot;)</code></pre>
+</div>
+<div id="sources-of-confusion" class="section level1">
+<h1>Sources of Confusion</h1>
+<p>In R, library means a collection of packages and packages means software tools. This convention is counter to other programming languages.</p>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+<p>When a developer creates his or her own package, it will in turn rely on other packages. Those packages will often times be outside of the <code>base</code> R package. (Although, I’ve seen some amazing coding where the author limits use to just functions in the <code>base</code> package.) Where a package incorporates the use of another package, it is referred to as a dependency. These dependencies must be explicit and inventoried. They must even include the specific versions. <code>renv</code> can help with that process. Also, remember that as a developer, you are writing source code and it may behave differently when it is bundled and installed in a user’s local library. Happy coding!</p>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to:</p>
+<ul>
+<li><a href="https://r-pkgs.org">R Packages</a></li>
+</ul>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2022 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+</div>
+<div id="ref-R-devtools" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">H. Wickham, J. Hester, W. Chang, and J. Bryan, <em>Devtools: Tools to make developing r packages easier</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=devtools">https://CRAN.R-project.org/package=devtools</a></div>
+</div>
+<div id="ref-R-pak" class="csl-entry">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">G. Csárdi and J. Hester, <em>Pak: Another approach to package installation</em>. 2022 [Online]. Available: <a href="https://pak.r-lib.org/">https://pak.r-lib.org/</a></div>
+</div>
+<div id="ref-R-renv" class="csl-entry">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">K. Ushey, <em>Renv: Project environments</em>. 2022 [Online]. Available: <a href="https://rstudio.github.io/renv/">https://rstudio.github.io/renv/</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value
+ version  R version 4.1.3 (2022-03-10)
+ os       macOS Big Sur/Monterey 10.16
+ system   x86_64, darwin17.0
+ ui       X11
+ language (EN)
+ collate  en_US.UTF-8
+ ctype    en_US.UTF-8
+ tz       America/New_York
+ date     2022-12-08
+ pandoc   2.19.2 @ /Applications/RStudio.app/Contents/MacOS/quarto/bin/tools/ (via rmarkdown)
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version    date (UTC) lib source
+ assertthat    0.2.1      2019-03-21 [1] CRAN (R 4.1.0)
+ blogdown    * 1.13       2022-09-24 [1] CRAN (R 4.1.2)
+ bookdown      0.29       2022-09-12 [1] CRAN (R 4.1.3)
+ bslib         0.4.1.9900 2022-12-08 [1] Github (rstudio/bslib@1a07d5e)
+ cachem        1.0.6      2021-08-19 [1] CRAN (R 4.1.0)
+ callr         3.7.2      2022-08-22 [1] CRAN (R 4.1.2)
+ cli           3.4.1      2022-09-23 [1] CRAN (R 4.1.2)
+ codetools     0.2-18     2020-11-04 [1] CRAN (R 4.1.3)
+ colorspace    2.0-3      2022-02-21 [1] CRAN (R 4.1.2)
+ crayon        1.5.2      2022-09-29 [1] CRAN (R 4.1.3)
+ DBI           1.1.3      2022-06-18 [1] CRAN (R 4.1.2)
+ devtools    * 2.4.4      2022-07-20 [1] CRAN (R 4.1.2)
+ digest        0.6.30     2022-10-18 [1] CRAN (R 4.1.2)
+ dplyr         1.0.10     2022-09-01 [1] CRAN (R 4.1.2)
+ ellipsis      0.3.2      2021-04-29 [1] CRAN (R 4.1.0)
+ evaluate      0.18       2022-11-07 [1] CRAN (R 4.1.2)
+ fansi         1.0.3      2022-03-24 [1] CRAN (R 4.1.2)
+ fastmap       1.1.0      2021-01-25 [1] CRAN (R 4.1.0)
+ formatR       1.12       2022-03-31 [1] CRAN (R 4.1.2)
+ fs            1.5.2      2021-12-08 [1] CRAN (R 4.1.0)
+ generics      0.1.3      2022-07-05 [1] CRAN (R 4.1.2)
+ ggplot2     * 3.4.0      2022-11-04 [1] CRAN (R 4.1.2)
+ ggthemes    * 4.2.4      2021-01-20 [1] CRAN (R 4.1.0)
+ glue          1.6.2      2022-02-24 [1] CRAN (R 4.1.2)
+ gtable        0.3.1      2022-09-01 [1] CRAN (R 4.1.2)
+ htmltools     0.5.4.9000 2022-12-08 [1] Github (rstudio/htmltools@f53be17)
+ htmlwidgets   1.5.4      2021-09-08 [1] CRAN (R 4.1.0)
+ httpuv        1.6.6      2022-09-08 [1] CRAN (R 4.1.2)
+ jquerylib     0.1.4      2021-04-26 [1] CRAN (R 4.1.0)
+ jsonlite      1.8.4      2022-12-06 [1] CRAN (R 4.1.3)
+ knitr         1.41       2022-11-18 [1] CRAN (R 4.1.2)
+ later         1.3.0      2021-08-18 [1] CRAN (R 4.1.0)
+ lifecycle     1.0.3      2022-10-07 [1] CRAN (R 4.1.2)
+ magrittr      2.0.3      2022-03-30 [1] CRAN (R 4.1.2)
+ memoise       2.0.1      2021-11-26 [1] CRAN (R 4.1.0)
+ mime          0.12       2021-09-28 [1] CRAN (R 4.1.0)
+ miniUI        0.1.1.1    2018-05-18 [1] CRAN (R 4.1.0)
+ munsell       0.5.0      2018-06-12 [1] CRAN (R 4.1.0)
+ pillar        1.8.1      2022-08-19 [1] CRAN (R 4.1.2)
+ pkgbuild      1.3.1      2021-12-20 [1] CRAN (R 4.1.0)
+ pkgconfig     2.0.3      2019-09-22 [1] CRAN (R 4.1.0)
+ pkgload       1.3.0      2022-06-27 [1] CRAN (R 4.1.2)
+ prettyunits   1.1.1      2020-01-24 [1] CRAN (R 4.1.0)
+ processx      3.8.0      2022-10-26 [1] CRAN (R 4.1.2)
+ profvis       0.3.7      2020-11-02 [1] CRAN (R 4.1.0)
+ promises      1.2.0.1    2021-02-11 [1] CRAN (R 4.1.0)
+ ps            1.7.2      2022-10-26 [1] CRAN (R 4.1.2)
+ purrr         0.3.5      2022-10-06 [1] CRAN (R 4.1.2)
+ R6            2.5.1      2021-08-19 [1] CRAN (R 4.1.0)
+ Rcpp          1.0.9      2022-07-08 [1] CRAN (R 4.1.2)
+ remotes       2.4.2      2021-11-30 [1] CRAN (R 4.1.0)
+ rlang         1.0.6      2022-09-24 [1] CRAN (R 4.1.2)
+ rmarkdown     2.18       2022-11-09 [1] CRAN (R 4.1.3)
+ rstudioapi    0.14       2022-08-22 [1] CRAN (R 4.1.2)
+ sass          0.4.4      2022-11-24 [1] CRAN (R 4.1.2)
+ scales        1.2.1      2022-08-20 [1] CRAN (R 4.1.2)
+ sessioninfo   1.2.2      2021-12-06 [1] CRAN (R 4.1.0)
+ shiny         1.7.2      2022-07-19 [1] CRAN (R 4.1.2)
+ stringi       1.7.8      2022-07-11 [1] CRAN (R 4.1.2)
+ stringr       1.5.0      2022-12-02 [1] CRAN (R 4.1.2)
+ tibble        3.1.8.9002 2022-12-08 [1] Github (tidyverse/tibble@134e7ba)
+ tidyselect    1.2.0      2022-10-10 [1] CRAN (R 4.1.2)
+ urlchecker    1.0.1      2021-11-30 [1] CRAN (R 4.1.0)
+ usethis     * 2.1.6      2022-05-25 [1] CRAN (R 4.1.2)
+ utf8          1.2.2      2021-07-24 [1] CRAN (R 4.1.0)
+ vctrs         0.5.1.9000 2022-12-08 [1] Github (r-lib/vctrs@48794fd)
+ withr         2.5.0      2022-03-03 [1] CRAN (R 4.1.0)
+ xfun          0.35       2022-11-16 [1] CRAN (R 4.1.2)
+ xtable        1.8-4      2019-04-21 [1] CRAN (R 4.1.0)
+ yaml          2.3.6      2022-10-18 [1] CRAN (R 4.1.2)
+
+ [1] /Library/Frameworks/R.framework/Versions/4.1/Resources/library
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
