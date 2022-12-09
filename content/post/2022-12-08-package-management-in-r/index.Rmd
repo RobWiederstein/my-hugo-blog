@@ -79,6 +79,8 @@ knitr::write_bib(.packages(), "./packages.bib")
 
 # What packages are installed and where?
 
+This command shows what packages you are using and where they are installed on your system.
+
 ```{r show-packages, echo =T}
 devtools::loaded_packages()[1:5, ]
 ```
