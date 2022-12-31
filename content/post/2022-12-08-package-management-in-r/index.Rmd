@@ -87,6 +87,8 @@ devtools::loaded_packages()[1:5, ]
 
 # Package Management
 
+These are common introductory commands for R users:
+
 - from CRAN, `install.packages(pkgs = "dplyr")`.
 - Development version from GitHub, `devtools::install_github("tidyverse/dplyr")`
 - attach library to search path with `library("dplyr")`.
