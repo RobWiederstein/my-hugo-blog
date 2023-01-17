@@ -58,11 +58,11 @@ summary: Exploratory data analysis of building energy usage.
 
 <div id="overview" class="section level1">
 <h1><a href="#overview">Overview</a></h1>
-<p>The data set originally served as the basis for an article entitled “Data driven prediction models of energy use of appliances in a low-energy house.” <span class="citation"><a href="#ref-candanedo2017" role="doc-biblioref">[1]</a></span> Since the publication of the article, the data set is available, among several places, at the UCI Machine Learning Repository and can be found <a href="https://archive.ics.uci.edu/ml/datasets/Appliances+energy+prediction">here</a>. According to the website,</p>
+<p>The data set originally served as the basis for an article entitled “Data driven prediction models of energy use of appliances in a low-energy house.” <span class="citation"><a href="#ref-candanedo2017" role="doc-biblioref">[1]</a></span> Since the publication of the article, the data set is available at the UCI Machine Learning Repository and can be found <a href="https://archive.ics.uci.edu/ml/datasets/Appliances+energy+prediction">here</a>. According to the website,</p>
 <blockquote>
 <p>“the data set is time series measured at 10 minute intervals for 4.5 months. The house temperature and humidity conditions were monitored with a ZigBee wireless sensor network. Each wireless node transmitted the temperature and humidity conditions around 3.3 min. Then, the wireless data was averaged for 10 minutes periods. The energy data was logged every 10 minutes with m-bus energy meters. Weather from the nearest airport weather station (Chievres Airport, Belgium) was downloaded from a public data set from Reliable Prognosis (rp5.ru), and merged together with the experimental data sets using the date and time column. Two random variables have been included in the data set for testing the regression models and to filter out non predictive attributes (parameters). <a href="https://github.com/LuisM78/Appliances-energy-prediction-data">GitHub Repo</a>.”</p>
 </blockquote>
-<p>The data set were simplified to reduce file size by grouping the measurements by the hour rather than the 10 minute interval. The resulting dataset contained 1/6 of the rows of the original. The interior rooms were averaged into a single inside measure for both temperature and relative humidity. This eliminated 16 columns.</p>
+<p>The data set was simplified to reduce the file size by grouping the measurements by the hour rather than the 10-minute interval. The resulting dataset contained 1/6 of the rows of the original. The interior rooms were averaged into a single inside measure for both temperature and relative humidity. This eliminated 16 columns.</p>
 </div>
 <div id="summary" class="section level1">
 <h1>Summary</h1>
@@ -687,7 +687,7 @@ rh_in_avg
 </div>
 <div id="conclusion" class="section level1">
 <h1><a href="#conclusion">Conclusion</a></h1>
-<p>Lights and appliances are used differently within an interior space, although both are low during the hours of 10:00 p.m. to 6:00 a.m. Appliance use reaches its maximal levels around the traditional supper/dinner time. Light usage is linked to sunset and sunrise. Seasonal variation is present as well. Energy usage declines as the days lengthen and the temperatures warm.</p>
+<p>Lights and appliances are used differently within an interior space, although both are low during the hours of 10:00 p.m. to 6:00 a.m. Appliance use reaches its maximal levels around traditional supper/dinner time. Light usage is linked to sunset and sunrise. Seasonal variation is present as well. Energy usage declines as the days lengthen and the temperatures warm.</p>
 </div>
 <div id="references" class="section level1">
 <h1><a href="#reference">References</a></h1>
