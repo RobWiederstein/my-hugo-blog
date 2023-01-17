@@ -18,10 +18,10 @@ nocite: |
   @R-base, @R-blogdown, @R-tidyverse, @R-colorspace, @R-psych, @R-kableExtra, @R-lubridate, @R-stringr, @R-patchwork,
   @R-viridis, @R-ggExtra, @R-fmsb, @R-GGally 
 header:
-  image: ~
-  alt: ~
-  caption: ~
-repo: ~
+  image: feature.jpg
+  alt: apartments
+  caption: Apartments
+repo: https://github.com/RobWiederstein/my-hugo-blog/tree/main/content/post/2023-01-11-building-energy-usage-exploratory-data-analysis
 summary: Exploratory data analysis of building energy usage.
 ---
 
