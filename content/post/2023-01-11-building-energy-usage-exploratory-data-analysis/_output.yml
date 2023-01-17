@@ -1,0 +1,8 @@
+# To set options for blogdown::html_page() globally
+# (i.e., apply certain options to all Rmd files), you
+# can create a _output.yml file under the root directory
+# of your website.
+blogdown::html_page:
+  toc: true
+  fig_width: 6
+  dev: "svg"

@@ -1,0 +1,390 @@
+---
+title: Building Energy Usage Exploratory Data Analysis
+author: Rob Wiederstein
+date: '2023-01-11'
+slug: building-energy-usage-exploratory-data-analysis
+categories:
+  - R
+tags:
+  - ts
+layout: layouts/post/single
+draft: false
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-colorspace, @R-psych, @R-kableExtra, @R-lubridate, @R-stringr, @R-patchwork,
+  @R-viridis, @R-ggExtra, @R-fmsb, @R-GGally 
+header:
+  image: ~
+  alt: ~
+  caption: ~
+repo: ~
+summary: Exploratory data analysis of building energy usage.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown',
+      'colorspace',
+      'ggplot2',
+      'tidyr',
+      'dplyr',
+      'psych',
+      'kableExtra',
+      'lubridate',
+      'stringr',
+      'patchwork',
+      'viridis',
+      'ggExtra',
+      'fmsb',
+      'GGally'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  #fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
+library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+
+```{r intro}
+df <- readRDS("./electric_usage.rds")
+```
+
+# [Overview](#overview)
+
+The data set originally served as the basis for an article entitled "Data driven prediction models of energy use of appliances in a low-energy house." [@candanedo2017] Since the publication of the article, the data set is available, among several places, at the UCI Machine Learning Repository and can be found [here](https://archive.ics.uci.edu/ml/datasets/Appliances+energy+prediction).  According to the website, 
+
+>"the data set is time series measured at 10 minute intervals for 4.5 months. The house temperature and humidity conditions were monitored with a ZigBee wireless sensor network. Each wireless node transmitted the temperature and humidity conditions around 3.3 min. Then, the wireless data was averaged for 10 minutes periods. The energy data was logged every 10 minutes with m-bus energy meters. Weather from the nearest airport weather station (Chievres Airport, Belgium) was downloaded from a public data set from Reliable Prognosis (rp5.ru), and merged together with the experimental data sets using the date and time column. Two random variables have been included in the data set for testing the regression models and to filter out non predictive attributes (parameters). [GitHub Repo](https://github.com/LuisM78/Appliances-energy-prediction-data)."
+
+The data set were simplified to reduce file size by grouping the measurements by the hour rather than the 10 minute interval.  The resulting dataset contained 1/6 of the rows of the original.  The interior rooms were averaged into a single inside measure for both temperature and relative humidity. This eliminated 16 columns.
+
+# Summary
+
+## Table
+
+```{r table}
+describe(df) |> 
+        kbl(digits = 2) |> 
+        kable_styling(full_width = F)
+```
+
+## Violin Plot
+
+```{r plot, out.width="100%"}
+colors <- colorspace::qualitative_hcl(9, palette = "Dark2")
+df |> 
+        select(-c(day, appliances_avg, lights_avg)) |> 
+        mutate(across(t_out_avg:rh_in_avg, ~scale(.x))) |> 
+        tidyr::pivot_longer(t_out_avg:rh_in_avg) |>
+        ggplot() +
+        aes(factor(name), value, fill = factor(name)) +
+        scale_fill_manual(values = colors) +
+        scale_x_discrete(labels = NULL) +
+        labs(title = "Scaled Predictors",
+             caption = "Source: UC Irvine Machine Learning Repository",
+             x = "",
+             y = "", 
+             fill = "Predictors") +
+        geom_violin(alpha = .5) +
+        theme_tufte()
+
+```
+
+# Outcome Variables
+
+## Energy Use by Hour
+
+```{r energy-use, out.width="100%"}
+colors <- colorspace::qualitative_hcl(n = 4, palette = "Dark2")
+df |>
+    # February
+    filter(day >= "2016-02-01" & day <= "2016-02-28") |>
+    select(
+        day,
+        appliances_avg,
+        lights_avg
+    ) |>
+    pivot_longer(appliances_avg:lights_avg) |>
+    ggplot() +
+    aes(day, value, color = name) +
+    geom_line() +
+    facet_wrap(vars(name), scales = "free", ncol = 1) +
+    geom_smooth(method = "loess", formula = "y ~ x") +
+    scale_y_continuous(name = "") +
+    scale_x_datetime(name = "") +
+    scale_color_manual(values = colors) +
+    geom_rangeframe(color = "black") +
+    theme_tufte() +
+    theme(legend.position = "none") +
+    labs(
+        title = "Energy Use by Hour",
+        subtitle = "Watts/hour",
+        caption = "Source: UC Irvine Machine Learning Repository"
+    )
+```
+
+## Energy Use by Hour and Day of Week 
+
+```{r energy-use-weekly, fig.height=4, fig.width=6}
+df1 <-
+    df |>
+    mutate(
+        hour = hour(day),
+        week_day = wday(day),
+        .keep = "all",
+        .after = day) |>
+    group_by(week_day, hour) |>
+    summarise(
+        mean_lights = mean(lights_avg),
+        mean_appliance = mean(appliances_avg),
+        .groups = "drop"
+    ) |>
+    mutate(hour1 = str_pad(hour, width = 2, side = "left", pad = "0"),
+           .after = hour) |>
+    unite(c(week_day, hour1), col = "week_hour", remove = F, sep = "")
+# factor
+df1$week_hour <- factor(df1$week_hour, ordered = T)
+#plot 1
+p1 <-
+    df1 |>
+    ggplot() +
+    aes(week_hour, mean_lights, group = week_hour) +
+    geom_col() +
+    scale_x_discrete(breaks = paste0(1:7, "00"),
+                     labels = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")) +
+    theme_tufte() +
+    labs(title = "Light Usage (Wh)",
+         x = "",
+         y = "") +
+    theme(text = element_text(size = 9))
+# plot 2
+p2 <-
+    df1 |>
+    ggplot() +
+    aes(week_hour, mean_appliance, group = week_hour) +
+    geom_col() +
+    scale_x_discrete(breaks = paste0(1:7, "00"),
+                     labels = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")) +
+    theme_tufte() +
+    labs(title = "Appliance Usage (Wh)",
+         x = "",
+         y = "")+
+    theme(text = element_text(size = 9))
+(p2 / p1)
+```
+
+## Calendar Heatmap
+
+```{r calendar-heatmap, out.width="100%"}
+# process ----
+df1 <-
+    df |>
+        rename(date = day) |> 
+        mutate(
+                year = year(date),
+                month = month(date),
+                day = day(date),
+                hour = hour(date),
+                .keep = "all",
+                .after = date
+        ) |>
+    select(date, day, hour, month, year, appliances_avg, lights_avg)
+#plot appliance ----
+df1$month <- as.factor(df1$month)
+levels(df1$month) <- c("Jan", "Feb", "Mar", "Apr", "May")
+p1 <-
+    df1 |>
+    ggplot() +
+    aes(day, hour, fill = appliances_avg) +
+    geom_tile(color = "white", size = 0.1) +
+    scale_fill_viridis(name = "Appliance (Wh)", option = "C") +
+    facet_grid(year ~ month) +
+    scale_y_continuous(trans = "reverse", breaks = 0:23) +
+    scale_x_continuous(breaks = c(1, 10, 20, 31)) +
+    theme_minimal(base_size = 8) +
+    labs(title = "Appliance Use (Wh)", x = "", y = "") +
+    theme_tufte() +
+    theme(axis.text.y=element_text(size=6)) +
+    theme(legend.title=element_text(size=8))+
+    theme(legend.text=element_text(size=6)) +
+    theme(legend.position = 'none')
+# plot lights ----
+p2 <-
+    df1 |>
+    ggplot() +
+    aes(day, hour, fill = lights_avg) +
+    geom_tile(color = "white", size = 0.1) +
+    scale_fill_viridis(name = "Appliance (Wh)", option = "C") +
+    facet_grid(year ~ month) +
+    scale_y_continuous(trans = "reverse", breaks = 0:23) +
+    scale_x_continuous(breaks = c(1, 10, 20, 31)) +
+    theme_minimal(base_size = 8) +
+    labs(title = "Lighting Use (Wh)", x = "", y = "") +
+    theme_tufte() +
+    theme(axis.text.y=element_text(size=6)) +
+    theme(legend.title=element_text(size=8))+
+    theme(legend.text=element_text(size=6)) +
+    theme(legend.position = "none")
+
+(p1 / p2)
+```
+
+
+## Radar Plot
+
+```{r radar-plot}
+df1 <-
+        df |> 
+        mutate(hour = lubridate::hour(day), .after = day) |> 
+        group_by(hour) |> 
+        summarize(appliances = mean(appliances_avg),
+               lights = mean(lights_avg)) |> 
+        select(hour, appliances, lights) |> 
+        ungroup() |> 
+        t() |> 
+        as.data.frame() |> 
+        setNames(0:23) |> 
+        filter(!row_number() %in% c(1))
+df2 <- rbind(rep(200, 24), rep(0, 24), df1)
+# The default radar chart 
+radarchart(df2,
+           pcol = colorspace::qualitative_hcl(2, palette = "Dark2"),
+           title = "Light and Appliance Usage by Hour")
+```
+
+
+# Predictor Variables
+
+## Weather - Exterior
+
+```{r weather-indicators, fig.height = 8, out.width="100%"}
+colors <- colorspace::qualitative_hcl(n = 6, palette = "Dark2")
+df |>
+    filter(day >= "2016-02-01" & day <= "2016-02-28") |>
+    select(
+        day,
+        t_out_avg:tdewpoint_avg
+    ) |>
+    pivot_longer(t_out_avg:tdewpoint_avg) |>
+    ggplot() +
+    aes(day, value, color = name) +
+    geom_line() +
+    facet_wrap(vars(name), scales = "free", ncol = 1) +
+    geom_smooth(method = "loess", formula = "y ~ x", span = .25) +
+    geom_rangeframe(color = "black") +
+    scale_x_datetime(name = "") +
+    scale_y_continuous(name = "") +
+    scale_color_manual(values = colors) +
+    theme_tufte() +
+    theme(legend.position = "none") +
+    labs(
+        title = "Weather - Exterior",
+        caption = "Source: UC Irvine Machine Learning Repository"
+    )
+```
+
+## Building - Interior
+
+
+```{r building-interior, cache=F, out.width="100%"}
+colors <- colorspace::qualitative_hcl(2, palette = "Dark2")
+        df |> 
+        select(day, 
+               t_in_avg,
+               rh_in_avg) |> 
+        filter(day >= "2016-02-01" & day <= "2016-02-28") |>
+        pivot_longer(t_in_avg:rh_in_avg) |> 
+        ggplot() +
+        aes(day, value, color = name) +
+        geom_line() +
+        facet_wrap(vars(name), scales = "free", ncol = 1) +
+    geom_smooth(method = "loess", formula = "y ~ x", span = .25) +
+    geom_rangeframe(color = "black") +
+    scale_x_datetime(name = "") +
+    scale_y_continuous(name = "") +
+    scale_color_manual(values = colors) +
+    theme_tufte() +
+    theme(legend.position = "none") +
+    labs(
+        title = "Building Interior",
+        caption = "Source: UC Irvine Machine Learning Repository"
+    )
+```
+
+
+
+# Correlogram
+
+```{r correlogram, fig.height=5, fig.width=6}
+ggcorr(
+    df[, -1],
+    label = TRUE,
+    label_alpha = TRUE,
+    angle = 0,
+    hjust = 1,
+    palette = "PuOr",
+    nbreaks = 7
+)
+```
+
+# [Conclusion](#conclusion)
+
+Lights and appliances are used differently within an interior space, although both are low during the hours of 10:00 p.m. to 6:00 a.m.  Appliance use reaches its maximal levels around the traditional supper/dinner time.  Light usage is linked to sunset and sunrise.  Seasonal variation is present as well. Energy usage declines as the days lengthen and the temperatures warm.
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```
