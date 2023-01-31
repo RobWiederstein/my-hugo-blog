@@ -45,7 +45,7 @@ General
 *   [Socrata Open Data Resources.](http://www.socrata.com/resources/)
 *   [U.S. Census.](http://www.census.gov/data.html)
 *   [U.S. Government’s Open Data Portal.](http://www.data.gov)
-*   [Xiaming Chen's Repo on Github](https://github.com/caesar0301/awesome-public-datasets)
+*   [Xiaming Chen's Repo on Github.](https://github.com/caesar0301/awesome-public-datasets)
 
 Health
 ======
@@ -53,7 +53,7 @@ Health
 *   [Centers for Disease Control.](http://www.cdc.gov/nchs/data_access/ftp_data.html)
 *   [County Health Rankings.](http://www.countyhealthrankings.org/rankings/data)
 *   [Centers for Medicaid/Medicare.](http://www.cms.gov/Research-Statistics-Data-and-Systems/Research-Statistics-Data-and-Systems.html)
-*.  [IPUMS Health Surveys](https://nhis.ipums.org/nhis/?utm_source=IPUMS+Emails&utm_campaign=e9a9f045a4-EMAIL_CAMPAIGN_2019_05_31_07_13_COPY_01&utm_medium=email&utm_term=0_a679127ff0-e9a9f045a4-21814309)
+*  [IPUMS Health Surveys.](https://nhis.ipums.org/nhis/?utm_source=IPUMS+Emails&utm_campaign=e9a9f045a4-EMAIL_CAMPAIGN_2019_05_31_07_13_COPY_01&utm_medium=email&utm_term=0_a679127ff0-e9a9f045a4-21814309)
 *   [World Health Organization.](http://www.who.int/research/en/)
 
 Indiana
