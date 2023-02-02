@@ -56,6 +56,8 @@ Papers:
 Certificates Earned:
 ====================
 
+* [Getting Started with SAS Programming](https://drive.google.com/file/d/16NaTbqM_AcZTv_gcysxs_4N45QjrqbLJ/view?usp=sharing): authorized by SAS and offered by Coursera.
+
 *   [Practical Machine Learning](https://drive.google.com/file/d/0B7aukJ6baNLgSk14TlNFbXM3OVU/view?usp=sharing): authorized by Johns Hopkins School of Health and offered by Coursera.
 
 *   [Regression Models](https://drive.google.com/file/d/0B7aukJ6baNLgVXhoQ0dKYlNoTVU/view?usp=sharing): authorized by Johns Hopkins School of Health and offered by Coursera.
