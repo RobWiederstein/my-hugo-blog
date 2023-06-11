@@ -4,27 +4,122 @@
   
   <url>
     <loc>https://robwiederstein.org/</loc>
-    <lastmod>2022-07-27T00:00:00+00:00</lastmod>
+    <lastmod>2023-01-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://robwiederstein.org/categories/</loc>
-    <lastmod>2022-07-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://robwiederstein.org/2022/07/27/laser-incidents-on-u-s-airplanes/</loc>
-    <lastmod>2022-07-27T00:00:00+00:00</lastmod>
+    <lastmod>2023-01-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://robwiederstein.org/post/</loc>
-    <lastmod>2022-07-27T00:00:00+00:00</lastmod>
+    <lastmod>2023-01-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2023/01/18/predicting-building-energy-usage/</loc>
+    <lastmod>2023-01-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://robwiederstein.org/categories/r/</loc>
+    <lastmod>2023-01-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/</loc>
+    <lastmod>2023-01-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/ts/</loc>
+    <lastmod>2023-01-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2023/01/11/building-energy-usage-exploratory-data-analysis/</loc>
+    <lastmod>2023-01-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2022/12/08/package-management-in-r/</loc>
+    <lastmod>2022-12-08T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2022/10/22/embedding-a-trelliscope-widget-in-github-pages/</loc>
+    <lastmod>2022-10-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/trelliscope/</loc>
+    <lastmod>2022-10-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2022/10/21/great-hack-for-documenting-r-package-data/</loc>
+    <lastmod>2022-10-21T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2022/10/19/multilingual-letter-frequency-in-literature/</loc>
+    <lastmod>2022-10-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/tidytext/</loc>
+    <lastmod>2022-10-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2022/09/10/a-zotero-and-rmarkdown-workflow/</loc>
+    <lastmod>2022-09-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/categories/zotero/</loc>
+    <lastmod>2022-09-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2022/09/04/alexandria-population-by-block/</loc>
+    <lastmod>2022-09-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/leaflet/</loc>
+    <lastmod>2022-09-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/sf/</loc>
+    <lastmod>2022-09-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2022/08/28/a-zotero-tutorial-for-beginners/</loc>
+    <lastmod>2022-08-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2022/08/27/choropleth-map-of-job-change-by-county/</loc>
+    <lastmod>2022-08-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/ggplot2/</loc>
+    <lastmod>2022-07-31T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2022/07/31/using-color-in-r-plots/</loc>
+    <lastmod>2022-07-31T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2022/07/27/laser-incidents-on-u-s-airplanes/</loc>
     <lastmod>2022-07-27T00:00:00+00:00</lastmod>
   </url>
   
@@ -34,17 +129,7 @@
   </url>
   
   <url>
-    <loc>https://robwiederstein.org/tags/</loc>
-    <lastmod>2022-04-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://robwiederstein.org/2022/04/27/tidy-tuesday-hidden-gems/</loc>
-    <lastmod>2022-04-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://robwiederstein.org/tags/tidytext/</loc>
     <lastmod>2022-04-27T00:00:00+00:00</lastmod>
   </url>
   
@@ -111,16 +196,6 @@
   <url>
     <loc>https://robwiederstein.org/2022/04/03/indiana-school-enrollments-2006-to-2022/</loc>
     <lastmod>2022-04-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://robwiederstein.org/tags/leaflet/</loc>
-    <lastmod>2022-04-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://robwiederstein.org/tags/sf/</loc>
-    <lastmod>2022-03-28T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -226,11 +301,6 @@
   <url>
     <loc>https://robwiederstein.org/2021/06/25/indiana-birth-outcomes/</loc>
     <lastmod>2021-06-25T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://robwiederstein.org/tags/ggplot2/</loc>
-    <lastmod>2021-06-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>

@@ -9,14 +9,113 @@
     <managingEditor>rob@robwiederstein.org (Rob Wiederstein)</managingEditor>
     <webMaster>rob@robwiederstein.org (Rob Wiederstein)</webMaster>
     <copyright>2021 Rob Wiederstein All rights reserved</copyright>
-    <lastBuildDate>Wed, 27 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://robwiederstein.org/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 18 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://robwiederstein.org/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Laser Incidents on U.S. Airplanes</title>
+      <title>Predicting Building Energy Usage</title>
+      <link>https://robwiederstein.org/2023/01/18/predicting-building-energy-usage/</link>
+      <pubDate>Wed, 18 Jan 2023 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2023/01/18/predicting-building-energy-usage/</guid>
+      <description>This post predicts appliance energy usage.</description>
+    </item>
+    
+    <item>
+      <title>Building Energy Usage Exploratory Data Analysis</title>
+      <link>https://robwiederstein.org/2023/01/11/building-energy-usage-exploratory-data-analysis/</link>
+      <pubDate>Wed, 11 Jan 2023 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2023/01/11/building-energy-usage-exploratory-data-analysis/</guid>
+      <description>Exploratory data analysis of building energy usage.</description>
+    </item>
+    
+    <item>
+      <title>Package Management in R</title>
+      <link>https://robwiederstein.org/2022/12/08/package-management-in-r/</link>
+      <pubDate>Thu, 08 Dec 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2022/12/08/package-management-in-r/</guid>
+      <description>Managing dependencies is required when building packages. This post reviews some common functions and strategies. It doesn&amp;rsquo;t discuss including packages in the description or namespaces.</description>
+    </item>
+    
+    <item>
+      <title>Embedding a Trelliscope Widget in GitHub Pages</title>
+      <link>https://robwiederstein.org/2022/10/22/embedding-a-trelliscope-widget-in-github-pages/</link>
+      <pubDate>Sat, 22 Oct 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2022/10/22/embedding-a-trelliscope-widget-in-github-pages/</guid>
+      <description>By default, Hugo automatically takes the first 70 words of your content as its summary and stores it into the &lt;code&gt;.Summary&lt;/code&gt; page variable for use in your templates. You may customize the summary length by setting &lt;code&gt;summaryLength&lt;/code&gt; in your site configuration &lt;em&gt;or&lt;/em&gt; you can set it in the front matter.</description>
+    </item>
+    
+    <item>
+      <title>Great Hack for Documenting R Package Data</title>
+      <link>https://robwiederstein.org/2022/10/21/great-hack-for-documenting-r-package-data/</link>
+      <pubDate>Fri, 21 Oct 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2022/10/21/great-hack-for-documenting-r-package-data/</guid>
+      <description>When creating a package, documenting your data is a crucial step.  While important, it can also be time-consuming. A high-dimensional dataset would require describing each variable. This post gives a quick method to pass an R-CMD-check and document data.</description>
+    </item>
+    
+    <item>
+      <title>Multilingual Letter Frequency in Literature</title>
+      <link>https://robwiederstein.org/2022/10/19/multilingual-letter-frequency-in-literature/</link>
+      <pubDate>Wed, 19 Oct 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2022/10/19/multilingual-letter-frequency-in-literature/</guid>
+      <description>This post is about letter frequency from four works of literature.  Each one is in a different language.  Letter frequency analysis is how simple substitution ciphers are cracked in cryptography.</description>
+    </item>
+    
+    <item>
+      <title>A Zotero and Rmarkdown Workflow</title>
+      <link>https://robwiederstein.org/2022/09/10/a-zotero-and-rmarkdown-workflow/</link>
+      <pubDate>Sat, 10 Sep 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2022/09/10/a-zotero-and-rmarkdown-workflow/</guid>
+      <description>You can use Rmarkdown to generate LaTeK documents and Zotero to track your citations.  This post explains a possible workflow.</description>
+    </item>
+    
+    <item>
+      <title>Alexandria Population by Block</title>
+      <link>https://robwiederstein.org/2022/09/04/alexandria-population-by-block/</link>
+      <pubDate>Sun, 04 Sep 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2022/09/04/alexandria-population-by-block/</guid>
+      <description>This post is a choropleth map of Alexandria, Virginia.  The project required a geographic file at the block level and a demographic file for population.  Both were downloaded from the US Census Bureau.</description>
+    </item>
+    
+    <item>
+      <title>A Zotero Tutorial for Beginners</title>
+      <link>https://robwiederstein.org/2022/08/28/a-zotero-tutorial-for-beginners/</link>
+      <pubDate>Sun, 28 Aug 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2022/08/28/a-zotero-tutorial-for-beginners/</guid>
+      <description>Zotero is a database for research. Authors use it to organize their citations and notes. Regardless of project size, Zotero facilitates recall, summarization, discoverability and reproducibility. This post explains the first steps in using Zotero for a research paper in LaTeX.</description>
+    </item>
+    
+    <item>
+      <title>Choropleth Map of Job Change by County</title>
+      <link>https://robwiederstein.org/2022/08/27/choropleth-map-of-job-change-by-county/</link>
+      <pubDate>Sat, 27 Aug 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2022/08/27/choropleth-map-of-job-change-by-county/</guid>
+      <description>The annual employment data from the Bureau of Labor Statistics (BLS) was downloaded for the years 1990 through 2021.  The average annual growth rate was computed by county and plotted as a choropleth map.</description>
+    </item>
+    
+    <item>
+      <title>Using Color in R Plots</title>
+      <link>https://robwiederstein.org/2022/07/31/using-color-in-r-plots/</link>
+      <pubDate>Sun, 31 Jul 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2022/07/31/using-color-in-r-plots/</guid>
+      <description>Using color effectively is key for informative and accurate plots. R packages can provide tried-and-true palettes to ease the process.</description>
+    </item>
+    
+    <item>
+      <title>Laser Incidents on U.S. Aircraft</title>
       <link>https://robwiederstein.org/2022/07/27/laser-incidents-on-u-s-airplanes/</link>
       <pubDate>Wed, 27 Jul 2022 00:00:00 +0000</pubDate>
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
       <guid>https://robwiederstein.org/2022/07/27/laser-incidents-on-u-s-airplanes/</guid>
-      <description>Pilots have reported an increasing number of laser incidents in the last few years. The Federal Aviation Administration (FAA) collects the reports and publishes them in a database.</description>
+      <description>U.S. pilots have reported an increasing number of laser incidents in the last few years. The Federal Aviation Administration (FAA) collects the reports and publishes them in a database.</description>
     </item>
     
     <item>
@@ -89,105 +188,6 @@
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
       <guid>https://robwiederstein.org/2022/04/03/indiana-school-enrollments-2006-to-2022/</guid>
       <description>This post examines trends in student enrollments for Indiana public schools.</description>
-    </item>
-    
-    <item>
-      <title>Simple Features Tutorial in R</title>
-      <link>https://robwiederstein.org/2022/03/28/simple-features-tutorial-in-r-number-2/</link>
-      <pubDate>Mon, 28 Mar 2022 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://robwiederstein.org/2022/03/28/simple-features-tutorial-in-r-number-2/</guid>
-      <description>This post is an introduction to working with the &lt;code&gt;sf&lt;/code&gt; package.  &amp;ldquo;sf&amp;rdquo; is short for &amp;ldquo;simple features&amp;rdquo; and is an open source standard to interact with vector geometries. Downloads of the &lt;code&gt;sf&lt;/code&gt; package now exceed other R packages dealing with spatial data.</description>
-    </item>
-    
-    <item>
-      <title>Styling R Code for Better Development</title>
-      <link>https://robwiederstein.org/2022/02/28/styling-r-code-for-better-development/</link>
-      <pubDate>Mon, 28 Feb 2022 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://robwiederstein.org/2022/02/28/styling-r-code-for-better-development/</guid>
-      <description>As a script grows in both length and complexity, it can become a maze unless there are well-marked paths to aid understanding. Consistent styling is crucial to being able to debug problematic code and can help one find the way.  This post offers some tips.</description>
-    </item>
-    
-    <item>
-      <title>Freddie Mac Mortgage Rates in R</title>
-      <link>https://robwiederstein.org/2022/01/20/freddie-mac-mortgage-rate-data/</link>
-      <pubDate>Thu, 20 Jan 2022 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://robwiederstein.org/2022/01/20/freddie-mac-mortgage-rate-data/</guid>
-      <description>Data is sometimes stored as an Excel spreadsheet.  To work with it in &lt;code&gt;R&lt;/code&gt;, it must be imported using a package. This project imports an excel spreadsheet of Freddie Mac mortgage rates using the &lt;code&gt;rio&lt;/code&gt; and &lt;code&gt;readxl&lt;/code&gt; packages.</description>
-    </item>
-    
-    <item>
-      <title>Retirement Locations Dashboard </title>
-      <link>https://robwiederstein.org/2021/10/13/retirement-locations-dashboard/</link>
-      <pubDate>Wed, 13 Oct 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://robwiederstein.org/2021/10/13/retirement-locations-dashboard/</guid>
-      <description>A dashboard to help find appealing retirement locations in the U.S.</description>
-    </item>
-    
-    <item>
-      <title>Prepend or Pad Character to String</title>
-      <link>https://robwiederstein.org/2021/08/29/prepend-character-to-string/</link>
-      <pubDate>Sun, 29 Aug 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://robwiederstein.org/2021/08/29/prepend-character-to-string/</guid>
-      <description>With the ubiquitous &amp;ldquo;FIPS&amp;rdquo; codes, there is no consistency in how they are formatted.  It seems like on every project, the merge is dependent upon the format matching in the datasets and then I&amp;rsquo;ve usually got a mess on my hands.  A missing &amp;ldquo;0&amp;rdquo; is often the problem.</description>
-    </item>
-    
-    <item>
-      <title>Motorcycle and Moped Accidents in Florida</title>
-      <link>https://robwiederstein.org/2021/08/09/motorcycle-and-moped-accidents-in-florida/</link>
-      <pubDate>Mon, 09 Aug 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://robwiederstein.org/2021/08/09/motorcycle-and-moped-accidents-in-florida/</guid>
-      <description>Florida is the destination for many vacationers.  Different transportation modes are available like cars, motorcycles, scooters, mopeds and golf carts.  This post explores the accident rate of motorcyles and mopeds at the city level.</description>
-    </item>
-    
-    <item>
-      <title>Staying Organized in R</title>
-      <link>https://robwiederstein.org/2021/07/20/staying-organized/</link>
-      <pubDate>Tue, 20 Jul 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://robwiederstein.org/2021/07/20/staying-organized/</guid>
-      <description>When code starts to run into the dozens of lines, it can begin to look like a jumbled box of legos.  The parts all go together, but you can easily forget the order and the ultimate goal of the project.  Here&amp;rsquo;s a post to offer an organizational strategy for writing code in Rstudio.</description>
-    </item>
-    
-    <item>
-      <title>Footer for Flexdashboard</title>
-      <link>https://robwiederstein.org/2021/07/05/footer-for-flexdashboard/</link>
-      <pubDate>Mon, 05 Jul 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://robwiederstein.org/2021/07/05/footer-for-flexdashboard/</guid>
-      <description>You can create a data dashboard in &lt;code&gt;R&lt;/code&gt; using the &lt;code&gt;flexdashboard&lt;/code&gt; package. In the background, there are a handful of other packages like bootstrap, bootswatch and fontawesome. The generated website did not have a footer though.  Here is a mashup of some html and css. The code was posted in a codepen repo.</description>
-    </item>
-    
-    <item>
-      <title>Indiana Birth Outcomes</title>
-      <link>https://robwiederstein.org/2021/06/25/indiana-birth-outcomes/</link>
-      <pubDate>Fri, 25 Jun 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://robwiederstein.org/2021/06/25/indiana-birth-outcomes/</guid>
-      <description>Indiana&amp;rsquo;s birth outcomes are examined using data from the Annie E. Casey foundation Kids Count website.</description>
-    </item>
-    
-    <item>
-      <title>Women Justices - An International Comparison</title>
-      <link>https://robwiederstein.org/2021/06/22/women-justices/</link>
-      <pubDate>Tue, 22 Jun 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://robwiederstein.org/2021/06/22/women-justices/</guid>
-      <description>Women serving on their country&amp;rsquo;s highest courts are a relatively new phenomena.  The trend accelerated beginning in the 1990s and now includes countries all over the world of differing economic levels. Women impact both the process and outcome of court decisions when appointed.  Additionally, women bolster court legitmacy among marginalized and unrepresented constituencies.</description>
-    </item>
-    
-    <item>
-      <title>US Lynchings</title>
-      <link>https://robwiederstein.org/2021/06/05/us-lynchings/</link>
-      <pubDate>Sat, 05 Jun 2021 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://robwiederstein.org/2021/06/05/us-lynchings/</guid>
-      <description>4134 people were killed outside of the judicial process in the United States between 1882 and 1936.  Most of the victims were black males living in former slave states of the deep South and were killed by lynching. However, lynchings were not unique to the South and occurred in other places as well.</description>
     </item>
     
   </channel>

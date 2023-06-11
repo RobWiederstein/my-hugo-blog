@@ -1,0 +1,255 @@
+---
+title: Predicting Building Energy Usage
+author: Rob Wiederstein
+date: '2023-01-18'
+slug: predicting-building-energy-usage
+categories:
+  - R
+tags:
+  - ts
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-tidymodels, @R-modeltime, @R-lubridate, @R-timetk
+header:
+  image: feature.jpg
+  alt: apartments
+  caption: Apartments
+repo: ~
+summary: This post predicts appliance energy usage.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown',
+      'tidymodels',
+      'modeltime',
+      'tidyverse',
+      'lubridate',
+      'timetk'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
+library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+```{r load-data}
+df <- readRDS(file = "./energy.rds")
+```
+
+# [Overview](#overview)
+
+The purpose of the post is to mimic the analysis of Candendo et. al. with a variety of statistical models using the  `tidymodels` and `modeltime` packages in R. Candendo predicts appliance energy usage.  The post will provide an (1) overview of energy prediction, (2) construct statistical models and (3) evaluate their effectiveness.
+
+# [Background](#background)
+
+## [Building Energy Usage](#building)
+
+Energy usage has been explored extensively concerning buildings. "The buildings and building construction sectors consumed 36% of the global final energy and nearly 40% of total CO2 emission in 2018". [@sun2020] Building energy usage may be reduced by improving efficiency. Less energy usage would lower buildings' environmental and economic burden. [@sun2020] Effective prediction techniques could quantify savings and improve conservation. [@sun2020] Building designs could be chosen based on the expected energy usage, and future costs could be discounted to present value over the building's expected useful life. [@sun2020]
+
+
+In a 2020 metanalysis, Sun and coauthors performed an extensive review on building energy prediction compiling 105 papers.[@sun2020] The effort detailed "the entire data-driven process that includes feature engineering, potential data-driven models and expected outputs." [@sun2020] 
+
+Sun grouped energy conservation strategies into three boxes:  white, grey, and black.  "White box" models predict the thermal behavior by numerical equations. [@sun2020]. "Grey box" or hybrid methods "combine physical models and data-driven approaches to simulate building energy." [@sun2020]. "Black box" use machine learning methods to discover statistical patterns with the data set. [@sun2020]
+
+Frequently, data sets contain (1) meteorological/outside, (2) indoor, (3) occupancy, (4) time, (5) building characteristics, (6) socioeconomic, and (7) historic features. [@sun2020]  With regard to available features, meteorological information, historical data and time index are the top-3 important factors for building energy prediction. [@sun2020] Popular statistical models are artificial neural network ("ANN"), support vector regression ("SVR"), and linear regression ("LR"), while the less popular models are time series analysis and regression trees ("RT"). [@sun2020]
+
+## [Appliance Energy Use](#appliance)
+
+Appliances represent a significant portion (between 20 and 30% of the electrical energy demand[@candanedo2017] electricity consumption in domestic buildings is explained by two main factors: the type and number of electrical appliances and the use of the appliances by the occupants.[@candanedo2017] Buildings and, specifically residential buildings, are candidates in reducing energy as "approximately 74% of this electricity use is from all buildings, and 38% is from residential buildings. [@cetin2016]
+
+"Refrigeration and freezer loads tended to be very flat, while cooking, dishwasher, lights and small appliances showed distinct evening peaks." [@pratt1993] "Refrigerators have a uniform load profile, while clothes washers, cloth dryers, and dishwashers are very user-dependent and thus vary from household to household and time of day."[@cetin2016]
+
+The variability in energy usage is a challenge for power operators.  Electric grids are vulnerable to failure at peak load times.  A Texas study attributed 75% of the peak demand to buildings,  with 50% to residential and 25% to business. [@cetin2016] Economizing appliance use during peak times has received more attention than HVAC systems because appliances do not affect "the comfort of the indoor environment." [@cetin2016]
+
+# [Current Data Set](#current)
+
+The data set originally served as the basis for an article entitled "Data-driven prediction models of energy use of appliances in a low-energy house." [@candanedo2017] Since the publication of the article, the data set is available at the UCI Machine Learning Repository and can be found [here](https://archive.ics.uci.edu/ml/datasets/Appliances+energy+prediction).  According to the website, 
+
+>"the data set is time series measured at 10-minute intervals for 4.5 months. The house temperature and humidity conditions were monitored with a ZigBee wireless sensor network. Each wireless node transmitted the temperature and humidity conditions around 3.3 min. Then, the wireless data was averaged for 10 minutes periods. The energy data was logged every 10 minutes with m-bus energy meters. Weather from the nearest airport weather station (Chievres Airport, Belgium) was downloaded from a public data set from Reliable Prognosis (rp5.ru), and merged together with the experimental data sets using the date and time column. Two random variables have been included in the data set for testing the regression models and to filter out non-predictive attributes (parameters). [GitHub Repo](https://github.com/LuisM78/Appliances-energy-prediction-data)."
+
+The data set consists of a single, residential house and was simplified to reduce the file size by filtering the measurements to those taken at the start of each hour.  The resulting dataset contained 1/6 of the rows of the original. An exploratory analysis of the data set was previously conducted [here](https://bit.ly/3iO5JLL).
+
+The 2017 paper used four statistical models which "were trained with repeated cross-validation and evaluated on a testing set: (a) multiple linear regression, (b) support vector machine with radial kernel, (c) random forest and (d) gradient boosting machines (GBM). The best model (GBM) was able to explain **97%** of the variance (R2) in the training set and with **57%** in the testing set when using all the predictors.
+
+
+# [Data and model](#data)
+
+## Plot
+
+```{r plot-time-series}
+#plot time series
+df |>
+    filter(date_time > "2016-02-01 00:00:00" &
+           date_time < "2016-03-01 00:00:00") |>
+    plot_time_series(date_time, appliances, .interactive = F) +
+    labs(title = "February Appliance Energy Usage")
+```
+
+## Split
+
+```{r split-data, echo=T}
+# Split Data 90/10
+set.seed(1)
+# note the "initial_time_split" from "resamples" package
+df_splits <- initial_time_split(df, prop = 0.9)
+df_train <- training(df_splits)
+df_test <- testing(df_splits)
+```
+
+## Build Models
+
+```{r build-models, echo=T, cache=T}
+# Model 1: auto_arima ----
+model_fit_arima_no_boost <- arima_reg() %>%
+    set_engine(engine = "auto_arima") %>%
+    fit(appliances ~ date_time + t1, data = df_train)
+# Model 2: arima_boost ----
+model_fit_arima_boosted <- arima_boost(
+    min_n = 2,
+    learn_rate = 0.015
+) %>%
+    set_engine(engine = "auto_arima_xgboost") %>%
+    fit(appliances ~ date_time + as.numeric(date_time) + factor(hour(date_time), ordered = F),
+        data = df_train)
+# Model 3: ets ----
+model_fit_ets <- exp_smoothing() %>%
+    set_engine(engine = "ets") %>%
+    fit(appliances ~ ., data = df_train)
+# Model 4: prophet ----
+model_fit_prophet <- prophet_reg() %>%
+    set_engine(engine = "prophet") %>%
+    fit(appliances ~ date_time, data = training(df_splits))
+# Model 5: lm ----
+model_fit_lm <- linear_reg() %>%
+    set_engine("lm") %>%
+    fit(appliances ~ date_time,
+        data = training(df_splits))
+
+# Add fitted models to model table
+models_tbl <- modeltime_table(
+    model_fit_arima_no_boost,
+    model_fit_arima_boosted,
+    model_fit_ets,
+    model_fit_prophet,
+    model_fit_lm
+)
+# calibrate
+calibration_tbl <- models_tbl %>%
+    modeltime_calibrate(new_data = testing(df_splits))
+```
+
+## Visualize
+
+```{r visualize-models, eval=F}
+# Visualizing the Forecast Test
+calibration_tbl %>%
+    modeltime_forecast(
+        new_data    = testing(df_splits),
+        actual_data = df
+    ) %>%
+    plot_modeltime_forecast(
+        .legend_max_width = 25, # For mobile screens
+        #.interactive      = F,
+        labs(title = "X")
+    )
+```
+
+
+## Accuracy
+
+```{r model-accuracy}
+calibration_tbl %>%
+    modeltime_accuracy() %>%
+    table_modeltime_accuracy(
+        .interactive = F
+    )
+```
+
+## Refit
+
+```{r augment-models}
+refit_tbl <-
+    calibration_tbl %>%
+    filter(.model_desc == "PROPHET") |>
+    modeltime_refit(data = df)
+refit_tbl %>%
+    modeltime_forecast(h = "1 week", actual_data = df) %>%
+    plot_modeltime_forecast(
+        .legend_max_width = 25, # For mobile screens
+        .interactive      = T
+    )
+```
+
+
+
+
+
+# [Results](#results)
+
+# [Conclusion](#conclusion)
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```

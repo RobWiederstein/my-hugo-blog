@@ -43,3 +43,5 @@ meal:  dinner
 I like to serve over quinoa or couscous and add a tablespoon of tumeric to the boiling water to turn it yellow.
 
 # Nutrition
+
+Solid.

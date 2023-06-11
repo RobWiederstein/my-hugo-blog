@@ -1,0 +1,189 @@
+---
+title: Pairing SAS with R
+author: Rob Wiederstein
+date: '2023-02-10'
+slug: pairing-sas-with-r
+categories:
+  - R
+  - SAS
+tags: []
+layout: layouts/post/single
+draft: TRUE
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: ~
+  alt: ~
+  caption: ~
+repo: ~
+summary: By default, Hugo automatically takes the first 70 words of your content as
+  its summary and stores it into the `.Summary` page variable for use in your templates.
+  You may customize the summary length by setting `summaryLength` in your site configuration
+  *or* you can set it in the front matter.
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#resources" id="toc-resources">Resources</a></li>
+<li><a href="#overview" id="toc-overview">Overview</a></li>
+<li><a href="#background" id="toc-background">Background</a></li>
+<li><a href="#data-and-model" id="toc-data-and-model">Data and model</a></li>
+<li><a href="#results" id="toc-results">Results</a></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
+<li><a href="#acknowledgements" id="toc-acknowledgements">Acknowledgements</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+<li><a href="#disclaimer" id="toc-disclaimer">Disclaimer</a></li>
+<li><a href="#reproducibility" id="toc-reproducibility">Reproducibility</a></li>
+</ul>
+</div>
+
+<div id="resources" class="section level1">
+<h1><a href="#resources">Resources</a></h1>
+<ul>
+<li><p><a href="https://www.youtube.com/watch?v=iS9toBHswBY">Melissa Van Bussel | Achieving a seamless workflow between R, Python and SAS from within RStudio - video</a></p></li>
+<li><p><a href="https://github.com/melissavanbussel/rstudio-conf-2022/blob/main/VanBussel_Slides.pdf">Melissa Van Bussel | Achieving a seamless workflow between R, Python and SAS from within RStudio - slides</a></p></li>
+<li><p><a href="https://melissavanbussel.quarto.pub/using-sas-and-r/sas-markdown.html">Melissa Van Bussel | Achieving a seamless workflow between R, Python and SAS from within RStudio - guide</a></p></li>
+<li><p><a href="https://www.youtube.com/watch?v=3pbXUthE1As">How to run R code from within SAS Enterprise Guide</a></p></li>
+<li><p><a href="https://github.com/Hemken/SASmarkdown">SASmarkdown package</a>. The package vignettes explain how to configure your system. SAS must be installed. You can include SAS chunks in your rmarkdown document. There is no interaction between SAS and R. You can’t use SAS data from within your R chunks.</p></li>
+<li><p>When you launch SAS, you can use the ‘RLANG’ option. This option was described as “pretty easy” to move between SAS and R. The option can be enabled without admin privileges, sort of.</p></li>
+</ul>
+<pre><code>proc iml;
+  submit / R;
+  # your R code
+  endsubmit;
+submit;</code></pre>
+</div>
+<div id="overview" class="section level1">
+<h1><a href="#overview">Overview</a></h1>
+<p>(Describe the problem.)</p>
+</div>
+<div id="background" class="section level1">
+<h1><a href="#background">Background</a></h1>
+<p>(Who else has worked on this problem? What did they find?)</p>
+</div>
+<div id="data-and-model" class="section level1">
+<h1><a href="#data">Data and model</a></h1>
+<p>(What data did you use, where did you get it?)</p>
+</div>
+<div id="results" class="section level1">
+<h1><a href="#results">Results</a></h1>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to:</p>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body">
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2022 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2022 [Online]. Available: <a href="https://CRAN.R-project.org/package=blogdown">https://CRAN.R-project.org/package=blogdown</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value
+ version  R version 4.2.2 (2022-10-31)
+ os       macOS Big Sur ... 10.16
+ system   x86_64, darwin17.0
+ ui       X11
+ language (EN)
+ collate  en_US.UTF-8
+ ctype    en_US.UTF-8
+ tz       America/New_York
+ date     2023-06-11
+ pandoc   2.19.2 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version date (UTC) lib source
+ assertthat    0.2.1   2019-03-21 [1] CRAN (R 4.2.0)
+ blogdown    * 1.16    2022-12-13 [1] CRAN (R 4.2.0)
+ bookdown      0.31    2022-12-13 [1] CRAN (R 4.2.0)
+ bslib         0.4.2   2022-12-16 [1] CRAN (R 4.2.0)
+ cachem        1.0.6   2021-08-19 [1] CRAN (R 4.2.0)
+ callr         3.7.3   2022-11-02 [1] CRAN (R 4.2.0)
+ cli           3.6.0   2023-01-09 [1] CRAN (R 4.2.0)
+ codetools     0.2-18  2020-11-04 [1] CRAN (R 4.2.2)
+ colorspace    2.0-3   2022-02-21 [1] CRAN (R 4.2.0)
+ crayon        1.5.2   2022-09-29 [1] CRAN (R 4.2.0)
+ DBI           1.1.3   2022-06-18 [1] CRAN (R 4.2.0)
+ devtools    * 2.4.5   2022-10-11 [1] CRAN (R 4.2.0)
+ digest        0.6.31  2022-12-11 [1] CRAN (R 4.2.2)
+ dplyr         1.0.10  2022-09-01 [1] CRAN (R 4.2.0)
+ ellipsis      0.3.2   2021-04-29 [1] CRAN (R 4.2.0)
+ evaluate      0.20    2023-01-17 [1] CRAN (R 4.2.0)
+ fansi         1.0.3   2022-03-24 [1] CRAN (R 4.2.0)
+ fastmap       1.1.0   2021-01-25 [1] CRAN (R 4.2.0)
+ fs            1.5.2   2021-12-08 [1] CRAN (R 4.2.0)
+ generics      0.1.3   2022-07-05 [1] CRAN (R 4.2.0)
+ ggplot2     * 3.4.0   2022-11-04 [1] CRAN (R 4.2.0)
+ ggthemes    * 4.2.4   2021-01-20 [1] CRAN (R 4.2.0)
+ glue          1.6.2   2022-02-24 [1] CRAN (R 4.2.0)
+ gtable        0.3.1   2022-09-01 [1] CRAN (R 4.2.0)
+ htmltools     0.5.4   2022-12-07 [1] CRAN (R 4.2.0)
+ htmlwidgets   1.6.0   2022-12-15 [1] CRAN (R 4.2.0)
+ httpuv        1.6.8   2023-01-12 [1] CRAN (R 4.2.2)
+ jquerylib     0.1.4   2021-04-26 [1] CRAN (R 4.2.0)
+ jsonlite      1.8.4   2022-12-06 [1] CRAN (R 4.2.0)
+ knitr         1.41    2022-11-18 [1] CRAN (R 4.2.0)
+ later         1.3.0   2021-08-18 [1] CRAN (R 4.2.0)
+ lifecycle     1.0.3   2022-10-07 [1] CRAN (R 4.2.0)
+ magrittr      2.0.3   2022-03-30 [1] CRAN (R 4.2.0)
+ memoise       2.0.1   2021-11-26 [1] CRAN (R 4.2.0)
+ mime          0.12    2021-09-28 [1] CRAN (R 4.2.0)
+ miniUI        0.1.1.1 2018-05-18 [1] CRAN (R 4.2.2)
+ munsell       0.5.0   2018-06-12 [1] CRAN (R 4.2.0)
+ pillar        1.8.1   2022-08-19 [1] CRAN (R 4.2.0)
+ pkgbuild      1.4.0   2022-11-27 [1] CRAN (R 4.2.0)
+ pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.2.0)
+ pkgload       1.3.2   2022-11-16 [1] CRAN (R 4.2.0)
+ prettyunits   1.1.1   2020-01-24 [1] CRAN (R 4.2.0)
+ processx      3.8.0   2022-10-26 [1] CRAN (R 4.2.0)
+ profvis       0.3.7   2020-11-02 [1] CRAN (R 4.2.0)
+ promises      1.2.0.1 2021-02-11 [1] CRAN (R 4.2.0)
+ ps            1.7.2   2022-10-26 [1] CRAN (R 4.2.0)
+ purrr         1.0.1   2023-01-10 [1] CRAN (R 4.2.0)
+ R6            2.5.1   2021-08-19 [1] CRAN (R 4.2.0)
+ Rcpp          1.0.10  2023-01-22 [1] CRAN (R 4.2.2)
+ remotes       2.4.2   2021-11-30 [1] CRAN (R 4.2.0)
+ rlang         1.0.6   2022-09-24 [1] CRAN (R 4.2.0)
+ rmarkdown     2.18    2022-11-09 [1] CRAN (R 4.2.0)
+ rstudioapi    0.14    2022-08-22 [1] CRAN (R 4.2.0)
+ sass          0.4.4   2022-11-24 [1] CRAN (R 4.2.0)
+ scales        1.2.1   2022-08-20 [1] CRAN (R 4.2.0)
+ sessioninfo   1.2.2   2021-12-06 [1] CRAN (R 4.2.0)
+ shiny         1.7.4   2022-12-15 [1] CRAN (R 4.2.2)
+ stringi       1.7.12  2023-01-11 [1] CRAN (R 4.2.2)
+ stringr       1.5.0   2022-12-02 [1] CRAN (R 4.2.0)
+ tibble        3.1.8   2022-07-22 [1] CRAN (R 4.2.0)
+ tidyselect    1.2.0   2022-10-10 [1] CRAN (R 4.2.0)
+ urlchecker    1.0.1   2021-11-30 [1] CRAN (R 4.2.0)
+ usethis     * 2.1.6   2022-05-25 [1] CRAN (R 4.2.0)
+ utf8          1.2.2   2021-07-24 [1] CRAN (R 4.2.0)
+ vctrs         0.5.1   2022-11-16 [1] CRAN (R 4.2.0)
+ withr         2.5.0   2022-03-03 [1] CRAN (R 4.2.0)
+ xfun          0.36    2022-12-21 [1] CRAN (R 4.2.0)
+ xtable        1.8-4   2019-04-21 [1] CRAN (R 4.2.0)
+ yaml          2.3.6   2022-10-18 [1] CRAN (R 4.2.0)
+
+ [1] /Library/Frameworks/R.framework/Versions/4.2/Resources/library
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
