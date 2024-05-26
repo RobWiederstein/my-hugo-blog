@@ -8,10 +8,6 @@ slug: []
 
 ## Locations
 
-?
-?
-*
-
 <iframe src="<iframe src="https://www.google.com/maps/d/embed?mid=1MlQ3FddAE2omXKjZCjg5tALNEufmNkY&ehbc=2E312F" width="640" height="480"></iframe>"
 
 
