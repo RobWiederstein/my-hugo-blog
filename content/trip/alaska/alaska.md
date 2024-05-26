@@ -8,7 +8,7 @@ slug: []
 
 ## Locations
 
-<iframe src="https://www.google.com/maps/d/edit?mid=1MlQ3FddAE2omXKjZCjg5tALNEufmNkY&usp=sharing" width="640" height="480"></iframe>
+<iframe src="https://www.google.com/maps/d/edit?mid=1MlQ3FddAE2omXKjZCjg5tALNEufmNkY&ll=37.48438662989602%2C-116.26080200000001&z=4" width="640" height="480"></iframe>
 
 ## Itinerary
 
