@@ -1,7 +1,7 @@
 ---
 title:  "Trip to Alaska"
 author: "Rob Wiederstein"
-date: "2024-07-27"
+date: "2021-07-27"
 draft: no
 slug: []
 ---
