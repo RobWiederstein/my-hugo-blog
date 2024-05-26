@@ -10,8 +10,10 @@ slug: []
 
 ?
 ?
+*
 
-<iframe src="https://www.google.com/maps/d/edit?mid=1MlQ3FddAE2omXKjZCjg5tALNEufmNkY&usp=sharing" width="640" height="480"></iframe>
+<iframe src="https://www.google.com/maps/d/edit?mid=1MlQ3FddAE2omXKjZCjg5tALNEufmNkY" width="640" height="480"></iframe>
+
 
 ## Itinerary
 
