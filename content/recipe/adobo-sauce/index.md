@@ -10,7 +10,7 @@ tags:
   - Mexican
 cook: Rob Wiederstein
 layout: layouts/recipe/single.html
-draft: yes
+draft: no
 image: /recipe/adobo-sauce/1_adobo.jpg
 caption: White plate holding peppers under water to soften
 summary: Adobo sauce is made from peppers and has a distinct taste because of the Ancho pepper.
