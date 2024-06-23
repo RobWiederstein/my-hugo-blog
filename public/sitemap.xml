@@ -4,32 +4,97 @@
   
   <url>
     <loc>https://robwiederstein.org/</loc>
-    <lastmod>2023-01-18T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-08T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
+    <loc>https://robwiederstein.org/recipe/adobo-sauce/</loc>
+    <lastmod>2024-06-08T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://robwiederstein.org/categories/</loc>
-    <lastmod>2023-01-18T00:00:00+00:00</lastmod>
+    <lastmod>2024-06-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://robwiederstein.org/post/</loc>
-    <lastmod>2023-01-18T00:00:00+00:00</lastmod>
+    <loc>https://robwiederstein.org/tags/mexican/</loc>
+    <lastmod>2024-06-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://robwiederstein.org/2023/01/18/predicting-building-energy-usage/</loc>
-    <lastmod>2023-01-18T00:00:00+00:00</lastmod>
+    <loc>https://robwiederstein.org/recipe/</loc>
+    <lastmod>2024-06-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://robwiederstein.org/categories/r/</loc>
-    <lastmod>2023-01-18T00:00:00+00:00</lastmod>
+    <loc>https://robwiederstein.org/categories/sauce/</loc>
+    <lastmod>2024-06-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://robwiederstein.org/tags/</loc>
+    <lastmod>2024-06-08T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/vegetarian/</loc>
+    <lastmod>2024-06-08T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/ggplot2/</loc>
+    <lastmod>2024-05-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2024/05/30/mapping-square-uh-stan-with-ggplot-and-tmap/</loc>
+    <lastmod>2024-05-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/post/</loc>
+    <lastmod>2024-05-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/categories/r/</loc>
+    <lastmod>2024-05-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/sf/</loc>
+    <lastmod>2024-05-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/tmap/</loc>
+    <lastmod>2024-05-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/biology/</loc>
+    <lastmod>2024-04-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2024/04/24/exploratory-analysis-of-red-tides-in-florida-coastal-areas/</loc>
+    <lastmod>2024-04-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2023/02/10/pairing-sas-with-r/</loc>
+    <lastmod>2023-02-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/categories/sas/</loc>
+    <lastmod>2023-02-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2023/01/18/predicting-building-energy-usage/</loc>
     <lastmod>2023-01-18T00:00:00+00:00</lastmod>
   </url>
   
@@ -46,6 +111,16 @@
   <url>
     <loc>https://robwiederstein.org/2022/12/08/package-management-in-r/</loc>
     <lastmod>2022-12-08T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/recipe/beets-with-feta-salad/</loc>
+    <lastmod>2022-10-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/categories/salad/</loc>
+    <lastmod>2022-10-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -94,11 +169,6 @@
   </url>
   
   <url>
-    <loc>https://robwiederstein.org/tags/sf/</loc>
-    <lastmod>2022-09-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://robwiederstein.org/2022/08/28/a-zotero-tutorial-for-beginners/</loc>
     <lastmod>2022-08-28T00:00:00+00:00</lastmod>
   </url>
@@ -106,11 +176,6 @@
   <url>
     <loc>https://robwiederstein.org/2022/08/27/choropleth-map-of-job-change-by-county/</loc>
     <lastmod>2022-08-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://robwiederstein.org/tags/ggplot2/</loc>
-    <lastmod>2022-07-31T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -244,6 +309,16 @@
   </url>
   
   <url>
+    <loc>https://robwiederstein.org/tags/dplyr/</loc>
+    <lastmod>2021-08-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/2021/08/29/merging-dataframes-with-crosswalk-in-r/</loc>
+    <lastmod>2021-08-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://robwiederstein.org/2021/08/29/prepend-character-to-string/</loc>
     <lastmod>2021-08-29T00:00:00+00:00</lastmod>
   </url>
@@ -276,6 +351,11 @@
   <url>
     <loc>https://robwiederstein.org/trip/savannah/savannah/</loc>
     <lastmod>2021-08-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/trip/alaska/alaska/</loc>
+    <lastmod>2021-07-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -404,11 +484,6 @@
   </url>
   
   <url>
-    <loc>https://robwiederstein.org/tags/biology/</loc>
-    <lastmod>2021-03-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://robwiederstein.org/2021/03/20/lost-cargo-in-wisconsin-shipwrecks/</loc>
     <lastmod>2021-03-20T00:00:00+00:00</lastmod>
   </url>
@@ -434,17 +509,7 @@
   </url>
   
   <url>
-    <loc>https://robwiederstein.org/recipe/</loc>
-    <lastmod>2021-03-10T16:25:54-06:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://robwiederstein.org/categories/recipe/</loc>
-    <lastmod>2021-03-10T16:25:54-06:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://robwiederstein.org/tags/vegetarian/</loc>
     <lastmod>2021-03-10T16:25:54-06:00</lastmod>
   </url>
   
@@ -524,8 +589,23 @@
   </url>
   
   <url>
-    <loc>https://robwiederstein.org/categories/salad/</loc>
-    <lastmod>2021-03-01T10:03:13-06:00</lastmod>
+    <loc>https://robwiederstein.org/recipe/advocado-toast/</loc>
+    <lastmod>2021-03-01T06:38:58-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/categories/appetizer/</loc>
+    <lastmod>2021-03-01T06:38:58-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/categories/drink/</loc>
+    <lastmod>2021-03-01T06:38:58-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/categories/lunch/</loc>
+    <lastmod>2021-03-01T06:38:58-06:00</lastmod>
   </url>
   
   <url>
@@ -584,6 +664,11 @@
   </url>
   
   <url>
+    <loc>https://robwiederstein.org/recipe/aloo-gobi/recipe/</loc>
+    <lastmod>2021-02-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://robwiederstein.org/recipe/aloo-matar/recipe/</loc>
     <lastmod>2021-02-18T00:00:00+00:00</lastmod>
   </url>
@@ -614,7 +699,17 @@
   </url>
   
   <url>
+    <loc>https://robwiederstein.org/2021/02/14/try-syntax-highlighting/</loc>
+    <lastmod>2021-02-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://robwiederstein.org/datasets/</loc>
+    <lastmod>2021-02-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://robwiederstein.org/tags/r-markdown/</loc>
     <lastmod>2021-02-14T00:00:00+00:00</lastmod>
   </url>
   

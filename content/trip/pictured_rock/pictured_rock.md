@@ -1,7 +1,7 @@
 ---
 title:  "Trip to Pictured Rock"
 author: "Rob Wiederstein"
-date: "2021-08-02"
+date: "2022-07-05"
 draft: no
 slug: []
 ---

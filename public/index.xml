@@ -9,7 +9,43 @@
     <managingEditor>rob@robwiederstein.org (Rob Wiederstein)</managingEditor>
     <webMaster>rob@robwiederstein.org (Rob Wiederstein)</webMaster>
     <copyright>2021 Rob Wiederstein All rights reserved</copyright>
-    <lastBuildDate>Wed, 18 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://robwiederstein.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 08 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://robwiederstein.org/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Adobo Sauce</title>
+      <link>https://robwiederstein.org/recipe/adobo-sauce/</link>
+      <pubDate>Sat, 08 Jun 2024 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/recipe/adobo-sauce/</guid>
+      <description>Adobo sauce is made from peppers and has a distinct taste because of the Ancho pepper.</description>
+    </item>
+    
+    <item>
+      <title>Mapping Square-Uh-Stan with Ggplot and Tmap</title>
+      <link>https://robwiederstein.org/2024/05/30/mapping-square-uh-stan-with-ggplot-and-tmap/</link>
+      <pubDate>Thu, 30 May 2024 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2024/05/30/mapping-square-uh-stan-with-ggplot-and-tmap/</guid>
+      <description>This is an introduction to the simple features package.  A variety of simple features&amp;ndash;polygons, lines, and points&amp;ndash;will be created.  Then, they will be plotted as a map using the &lt;code&gt;ggplot2&lt;/code&gt; and &lt;code&gt;tmap&lt;/code&gt; packages.</description>
+    </item>
+    
+    <item>
+      <title>Exploratory Analysis of Red Tides in Florida Coastal Areas</title>
+      <link>https://robwiederstein.org/2024/04/24/exploratory-analysis-of-red-tides-in-florida-coastal-areas/</link>
+      <pubDate>Wed, 24 Apr 2024 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2024/04/24/exploratory-analysis-of-red-tides-in-florida-coastal-areas/</guid>
+      <description>By default, Hugo automatically takes the first 70 words of your content as its summary and stores it into the &lt;code&gt;.Summary&lt;/code&gt; page variable for use in your templates. You may customize the summary length by setting &lt;code&gt;summaryLength&lt;/code&gt; in your site configuration &lt;em&gt;or&lt;/em&gt; you can set it in the front matter.</description>
+    </item>
+    
+    <item>
+      <title>Pairing SAS with R</title>
+      <link>https://robwiederstein.org/2023/02/10/pairing-sas-with-r/</link>
+      <pubDate>Fri, 10 Feb 2023 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2023/02/10/pairing-sas-with-r/</guid>
+      <description>By default, Hugo automatically takes the first 70 words of your content as its summary and stores it into the &lt;code&gt;.Summary&lt;/code&gt; page variable for use in your templates. You may customize the summary length by setting &lt;code&gt;summaryLength&lt;/code&gt; in your site configuration &lt;em&gt;or&lt;/em&gt; you can set it in the front matter.</description>
+    </item>
+    
     <item>
       <title>Predicting Building Energy Usage</title>
       <link>https://robwiederstein.org/2023/01/18/predicting-building-energy-usage/</link>
@@ -35,6 +71,15 @@
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
       <guid>https://robwiederstein.org/2022/12/08/package-management-in-r/</guid>
       <description>Managing dependencies is required when building packages. This post reviews some common functions and strategies. It doesn&amp;rsquo;t discuss including packages in the description or namespaces.</description>
+    </item>
+    
+    <item>
+      <title>Beets with Feta Salad</title>
+      <link>https://robwiederstein.org/recipe/beets-with-feta-salad/</link>
+      <pubDate>Mon, 24 Oct 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/recipe/beets-with-feta-salad/</guid>
+      <description>Healthy pairing with beets and spring greens</description>
     </item>
     
     <item>
@@ -143,51 +188,6 @@
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
       <guid>https://robwiederstein.org/2022/04/15/list-inspection-part-04/</guid>
       <description>List inspection is key to the effective manipulation and transformation of the data.</description>
-    </item>
-    
-    <item>
-      <title>Rectangling-Part-05</title>
-      <link>https://robwiederstein.org/2022/04/15/rectangling-part-05/</link>
-      <pubDate>Fri, 15 Apr 2022 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://robwiederstein.org/2022/04/15/rectangling-part-05/</guid>
-      <description>Rectangling is the process of untangling lists into tables.</description>
-    </item>
-    
-    <item>
-      <title>List into Tibble-Part-03</title>
-      <link>https://robwiederstein.org/2022/04/13/lists-into-tibbles-part-03/</link>
-      <pubDate>Wed, 13 Apr 2022 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://robwiederstein.org/2022/04/13/lists-into-tibbles-part-03/</guid>
-      <description>Function returns and data are often in list form.  Some, like myself, prefer to convert them to a table or data frame to perform computations.  Lists of equal lengths are easy to convert to a table, but lists of unequal lengths can be problematic.  The tibble package allows for lists to be stored in the column of a data frame.</description>
-    </item>
-    
-    <item>
-      <title>List Iteration-Part-02</title>
-      <link>https://robwiederstein.org/2022/04/12/list-iteration-part-02/</link>
-      <pubDate>Tue, 12 Apr 2022 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://robwiederstein.org/2022/04/12/list-iteration-part-02/</guid>
-      <description>This post is about how to iterate over and extract from a list.  It begins with the function lapply() since many people are familiar with it and then expounds on functions in the purrr package.</description>
-    </item>
-    
-    <item>
-      <title>List Basics-Part-01</title>
-      <link>https://robwiederstein.org/2022/04/11/list-basics-part-01/</link>
-      <pubDate>Mon, 11 Apr 2022 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://robwiederstein.org/2022/04/11/list-basics-part-01/</guid>
-      <description>This post deals with list basics.</description>
-    </item>
-    
-    <item>
-      <title>Indiana School Enrollments 2006 to 2022</title>
-      <link>https://robwiederstein.org/2022/04/03/indiana-school-enrollments-2006-to-2022/</link>
-      <pubDate>Sun, 03 Apr 2022 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://robwiederstein.org/2022/04/03/indiana-school-enrollments-2006-to-2022/</guid>
-      <description>This post examines trends in student enrollments for Indiana public schools.</description>
     </item>
     
   </channel>
