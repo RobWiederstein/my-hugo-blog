@@ -9,7 +9,25 @@
     <managingEditor>rob@robwiederstein.org (Rob Wiederstein)</managingEditor>
     <webMaster>rob@robwiederstein.org (Rob Wiederstein)</webMaster>
     <copyright>2021 Rob Wiederstein All rights reserved</copyright>
-    <lastBuildDate>Sat, 08 Jun 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://robwiederstein.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 16 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://robwiederstein.org/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Color Palette Selection from Historic Maps</title>
+      <link>https://robwiederstein.org/2024/09/16/color-palette-selection-from-historic-maps/</link>
+      <pubDate>Mon, 16 Sep 2024 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2024/09/16/color-palette-selection-from-historic-maps/</guid>
+      <description>By default, Hugo automatically takes the first 70 words of your content as its summary and stores it into the &lt;code&gt;.Summary&lt;/code&gt; page variable for use in your templates. You may customize the summary length by setting &lt;code&gt;summaryLength&lt;/code&gt; in your site configuration &lt;em&gt;or&lt;/em&gt; you can set it in the front matter.</description>
+    </item>
+    
+    <item>
+      <title>Trip to Alaska</title>
+      <link>https://robwiederstein.org/trip/alaska/alaska/</link>
+      <pubDate>Sat, 22 Jun 2024 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/trip/alaska/alaska/</guid>
+      <description>Locations &#34; Itinerary </description>
+    </item>
+    
     <item>
       <title>Adobo Sauce</title>
       <link>https://robwiederstein.org/recipe/adobo-sauce/</link>
@@ -17,33 +35,6 @@
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
       <guid>https://robwiederstein.org/recipe/adobo-sauce/</guid>
       <description>Adobo sauce is made from peppers and has a distinct taste because of the Ancho pepper.</description>
-    </item>
-    
-    <item>
-      <title>Mapping Square-Uh-Stan with Ggplot and Tmap</title>
-      <link>https://robwiederstein.org/2024/05/30/mapping-square-uh-stan-with-ggplot-and-tmap/</link>
-      <pubDate>Thu, 30 May 2024 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://robwiederstein.org/2024/05/30/mapping-square-uh-stan-with-ggplot-and-tmap/</guid>
-      <description>This is an introduction to the simple features package.  A variety of simple features&amp;ndash;polygons, lines, and points&amp;ndash;will be created.  Then, they will be plotted as a map using the &lt;code&gt;ggplot2&lt;/code&gt; and &lt;code&gt;tmap&lt;/code&gt; packages.</description>
-    </item>
-    
-    <item>
-      <title>Exploratory Analysis of Red Tides in Florida Coastal Areas</title>
-      <link>https://robwiederstein.org/2024/04/24/exploratory-analysis-of-red-tides-in-florida-coastal-areas/</link>
-      <pubDate>Wed, 24 Apr 2024 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://robwiederstein.org/2024/04/24/exploratory-analysis-of-red-tides-in-florida-coastal-areas/</guid>
-      <description>By default, Hugo automatically takes the first 70 words of your content as its summary and stores it into the &lt;code&gt;.Summary&lt;/code&gt; page variable for use in your templates. You may customize the summary length by setting &lt;code&gt;summaryLength&lt;/code&gt; in your site configuration &lt;em&gt;or&lt;/em&gt; you can set it in the front matter.</description>
-    </item>
-    
-    <item>
-      <title>Pairing SAS with R</title>
-      <link>https://robwiederstein.org/2023/02/10/pairing-sas-with-r/</link>
-      <pubDate>Fri, 10 Feb 2023 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://robwiederstein.org/2023/02/10/pairing-sas-with-r/</guid>
-      <description>By default, Hugo automatically takes the first 70 words of your content as its summary and stores it into the &lt;code&gt;.Summary&lt;/code&gt; page variable for use in your templates. You may customize the summary length by setting &lt;code&gt;summaryLength&lt;/code&gt; in your site configuration &lt;em&gt;or&lt;/em&gt; you can set it in the front matter.</description>
     </item>
     
     <item>
@@ -71,15 +62,6 @@
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
       <guid>https://robwiederstein.org/2022/12/08/package-management-in-r/</guid>
       <description>Managing dependencies is required when building packages. This post reviews some common functions and strategies. It doesn&amp;rsquo;t discuss including packages in the description or namespaces.</description>
-    </item>
-    
-    <item>
-      <title>Beets with Feta Salad</title>
-      <link>https://robwiederstein.org/recipe/beets-with-feta-salad/</link>
-      <pubDate>Mon, 24 Oct 2022 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://robwiederstein.org/recipe/beets-with-feta-salad/</guid>
-      <description>Healthy pairing with beets and spring greens</description>
     </item>
     
     <item>
@@ -164,6 +146,28 @@
     </item>
     
     <item>
+      <title>Trip to Pictured Rock</title>
+      <link>https://robwiederstein.org/trip/pictured_rock/pictured_rock/</link>
+      <pubDate>Tue, 05 Jul 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/trip/pictured_rock/pictured_rock/</guid>
+      <description>Day 1 &amp;ndash; Tuesday &amp;ndash; July 5 Arrive Mackinaw City, Michigan (11 hrs)
+Mackinac Island KOA Journey
+566 Trailsend Road
+Mackinaw City , MI 49701
+800.562.1738
+(Confirmation no: 9156770 &amp;amp; 9156801)
+Confirmed.
+Day 2 &amp;ndash; Wednesday &amp;ndash; July 6 Mackinac Island Star Line Ferry
+($29 per person round trip)
+First trip 7:30 a.m. Last trip 9:00 p.m.
+Mackinac Island
+Mackinac Carriage Tours
+Sightseeing Tour $34/person
+Grand Hotel Mackinac Island</description>
+    </item>
+    
+    <item>
       <title>Tidy Tuesday Hidden Gems </title>
       <link>https://robwiederstein.org/2022/04/27/tidy-tuesday-hidden-gems/</link>
       <pubDate>Wed, 27 Apr 2022 00:00:00 +0000</pubDate>
@@ -188,6 +192,15 @@
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
       <guid>https://robwiederstein.org/2022/04/15/list-inspection-part-04/</guid>
       <description>List inspection is key to the effective manipulation and transformation of the data.</description>
+    </item>
+    
+    <item>
+      <title>Rectangling-Part-05</title>
+      <link>https://robwiederstein.org/2022/04/15/rectangling-part-05/</link>
+      <pubDate>Fri, 15 Apr 2022 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2022/04/15/rectangling-part-05/</guid>
+      <description>Rectangling is the process of untangling lists into tables.</description>
     </item>
     
   </channel>

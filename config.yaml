@@ -6,8 +6,13 @@ theme: hugo-lithium
 author:
   name: Rob Wiederstein
   email: rob@robwiederstein.org
-googleAnalytics: 'UA-59724072-1'
-disqusShortname: ''
+#googleAnalytics: 'UA-59724072-1'
+#disqusShortname: ''
+site:
+  config:
+    services:
+      disqus:
+        shortname: ""
 ignoreFiles:
   - \.Rmd$
   - \.Rmarkdown$

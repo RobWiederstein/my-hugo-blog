@@ -1,0 +1,266 @@
+---
+title: Exploratory Analysis of Red Tides in Florida Coastal Areas
+author: Rob Wiederstein
+date: '2024-04-24'
+slug: exploratory-analysis-of-red-tides-in-florida-coastal-areas
+categories:
+  - R
+tags:
+  - biology
+layout: layouts/post/single
+draft: true
+bibliography:
+  - packages.bib
+  - red_tide.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: ~
+  alt: ~
+  caption: ~
+repo: ~
+summary: By default, Hugo automatically takes the first 70 words of your content as
+  its summary and stores it into the `.Summary` page variable for use in your templates.
+  You may customize the summary length by setting `summaryLength` in your site configuration
+  *or* you can set it in the front matter.
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#r-image" id="toc-r-image">R image</a></li>
+<li><a href="#overview" id="toc-overview">Overview</a></li>
+<li><a href="#terms" id="toc-terms">Terms</a></li>
+<li><a href="#background" id="toc-background">Background</a>
+<ul>
+<li><a href="#how-hab-karenia-brevis-occur" id="toc-how-hab-karenia-brevis-occur">How HAB (Karenia Brevis) Occur</a></li>
+<li><a href="#health-concerns" id="toc-health-concerns">Health Concerns</a></li>
+<li><a href="#history" id="toc-history">History</a></li>
+</ul></li>
+<li><a href="#data-and-model" id="toc-data-and-model">Data and model</a></li>
+<li><a href="#results" id="toc-results">Results</a></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
+<li><a href="#acknowledgements" id="toc-acknowledgements">Acknowledgements</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+<li><a href="#disclaimer" id="toc-disclaimer">Disclaimer</a></li>
+<li><a href="#reproducibility" id="toc-reproducibility">Reproducibility</a></li>
+</ul>
+</div>
+
+<div id="r-image" class="section level1">
+<h1><a href="#image">R image</a></h1>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:plot-mtcars"></span>
+<img src="{{< blogdown/postref >}}index_files/figure-html/plot-mtcars-1.svg" alt="A plot with 538 layout theme and color blind palette." width="576" />
+<p class="caption">
+Figure 1: A plot with 538 layout theme and color blind palette.
+</p>
+</div>
+</div>
+<div id="overview" class="section level1">
+<h1><a href="#overview">Overview</a></h1>
+<p>(Describe the problem.)</p>
+</div>
+<div id="terms" class="section level1">
+<h1><a href="#terms">Terms</a></h1>
+<p>anoxia</p>
+<p>auxotrophic</p>
+<p>benthic</p>
+<p>demersal</p>
+<p>eutrophication</p>
+<p>heterotrophic</p>
+<p>hypoxia</p>
+<p>statification</p>
+<p>DO - diluted oxygen</p>
+<p>HABSOS - Harmful Algal BloomS Observing System</p>
+<p>IOOS - Integrated Ocean Observing System</p>
+<p>NSP - neurotoxic shellfish poisoning</p>
+<p>WOD - World Ocean Database</p>
+</div>
+<div id="background" class="section level1">
+<h1><a href="#background">Background</a></h1>
+<ul>
+<li><p>“A harmful algal bloom (HAB), or excessive algae growth, is an algal bloom that causes negative impacts to other organisms by production of natural algae-produced toxins, mechanical damage to other organisms, or by other means.”</p></li>
+<li><p>The US Environmental Protection Agency (EPA) defined an HAB in 2008 as “potentially toxic (auxotrophic, heterotrophic) species and high-biomass producers that can cause hypoxia and anoxia and indiscriminate mortalities of marine life after reaching dense concentrations, whether or not toxins are produced”.</p></li>
+<li><p>“As algal biomass accumulates in the surface water during a HAB, the sinking and decomposition of dead cells near the bottom increases respiratory demand and depletes dissolved oxygen, a condition generally referred to as hypoxia.”<span class="citation"><a href="#ref-turley2022">[1]</a></span></p></li>
+<li><p>HABs are sometimes defined as only those algal blooms that produce toxins, and sometimes as any algal bloom that can result in severely lower oxygen levels in natural waters, killing organisms in marine or fresh waters.</p></li>
+<li><p>A bloom’s duration can last from a few days to many months.</p></li>
+<li><p>Upon the expiration of the bloom, microbes consume the dead algae resulting in an oxygen deprived “dead-zone”.</p></li>
+<li><p>Any fish or plants within the dead-zone will die due to asphyxiation.</p></li>
+<li><p>When a bloom occurs within a marine environment, an indicator is the presence of dead fish floating on the water. These events are referred to as “red tides”.</p></li>
+<li><p>The origin or cause of a HAB can be difficult to pinpoint though high levels of nutrients, like nitrogen and phosphate, high water temperatures, and lack of water circulation are contributing factors.</p></li>
+<li><p>In the NOAA data, the HAB is identified as Karenia Brevis.</p></li>
+<li><p>“Karenia” is a genus that consists of unicellular, photosynthetic, planktonic organisms found in marine environments. As of 2012, the genus consisted of 12 species. “They are best known for their dense toxic algal blooms and red tides that cause considerable ecological and economical damage; some Karenia species cause severe animal mortality. Karenia brevis is known to cause respiratory distress and neurotoxic shellfish poisoning (NSP) in humans.”</p></li>
+<li><p>“The toxin-producing dinoflagellate Karenia brevis is the main causative species for HABs occurring annually on the West Florida Shelf.”<span class="citation"><a href="#ref-turley2022">[1]</a></span></p></li>
+<li><p>“The West Florida Shelf is a relatively wide and shallow continental shelf with ample wind energy to mix the water column for much of the year (Yang and Weisberg, 1999). However, during the summer and early fall, warm sea surface temperatures and increased runoff during the Florida wet season leads to increased stratification, and in conjunction with HABs may contribute to an increased likelihood of hypoxia on the West Florida Shelf.” <span class="citation"><a href="#ref-turley2022">[1]</a></span></p></li>
+</ul>
+<div id="how-hab-karenia-brevis-occur" class="section level2">
+<h2>How HAB (Karenia Brevis) Occur</h2>
+<p>The National Centers for Coastal Ocean Science (NCCOS) offers a algal bloom forecast. On the website, it describes the process. “During the early bloom period (typically each fall), Karenia brevis cells—which persist in the bottom waters offshore—can be moved onshore to the Southwest Florida coast by a process known as coastal upwelling. The graphics below demonstrate this process. Once near the coast, Karenia brevis cells can quickly reach levels that create a harmful algal bloom (HAB).”</p>
+<p><img src="upwelling-graphic-scaled.jpg" width="90%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="health-concerns" class="section level2">
+<h2>Health Concerns</h2>
+<ul>
+<li><p>“Consumption of shellfish containing elevated PbTx concentrations causes neurotoxic shellfish poisoning (NSP). Unlike many other marine algal toxins, brevetoxins become aerosolized when K. brevis cells break open in high turbulence (especially nearshore) and are subsequently transported onshore by winds.”<span class="citation"><a href="#ref-stumpf2022">[2]</a></span></p></li>
+<li><p>“These aerosolized toxins cause respiratory irritation and pose a significant risk to beachgoers with chronic respiratory illnesses such as asthma, and have been measured at distances greater than 1.5 km from the shore during blooms.” <span class="citation"><a href="#ref-stumpf2022">[2]</a></span></p></li>
+<li><p>Severe K. brevis blooms are associated with the mortality of manatee, bottlenose dolphins, sea turtles and fish. <span class="citation"><a href="#ref-stumpf2022">[2]</a></span></p></li>
+</ul>
+</div>
+<div id="history" class="section level2">
+<h2>History</h2>
+<ul>
+<li><p>“Fish kills in the Gulf of Mexico that could be attributed to K. brevis were identified as long ago as 1528.”<span class="citation"><a href="#ref-stumpf2022">[2]</a></span></p></li>
+<li><p>“Reports of HABs affecting the coastal waters of the Gulf of Mexico from Florida to Texas date back to the arrival of Europeans with the first well documented bloom in 1844.”<span class="citation"><a href="#ref-turley2022">[1]</a></span></p></li>
+<li><p>A Mr. Benjamin Curry of Manatee County, “one of the oldest residents on the Florida coast” confirmed “that as far back as 1844 a widespread destruction of all sorts of saltwater animal life occurred, apparently due to causes precisely similar to those which produced the lately noticed desolation.”<span class="citation"><a href="#ref-feinstein1955red">[3]</a></span></p></li>
+<li><p>In 1875, red tides were “were first linked to reports of human respiratory irritation.”<span class="citation"><a href="#ref-turley2022">[1]</a></span></p></li>
+<li><p>“K. brevis was identified as the cause of “red tides” off the Southwest coast of Florida in the 1940s.”<span class="citation"><a href="#ref-stumpf2022">[2]</a></span></p></li>
+<li><p>As a result, regular water sampling of bloom events began in late 1953 (Florida’s FWC-FWRI’s HAB Monitoring Database, myfwc.com/research/redtide/ monitoring/database/).<span class="citation"><a href="#ref-stumpf2022">[2]</a></span></p></li>
+<li><p>Prior to 1953, Feinstein is credited with compiling the historical record of red tides from 1844 to 1953, through sources like newspaper articles, interviews, and logs.<span class="citation"><a href="#ref-stumpf2022">[2]</a></span> The work is revolutionary and inspirational in that it was one of the first attempts to assess the place, seasonality, and duration of red tides on Florida’s Gulf Coast.</p></li>
+<li><p>Feinstein notes that “many incidences of Red Tide, especially before 1947, were probably not recorded.”<span class="citation"><a href="#ref-feinstein1955red">[3]</a></span></p></li>
+<li><p>However, “sampling was still intermittent and often event-driven until a severe event occurred in the mid-1990s (1994–1997). From 1994 onwards, blooms were sampled more systematically by the state of Florida, supplemented by various research projects.”<span class="citation"><a href="#ref-stumpf2022">[2]</a></span></p></li>
+</ul>
+</div>
+</div>
+<div id="data-and-model" class="section level1">
+<h1><a href="#data">Data and model</a></h1>
+<p><a href="https://www.ncei.noaa.gov/archive/archive-management-system/OAS/bin/prd/jquery/download/120767.7.7.tar.gz">HABSOS data</a>. According to the HABASOS website,</p>
+<blockquote>
+<p>The Harmful Algal BloomS Observing System (HABSOS) began as a pilot project in 2001 to focus on recent Karenia brevis blooms in the Gulf of Mexico. This project identified a need for a harmful algal bloom observing network. Many individuals from Gulf of Mexico state agencies and universities, US Environmental Protection Agency, and NOAA National Coastal Data Development Center (NCDDC) participated in this project. This product developed a strong partnership between Gulf of Mexico partners and NOAA National Centers for Environmental Information (formerly NCDDC).</p>
+</blockquote>
+<blockquote>
+<p>HABSOS evolved into a database of HAB observations and associated environmental observations submitted by the partners who collect these data. These data are updated annually and made publicly available in the NCEI archive and via the interactive map viewer. NCEI’s HABSOS provides a research quality HAB dataset and HAB observations in near-real time.</p>
+</blockquote>
+<p>(What data did you use, where did you get it?)</p>
+<p>“Historical HAB sampling in Florida has been collected opportunistically, limiting the use of the data for robust statistical analyses (Christman and Young 2006), but more recently there have been efforts to conduct routine monitoring.”<span class="citation"><a href="#ref-turley2022">[1]</a></span></p>
+<p>Turley and others used the HAB sampling data to “identify extreme events, examine the geographic extent, and determine approximate temporal limits of an event.”<span class="citation"><a href="#ref-turley2022">[1]</a></span></p>
+<p>“This, however, assumes that major events don’t go completely undetected, which is not likely for nearshore events but could occur in the case of offshore blooms.”<span class="citation"><a href="#ref-turley2022">[1]</a></span></p>
+</div>
+<div id="results" class="section level1">
+<h1><a href="#results">Results</a></h1>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to:</p>
+<ul>
+<li><p><a href="https://www.ncei.noaa.gov/maps/habsos/maps.htm">Harmful Algal BloomS Observing System</a></p></li>
+<li><p><a href="https://coastalscience.noaa.gov/science-areas/habs/hab-forecasts/gulf-of-mexico/">Gulf of Mexico Harmful Algal Bloom Forecast</a></p></li>
+<li><p><a href="https://visitbeaches.org">MOTE Beach Conditions Reporting System</a></p></li>
+</ul>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body" entry-spacing="0">
+<div id="ref-turley2022" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">B. D. Turley, M. Karnauskas, M. D. Campbell, D. S. Hanisko, and C. R. Kelble, <span>“Relationships between blooms of <span><em>Karenia</em></span><span> <em>Brevis</em></span> and hypoxia across the <span>West Florida Shelf</span>,”</span> <em>Harmful Algae</em>, vol. 114, p. 102223, May 2022, doi: <a href="https://doi.org/10.1016/j.hal.2022.102223">10.1016/j.hal.2022.102223</a>. [Online]. Available: <a href="https://www.sciencedirect.com/science/article/pii/S1568988322000518">https://www.sciencedirect.com/science/article/pii/S1568988322000518</a>. [Accessed: 24-Apr-2024]</div>
+</div>
+<div id="ref-stumpf2022" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">R. P. Stumpf <em>et al.</em>, <span>“Quantifying <span>Karenia</span> brevis bloom severity and respiratory irritation impact along the shoreline of <span>Southwest Florida</span>,”</span> <em>PLOS ONE</em>, vol. 17, no. 1, p. e0260755, Jan. 2022, doi: <a href="https://doi.org/10.1371/journal.pone.0260755">10.1371/journal.pone.0260755</a>. [Online]. Available: <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0260755">https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0260755</a>. [Accessed: 24-Apr-2024]</div>
+</div>
+<div id="ref-feinstein1955red" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">A. Feinstein, A. R. Ceurvels, R. F. Hutton, E. Snoek, and F. W. Smith, <span>“Red tide outbreaks off the <span>Florida</span> west coast,”</span> <em>RED</em>, vol. 55, p. 15, 1955. </div>
+</div>
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2024 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2024 [Online]. Available: <a href="https://github.com/rstudio/blogdown">https://github.com/rstudio/blogdown</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value
+ version  R version 4.3.2 (2023-10-31)
+ os       macOS Monterey 12.5.1
+ system   x86_64, darwin20
+ ui       X11
+ language (EN)
+ collate  en_US.UTF-8
+ ctype    en_US.UTF-8
+ tz       America/New_York
+ date     2024-04-24
+ pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version date (UTC) lib source
+ blogdown    * 1.19    2024-02-01 [1] CRAN (R 4.3.2)
+ bookdown      0.39    2024-04-15 [1] CRAN (R 4.3.2)
+ bslib         0.7.0   2024-03-29 [1] CRAN (R 4.3.2)
+ cachem        1.0.8   2023-05-01 [1] CRAN (R 4.3.0)
+ cli           3.6.2   2023-12-11 [1] CRAN (R 4.3.0)
+ codetools     0.2-19  2023-02-01 [1] CRAN (R 4.3.2)
+ colorspace    2.1-0   2023-01-23 [1] CRAN (R 4.3.0)
+ devtools    * 2.4.5   2022-10-11 [1] CRAN (R 4.3.0)
+ digest        0.6.35  2024-03-11 [1] CRAN (R 4.3.2)
+ dplyr         1.1.4   2023-11-17 [1] CRAN (R 4.3.0)
+ ellipsis      0.3.2   2021-04-29 [1] CRAN (R 4.3.0)
+ evaluate      0.23    2023-11-01 [1] CRAN (R 4.3.0)
+ fansi         1.0.6   2023-12-08 [1] CRAN (R 4.3.0)
+ farver        2.1.1   2022-07-06 [1] CRAN (R 4.3.0)
+ fastmap       1.1.1   2023-02-24 [1] CRAN (R 4.3.0)
+ fs            1.6.3   2023-07-20 [1] CRAN (R 4.3.0)
+ generics      0.1.3   2022-07-05 [1] CRAN (R 4.3.0)
+ ggplot2     * 3.5.0   2024-02-23 [1] CRAN (R 4.3.2)
+ ggthemes    * 5.1.0   2024-02-10 [1] CRAN (R 4.3.2)
+ glue          1.7.0   2024-01-09 [1] CRAN (R 4.3.0)
+ gtable        0.3.4   2023-08-21 [1] CRAN (R 4.3.0)
+ highr         0.10    2022-12-22 [1] CRAN (R 4.3.0)
+ htmltools     0.5.8.1 2024-04-04 [1] CRAN (R 4.3.2)
+ htmlwidgets   1.6.4   2023-12-06 [1] CRAN (R 4.3.0)
+ httpuv        1.6.14  2024-01-26 [1] CRAN (R 4.3.2)
+ jquerylib     0.1.4   2021-04-26 [1] CRAN (R 4.3.0)
+ jsonlite      1.8.8   2023-12-04 [1] CRAN (R 4.3.0)
+ knitr         1.45    2023-10-30 [1] CRAN (R 4.3.0)
+ labeling      0.4.3   2023-08-29 [1] CRAN (R 4.3.0)
+ later         1.3.2   2023-12-06 [1] CRAN (R 4.3.0)
+ lifecycle     1.0.4   2023-11-07 [1] CRAN (R 4.3.0)
+ magrittr      2.0.3   2022-03-30 [1] CRAN (R 4.3.0)
+ memoise       2.0.1   2021-11-26 [1] CRAN (R 4.3.0)
+ mime          0.12    2021-09-28 [1] CRAN (R 4.3.0)
+ miniUI        0.1.1.1 2018-05-18 [1] CRAN (R 4.3.0)
+ munsell       0.5.1   2024-04-01 [1] CRAN (R 4.3.2)
+ pillar        1.9.0   2023-03-22 [1] CRAN (R 4.3.0)
+ pkgbuild      1.4.3   2023-12-10 [1] CRAN (R 4.3.0)
+ pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.3.0)
+ pkgload       1.3.4   2024-01-16 [1] CRAN (R 4.3.0)
+ profvis       0.3.8   2023-05-02 [1] CRAN (R 4.3.0)
+ promises      1.2.1   2023-08-10 [1] CRAN (R 4.3.0)
+ purrr         1.0.2   2023-08-10 [1] CRAN (R 4.3.0)
+ R6            2.5.1   2021-08-19 [1] CRAN (R 4.3.0)
+ Rcpp          1.0.12  2024-01-09 [1] CRAN (R 4.3.0)
+ remotes       2.4.2.1 2023-07-18 [1] CRAN (R 4.3.0)
+ rlang         1.1.3   2024-01-10 [1] CRAN (R 4.3.0)
+ rmarkdown     2.26    2024-03-05 [1] CRAN (R 4.3.2)
+ rstudioapi    0.15.0  2023-07-07 [1] CRAN (R 4.3.0)
+ sass          0.4.9   2024-03-15 [1] CRAN (R 4.3.2)
+ scales        1.3.0   2023-11-28 [1] CRAN (R 4.3.0)
+ sessioninfo   1.2.2   2021-12-06 [1] CRAN (R 4.3.0)
+ shiny         1.8.0   2023-11-17 [1] CRAN (R 4.3.0)
+ stringi       1.8.3   2023-12-11 [1] CRAN (R 4.3.0)
+ stringr       1.5.1   2023-11-14 [1] CRAN (R 4.3.0)
+ tibble        3.2.1   2023-03-20 [1] CRAN (R 4.3.0)
+ tidyselect    1.2.0   2022-10-10 [1] CRAN (R 4.3.0)
+ urlchecker    1.0.1   2021-11-30 [1] CRAN (R 4.3.0)
+ usethis     * 2.2.3   2024-02-19 [1] CRAN (R 4.3.2)
+ utf8          1.2.4   2023-10-22 [1] CRAN (R 4.3.0)
+ vctrs         0.6.5   2023-12-01 [1] CRAN (R 4.3.0)
+ withr         3.0.0   2024-01-16 [1] CRAN (R 4.3.0)
+ xfun          0.43    2024-03-25 [1] CRAN (R 4.3.2)
+ xtable        1.8-4   2019-04-21 [1] CRAN (R 4.3.0)
+ yaml          2.3.8   2023-12-11 [1] CRAN (R 4.3.0)
+
+ [1] /Library/Frameworks/R.framework/Versions/4.3-x86_64/Resources/library
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>

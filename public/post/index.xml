@@ -9,7 +9,16 @@
     <managingEditor>rob@robwiederstein.org (Rob Wiederstein)</managingEditor>
     <webMaster>rob@robwiederstein.org (Rob Wiederstein)</webMaster>
     <copyright>2021 Rob Wiederstein All rights reserved</copyright>
-    <lastBuildDate>Wed, 18 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://robwiederstein.org/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 16 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://robwiederstein.org/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Color Palette Selection from Historic Maps</title>
+      <link>https://robwiederstein.org/2024/09/16/color-palette-selection-from-historic-maps/</link>
+      <pubDate>Mon, 16 Sep 2024 00:00:00 +0000</pubDate>
+      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
+      <guid>https://robwiederstein.org/2024/09/16/color-palette-selection-from-historic-maps/</guid>
+      <description>By default, Hugo automatically takes the first 70 words of your content as its summary and stores it into the &lt;code&gt;.Summary&lt;/code&gt; page variable for use in your templates. You may customize the summary length by setting &lt;code&gt;summaryLength&lt;/code&gt; in your site configuration &lt;em&gt;or&lt;/em&gt; you can set it in the front matter.</description>
+    </item>
+    
     <item>
       <title>Predicting Building Energy Usage</title>
       <link>https://robwiederstein.org/2023/01/18/predicting-building-energy-usage/</link>
@@ -179,15 +188,6 @@
       <author>rob@robwiederstein.org (Rob Wiederstein)</author>
       <guid>https://robwiederstein.org/2022/04/11/list-basics-part-01/</guid>
       <description>This post deals with list basics.</description>
-    </item>
-    
-    <item>
-      <title>Indiana School Enrollments 2006 to 2022</title>
-      <link>https://robwiederstein.org/2022/04/03/indiana-school-enrollments-2006-to-2022/</link>
-      <pubDate>Sun, 03 Apr 2022 00:00:00 +0000</pubDate>
-      <author>rob@robwiederstein.org (Rob Wiederstein)</author>
-      <guid>https://robwiederstein.org/2022/04/03/indiana-school-enrollments-2006-to-2022/</guid>
-      <description>This post examines trends in student enrollments for Indiana public schools.</description>
     </item>
     
   </channel>

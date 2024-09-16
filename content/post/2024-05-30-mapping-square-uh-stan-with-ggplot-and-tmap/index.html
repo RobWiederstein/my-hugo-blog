@@ -1,0 +1,433 @@
+---
+title: Mapping Square-Uh-Stan with Ggplot and Tmap
+author: Rob Wiederstein
+date: '2024-05-30'
+slug: mapping-square-uh-stan-with-ggplot-and-tmap
+categories:
+  - R
+tags:
+  - sf
+  - ggplot2
+  - tmap
+layout: layouts/post/single
+draft: true
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-ggplot2, @R-tmap, @R-tmaptools, @R-dplyr, @R-sf, @R-naturalearth
+header:
+  image: ~
+  alt: ~
+  caption: ~
+repo: ~
+summary: This is an introduction to the simple features package.  A variety of simple features--polygons, lines, and points--will be created.  Then, they will be plotted as a map using the `ggplot2` and `tmap` packages.
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#overview" id="toc-overview">Overview</a></li>
+<li><a href="#background" id="toc-background">Background</a>
+<ul>
+<li><a href="#workng-with-maps" id="toc-workng-with-maps">Workng with Maps</a></li>
+<li><a href="#simple-features" id="toc-simple-features">Simple Features</a></li>
+<li><a href="#beijing-tokyo-example" id="toc-beijing-tokyo-example">Beijing &amp; Tokyo Example</a></li>
+<li><a href="#base-plot-beijing-and-tokyo" id="toc-base-plot-beijing-and-tokyo">Base Plot Beijing and Tokyo</a></li>
+</ul></li>
+<li><a href="#create-square-uh-stan" id="toc-create-square-uh-stan">Create Square-uh-stan</a></li>
+<li><a href="#ggplot2" id="toc-ggplot2">Ggplot2</a>
+<ul>
+<li><a href="#code" id="toc-code">Code</a></li>
+<li><a href="#plot" id="toc-plot">Plot</a></li>
+</ul></li>
+<li><a href="#tmap" id="toc-tmap">Tmap</a>
+<ul>
+<li><a href="#code-1" id="toc-code-1">Code</a></li>
+<li><a href="#plot-1" id="toc-plot-1">Plot</a></li>
+</ul></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
+<li><a href="#acknowledgements" id="toc-acknowledgements">Acknowledgements</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+<li><a href="#disclaimer" id="toc-disclaimer">Disclaimer</a></li>
+<li><a href="#reproducibility" id="toc-reproducibility">Reproducibility</a></li>
+</ul>
+</div>
+
+<div id="overview" class="section level1">
+<h1><a href="#overview">Overview</a></h1>
+<p>This is an introduction to working with vector data using the <code>sf</code> package. After the creation of some simple features, the data will be plotted in <code>ggplot2</code> and <code>tmap</code> packages. For this post, a set of features is created around the intersection of the Prime Meridian and the Equator. This is a completely fictional world of two countries “A” and “B” in a region known as “Square-uh-stan.” Country A contains a polygon named “Lake Clear” and Country B contains a point named “Mt. High”. Africa will be used as the base layer and will frame the upper and right side of the map. Coordinate Reference Systems (CRS) are the underpinnings of all GIS work. To keep things simple, the “EPSG:4326” CRS is used.</p>
+</div>
+<div id="background" class="section level1">
+<h1><a href="#background">Background</a></h1>
+<p>This section will demonstrate working with maps, show how to create some simple feaures, and plot Beijing and Tokyo on a map using base graphics.</p>
+<div id="workng-with-maps" class="section level2">
+<h2><a href="working">Workng with Maps</a></h2>
+<p>Whenever you work with maps, you’re going to be working with a lot of layers in the plotting phase and, at least for me, it takes a lot of time to get things to look right. For the creation of Square-uh-stan, here are the basic steps that are undertaken when creating a map:</p>
+<ol style="list-style-type: decimal">
+<li>create simple features</li>
+<li>convert to sfc</li>
+<li>set CRS</li>
+<li>add attributes / convert to sf (1-4 are usually done in the background)</li>
+<li>plot (base/ggplot2/tmap)</li>
+<li>add base map</li>
+<li>decide layers (countries, water features, cities, shipwrecks, etc)</li>
+<li>add annotations</li>
+<li>add compass rosette</li>
+<li>add distance scale</li>
+<li>add labels</li>
+<li>set theme</li>
+<li>exhaustive tinkering</li>
+</ol>
+<p>There’s no strict rules on how to go about creating a map, but that’s what my workflow usually looks like.</p>
+</div>
+<div id="simple-features" class="section level2">
+<h2><a href="#simplefeatures">Simple Features</a></h2>
+<p>In working with simple feature data, three abbreviations are critical to understanding the procedure: “sfg”, “sfc”, and “sf”. The order of creation is:</p>
+<ul>
+<li><p>simple feature geometry or “sfg”</p></li>
+<li><p>simple feature column or “sfc” which is a list-column with the geometries for each feature (record)</p></li>
+<li><p>simple feature “sf” which is the final evolution and is a table (data.frame) with feature attributes (data) and feature geometries (polygons, points, lines, etc.). You can use <code>dplyr</code> to work with the data.</p></li>
+</ul>
+<p>The diagram below describes how to begin with a simple point, for example, and ultimately to have an object of class <code>sf</code>. Most often, you won’t need to know the steps behind the creation of an <code>sf</code> object, it will be enough to read it into memory and plot it.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:sf-diagram"></span>
+<img src="img/sfdiagram.png" alt="Diagram showing `sf` workflow from start to finish.  Taken from Geocomputation With R.[@lovelaceGeocomputation2019]" width="100%" />
+<p class="caption">
+Figure 1: Diagram showing <code>sf</code> workflow from start to finish. Taken from Geocomputation With R.<span class="citation"><a href="#ref-lovelaceGeocomputation2019">[1]</a></span>
+</p>
+</div>
+</div>
+<div id="beijing-tokyo-example" class="section level2">
+<h2>Beijing &amp; Tokyo Example</h2>
+<p>Here’s an example where two points are created. The two points are the latitutde and longitude of Beijing and Tokyo. I opened google maps and just copied and pasted the coordinates below. The population numbers are just an estimate.</p>
+<pre class="r"><code>beijing &lt;- sf::st_point(c(116.338348, 39.909982))
+tokyo &lt;- sf::st_point(c(139.488645, 35.720886))
+city_geom &lt;- sf::st_sfc(list(beijing, tokyo), crs = &quot;EPSG:4326&quot;)
+city_attrib &lt;- data.frame(name = c(&quot;Beijing&quot;, &quot;Tokyo&quot;), pop = c(14000000, 22000000),
+    date = as.Date(&quot;2022-01-01&quot;))
+city_sf &lt;- sf::st_sf(city_attrib, geometry = city_geom)</code></pre>
+</div>
+<div id="base-plot-beijing-and-tokyo" class="section level2">
+<h2>Base Plot Beijing and Tokyo</h2>
+<p>There is a world map in the <code>rnaturalearth</code> package. The map was subset to the “Asia” continent and used as the first layer in the plot.</p>
+<pre class="r"><code>asia &lt;- rnaturalearth::ne_countries(continent = &quot;Asia&quot;)
+chn_jap &lt;- rnaturalearth::ne_countries(country = c(&quot;China&quot;, &quot;Japan&quot;))
+plot(asia$geometry, axes = T)
+plot(chn_jap$geometry, col = &quot;gray90&quot;, add = T)
+plot(city_sf[&quot;name&quot;], add = T, pch = 16, cex = 1.5)
+text(x = 110, y = 37, label = &quot;Beijing&quot;, cex = 0.75)
+text(x = 143, y = 31, label = &quot;Tokyo&quot;, cex = 0.75)
+title(&quot;Capitals of China and Japan&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/plot-chn-jap-1.svg" width="576" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="create-square-uh-stan" class="section level1">
+<h1>Create Square-uh-stan</h1>
+<p>Here, a handful of common geometries are created: 3 polygons, 2 line strings and a single point. For reference, I used the vignettes for the <code>sf</code> package and you can find them by running <code>vignette(package = "sf")</code>. They are really, really helpful.</p>
+<pre class="r"><code>library(sf)
+#load world map
+afrc &lt;- rnaturalearth::ne_countries(continent = &quot;Africa&quot;)
+
+# create simple features
+land_1 &lt;- st_polygon(list(rbind(c(-10, -10), c(-10, -15), c(-15, -15), c(-15, -10), c(-10, -10))))
+land_2 &lt;- land_1 * .75 + 7
+lake &lt;- land_1 * .25
+mountain &lt;- st_centroid(land_1 - 1)
+pm &lt;- st_linestring(matrix(c(0, -20, 0, 20), ncol = 2, byrow = T))
+eq &lt;- st_linestring(matrix(c(-20, 0, 20, 0), ncol = 2, byrow = T))
+
+# sfc
+land_sfc = st_sfc(list(land_1, land_2))
+lake_sfc = st_sfc(lake)
+mountain_sfc &lt;- st_sfc(mountain)
+pm_sfc &lt;- st_sfc(pm)
+eq_sfc &lt;- st_sfc(eq)
+
+# set CRS
+land_sfc_wgs = st_sfc(land_sfc, crs = &quot;EPSG:4326&quot;)
+lake_sfc_wgs = st_sfc(lake_sfc, crs = &quot;EPSG:4326&quot;)
+mountain_sfc_wgs &lt;- st_sfc(mountain_sfc, crs = &quot;EPSG:4326&quot;)
+pm_sfc_wgs &lt;- st_sfc(pm_sfc, crs = &quot;EPSG:4326&quot;)
+eq_sfc_wgs &lt;- st_sfc(eq_sfc, crs = &quot;EPSG:4326&quot;)
+
+
+# add labels
+country &lt;- c(&quot;A&quot;, &quot;B&quot;)
+land_sfc_wgs_df = st_sf(country = country, land_sfc_wgs)
+name &lt;- &quot;Mt. High&quot;
+mountain_sfc_wgs_df = st_sf(name = name, mountain_sfc_wgs)
+name &lt;- &quot;Lake Clear&quot;
+lake_sfc_wgs_df &lt;- st_sf(name = name, lake_sfc_wgs)
+name &lt;- &quot;Equator&quot;
+eq_sfc_wgs_df &lt;- st_sf(name = name, eq_sfc_wgs)
+name &lt;- &quot;Prime Meridian&quot;
+pm_sfc_wgs_df &lt;- st_sf(name = name, pm_sfc_wgs)</code></pre>
+</div>
+<div id="ggplot2" class="section level1">
+<h1><a href="#gglot2">Ggplot2</a></h1>
+<p><code>ggplot2</code> is the defacto standard in <code>R</code> for plotting. This is a solid choice for plotting maps and may dovetail nicely with your existing workflow. The operable functions are <code>geom_sf</code> and <code>coord_sf</code>. For those in a hurry to get something plotted, I’d recommend this method first and reference Hadley Wickham’s discussion in Chapter 6 - Maps in the <code>ggplot2</code> book.<span class="citation"><a href="#ref-ggplot22016">[2]</a></span></p>
+<div id="code" class="section level2">
+<h2>Code</h2>
+<pre class="r"><code># plot ggplot2
+library(ggplot2)
+library(ggspatial)
+
+ggplot() +
+# add layers
+geom_sf(data = afrc, fill = &quot;antiquewhite&quot;) +
+geom_sf(data = land_sfc_wgs_df, fill = &quot;antiquewhite&quot;) +
+geom_sf(data = lake_sfc_wgs_df, fill = &quot;lightblue&quot;) +
+geom_sf(data = mountain_sfc_wgs_df, color = &quot;red&quot;, shape = 17, size = 3) +
+geom_sf(data = pm_sfc_wgs_df, linetype = &quot;dashed&quot;) +
+geom_sf(data = eq_sfc_wgs_df, linetype = &quot;dashed&quot;) +
+# add annotations
+geom_sf_text(data = land_sfc_wgs_df,
+             aes(label = country),
+             nudge_y = 1) +
+geom_sf_text(data = mountain_sfc_wgs_df,
+             aes(label = name),
+             nudge_y = -.75,
+             nudge_x = .75) +
+geom_sf_text(data = lake_sfc_wgs_df,
+             aes(label = name),
+             nudge_y = -1) +
+geom_sf_text(data = eq_sfc_wgs_df,
+             aes(label = name),
+             nudge_y = .75,
+             nudge_x = 2.5,
+             color = &quot;gray50&quot;,
+             fontface = &quot;italic&quot;) +
+annotate(geom = &quot;text&quot;, x = -.75, y = -15, label = &quot;Prime Meridian&quot;,
+         fontface = &quot;italic&quot;, color = &quot;grey50&quot;, angle = 90) +
+# restrict frame
+coord_sf(xlim = c(-20, 15),
+         ylim = c(-20, 10),
+         expand = F) +
+# add direction
+annotation_north_arrow(
+    which_north = &quot;grid&quot;,
+    height = unit(.75, &quot;cm&quot;),
+    width = unit(.75, &quot;cm&quot;),
+    location = &quot;br&quot;,
+    pad_x = unit(3.2, &quot;cm&quot;),
+    pad_y = unit(1, &quot;cm&quot;)
+    ) +
+# add scale
+    annotation_scale(pad_x = unit(3.5, &quot;in&quot;)) +
+# add labels
+labs(title = &quot;Square-uh-stan&quot;,
+     subtitle = &quot;ggplot2&quot;,
+     x = &quot;longitude&quot;,
+     y = &quot;latitude&quot;,
+     caption = &quot;Source: My Data Source&quot;) +
+# add theme
+theme_bw() +
+theme(panel.grid.major = element_line(
+    color = gray(.5),
+    linetype = &quot;dotted&quot;,
+    linewidth = 0.25),
+    panel.background = element_rect(
+        fill = &quot;lightblue&quot;)
+)</code></pre>
+</div>
+<div id="plot" class="section level2">
+<h2>Plot</h2>
+<p>Creation of the plot was straightforward and comforting as I’ve grown accustomed to the <code>ggplot2</code> syntax. Now on to <code>tmap</code>!</p>
+<p><img src="img/square-uh-stan_ggplot.jpg" width="75%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="tmap" class="section level1">
+<h1><a href="#tmap">Tmap</a></h1>
+<p>The <code>tmap</code> package is not something I was very familiar with, although it is referenced in parallel with <code>ggplot2</code> in most comprehensive discussions. The “Geocomputation with R” e-book emphasizes the <code>tmap</code> package stating</p>
+<blockquote>
+<p>tmap is a powerful and flexible map-making package with sensible defaults. It has a concise syntax that allows for the creation of attractive maps with minimal code which will be familiar to ggplot2 users. It also has the unique capability to generate static and interactive maps using the same code via tmap_mode(). Finally, it accepts a wider range of spatial classes (including sf and terra objects) than alternatives such as ggplot2.<span class="citation"><a href="#ref-lovelaceGeocomputation2019">[1]</a></span></p>
+</blockquote>
+<p>For the code below, the development package from GitHub was installed, which was recommended in “Geocomputation with R.”</p>
+<pre class="r"><code>remotes::install_github(&quot;r-tmap/tmap&quot;)</code></pre>
+<div id="code-1" class="section level2">
+<h2>Code</h2>
+<pre class="r"><code>library(tmap)
+library(tmaptools)
+tmap_options_reset()
+box &lt;- tmaptools::bb(afrc, xlim = c(-20, 15), ylim = c(-20, 10))
+tm &lt;-
+tm_shape(afrc, bb = box) +
+    tm_borders(&quot;gray50&quot;, lwd = .25) +
+    tm_polygons(fill = &quot;antiquewhite&quot;) +
+tm_shape(land_sfc_wgs_df) +
+    tm_borders(&quot;gray50&quot;, lwd = .25) +
+    tm_polygons(&quot;country&quot;, fill = &quot;antiquewhite&quot;) +
+    tm_text(&quot;country&quot;, ymod = 1) +
+tm_shape(lake_sfc_wgs) +
+    tm_polygons(fill = &quot;lightblue&quot;) +
+    tm_text(&quot;Lake Clear&quot;, ymod = -1.3, xmod =-1) +
+tm_shape(mountain_sfc_wgs_df) +
+    tm_symbols(size = 1, fill = &quot;red&quot;, shape = 17) +
+    tm_text(&quot;Mt. High&quot;, ymod = -.75, xmod = 1) +
+tm_shape(eq_sfc_wgs_df) +
+    tm_lines(lty = &quot;dotted&quot;) +
+    tm_text(&quot;Equator&quot;, xmod = -18, ymod = .5, fontface = &quot;italic&quot;, alpha = .5, size = .75) +
+tm_shape(pm_sfc_wgs_df) +
+    tm_lines(lty = &quot;dotted&quot;) +
+    tm_text(&quot;Prime Meridian&quot;, ymod = -17, xmod = -.5, fontface = &quot;italic&quot;,
+            alpha = .5, size = .75, angle = 90) +
+    tm_xlab(&quot;Longitude&quot;) +
+    tm_ylab(&quot;Latitude&quot;, rotation = 90) +
+    tm_grid(labels.show = T,  alpha = .5) +
+    tm_compass(position = c(.75, .25)) +
+    tm_scalebar() +
+    tm_title_in(&quot;Square-uh-stan&quot;,
+                size = 1.4,
+                padding = c(.5, 1, .5, 1),
+                position = tm_pos_in(&quot;left&quot;, &quot;top&quot;),
+                bg.color = &quot;white&quot;,
+                frame = &quot;black&quot;,
+                frame.lwd = 2) +
+    tm_layout(
+              bg.color = &quot;lightblue&quot;,
+              inner.margins = 0,
+              frame = &quot;grey50&quot;,
+              frame.lwd = 3,
+              frame.double.line = F,
+              outer.bg.color = &quot;#00000000&quot;
+              )</code></pre>
+</div>
+<div id="plot-1" class="section level2">
+<h2>Plot</h2>
+<p>I had a lot of difficulty working with the development package and the documentation available online. Eventually, the end product came very close to what I expected. The map “title” was really far away from the plotting area so to solve it, I inserted the title within the frame. Axes labels were another difficult area and the documentation wasn’t very helpful.</p>
+<p><img src="img/square-uh-stan_tmap.png" width="75%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+<p>The <code>sf</code> package makes it easy to create and manipulate geographic features, particularly if the object is in its final phase with an <code>sf</code> class. For static maps, <code>ggplot2</code> is an option when looking for a polished final plot for a publication. <code>tmap</code> may be worth the effort to learn. The package is easy to use and can allow for greater flexibility when dealing with a variety of <code>sf</code> objects. Many thanks for visiting the region of Square-uh-stan and we hope you’ll return soon!</p>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to all of those who devote time to educating others. In creating this post, I relied on dozens of resources. So many in fact, a separate repository <a href="https://github.com/RobWiederstein/awesome-maps-r"><code>awesome-maps-r</code></a> was created to track the resources.</p>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body" entry-spacing="0">
+<div id="ref-lovelaceGeocomputation2019" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R. Lovelace, J. Nowosad, and J. Muenchow, <em>Geocomputation with <span>R</span></em>. <span>Chapman and Hall/CRC</span>, 2019. </div>
+</div>
+<div id="ref-ggplot22016" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">H. Wickham, <em>ggplot2: Elegant graphics for data analysis</em>. Springer-Verlag New York, 2016 [Online]. Available: <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a></div>
+</div>
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2024 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2024 [Online]. Available: <a href="https://github.com/rstudio/blogdown">https://github.com/rstudio/blogdown</a></div>
+</div>
+<div id="ref-R-dplyr" class="csl-entry">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">H. Wickham, R. François, L. Henry, K. Müller, and D. Vaughan, <em>Dplyr: A grammar of data manipulation</em>. 2023 [Online]. Available: <a href="https://dplyr.tidyverse.org">https://dplyr.tidyverse.org</a></div>
+</div>
+<div id="ref-R-ggplot2" class="csl-entry">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">H. Wickham <em>et al.</em>, <em>ggplot2: Create elegant data visualisations using the grammar of graphics</em>. 2024 [Online]. Available: <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a></div>
+</div>
+<div id="ref-R-sf" class="csl-entry">
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">E. Pebesma, <em>Sf: Simple features for r</em>. 2024 [Online]. Available: <a href="https://r-spatial.github.io/sf/">https://r-spatial.github.io/sf/</a></div>
+</div>
+<div id="ref-R-tmap" class="csl-entry">
+<div class="csl-left-margin">[8] </div><div class="csl-right-inline">M. Tennekes, <em>Tmap: Thematic maps</em>. 2023 [Online]. Available: <a href="https://r-tmap.github.io/tmap/">https://r-tmap.github.io/tmap/</a></div>
+</div>
+<div id="ref-R-tmaptools" class="csl-entry">
+<div class="csl-left-margin">[9] </div><div class="csl-right-inline">M. Tennekes, <em>Tmaptools: Thematic map tools</em>. 2021 [Online]. Available: <a href="https://github.com/mtennekes/tmaptools">https://github.com/mtennekes/tmaptools</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value
+ version  R version 4.3.2 (2023-10-31)
+ os       macOS Monterey 12.5.1
+ system   x86_64, darwin20
+ ui       X11
+ language (EN)
+ collate  en_US.UTF-8
+ ctype    en_US.UTF-8
+ tz       America/New_York
+ date     2024-05-30
+ pandoc   3.1.1 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/ (via rmarkdown)
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version date (UTC) lib source
+ blogdown    * 1.19    2024-02-01 [1] CRAN (R 4.3.2)
+ bookdown      0.39    2024-04-15 [1] CRAN (R 4.3.2)
+ bslib         0.7.0   2024-03-29 [1] CRAN (R 4.3.2)
+ cachem        1.1.0   2024-05-16 [1] CRAN (R 4.3.3)
+ cli           3.6.2   2023-12-11 [1] CRAN (R 4.3.0)
+ codetools     0.2-19  2023-02-01 [1] CRAN (R 4.3.2)
+ colorspace    2.1-0   2023-01-23 [1] CRAN (R 4.3.0)
+ devtools    * 2.4.5   2022-10-11 [1] CRAN (R 4.3.0)
+ digest        0.6.35  2024-03-11 [1] CRAN (R 4.3.2)
+ dplyr         1.1.4   2023-11-17 [1] CRAN (R 4.3.0)
+ ellipsis      0.3.2   2021-04-29 [1] CRAN (R 4.3.0)
+ evaluate      0.23    2023-11-01 [1] CRAN (R 4.3.0)
+ fansi         1.0.6   2023-12-08 [1] CRAN (R 4.3.0)
+ farver        2.1.2   2024-05-13 [1] CRAN (R 4.3.3)
+ fastmap       1.2.0   2024-05-15 [1] CRAN (R 4.3.3)
+ fs            1.6.4   2024-04-25 [1] CRAN (R 4.3.2)
+ generics      0.1.3   2022-07-05 [1] CRAN (R 4.3.0)
+ ggplot2     * 3.5.1   2024-04-23 [1] CRAN (R 4.3.2)
+ ggthemes    * 5.1.0   2024-02-10 [1] CRAN (R 4.3.2)
+ glue          1.7.0   2024-01-09 [1] CRAN (R 4.3.0)
+ gtable        0.3.4   2023-08-21 [1] CRAN (R 4.3.0)
+ highr         0.10    2022-12-22 [1] CRAN (R 4.3.0)
+ htmltools     0.5.8.1 2024-04-04 [1] CRAN (R 4.3.2)
+ htmlwidgets   1.6.4   2023-12-06 [1] CRAN (R 4.3.0)
+ httpuv        1.6.14  2024-01-26 [1] CRAN (R 4.3.2)
+ jquerylib     0.1.4   2021-04-26 [1] CRAN (R 4.3.0)
+ jsonlite      1.8.8   2023-12-04 [1] CRAN (R 4.3.0)
+ knitr         1.45    2023-10-30 [1] CRAN (R 4.3.0)
+ labeling      0.4.3   2023-08-29 [1] CRAN (R 4.3.0)
+ later         1.3.2   2023-12-06 [1] CRAN (R 4.3.0)
+ lifecycle     1.0.4   2023-11-07 [1] CRAN (R 4.3.0)
+ magrittr      2.0.3   2022-03-30 [1] CRAN (R 4.3.0)
+ memoise       2.0.1   2021-11-26 [1] CRAN (R 4.3.0)
+ mime          0.12    2021-09-28 [1] CRAN (R 4.3.0)
+ miniUI        0.1.1.1 2018-05-18 [1] CRAN (R 4.3.0)
+ munsell       0.5.1   2024-04-01 [1] CRAN (R 4.3.2)
+ pillar        1.9.0   2023-03-22 [1] CRAN (R 4.3.0)
+ pkgbuild      1.4.3   2023-12-10 [1] CRAN (R 4.3.0)
+ pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.3.0)
+ pkgload       1.3.4   2024-01-16 [1] CRAN (R 4.3.0)
+ profvis       0.3.8   2023-05-02 [1] CRAN (R 4.3.0)
+ promises      1.2.1   2023-08-10 [1] CRAN (R 4.3.0)
+ purrr         1.0.2   2023-08-10 [1] CRAN (R 4.3.0)
+ R6            2.5.1   2021-08-19 [1] CRAN (R 4.3.0)
+ Rcpp          1.0.12  2024-01-09 [1] CRAN (R 4.3.0)
+ remotes       2.4.2.1 2023-07-18 [1] CRAN (R 4.3.0)
+ rlang         1.1.3   2024-01-10 [1] CRAN (R 4.3.0)
+ rmarkdown     2.27    2024-05-17 [1] CRAN (R 4.3.3)
+ rstudioapi    0.15.0  2023-07-07 [1] CRAN (R 4.3.0)
+ sass          0.4.9   2024-03-15 [1] CRAN (R 4.3.2)
+ scales        1.3.0   2023-11-28 [1] CRAN (R 4.3.0)
+ sessioninfo   1.2.2   2021-12-06 [1] CRAN (R 4.3.0)
+ shiny         1.8.0   2023-11-17 [1] CRAN (R 4.3.0)
+ stringi       1.8.3   2023-12-11 [1] CRAN (R 4.3.0)
+ stringr       1.5.1   2023-11-14 [1] CRAN (R 4.3.0)
+ tibble        3.2.1   2023-03-20 [1] CRAN (R 4.3.0)
+ tidyselect    1.2.0   2022-10-10 [1] CRAN (R 4.3.0)
+ urlchecker    1.0.1   2021-11-30 [1] CRAN (R 4.3.0)
+ usethis     * 2.2.3   2024-02-19 [1] CRAN (R 4.3.2)
+ utf8          1.2.4   2023-10-22 [1] CRAN (R 4.3.0)
+ vctrs         0.6.5   2023-12-01 [1] CRAN (R 4.3.0)
+ withr         3.0.0   2024-01-16 [1] CRAN (R 4.3.0)
+ xfun          0.44    2024-05-15 [1] CRAN (R 4.3.3)
+ xtable        1.8-4   2019-04-21 [1] CRAN (R 4.3.0)
+ yaml          2.3.8   2023-12-11 [1] CRAN (R 4.3.0)
+
+ [1] /Library/Frameworks/R.framework/Versions/4.3-x86_64/Resources/library
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>

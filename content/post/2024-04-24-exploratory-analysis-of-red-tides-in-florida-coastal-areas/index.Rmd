@@ -1,0 +1,240 @@
+---
+title: Exploratory Analysis of Red Tides in Florida Coastal Areas
+author: Rob Wiederstein
+date: '2024-04-24'
+slug: exploratory-analysis-of-red-tides-in-florida-coastal-areas
+categories:
+  - R
+tags:
+  - biology
+layout: layouts/post/single
+draft: true
+bibliography:
+  - packages.bib
+  - red_tide.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: ~
+  alt: ~
+  caption: ~
+repo: ~
+summary: By default, Hugo automatically takes the first 70 words of your content as
+  its summary and stores it into the `.Summary` page variable for use in your templates.
+  You may customize the summary length by setting `summaryLength` in your site configuration
+  *or* you can set it in the front matter.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
+library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+# [R image](#image)
+
+
+```{r plot-mtcars, echo=F, fig.cap = "A plot with 538 layout theme and color blind palette."}
+data(mtcars)
+mtcars$cyl <- factor(mtcars$cyl)
+p <- ggplot(mtcars, aes(mpg, hp, group = cyl, colour = cyl))
+p <- p + scale_color_manual(values = cbPalette)
+p <- p + geom_point(size = 2)
+p <- p + ggtitle("mtcars")
+p
+```
+
+# [Overview](#overview)
+
+(Describe the problem.)
+
+# [Terms](#terms)
+
+anoxia
+
+auxotrophic
+
+benthic
+
+demersal
+
+eutrophication
+
+heterotrophic
+
+hypoxia
+
+statification
+
+DO - diluted oxygen
+
+HABSOS - Harmful Algal BloomS Observing System
+
+IOOS - Integrated Ocean Observing System
+
+NSP - neurotoxic shellfish poisoning
+
+WOD - World Ocean Database
+
+
+
+
+# [Background](#background)
+
+
+- "A harmful algal bloom (HAB), or excessive algae growth, is an algal bloom that causes negative impacts to other organisms by production of natural algae-produced toxins, mechanical damage to other organisms, or by other means."
+
+- The US Environmental Protection Agency (EPA) defined an HAB in 2008 as  "potentially toxic (auxotrophic, heterotrophic) species and high-biomass producers that can cause hypoxia and anoxia and indiscriminate mortalities of marine life after reaching dense concentrations, whether or not toxins are produced".
+
+- “As algal biomass accumulates in the surface water during a HAB, the sinking and decomposition of dead cells near the bottom increases respiratory demand and depletes dissolved oxygen, a condition generally referred to as hypoxia.”[@turley2022]
+
+- HABs are sometimes defined as only those algal blooms that produce toxins, and sometimes as any algal bloom that can result in severely lower oxygen levels in natural waters, killing organisms in marine or fresh waters.
+ 
+ - A bloom's duration can last from a few days to many months. 
+ 
+ - Upon the expiration of the bloom, microbes consume the dead algae resulting in an oxygen deprived "dead-zone".
+ 
+ - Any fish or plants within the dead-zone will die due to asphyxiation.
+ 
+- When a bloom occurs within a marine environment, an indicator is the presence of dead fish floating on the water.  These events are referred to as "red tides".
+
+- The origin or cause of a HAB can be difficult to pinpoint though high levels of nutrients, like nitrogen and phosphate, high water temperatures, and lack of water circulation are contributing factors.
+
+- In the NOAA data, the HAB is identified as Karenia Brevis.
+
+- "Karenia" is a genus that consists of unicellular, photosynthetic, planktonic organisms found in marine environments. As of 2012, the genus consisted of 12 species. "They are best known for their dense toxic algal blooms and red tides that cause considerable ecological and economical damage; some Karenia species cause severe animal mortality. Karenia brevis is known to cause respiratory distress and neurotoxic shellfish poisoning (NSP) in humans."
+
+- “The toxin-producing dinoflagellate Karenia brevis is the main causative species for HABs occurring annually on the West Florida Shelf.”[@turley2022]
+
+- “The West Florida Shelf is a relatively wide and shallow continental shelf with ample wind energy to mix the water column for much of the year (Yang and Weisberg, 1999). However, during the summer and early fall, warm sea surface temperatures and increased runoff during the Florida wet season leads to increased stratification, and in conjunction with HABs may contribute to an increased likelihood of hypoxia on the West Florida Shelf.” [@turley2022]
+
+## How HAB (Karenia Brevis) Occur
+
+The National Centers for Coastal Ocean Science (NCCOS) offers a algal bloom forecast. On the website, it describes the process.  "During the early bloom period (typically each fall), Karenia brevis cells—which persist in the bottom waters offshore—can be moved onshore to the Southwest Florida coast by a process known as coastal upwelling. The graphics below demonstrate this process. Once near the coast, Karenia brevis cells can quickly reach levels that create a harmful algal bloom (HAB)."
+
+```{r upwelling-diagram, out.width="90%"}
+knitr::include_graphics("./upwelling-graphic-scaled.jpg")
+```
+
+
+
+## Health Concerns
+
+- “Consumption of shellfish containing elevated PbTx concentrations causes neurotoxic shellfish poisoning (NSP). Unlike many other marine algal toxins, brevetoxins become aerosolized when K. brevis cells break open in high turbulence (especially nearshore) and are subsequently transported onshore by winds.”[@stumpf2022]
+
+- “These aerosolized toxins cause respiratory irritation and pose a significant risk to beachgoers with chronic respiratory illnesses such as asthma, and have been measured at distances greater than 1.5 km from the shore during blooms.” [@stumpf2022]
+
+- Severe K. brevis blooms are associated with the mortality of manatee, bottlenose dolphins, sea turtles and fish. [@stumpf2022]
+
+## History
+
+- “Fish kills in the Gulf of Mexico that could be attributed to K. brevis were identified as long ago as 1528."[@stumpf2022] 
+
+- “Reports of HABs affecting the coastal waters of the Gulf of Mexico from Florida to Texas date back to the arrival of Europeans with the first well documented bloom in 1844.”[@turley2022]
+
+- A Mr. Benjamin Curry of Manatee County, "one of the oldest residents on the Florida coast" confirmed "that as far back as 1844 a widespread destruction of all sorts of saltwater animal life occurred, apparently due to causes precisely similar to those which produced the lately noticed desolation."[@feinstein1955red]
+
+- In 1875, red tides were "were first linked to reports of human respiratory irritation.”[@turley2022]
+
+- “K. brevis was identified as the cause of “red tides” off the Southwest coast of Florida in the 1940s."[@stumpf2022]
+
+- As a result, regular water sampling of bloom events began in late 1953 (Florida’s FWC-FWRI’s HAB Monitoring Database, myfwc.com/research/redtide/ monitoring/database/).[@stumpf2022] 
+
+- Prior to 1953, Feinstein is credited with compiling the historical record of red tides from 1844 to 1953, through sources like newspaper articles, interviews, and logs.[@stumpf2022] The work is revolutionary and inspirational in that it was one of the first attempts to assess the place, seasonality, and duration of red tides on Florida's Gulf Coast.
+
+- Feinstein notes that "many incidences of Red Tide, especially before 1947, were probably not recorded.”[@feinstein1955red]
+
+- However, "sampling was still intermittent and often event-driven until a severe event occurred in the mid-1990s (1994–1997). From 1994 onwards, blooms were sampled more systematically by the state of Florida, supplemented by various research projects.”[@stumpf2022]
+
+
+# [Data and model](#data)
+
+[HABSOS data](https://www.ncei.noaa.gov/archive/archive-management-system/OAS/bin/prd/jquery/download/120767.7.7.tar.gz).  According to the HABASOS website, 
+
+> The Harmful Algal BloomS Observing System (HABSOS) began as a pilot project in 2001 to focus on recent Karenia brevis blooms in the Gulf of Mexico. This project identified a need for a harmful algal bloom observing network.  Many individuals from Gulf of Mexico state agencies and universities, US Environmental Protection Agency, and NOAA National Coastal Data Development Center (NCDDC) participated in this project.  This product developed a strong partnership between Gulf of Mexico partners and NOAA National Centers for Environmental Information (formerly NCDDC). 
+
+> HABSOS evolved into a database of HAB observations and associated environmental observations submitted by the partners who collect these data. These data are updated annually and made publicly available in the NCEI archive and via the interactive map viewer.  NCEI’s HABSOS provides a research quality HAB dataset and HAB observations in near-real time.
+
+(What data did you use, where did you get it?)
+
+"Historical HAB sampling in Florida has been collected opportunistically, limiting the use of the data for robust statistical analyses (Christman and Young 2006), but more recently there have been efforts to conduct routine monitoring."[@turley2022]
+
+Turley and others used the HAB sampling data to "identify extreme events, examine the geographic extent, and determine approximate temporal limits of an event.”[@turley2022]
+
+“This, however, assumes that major events don’t go completely undetected, which is not likely for nearshore events but could occur in the case of offshore blooms.”[@turley2022]
+
+# [Results](#results)
+
+# [Conclusion](#conclusion)
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+- [Harmful Algal BloomS Observing System](https://www.ncei.noaa.gov/maps/habsos/maps.htm)
+
+- [Gulf of Mexico Harmful Algal Bloom Forecast](https://coastalscience.noaa.gov/science-areas/habs/hab-forecasts/gulf-of-mexico/)
+
+- [MOTE Beach Conditions Reporting System](https://visitbeaches.org)
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```
