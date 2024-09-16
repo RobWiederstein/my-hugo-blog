@@ -92,7 +92,7 @@ p
 
 # [Overview](#overview)
 
-There are many famous maps and mapmakers, but the Cassini family stands above all of them.
+Many, many tools are available online to generate color palettes for maps and charts.  The science of color is better understood today as a result of photography and digital display than any other time.  Yet, history is replete with beautiful art and maps.  Monarchs and nations devoted extreme resources for exploration and conquest.  Maps were crucial in the effort.  The resulting maps were both a symbol of national power and advertisements of artistic ingenuity.  Many of these historic maps contain color schemes that just work.  Can these maps be used to color a contemporary map of today?  The answer is a resounding "yes" and the inspiration for this effort was taken from the post "[Cartographic palettes and colour harmonies](https://wanderingcartographer.wordpress.com/2022/07/27/cartographic-palettes-and-colour-harmonies/)."
 
 # [Background](#background)
 
