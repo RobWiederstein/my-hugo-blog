@@ -18,24 +18,34 @@ link-citations: yes
 nocite: |
   @R-base, @R-blogdown, @R-tidyverse
 header:
-  image: ~
-  alt: ~
-  caption: ~
-repo: ~
-summary: By default, Hugo automatically takes the first 70 words of your content as
-  its summary and stores it into the `.Summary` page variable for use in your templates.
-  You may customize the summary length by setting `summaryLength` in your site configuration
-  *or* you can set it in the front matter.
+  image: Besancon-Planoise_Cassini_map.png
+  alt: Cassini map of Besancon France 1780
+  caption: A rendering of Besancon-Planoise, France 1780
+repo: https://github.com/RobWiederstein/my-hugo-blog/tree/main/content/post/2024-09-16-color-palette-selection-from-historic-maps
+summary: Historic maps can provide examples of coloring that can inspire contemporary work.  Here, the colors from a 1780 map of Besancon France are indexed using GIMP and then used to color map tiles from Open Streeet Maps.
 ---
 
 
 <div id="TOC">
 <ul>
-<li><a href="#r-image" id="toc-r-image">R image</a></li>
 <li><a href="#overview" id="toc-overview">Overview</a></li>
-<li><a href="#background" id="toc-background">Background</a></li>
-<li><a href="#data-and-model" id="toc-data-and-model">Data and model</a></li>
-<li><a href="#results" id="toc-results">Results</a></li>
+<li><a href="#background" id="toc-background">Background</a>
+<ul>
+<li><a href="#besancon" id="toc-besancon">Besancon</a></li>
+<li><a href="#the-cassini-family" id="toc-the-cassini-family">The Cassini Family</a></li>
+</ul></li>
+<li><a href="#open-street-maps" id="toc-open-street-maps">Open Street Maps</a></li>
+<li><a href="#cassini-palette" id="toc-cassini-palette">Cassini Palette</a>
+<ul>
+<li><a href="#image-color-summarizer" id="toc-image-color-summarizer">Image Color Summarizer</a></li>
+<li><a href="#gimp" id="toc-gimp">GIMP</a></li>
+</ul></li>
+<li><a href="#qgis" id="toc-qgis">QGIS</a></li>
+<li><a href="#results" id="toc-results">Results</a>
+<ul>
+<li><a href="#before" id="toc-before">Before</a></li>
+<li><a href="#after" id="toc-after">After</a></li>
+</ul></li>
 <li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
 <li><a href="#acknowledgements" id="toc-acknowledgements">Acknowledgements</a></li>
 <li><a href="#references" id="toc-references">References</a></li>
@@ -44,36 +54,123 @@ summary: By default, Hugo automatically takes the first 70 words of your content
 </ul>
 </div>
 
-<div id="r-image" class="section level1">
-<h1><a href="#image">R image</a></h1>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:plot-mtcars"></span>
-<img src="{{< blogdown/postref >}}index_files/figure-html/plot-mtcars-1.svg" alt="A plot with 538 layout theme and color blind palette." width="576" />
-<p class="caption">
-Figure 1: A plot with 538 layout theme and color blind palette.
-</p>
-</div>
-</div>
 <div id="overview" class="section level1">
 <h1><a href="#overview">Overview</a></h1>
-<p>Many, many tools are available online to generate color palettes for maps and charts. The science of color is better understood today as a result of photography and digital display than any other time. Yet, history is replete with beautiful art and maps. Monarchs and nations devoted extreme resources for exploration and conquest. Maps were crucial in the effort. The resulting maps were both a symbol of national power and advertisements of artistic ingenuity. Many of these historic maps contain color schemes that just work. Can these maps be used to color a contemporary map of today? The answer is a resounding “yes” and the inspiration for this effort was taken from the post “<a href="https://wanderingcartographer.wordpress.com/2022/07/27/cartographic-palettes-and-colour-harmonies/">Cartographic palettes and colour harmonies</a>.”</p>
+<p>Many, many tools are available online to generate color palettes for maps and charts. The science of color is better understood today as a result of photography and digital display than at any other time. Yet, history is replete with beautiful art and maps. Monarchs and nations devoted extreme resources for exploration and conquest. Maps were crucial in the effort. The resulting maps were both a symbol of national power and advertisements of scientific ingenuity. Many of these historic maps contain beautiful color schemes. Can these maps be used to color a contemporary map of today? The answer is a resounding “yes” and the inspiration for this effort was taken from the post “<a href="https://wanderingcartographer.wordpress.com/2022/07/27/cartographic-palettes-and-colour-harmonies/">Cartographic palettes and colour harmonies</a>.”</p>
+<p>In the rest of the post, I’ll give some background on Besancon and the famous Cassini family, download the map tiles that cover the Besacon-Planois area of France, discuss how to extract the colors from the old map, and recolor the map with the new palette. Our tools will be GIMP, the open-source digital image manipulation tool, and QGIS, the open-source GIS mapping tool. Both QGIS and GIMP are amazing tools, but have a steep learning curve.</p>
 </div>
 <div id="background" class="section level1">
 <h1><a href="#background">Background</a></h1>
-<p>(Who else has worked on this problem? What did they find?)</p>
+<div id="besancon" class="section level2">
+<h2>Besancon</h2>
+<p>Besancon is long-established city in France close to Switzerland. The site was seen as an ideal place for military fortification because it sits within an oxbow of the river Doubs, meaning it is surrounded by water on three sides. The Alps also provide a natural barrier to its immediate south. The city is the capital of the French region Bourgogne-Franch-Comte. According to wikipedia, the city population was 283,127 in 2021. In 1793, the number of inhabitants of Besancon was 25,328 according to the Cassini map online on EHESS <a href="http://cassini.ehess.fr/fr/html/fiche.php?select_resultat=3928">site</a>.</p>
 </div>
-<div id="data-and-model" class="section level1">
-<h1><a href="#data">Data and model</a></h1>
-<p>(What data did you use, where did you get it?)</p>
+<div id="the-cassini-family" class="section level2">
+<h2>The Cassini Family</h2>
+<p>Four successive generations of the Cassini family labored to produce the first national map of France:</p>
+<ul>
+<li><p>Giovanni Domenico Cassini (1625 - 1712)</p></li>
+<li><p>Jacques Cassini (1677 - 1756)</p></li>
+<li><p>Cesar-Francois Cassini de Thury (1714 - 1784)</p></li>
+<li><p>Jean-Dominique Cassini (1748 - 1845)</p></li>
+</ul>
+<p><strong>Giovanni</strong> moved to France from Italy. With the patronage of Louis XIV, Giovanni was the founder, architect, and director of the Paris Observatory which opened in 1671. He discovered a more accurate way to determine longitude which allowed for France to be more accurately surveyed for the first time. He was the first of his family to begin working on a topographic map of France. The map was constructed by triangulation. Finally published in 1789, it was known as the <em>Carte de Cassini</em> or the “Cassini Map”.</p>
+<p><strong>Cesar-Francois</strong> began the construction of a topographical map of France, one of the landmarks in the history of cartography. Finished by his son and published by the Academy of Sciences from 1744 to 1793, its 180 plates are known as the Cassini map.</p>
+<p><strong>Jean-Dominique</strong> published his father’s map of France which was published by the Academy of sciences in 1793. It was the first topographic map of an entire country. The map consists of 182 sheets at the same scale, allowing the sheets to be joined together to form a physical map of about 39 feet high by 38 feet wide. The map was overlayed on Google earth and reveals an accurate geographic depiction of France, particularly its roads and boundaries. <a href="https://www.davidrumsey.com/xmaps10000.html">David Rumsey Map Collection</a></p>
+<p>In spite of an immense amount of searching, I was unable to resolve whether the Besancon-Planoise map pictured above was part of the original Cassini map. Rather, the gist of material suggest the Besancon-Planoise was a separate publication and survey. Looking at the whole French map, the styling is different.</p>
+<p>As a side note, a multinational sponsored satellite was named “Cassini-Huygens” in rememberance of Giovanni Cassini’s contributions to astronomy, mathmatics and cartography. The satellite, launched in 1997, orbited Saturn until 2017 when it was steered into Saturn’s atmosphere as part of its planned demise. The satellite’s name was a fitting tribute since Giovanni was the first astronomer to observe Saturn’s separate rings.</p>
+</div>
+</div>
+<div id="open-street-maps" class="section level1">
+<h1><a href="#osm">Open Street Maps</a></h1>
+<p>My first effort at downloading the Open Street Maps was using the QGIS plugin “OSMDownloader”. The download via the plugin was a large file size and created layers by geometry type. Rather than hack a column for conditional coloring, I chose to download the tiles via <a href="https://extract.bbbike.org/">bbbike</a>. The change in source had the benefit of having 8 layers of data: places, points, railroads, roads, waterways, building, landuse and natural. Below is a copy of the “bbbike” tiles download window.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-1"></span>
+<img src="bbbike_osm_downloader_besancon.png" alt="While difficult to see, the bounding box includes Besancon, France.  The tool notifies you by email when the tiles have been downloaded.  2 to 7 minutes is a common preparation time." width="100%" />
+<p class="caption">
+Figure 1: While difficult to see, the bounding box includes Besancon, France. The tool notifies you by email when the tiles have been downloaded. 2 to 7 minutes is a common preparation time.
+</p>
+</div>
+</div>
+<div id="cassini-palette" class="section level1">
+<h1>Cassini Palette</h1>
+<p>There are at least two ways to generate a color palette from the Cassini map of Besacon: Image Color Summarizer and GIMP.</p>
+<div id="image-color-summarizer" class="section level2">
+<h2>Image Color Summarizer</h2>
+<p>The first way is to use an online tool called “Image Color Summarizer.” The <a href="https://mk.bcgsc.ca/color-summarizer/?">Image Color Summarizer</a> only analyzes a 200 x 200 pixel image; however, it can be downloaded and used from the command line too. The results will sample the pixels and provide the user an average color for the number of samples chosen. The results also include a percentage of the pixels from within the image. The tool will provide the representative colours of the image. You can then paste the hex code into QGIS.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-2"></span>
+<img src="img_color_analysis.png" alt="The image color summarizer displays the frequency of color in descending order. This can be useful in color selection later." width="100%" />
+<p class="caption">
+Figure 2: The image color summarizer displays the frequency of color in descending order. This can be useful in color selection later.
+</p>
+</div>
+</div>
+<div id="gimp" class="section level2">
+<h2>GIMP</h2>
+<p>GIMP (GNU Image Manipulation Program) is a free, open-source image editing program that can be used for a variety of tasks like image editing. GIMP was downloaded and the Cassini map was loaded into GIMP as a layer. The steps to generate a color palette are described below.</p>
+<ul>
+<li>First, go to <code>Image &gt; Mode &gt; Indexed</code> and then hit “Convert”.</li>
+</ul>
+<p><img src="gimp_convert_img_indx_colors.png" width="50%" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Second, go to <code>Windows &gt; Dockable Dialogs &gt; Colormap</code>. You’ll see the palette generated from the image.</li>
+</ul>
+<p><img src="gimp_cassini_color_palette.png" width="80%" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Third, take a screenshot of the colors. There’s some different ways to import the palette into QGIS, but the simplest way is the way I’ve included here. (You can also save it as a palette and then import it into QGIS.)</li>
+</ul>
+</div>
+</div>
+<div id="qgis" class="section level1">
+<h1>QGIS</h1>
+<p>First, load the OSM tiles.</p>
+<p>Second, load the Cassini color palette. You’ll have to set a projection and then hit pan so that you can see the palette on the map. We’re going to include the palette as project colors in the “Properties” menu.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-5"></span>
+<img src="qgis_cassini_palette_import.png" alt="Note that the file extension is a 'png' and it was rotated 90 degrees to make it easier to work with." width="100%" />
+<p class="caption">
+Figure 3: Note that the file extension is a ‘png’ and it was rotated 90 degrees to make it easier to work with.
+</p>
+</div>
+<p>Third, add the colors to the project properties colors. You need to understand that the colors are not added by mouse click, but by the pressing of the space bar. This was repeated 16 times. One nice feature is that the label allows you to specify what the color will be used for.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-6"></span>
+<img src="qgis_add_proj_colors.png" alt="It may take you a while to add the first couple of colors and become familiar with the workflow. The overall time took about 5 minutes." width="100%" />
+<p class="caption">
+Figure 4: It may take you a while to add the first couple of colors and become familiar with the workflow. The overall time took about 5 minutes.
+</p>
+</div>
+<p>Fourth, beginning with only one layer, in the “Properties” menu, switch the symbol from “Single Symbol” to “Categorized”, set the value box to “type”, hit the “Classify” button and click “OK”.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-7"></span>
+<img src="qgis_classify_symbols_by_type.png" alt="Change the layer features to be colored by the value in the type column." width="100%" />
+<p class="caption">
+Figure 5: Change the layer features to be colored by the value in the type column.
+</p>
+</div>
+<p>After inspection of the layer, double click on the layer and reopen the “Properties” menu to switch out the randomly selected colors for the Cassini palette. Double-click on the feature, doublic click on the color, select the project colors drop-down menu and choose the color that Cassini might have used. I chose a blue, but experimented quite a bit.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-8"></span>
+<img src="qgis_change_symbol_color.png" alt="Substitute colors for Cassini Palette in the project palette." width="100%" />
+<p class="caption">
+Figure 6: Substitute colors for Cassini Palette in the project palette.
+</p>
+</div>
 </div>
 <div id="results" class="section level1">
 <h1><a href="#results">Results</a></h1>
+<div id="before" class="section level2">
+<h2>Before</h2>
+<p><img src="Besancon-Planoise_Cassini_map.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="after" class="section level2">
+<h2>After</h2>
+<p><img src="besancon.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
 </div>
 <div id="conclusion" class="section level1">
 <h1><a href="#conclusion">Conclusion</a></h1>
+<p>There were lots of styling choices that were made in coloring the open street map tiles. I come away from the project with a great respect for the French surveyors and the Cassini family because the maps of the 1700s have stood the test of time. The accuracy is amazing. My second impression is how much development has ocurred in the Besancon area since 1780. Whereas the city of Besancon had some crimsom within the oxbow of the Doubs, now the entire area is populated with buildings. The population of just Besancon has increased 10 fold from 1793 to 2021. Third, I loved the palette of colors, its much better than anything I could’ve generated and it’s more creative than what might have come from an online tool. Overall, I’ll continue to explore the use of historic color palettes for the creation of contemporary maps.</p>
 </div>
 <div id="acknowledgements" class="section level1">
 <h1><a href="#acknowledge">Acknowledgements</a></h1>
 <p>This blog post was made possible thanks to:</p>
+<p>Morgan Hite and his blog: <a href="https://wanderingcartographer.wordpress.com/">The Wandering Cartographer</a>.</p>
 </div>
 <div id="references" class="section level1">
 <h1><a href="#reference">References</a></h1>
@@ -102,7 +199,7 @@ Figure 1: A plot with 538 layout theme and color blind palette.
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       America/New_York
- date     2024-09-16
+ date     2024-09-17
  pandoc   3.1.11 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/aarch64/ (via rmarkdown)
 
 ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -120,7 +217,6 @@ Figure 1: A plot with 538 layout theme and color blind palette.
  ellipsis      0.3.2   2021-04-29 [1] CRAN (R 4.4.0)
  evaluate      0.24.0  2024-06-10 [1] CRAN (R 4.4.0)
  fansi         1.0.6   2023-12-08 [1] CRAN (R 4.4.0)
- farver        2.1.2   2024-05-13 [1] CRAN (R 4.4.0)
  fastmap       1.2.0   2024-05-15 [1] CRAN (R 4.4.0)
  fs            1.6.4   2024-04-25 [1] CRAN (R 4.4.0)
  generics      0.1.3   2022-07-05 [1] CRAN (R 4.4.0)
@@ -135,7 +231,6 @@ Figure 1: A plot with 538 layout theme and color blind palette.
  jquerylib     0.1.4   2021-04-26 [1] CRAN (R 4.4.0)
  jsonlite      1.8.8   2023-12-04 [1] CRAN (R 4.4.0)
  knitr         1.48    2024-07-07 [1] CRAN (R 4.4.0)
- labeling      0.4.3   2023-08-29 [1] CRAN (R 4.4.0)
  later         1.3.2   2023-12-06 [1] CRAN (R 4.4.0)
  lifecycle     1.0.4   2023-11-07 [1] CRAN (R 4.4.0)
  magrittr      2.0.3   2022-03-30 [1] CRAN (R 4.4.0)
