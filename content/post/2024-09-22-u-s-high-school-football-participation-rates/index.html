@@ -1,0 +1,291 @@
+---
+title: U.S. High School Football Participation Rates
+author: Rob Wiederstein
+date: '2024-09-22'
+slug: u-s-high-school-football-participation-rates
+categories:
+  - R
+  - maps
+tags: []
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-tidyr, @R-tidycensus,
+  @R-ggplot2, @R-classInt
+header:
+  image: ./helmet_500_x_800.jpg
+  alt: football helmet
+  caption: Traditional American football helmet to protect players against injury.
+repo: ~
+summary: Concerns over injuries and specifically concussions have caused many parents to reconsider whether their children should participate in traditional 11-player contact football.  This post looks at a twelve year window 2010-2022 and finds that high school footbal participation rates have declined at the state level.
+---
+
+<link href="{{< blogdown/postref >}}index_files/htmltools-fill/fill.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/htmlwidgets/htmlwidgets.js"></script>
+<link href="{{< blogdown/postref >}}index_files/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/datatables-binding/datatables.js"></script>
+<script src="{{< blogdown/postref >}}index_files/jquery/jquery-3.6.0.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="{{< blogdown/postref >}}index_files/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/crosstalk/css/crosstalk.min.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/crosstalk/js/crosstalk.min.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#overview" id="toc-overview">Overview</a></li>
+<li><a href="#background" id="toc-background">Background</a></li>
+<li><a href="#data" id="toc-data">Data</a>
+<ul>
+<li><a href="#nfhs" id="toc-nfhs">NFHS</a></li>
+<li><a href="#nces" id="toc-nces">NCES</a></li>
+</ul></li>
+<li><a href="#us-high-school-football-participation-rates" id="toc-us-high-school-football-participation-rates">US High School Football Participation Rates</a></li>
+<li><a href="#states-high-school-football-participation" id="toc-states-high-school-football-participation">States High School Football Participation</a>
+<ul>
+<li><a href="#table" id="toc-table">Table</a></li>
+<li><a href="#histogram" id="toc-histogram">Histogram</a></li>
+<li><a href="#all-states" id="toc-all-states">All States</a></li>
+<li><a href="#map-us-participation-rate-change" id="toc-map-us-participation-rate-change">Map US Participation Rate Change</a></li>
+</ul></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
+<li><a href="#acknowledgements" id="toc-acknowledgements">Acknowledgements</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+<li><a href="#disclaimer" id="toc-disclaimer">Disclaimer</a></li>
+<li><a href="#reproducibility" id="toc-reproducibility">Reproducibility</a></li>
+</ul>
+</div>
+
+<div id="overview" class="section level1">
+<h1><a href="#overview">Overview</a></h1>
+<p>Concerns over injuries, specifically concussions, have caused many parents to reconsider whether their children should participate in traditional 11-player contact football. When scaled by student enrollment from the Common Core of Data by the National Center for Education Statistics, US football participation rates have been declining in male 11-Player football since 2005, but accelerated beginning in 2013.</p>
+</div>
+<div id="background" class="section level1">
+<h1><a href="#background">Background</a></h1>
+<p>Concussions used to be seen as a temporary nuisance in contact sports. “Getting your bell rung” was part and parcel of football, rugby, soccer, and ice hockey. The disorder was seen as temporary and players were encouraged to remain in the game and to play through the brain fog. Only in the last decade or so have concussions been seen as a serious health threat with long-lasting, debilitating consequences.</p>
+<p>The National Football League first adopted its concussion protocol in 2013 but has significantly enhanced the requirements since then. A documentary by Frontline called “League of Denial: The NFL’s Concussion Crisis” premiered in 2013. As of September 26th, 2024, the video had 3.2 million views on YouTube. Released on December 25, 2015, the movie “Concussion,” starring Will Smith, also raised the public’s awareness of concussions and football. And recently, Brett Favre, the long-time quarterback for the Green Bay Packers, disclosed in a 2024 Congressional hearing that he was diagnosed with Parkinson’s disease, a condition sometimes associated with repeated head trauma. For a chronology of the NFL concussion litigation, see the <a href="https://en.wikipedia.org/wiki/Concussions_in_American_football">article</a> on Wikipedia. The question is whether increased public awareness on the danger of concussions changed student/parent preferences in high school sports.</p>
+</div>
+<div id="data" class="section level1">
+<h1><a href="#data">Data</a></h1>
+<p>The data comes from two sources: the National Federation of State High School Associations (NFHS) and the National Center for Education Statistics (NCES).</p>
+<div id="nfhs" class="section level2">
+<h2>NFHS</h2>
+<p>The NFHS website can be found at <a href="https://www.nfhs.org/">https://www.nfhs.org/</a>. According to its website, the group is a “national leader and advocate for high school athletics as well as fine and performing arts programs.” The membership comprises 51 members, the 50 states plus the District of Columbia. The organization is a not-for-profit that annually files IRS form 990 and has been tax-exempt since 1942. In 2023, annual revenue was listed as $17.9 million; employees numbered 42; and net assets were $29 million. Data may be downloaded from the NFHS Participation Statistics <a href="https://members.nfhs.org/participation_statistics">page</a>. The table is comprised of seven fields: year, state, sport, boys schools, girls schools, boys participation, and girls participation. Unfortunately, the most current year was for the 2018 - 2019 school year. More recent years were scraped from NFHS pdfs using Tabula.</p>
+</div>
+<div id="nces" class="section level2">
+<h2>NCES</h2>
+<p>The second source is the National Center for Education Statistics (NCES). The NCES data was necessary to scale the number of participants to some meaningful population. The NCES is the primary federal entity for collecting and analyzing data related to education. The NCES website for the Common Core of Data can be found <a href="https://nces.ed.gov/ccd/">here</a>. According to the website, the Common Core of Data (CCD) is the “Department of Education’s primary database on public elementary and secondary education in the United States. CCD is a comprehensive, annual, national database of all public elementary and secondary schools and school districts.” The data is primarily used to calculate graduation, completion, and dropout rates from public high schools. The CCD is difficult data to parse as its format changes with some frequency. Enrollment data for 9th through 12th-grade students was extracted and summed for total high school enrollment by state and gender. One potential problem is that some states may define their high school cohorts differently from the ninth to the twelfth grades.</p>
+</div>
+</div>
+<div id="us-high-school-football-participation-rates" class="section level1">
+<h1>US High School Football Participation Rates</h1>
+<p>Let’s start with a summary of the participation rate for high school football grouped on the national level. There’s a rash of results returned on the internet that suggest the number of high schoolers playing football is increasing. This may be true when looking at absolute numbers, but inaccurate when information is scaled to a relevant population.</p>
+<p>Here, we’re using high school enrollment data. The data clearly show that fewer high schoolers are playing football per 100 students. The trend shows a slow, meandering decline from 2005 to 2013. Then, from 2013 to 2021, the decline quickens. There are two years of data missing from HFHS: 2019 and 2020. A rebound looks to be in the offing for 2022. It’ll be interesting to see what happens in 2023.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:usFootball"></span>
+<img src="concussions.jpg" alt="(A) U.S. Public High School Football Participation Rates 2005 to 2022 for males in 11-Player Football. Y-axis is stated in number of players per 100 students. (B) Google Trends for the term 'football concussions united states'." width="100%" />
+<p class="caption">
+Figure 1: (A) U.S. Public High School Football Participation Rates 2005 to 2022 for males in 11-Player Football. Y-axis is stated in number of players per 100 students. (B) Google Trends for the term ‘football concussions united states’.
+</p>
+</div>
+<p>Research has shown that repeated head injuries can lead to long-term neurological issues, including chronic traumatic encephalopathy (CTE), a degenerative brain condition linked to memory loss, mood swings, and cognitive decline. Other neurological issues associated with concussions include depression, anxiety, dementia, sleep disorders, and motor function. The connection between CTE and concussions was first proposed by pathologist Dr. Bennet Omalu who did autopsies on former NFL players. Frontline, a PBS documentary series, released a documentary on October 8, 2013, entitled “League of Denial: The NFL’s Concussion Crisis.” The movie Concussion was released on December 25, 2015, starring Will Smith as Benett Omalu. Google searches for “football concussion” reached a high around the release of the documentary and movie.</p>
+<p>While the chart ends in 2022, there were two more recent spikes. The first was when Tua Tagovailoa Quarterback for the Miami Dolphins received a concussion after contact with the playing field on September 29, 2022. The injury occurred during a nationally televised Thursday night game against the Buffalo Bills. The second spike in Google searches for “football concussions” occurred on September 13, 2024, and also involved Miami Quarterback Tua Tagovailoa. The 26-year-old quarterback received what was his third concussion in the NFL. The concussion was accompanied by tell-tale neurological injury, the clenching of his hands, and renewed calls for his retirement.</p>
+</div>
+<div id="states-high-school-football-participation" class="section level1">
+<h1>States High School Football Participation</h1>
+<p>The top five states by high school football participation by number of players per 100 students are Mississippi (19.9), Alabama (17.0), Texas (10.2), Iowa (10.1), and Louisiana (10.0). The bottom five states are Washington D.C. (1.8), Vermont (2.2), New York (3.7), Alaska (3.7), and Maine (4.2).</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-1"></span>
+<img src="map_us_states_fb_players_per_student.jpg" alt="U.S. Public High School Football Participation Rates 2022." width="100%" />
+<p class="caption">
+Figure 2: U.S. Public High School Football Participation Rates 2022.
+</p>
+</div>
+<div id="table" class="section level2">
+<h2>Table</h2>
+<p>45 out of 51 states saw declines in 11-player football participation from 2010 to 2022. Six states had positive growth Alabama (+65%), Mississippi (21.7%), Rhode Island (4.2%), New Hampshire (3.0%), and Louisiana (.7%). The rest of the states had negative growth with Vermont’s participation rate declining from 5.4 football players per 100 students to 2.2, a decline of 58.3%.</p>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-1" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"filter":"none","vertical":false,"data":[["VT","DC","ME","DE","NC","WY","AK","NE","CO","IA","NV","OR","MT","AR","MD","ID","WI","HI","TX","NY","ND","NM","MI","WA","MN","FL","VA","SC","SD","MA","CA","GA","IL","AZ","KS","OH","IN","UT","KY","NJ","TN","WV","CT","MO","PA","LA","OK","NH","RI","MS","AL"],["Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player","Football -- 11-Player"],[50,51,47,39,34,17,48,7,40,4,45,32,9,23,42,22,8,15,3,49,11,27,20,37,16,46,33,13,10,29,43,31,24,38,6,12,28,41,26,35,18,21,36,14,44,5,19,30,25,1,2],[5.358689251446188,4.123185117967331,6.487331249584359,8.041100092015132,8.258058843672778,10.44121572665217,5.070548935533728,11.66674224560131,6.531978748261015,13.12109330028511,5.648882008149055,7.55618434866578,10.72172584602565,8.761273832956315,5.856355683475034,8.8331395704583,10.40696549029061,9.379509379509379,12.50309464193325,4.422601249781353,9.990755414685685,7.766990291262135,8.537774039633069,6.627712246978303,8.983713452255721,4.899158946497989,6.723527213587582,8.979011400333878,9.63290741516548,7.049014216993302,5.212892856820386,6.761232900958306,7.536024344401683,6.266516964975434,10.28493602379843,9.024564203220653,7.0832992467387,5.198881505608041,7.184640378696259,6.298763646416204,7.927830180424548,7.595169948530224,6.105586724523461,7.757898440078486,4.550667705969006,9.89136804636121,7.104331368748899,5.947572661756554,6.32015458433748,16.36813255354902,10.28791565287916],[2.235072178477691,1.845389170896785,4.173354735152488,5.437142730535738,5.77260395108575,7.52632842784124,3.700562793924909,8.550903285777796,4.830075402923203,10.08366273937905,4.359692736695341,5.847037184602201,8.38732425404381,6.854510060152099,4.628115912674875,7.04477732141419,8.465999307001946,7.640345643848271,10.24514888769438,3.658728101702836,8.266783677051338,6.452279300371849,7.134679226766982,5.591232003302619,7.608029966387512,4.21200272016321,5.786809888713274,7.728839779924562,8.338091159958132,6.128004158288536,4.559778254206948,5.935258387614393,6.617374300269402,5.506074630790962,9.077297526424459,8.032773416785547,6.314503029205038,4.649906890130354,6.565553594072453,5.764824690742194,7.362974434301172,7.088426527958387,5.700304994512524,7.671820237215463,4.524489307893536,9.960897110522062,7.168831930555148,6.124635218499502,6.586127141670223,19.91356306282058,16.9715744588881],[-3.123617072968498,-2.277795947070547,-2.313976514431871,-2.603957361479393,-2.485454892587028,-2.914887298810934,-1.369986141608819,-3.11583895982351,-1.701903345337812,-3.037430560906055,-1.289189271453714,-1.709147164063578,-2.334401591981837,-1.906763772804216,-1.228239770800159,-1.78836224904411,-1.94096618328866,-1.739163735661108,-2.257945754238877,-0.7638731480785173,-1.723971737634347,-1.314710990890286,-1.403094812866087,-1.036480243675683,-1.375683485868208,-0.6871562263347792,-0.9367173248743086,-1.250171620409316,-1.294816255207348,-0.9210100587047663,-0.6531146026134387,-0.8259745133439127,-0.9186500441322814,-0.7604423341844715,-1.207638497373971,-0.9917907864351054,-0.7687962175336622,-0.5489746154776869,-0.6190867846238062,-0.5339389556740102,-0.5648557461233761,-0.5067434205718371,-0.4052817300109375,-0.08607820286302292,-0.02617839807547018,0.06952906416085192,0.0645005618062493,0.177062556742948,0.2659725573327423,3.545430509271561,6.683658806008946],[-58.29069248838239,-55.24360129126256,-35.66915924911537,-32.38309847759687,-30.09732601374417,-27.91712550647156,-27.01849758333145,-26.70701807094666,-26.05494308735931,-23.14921852464881,-22.82202512982099,-22.61918297910993,-21.77262901053526,-21.76354499538359,-20.97276595180005,-20.24605447224154,-18.65064494640176,-18.54216105866382,-18.0590951192684,-17.27203301713628,-17.2556695272535,-16.92690400771243,-16.43396518053537,-15.63858244069413,-15.31308287134635,-14.02600392922486,-13.93193327129391,-13.92326576579276,-13.44159348161974,-13.06579942035662,-12.52883227321513,-12.2163298534923,-12.19011513431114,-12.13500798664881,-11.7418182726621,-10.98990227230207,-10.8536458894862,-10.55947543496629,-8.616809638231985,-8.476885078515439,-7.124972826967481,-6.671916810365768,-6.637883438508845,-1.10955568093454,-0.5752649889406906,0.7029266713660497,0.9079047479398207,2.977055797594147,4.208323606385702,21.660568166054,64.96611200480118]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>state<\/th>\n      <th>sport<\/th>\n      <th>rank<\/th>\n      <th>2010<\/th>\n      <th>2022<\/th>\n      <th>change<\/th>\n      <th>percent_change<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":4,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":5,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"targets":6,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 1, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[2,3,4,5,6]},{"name":"state","targets":0},{"name":"sport","targets":1},{"name":"rank","targets":2},{"name":"2010","targets":3},{"name":"2022","targets":4},{"name":"change","targets":5},{"name":"percent_change","targets":6}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render","options.columnDefs.3.render"],"jsHooks":[]}</script>
+</div>
+<div id="histogram" class="section level2">
+<h2>Histogram</h2>
+<p>One of the more interesting features of this dataset is the degree to which Alabama and Mississippi are outliers. Note that not only are Alabama and Mississippi outliers but their distance from the mean seems to be increasing over time.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-3"></span>
+<img src="us_states_fb_players_per_student_hist.jpg" alt="(A) Density Plot of U.S. Public High School Football Participation Rates. (B) Histogram of U.S. Public High School Football Participation Rates." width="100%" />
+<p class="caption">
+Figure 3: (A) Density Plot of U.S. Public High School Football Participation Rates. (B) Histogram of U.S. Public High School Football Participation Rates.
+</p>
+</div>
+</div>
+<div id="all-states" class="section level2">
+<h2>All States</h2>
+<p>Here are 50 states plus D.C. from 2010 to 2022. The gray band in the middle of the chart is when the pandemic / Covid-19 closed schools. The NFHS did not have data for 2019 and 2020. Each state is compared to the national average which is the green line and then ranked by the difference in that state’s 2022 participation rate to the national average. Thus, Mississippi and Alabama lead the faceting and the rest are in descending order.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-4"></span>
+<img src="us_states_fb_players_per_student.jpg" alt="All 50 states plus DC high school participation rates from 2010 to 2022." width="100%" />
+<p class="caption">
+Figure 4: All 50 states plus DC high school participation rates from 2010 to 2022.
+</p>
+</div>
+</div>
+<div id="map-us-participation-rate-change" class="section level2">
+<h2>Map US Participation Rate Change</h2>
+<p>Many fewer students choose to play football in high school when compared to 2010. One of the largest states, Texas, saw a significant decrease. Whereas 12.5 football players per 100 students were involved in football in 2010, only 10.2 were involved in 2022. This was a rate reduction of 2.3 or 18.1% over the time period.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-5"></span>
+<img src="map_us_states_fb_diff.jpg" alt="Change in Football Participation Rates 
+2022 to 2010. Dark blue represents states where with the greatest reduction in players per 100 students." width="100%" />
+<p class="caption">
+Figure 5: Change in Football Participation Rates
+2022 to 2010. Dark blue represents states where with the greatest reduction in players per 100 students.
+</p>
+</div>
+</div>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+<p>Fewer male public high school students are choosing to play 11-player contact football in 2022 than in 2010 when scaled by enrollment. There are likely many reasons for the decline. Heightened public awareness of the danger of head trauma and concussions may be driving the aversion. The information here was limited because the NFHS has not published its data in machine-readable formats since 2018. The use of an application like Tabula is both time-consuming and error-prone. Computation of an overall penetration of high school athletics for all sports would be helpful and could shed light as to whether students are choosing different sports or forgoing athletics altogether.</p>
+<p>It should be noted that changing to other sports may involve physical hazard too and that these hazards are not limited to male sports. A superficial review of other NFHS data suggests that soccer and outdoor track have become more popular whereas sports like wrestling and 11-player football declined. No assertion is made or opinion offered as to whether a concussion in high school football results in long-term health problems.</p>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to:</p>
+<ul>
+<li><p><a href="https://nces.ed.gov/">National Center for Education Statistics</a></p></li>
+<li><p><a href="https://www.nfhs.org/">National Federation of State High School Associations</a></p></li>
+</ul>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body" entry-spacing="0">
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2024 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2024 [Online]. Available: <a href="https://github.com/rstudio/blogdown">https://github.com/rstudio/blogdown</a></div>
+</div>
+<div id="ref-R-classInt" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">R. Bivand, <em>classInt: Choose univariate class intervals</em>. 2023 [Online]. Available: <a href="https://r-spatial.github.io/classInt/">https://r-spatial.github.io/classInt/</a></div>
+</div>
+<div id="ref-R-ggplot2" class="csl-entry">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">H. Wickham <em>et al.</em>, <em>ggplot2: Create elegant data visualisations using the grammar of graphics</em>. 2024 [Online]. Available: <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a></div>
+</div>
+<div id="ref-R-tidycensus" class="csl-entry">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">K. Walker and M. Herman, <em>Tidycensus: Load US census boundary and attribute data as tidyverse and sf-ready data frames</em>. 2024 [Online]. Available: <a href="https://walker-data.com/tidycensus/">https://walker-data.com/tidycensus/</a></div>
+</div>
+<div id="ref-R-tidyr" class="csl-entry">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">H. Wickham, D. Vaughan, and M. Girlich, <em>Tidyr: Tidy messy data</em>. 2024 [Online]. Available: <a href="https://tidyr.tidyverse.org">https://tidyr.tidyverse.org</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value
+ version  R version 4.4.1 (2024-06-14)
+ os       macOS Sonoma 14.4
+ system   aarch64, darwin20
+ ui       X11
+ language (EN)
+ collate  en_US.UTF-8
+ ctype    en_US.UTF-8
+ tz       America/New_York
+ date     2024-09-30
+ pandoc   3.1.11 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/aarch64/ (via rmarkdown)
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version date (UTC) lib source
+ blogdown    * 1.19    2024-02-01 [1] CRAN (R 4.4.0)
+ bookdown      0.40    2024-07-02 [1] CRAN (R 4.4.0)
+ bslib         0.8.0   2024-07-29 [1] CRAN (R 4.4.0)
+ cachem        1.1.0   2024-05-16 [1] CRAN (R 4.4.0)
+ class         7.3-22  2023-05-03 [1] CRAN (R 4.4.1)
+ classInt    * 0.4-10  2023-09-05 [1] CRAN (R 4.4.0)
+ cli           3.6.3   2024-06-21 [1] CRAN (R 4.4.0)
+ codetools     0.2-20  2024-03-31 [1] CRAN (R 4.4.1)
+ colorspace  * 2.1-1   2024-07-26 [1] CRAN (R 4.4.0)
+ crayon        1.5.3   2024-06-20 [1] CRAN (R 4.4.0)
+ DBI           1.2.3   2024-06-02 [1] CRAN (R 4.4.0)
+ devtools    * 2.4.5   2022-10-11 [1] CRAN (R 4.4.0)
+ digest        0.6.37  2024-08-19 [1] CRAN (R 4.4.1)
+ dplyr       * 1.1.4   2023-11-17 [1] CRAN (R 4.4.0)
+ DT          * 0.33    2024-04-04 [1] CRAN (R 4.4.0)
+ e1071         1.7-16  2024-09-16 [1] CRAN (R 4.4.1)
+ ellipsis      0.3.2   2021-04-29 [1] CRAN (R 4.4.0)
+ evaluate      0.24.0  2024-06-10 [1] CRAN (R 4.4.0)
+ fansi         1.0.6   2023-12-08 [1] CRAN (R 4.4.0)
+ fastmap       1.2.0   2024-05-15 [1] CRAN (R 4.4.0)
+ fs            1.6.4   2024-04-25 [1] CRAN (R 4.4.0)
+ generics      0.1.3   2022-07-05 [1] CRAN (R 4.4.0)
+ ggplot2     * 3.5.1   2024-04-23 [1] CRAN (R 4.4.0)
+ ggthemes    * 5.1.0   2024-02-10 [1] CRAN (R 4.4.0)
+ glue          1.7.0   2024-01-09 [1] CRAN (R 4.4.0)
+ gtable        0.3.5   2024-04-22 [1] CRAN (R 4.4.0)
+ highr         0.11    2024-05-26 [1] CRAN (R 4.4.0)
+ hms           1.1.3   2023-03-21 [1] CRAN (R 4.4.0)
+ htmltools     0.5.8.1 2024-04-04 [1] CRAN (R 4.4.0)
+ htmlwidgets   1.6.4   2023-12-06 [1] CRAN (R 4.4.0)
+ httpuv        1.6.15  2024-03-26 [1] CRAN (R 4.4.0)
+ httr          1.4.7   2023-08-15 [1] CRAN (R 4.4.0)
+ jquerylib     0.1.4   2021-04-26 [1] CRAN (R 4.4.0)
+ jsonlite      1.8.8   2023-12-04 [1] CRAN (R 4.4.0)
+ KernSmooth    2.23-24 2024-05-17 [1] CRAN (R 4.4.1)
+ knitr         1.48    2024-07-07 [1] CRAN (R 4.4.0)
+ later         1.3.2   2023-12-06 [1] CRAN (R 4.4.0)
+ lifecycle     1.0.4   2023-11-07 [1] CRAN (R 4.4.0)
+ magrittr      2.0.3   2022-03-30 [1] CRAN (R 4.4.0)
+ memoise       2.0.1   2021-11-26 [1] CRAN (R 4.4.0)
+ mime          0.12    2021-09-28 [1] CRAN (R 4.4.0)
+ miniUI        0.1.1.1 2018-05-18 [1] CRAN (R 4.4.0)
+ munsell       0.5.1   2024-04-01 [1] CRAN (R 4.4.0)
+ pillar        1.9.0   2023-03-22 [1] CRAN (R 4.4.0)
+ pkgbuild      1.4.4   2024-03-17 [1] CRAN (R 4.4.0)
+ pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.4.0)
+ pkgload       1.4.0   2024-06-28 [1] CRAN (R 4.4.0)
+ profvis       0.3.8   2023-05-02 [1] CRAN (R 4.4.0)
+ promises      1.3.0   2024-04-05 [1] CRAN (R 4.4.0)
+ proxy         0.4-27  2022-06-09 [1] CRAN (R 4.4.0)
+ purrr         1.0.2   2023-08-10 [1] CRAN (R 4.4.0)
+ R6            2.5.1   2021-08-19 [1] CRAN (R 4.4.0)
+ rappdirs      0.3.3   2021-01-31 [1] CRAN (R 4.4.0)
+ Rcpp          1.0.13  2024-07-17 [1] CRAN (R 4.4.0)
+ readr         2.1.5   2024-01-10 [1] CRAN (R 4.4.0)
+ remotes       2.5.0   2024-03-17 [1] CRAN (R 4.4.0)
+ rlang         1.1.4   2024-06-04 [1] CRAN (R 4.4.0)
+ rmarkdown     2.28    2024-08-17 [1] CRAN (R 4.4.0)
+ rstudioapi    0.16.0  2024-03-24 [1] CRAN (R 4.4.0)
+ rvest         1.0.4   2024-02-12 [1] CRAN (R 4.4.0)
+ sass          0.4.9   2024-03-15 [1] CRAN (R 4.4.0)
+ scales        1.3.0   2023-11-28 [1] CRAN (R 4.4.0)
+ sessioninfo   1.2.2   2021-12-06 [1] CRAN (R 4.4.0)
+ sf            1.0-17  2024-09-06 [1] CRAN (R 4.4.1)
+ shiny         1.9.1   2024-08-01 [1] CRAN (R 4.4.0)
+ stringi       1.8.4   2024-05-06 [1] CRAN (R 4.4.0)
+ stringr       1.5.1   2023-11-14 [1] CRAN (R 4.4.0)
+ tibble        3.2.1   2023-03-20 [1] CRAN (R 4.4.0)
+ tidycensus  * 1.6.5   2024-07-25 [1] CRAN (R 4.4.0)
+ tidyr       * 1.3.1   2024-01-24 [1] CRAN (R 4.4.0)
+ tidyselect    1.2.1   2024-03-11 [1] CRAN (R 4.4.0)
+ tigris        2.1     2024-01-24 [1] CRAN (R 4.4.0)
+ tzdb          0.4.0   2023-05-12 [1] CRAN (R 4.4.0)
+ units         0.8-5   2023-11-28 [1] CRAN (R 4.4.0)
+ urlchecker    1.0.1   2021-11-30 [1] CRAN (R 4.4.0)
+ usethis     * 3.0.0   2024-07-29 [1] CRAN (R 4.4.0)
+ utf8          1.2.4   2023-10-22 [1] CRAN (R 4.4.0)
+ uuid          1.2-1   2024-07-29 [1] CRAN (R 4.4.0)
+ vctrs         0.6.5   2023-12-01 [1] CRAN (R 4.4.0)
+ withr         3.0.1   2024-07-31 [1] CRAN (R 4.4.0)
+ xfun          0.47    2024-08-17 [1] CRAN (R 4.4.0)
+ xml2          1.3.6   2023-12-04 [1] CRAN (R 4.4.0)
+ xtable        1.8-4   2019-04-21 [1] CRAN (R 4.4.0)
+ yaml          2.3.10  2024-07-26 [1] CRAN (R 4.4.0)
+
+ [1] /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
