@@ -1,0 +1,223 @@
+---
+title: 'Forecasting U.S. High School Football Participation '
+author: Rob Wiederstein
+date: '2024-10-05'
+slug: forecasting-u-s-high-school-football-participation
+categories:
+  - R
+tags:
+  - forecast
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse, @R-knitr, @R-ggplot2, @R-DT, @R-forecast, @R-ggthemes, @R-knitr, @R-cowplot, @R-fpp3, @R-tsibble, @R-feasts, @R-fable
+header:
+  image: ./helmet_500_x_800.jpg
+  alt: football helmet
+  caption: Traditional American football helmet to protect players against injury.
+repo: ~
+summary:  U.S. High School football participation rates have been in decline since 2003.  This blog post uses a time series model to forecast participation rates for the next five years.
+---
+
+<link href="{{< blogdown/postref >}}index_files/htmltools-fill/fill.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/htmlwidgets/htmlwidgets.js"></script>
+<link href="{{< blogdown/postref >}}index_files/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/datatables-binding/datatables.js"></script>
+<script src="{{< blogdown/postref >}}index_files/jquery/jquery-3.6.0.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="{{< blogdown/postref >}}index_files/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="{{< blogdown/postref >}}index_files/crosstalk/css/crosstalk.min.css" rel="stylesheet" />
+<script src="{{< blogdown/postref >}}index_files/crosstalk/js/crosstalk.min.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#overview" id="toc-overview">Overview</a></li>
+<li><a href="#outliers" id="toc-outliers">Outliers</a></li>
+<li><a href="#modeling" id="toc-modeling">Modeling</a></li>
+<li><a href="#forecast" id="toc-forecast">Forecast</a></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
+<li><a href="#acknowledgements" id="toc-acknowledgements">Acknowledgements</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+<li><a href="#disclaimer" id="toc-disclaimer">Disclaimer</a></li>
+<li><a href="#reproducibility" id="toc-reproducibility">Reproducibility</a></li>
+</ul>
+</div>
+
+<div id="overview" class="section level1">
+<h1><a href="#overview">Overview</a></h1>
+<p>This is the second and final of two posts on U.S. high school football participation. The first post, <a href="https://robwiederstein.org/r/2024/09/28/u-s-high-school-football-participation/">U.S. High School Football Participation</a>, provided an overview of the decline in high school football participation rates since 2005. This post will address outliers in order to salavage some additional years for a forecast. The forecast will use an ARIMA model and forecast participation rates for the next five years. The forecast predicts a slight rebound in participation rates.</p>
+</div>
+<div id="outliers" class="section level1">
+<h1><a href="#outliers">Outliers</a></h1>
+<p>Data is like water in the desert: if you waste it, you will ultimately regret it. Because there are relatively few observations for a forecast, it’s important to keep as many as possible. To keep 2003 through 2023, there were two key decisions in the data cleaning process:</p>
+<ul>
+<li><p>Outliers were identified and removed where they were not within 1.5 times the interquartile range.</p></li>
+<li><p>During Covid-19, the number of players was not reported by the NFHS for 2019 and 2020. To keep the year, the number of players was interpolated between 2018 to 2021.</p></li>
+</ul>
+<p>Below are the boxplots of the number of players per 100 students with and without outliers. Of particular concern were the numbers being reported out of Mississippi and Alabama. Not only were they outliers, but their distance from the mean was increasing over time. I was particulary interested in how the outliers impacted the final year of data because it shows an increase.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-1"></span>
+<img src="pp100_boxplots.jpg" alt="(A) Outliers.  Y-axis is in number of players per 100 students and was limited to 30.  2005 was problematic in that North Carolina contained a value of 586. (B) Outliers Identified.  Y-axis is in number of deviations from the mean. Note the prevalence of Mississippi and Alabama as outliers.  (C) Outliers Removed.  Y-axis is reset to number of players per 100 students." width="100%" />
+<p class="caption">
+Figure 1: (A) Outliers. Y-axis is in number of players per 100 students and was limited to 30. 2005 was problematic in that North Carolina contained a value of 586. (B) Outliers Identified. Y-axis is in number of deviations from the mean. Note the prevalence of Mississippi and Alabama as outliers. (C) Outliers Removed. Y-axis is reset to number of players per 100 students.
+</p>
+</div>
+<p>In 2022, Alabama reported a raw participation rate of 16.97 and Mississippi a rate of 19.91 which converts to a standardized Z-score of 3.36 for Alabama and 4.33 for Mississippi. With a mean of 6.88 and a standard deviation of 3.01, the probability of observing a value greater than Alabama is one in 263 and Mississippi is one in 100,000.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-2"></span>
+<img src="trend_w_outliers.jpg" alt="The number of players per 100 students is shown with and without outliers.  The trend line where outliers are removed is shown in black and the trend line where outliers are retained are shown in blue." width="100%" />
+<p class="caption">
+Figure 2: The number of players per 100 students is shown with and without outliers. The trend line where outliers are removed is shown in black and the trend line where outliers are retained are shown in blue.
+</p>
+</div>
+</div>
+<div id="modeling" class="section level1">
+<h1><a href="#modeling">Modeling</a></h1>
+<p>Five models were fit to the data: ARIMA, ETS, Naive, Drift, and Mean. The models forecast the final 5 years of the test data and were compared to the actual values.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-3"></span>
+<img src="forecast_models_compared.jpg" alt="Actual Data is show in black.  Models are shown in color.  The ARIMA model, shown in red, was the to performing model." width="100%" />
+<p class="caption">
+Figure 3: Actual Data is show in black. Models are shown in color. The ARIMA model, shown in red, was the to performing model.
+</p>
+</div>
+<p>The ARIMA model was the best performing model on several different metrics. When comparing different methods applied to a single time series the mean absolute error (MAE) is “popular as it is easy to both understand and compute. A forecast method that minimises the MAE will lead to forecasts of the median, while minimising the root mean squared error (RMSE) will lead to forecasts of the mean. Consequently, the RMSE is also widely used, despite being more difficult to interpret.”<span class="citation"><a href="#ref-hyndman_forecasting_2021">[1]</a></span> Here, the ARIMA model leads all other methods when measured by either RMSE or MAE. Two other common accuracy metrics are the mean absolute percentage error (MAPE) and mean absolute scaled error (MASE).</p>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-1" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5"],["ARIMA","Drift","Naive","ETS","Mean"],[0.2945523430253488,0.3054331470708264,0.372910561741164,0.3729266369475432,0.9170776282047581],[0.2012576640528476,0.2899169431600995,0.3578562790011084,0.3578730304275712,0.9110599351942072],[3.192427507720728,4.631618164658096,5.71479845764783,5.715064661146497,14.50597508252588],[1.88479641949751,2.715098672099923,3.351356762139901,3.351513640779863,8.532159567104841]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>.model<\/th>\n      <th>RMSE<\/th>\n      <th>MAE<\/th>\n      <th>MAPE<\/th>\n      <th>MASE<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","columnDefs":[{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":4,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":5,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[2,3,4,5]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":".model","targets":1},{"name":"RMSE","targets":2},{"name":"MAE","targets":3},{"name":"MAPE","targets":4},{"name":"MASE","targets":5}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render","options.columnDefs.3.render"],"jsHooks":[]}</script>
+</div>
+<div id="forecast" class="section level1">
+<h1><a href="#forecast">Forecast</a></h1>
+<p>After fitting the model to the data, and then applying to the test set, the model is applied the entire dataset and forecasts the number of players per 100 students for the next five years. The forecast predicts a slight rebound in participation rates. The forecasted number of players per 100 students is shown below. ARIMA modeling it not recommended on small datasets like this one with 30 being the minimum. However, 30 is general advice and deviation may be appropriate depending on the number of parameters and the amount of noise within the data.<span class="citation"><a href="#ref-hyndman_forecasting_2021">[1]</a></span></p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-5"></span>
+<img src="football_participation_forecast.jpg" alt="The forecasted number of players per 100 students is shown for the next five years." width="100%" />
+<p class="caption">
+Figure 4: The forecasted number of players per 100 students is shown for the next five years.
+</p>
+</div>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+<p>High school football participation rates have been in decline since 2005. The bump up in the data from the 2022 data point had a big influence in the ARIMA-based forecast. The forecast shows participation rates recovering with a wide range of possible outcomes in the 80th and 95th confidence intervals. The forecast is predicting a slight rebound in participation rates. Some caveats in about the forecast include the following: (1) it is based on 20 observations, (2) outliers were removed, and (3) missing data was interpolated COVID-19 period. The forecast is provided for discussion purposes only.</p>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to:</p>
+<ul>
+<li><p><a href="https://nces.ed.gov/">National Center for Education Statistics</a></p></li>
+<li><p><a href="https://www.nfhs.org/">National Federation of State High School Associations</a></p></li>
+</ul>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body" entry-spacing="0">
+<div id="ref-hyndman_forecasting_2021" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R. J. Hyndman and G. Athanasopoulos, <em>Forecasting: <span>Principles</span> and <span>Practice</span></em>, 3rd ed. Otexts Melbourne, 2021 [Online]. Available: <a href="https://otexts.com/fpp3/buy-a-print-version.html">https://otexts.com/fpp3/buy-a-print-version.html</a></div>
+</div>
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2024 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[3] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2024 [Online]. Available: <a href="https://github.com/rstudio/blogdown">https://github.com/rstudio/blogdown</a></div>
+</div>
+<div id="ref-R-ggplot2" class="csl-entry">
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">H. Wickham <em>et al.</em>, <em>ggplot2: Create elegant data visualisations using the grammar of graphics</em>. 2024 [Online]. Available: <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a></div>
+</div>
+<div id="ref-R-ggthemes" class="csl-entry">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">J. B. Arnold, <em>Ggthemes: Extra themes, scales and geoms for ggplot2</em>. 2024 [Online]. Available: <a href="https://jrnold.github.io/ggthemes/">https://jrnold.github.io/ggthemes/</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value
+ version  R version 4.4.1 (2024-06-14)
+ os       macOS Sonoma 14.4
+ system   aarch64, darwin20
+ ui       X11
+ language (EN)
+ collate  en_US.UTF-8
+ ctype    en_US.UTF-8
+ tz       America/New_York
+ date     2024-10-05
+ pandoc   3.1.11 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/aarch64/ (via rmarkdown)
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version date (UTC) lib source
+ blogdown    * 1.19    2024-02-01 [1] CRAN (R 4.4.0)
+ bookdown      0.40    2024-07-02 [1] CRAN (R 4.4.0)
+ bslib         0.8.0   2024-07-29 [1] CRAN (R 4.4.0)
+ cachem        1.1.0   2024-05-16 [1] CRAN (R 4.4.0)
+ cli           3.6.3   2024-06-21 [1] CRAN (R 4.4.0)
+ codetools     0.2-20  2024-03-31 [1] CRAN (R 4.4.1)
+ colorspace    2.1-1   2024-07-26 [1] CRAN (R 4.4.0)
+ devtools    * 2.4.5   2022-10-11 [1] CRAN (R 4.4.0)
+ digest        0.6.37  2024-08-19 [1] CRAN (R 4.4.1)
+ dplyr         1.1.4   2023-11-17 [1] CRAN (R 4.4.0)
+ ellipsis      0.3.2   2021-04-29 [1] CRAN (R 4.4.0)
+ evaluate      0.24.0  2024-06-10 [1] CRAN (R 4.4.0)
+ fansi         1.0.6   2023-12-08 [1] CRAN (R 4.4.0)
+ farver        2.1.2   2024-05-13 [1] CRAN (R 4.4.0)
+ fastmap       1.2.0   2024-05-15 [1] CRAN (R 4.4.0)
+ fs            1.6.4   2024-04-25 [1] CRAN (R 4.4.0)
+ generics      0.1.3   2022-07-05 [1] CRAN (R 4.4.0)
+ ggplot2     * 3.5.1   2024-04-23 [1] CRAN (R 4.4.0)
+ ggthemes    * 5.1.0   2024-02-10 [1] CRAN (R 4.4.0)
+ glue          1.7.0   2024-01-09 [1] CRAN (R 4.4.0)
+ gtable        0.3.5   2024-04-22 [1] CRAN (R 4.4.0)
+ highr         0.11    2024-05-26 [1] CRAN (R 4.4.0)
+ htmltools     0.5.8.1 2024-04-04 [1] CRAN (R 4.4.0)
+ htmlwidgets   1.6.4   2023-12-06 [1] CRAN (R 4.4.0)
+ httpuv        1.6.15  2024-03-26 [1] CRAN (R 4.4.0)
+ jquerylib     0.1.4   2021-04-26 [1] CRAN (R 4.4.0)
+ jsonlite      1.8.8   2023-12-04 [1] CRAN (R 4.4.0)
+ knitr         1.48    2024-07-07 [1] CRAN (R 4.4.0)
+ labeling      0.4.3   2023-08-29 [1] CRAN (R 4.4.0)
+ later         1.3.2   2023-12-06 [1] CRAN (R 4.4.0)
+ lifecycle     1.0.4   2023-11-07 [1] CRAN (R 4.4.0)
+ magrittr      2.0.3   2022-03-30 [1] CRAN (R 4.4.0)
+ memoise       2.0.1   2021-11-26 [1] CRAN (R 4.4.0)
+ mime          0.12    2021-09-28 [1] CRAN (R 4.4.0)
+ miniUI        0.1.1.1 2018-05-18 [1] CRAN (R 4.4.0)
+ munsell       0.5.1   2024-04-01 [1] CRAN (R 4.4.0)
+ pillar        1.9.0   2023-03-22 [1] CRAN (R 4.4.0)
+ pkgbuild      1.4.4   2024-03-17 [1] CRAN (R 4.4.0)
+ pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.4.0)
+ pkgload       1.4.0   2024-06-28 [1] CRAN (R 4.4.0)
+ profvis       0.3.8   2023-05-02 [1] CRAN (R 4.4.0)
+ promises      1.3.0   2024-04-05 [1] CRAN (R 4.4.0)
+ purrr         1.0.2   2023-08-10 [1] CRAN (R 4.4.0)
+ R6            2.5.1   2021-08-19 [1] CRAN (R 4.4.0)
+ Rcpp          1.0.13  2024-07-17 [1] CRAN (R 4.4.0)
+ remotes       2.5.0   2024-03-17 [1] CRAN (R 4.4.0)
+ rlang         1.1.4   2024-06-04 [1] CRAN (R 4.4.0)
+ rmarkdown     2.28    2024-08-17 [1] CRAN (R 4.4.0)
+ rstudioapi    0.16.0  2024-03-24 [1] CRAN (R 4.4.0)
+ sass          0.4.9   2024-03-15 [1] CRAN (R 4.4.0)
+ scales        1.3.0   2023-11-28 [1] CRAN (R 4.4.0)
+ sessioninfo   1.2.2   2021-12-06 [1] CRAN (R 4.4.0)
+ shiny         1.9.1   2024-08-01 [1] CRAN (R 4.4.0)
+ stringi       1.8.4   2024-05-06 [1] CRAN (R 4.4.0)
+ stringr       1.5.1   2023-11-14 [1] CRAN (R 4.4.0)
+ tibble        3.2.1   2023-03-20 [1] CRAN (R 4.4.0)
+ tidyselect    1.2.1   2024-03-11 [1] CRAN (R 4.4.0)
+ urlchecker    1.0.1   2021-11-30 [1] CRAN (R 4.4.0)
+ usethis     * 3.0.0   2024-07-29 [1] CRAN (R 4.4.0)
+ utf8          1.2.4   2023-10-22 [1] CRAN (R 4.4.0)
+ vctrs         0.6.5   2023-12-01 [1] CRAN (R 4.4.0)
+ withr         3.0.1   2024-07-31 [1] CRAN (R 4.4.0)
+ xfun          0.47    2024-08-17 [1] CRAN (R 4.4.0)
+ xtable        1.8-4   2019-04-21 [1] CRAN (R 4.4.0)
+ yaml          2.3.10  2024-07-26 [1] CRAN (R 4.4.0)
+
+ [1] /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
