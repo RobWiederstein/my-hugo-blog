@@ -115,7 +115,7 @@ Nine models were fit to the data. Some of the model choices like "Mean" were inc
 knitr::include_graphics("./forecast_models_compared.jpg")
 ```
 
-The ARIMA model was the best performing model on several different metrics. When comparing different methods applied to a single time series the mean absolute error (MAE) is "popular as it is easy to both understand and compute. A forecast method that minimises the MAE will lead to forecasts of the median, while minimising the root mean squared error (RMSE) will lead to forecasts of the mean. Consequently, the RMSE is also widely used, despite being more difficult to interpret."[@hyndman_forecasting_2021] Here, the prophet model leads all other methods when measured by either RMSE or MAE.  Two other common accuracy metrics are the mean absolute percentage error (MAPE) and mean absolute scaled error (MASE).
+The prophet model was the best performing model on the different metrics. When comparing different methods applied to a single time series the mean absolute error (MAE) is "popular as it is easy to both understand and compute. A forecast method that minimizes the MAE will lead to forecasts of the median, while minimizing the root mean squared error (RMSE) will lead to forecasts of the mean. Consequently, the RMSE is also widely used, despite being more difficult to interpret."[@hyndman_forecasting_2021] Here, the prophet model leads all other methods when measured by either RMSE or MAE.  Two other common accuracy metrics are the mean absolute percentage error (MAPE) and mean absolute scaled error (MASE).
 
 
 ```{r, cache=FALSE}
