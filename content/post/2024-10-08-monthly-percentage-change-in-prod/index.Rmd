@@ -1,0 +1,200 @@
+---
+title: Monthly Percentage Change in Production with Dplyr
+author: Rob Wiederstein
+date: '2024-10-08'
+slug: monthly-percentage-change-in-prod
+categories: []
+tags:
+  - dplyr
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: aus_production_cum_pct.jpg
+  alt: plot of aus_production
+  caption: Plot of Australian Production
+repo: ~
+summary: This post demonstrates how to calculate the monthly percentage change in production, or other indicator, using `dplyr`.
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=F,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=F
+)
+```
+
+```{r set-ggplot-theme-defaults, include = F}
+#from ggthemes
+library(ggplot2); theme_set(ggthemes::theme_fivethirtyeight())
+```
+
+```{r define-color-palette, include = F, eval = T}
+# color blind friendly palette from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#000000")
+```
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+# [Overview](#overview)
+
+
+This blog post demonstrates how to (1) calculate the annual percentage change in production and (2) the cumulative change in production.  The example dataset is the `aus_production` data in the `tstibbleData` package.
+
+```{r}
+library(fpp3)
+library(fable)
+library(tsibble)
+library(tsibbledata)
+library(cowplot)
+library(colorspace)
+```
+
+# Australian Production
+
+The data are quarterly estimates of selected indicators of manufacturing production in Australia. The data are from the first quarter of 1956 to the second quarter of 2010. Note that the data are stored in wide format.
+
+```{r}
+head(aus_production)
+```
+
+
+# Wide to Long
+
+The first objective is to convert the data from wide to long format. The `pivot_longer()` function from the `tidyverse` package is used to convert the data from wide to long format. Also, we'll convert the data to an annual frequency and narrow the window to 11 years (1990-2000).
+
+```{r echo=TRUE}
+aus_production %>% 
+pivot_longer(Beer:Gas, names_to = "product", values_to = "volume") %>% 
+as_tsibble(key = product, index = Quarter) %>% 
+filter_index("1990 Q1" ~ "2000 Q1") %>%
+index_by(year = year(Quarter)) %>% 
+group_by(product) %>% 
+summarize(avg_volume = mean(volume)) -> ap_long
+```
+
+# Cumulative Percentage Change
+
+I've spent a lot of time confused over how to transfrom raw data to a cumulative annual percentage rate.  This can make for a really effective plot.  Turns out, it's really easy to do using the dplyr family of functions:  		`first` and `lag`.  For the cumulative, we'll use the `first` function as the base year. In using the function, the data need to be in the correct order.
+
+```{r echo=TRUE}
+ap_long %>%
+group_by(product) %>%
+mutate(base = first(avg_volume),
+	   diff = avg_volume - base,
+	   pct = (diff / base)) -> ap_long_cum_pct
+```
+
+```{r}
+ap_long_cum_pct %>% head(10)
+```
+
+Then, a plot was generated showing the cumulative percentage change in production.  I used the `scales::percent_format()` function to format the y-axis as a percentage and the `scale_color_discrete_qualitative()` function from the `colorspace` package for a qualitative color palette. Lastly, I used the `theme_cowplot()` function from the `cowplot` package to format the plot.
+
+```{r echo=TRUE, out.width="100%"}
+ap_long_cum_pct %>% 
+ggplot() +
+aes(x = year, y = pct, group = product, color = product) +
+geom_line() +
+scale_y_continuous(name = "", labels = scales::percent_format()) +
+scale_x_continuous(name = "", breaks = seq(1990, 2000, 2)) +
+scale_color_discrete_qualitative(name = "Product", palette = "Dark2") +
+labs(title = "Cumulative Pct. Change in Australian Production",
+	 subtitle = "1990-2000") +
+theme_cowplot() 
+```
+
+
+# Change in Annual Percentage Rate
+
+Next, we'll calculate the annual percentage change in production.  This is a bit more complicated than the cumulative percentage change.  We'll use the `lag` function to calculate the annual percentage change in production.  The `replace_na` function is used to replace the `NA` values with `0`.
+
+```{r echo=TRUE}
+ap_long %>% 
+arrange(product, year) %>% 
+group_by(product) %>%
+mutate(base = lag(avg_volume),
+	   diff = avg_volume - base,
+	   pct = (diff / base)) %>% 
+replace_na(list(pct = 0)) -> ap_long_ann_pct
+```
+
+```{r}
+ap_long_ann_pct %>% head(10)
+```
+
+Finally, we'll plot the annual percentage change in production to see the results.
+
+```{r echo=TRUE, out.width="100%"}
+ap_long_ann_pct %>% 
+ggplot() +
+aes(x = year, y = pct, group = product, color = product) +
+geom_line() +
+scale_y_continuous(name = "", labels = scales::percent_format()) +
+scale_x_continuous(name = "", breaks = seq(1990, 2000, 2)) +
+scale_color_discrete_qualitative(name = "Product", palette = "Dark2") +
+labs(title = "Annual Pct. Change in Australian Production",
+	 subtitle = "1990-2000") +
+theme_cowplot()
+```
+
+# [Conclusion](#conclusion)
+
+The `dplyr` package makes it easy to calculate the annual percentage change in production and the cumulative change in production.  The `first` and `lag` functions are particularly useful for these calculations. 
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+- the `tsibbleData` package
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+options(width = 120)
+session_info()
+```
