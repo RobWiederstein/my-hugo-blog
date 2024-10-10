@@ -138,12 +138,19 @@ library(fpp3)
 fb_train <- fb_ts |> filter(year %in% 2003:2017)
 fb_test <- fb_ts |> filter(year %in% 2018:2020)
 #fit
+library(fable)
+library(fable.prophet)
 fb_fit <- fb_train |> 
-	model(`Mean` = MEAN(pp100),
-		  `Naive` = NAIVE(pp100),
-		  `Drift` = RW(pp100 ~ drift()),
-		  `ARIMA` = ARIMA(pp100),
-		  `ETS` = ETS(pp100)
+	model(`mean` = MEAN(pp100),
+		  `naive` = NAIVE(pp100),
+		  `drift` = RW(pp100 ~ drift()),
+		  `arima` = ARIMA(pp100),
+		  `ets` = ETS(pp100),
+		  `nnetar` = NNETAR(pp100),
+		  `croston` = CROSTON(pp100),
+		  `theta` = THETA(pp100),
+		  `prophet` = prophet(pp100 ~ season(period = 1, order = 2,
+		  								  type = "multiplicative"))
 	)
 #forecast
 fb_fc <- fb_fit |> forecast(h = 5)
@@ -162,8 +169,8 @@ filename <- paste0(
 )
 ggsave(filename, height = 5, width = 8, unit = "in", dpi = 300)
 # accuracy
-accuracy(fb_fc, fb_ts) %>% 
-	arrange(RMSE) -> tbl_accuracy
+(accuracy(fb_fc, fb_ts) %>% 
+	arrange(RMSE) -> tbl_accuracy)
 paste0(
 	"./content/post/2024-10-05-forecasting-u-s-high-school-football-",
 	"participation/tbl_accuracy.rds"
@@ -172,7 +179,8 @@ saveRDS(tbl_accuracy, file = file)
 # predict
 
 fb_fit <- fb_ts %>% 
-	model(`ARIMA` = ARIMA(pp100))
+	model(`prophet` =  prophet(pp100 ~ season(period = 1, order = 2,
+											  type = "multiplicative")))
 fb_fc <- fb_fit %>% forecast(h = 5)
 fb_fc %>% 
 	autoplot(fb_ts) + 
@@ -183,18 +191,6 @@ fb_fc %>%
 	) +
 	scale_y_continuous(
 		name = "Players / 100 students"
-	)
-# predict
-fb_ts
-fb_fit <- fb_ts %>% 
-	model(`ARIMA` = ARIMA(pp100))
-fb_fc <- fb_fit %>% forecast(h = 5)
-fb_fc %>% 
-	autoplot(fb_ts) + 
-	theme_cowplot() + 
-	scale_x_continuous(
-		name = "",
-		breaks = seq(2005, 2030, 5)
 	)
 filename <- paste0(
 	"./content/post/2024-10-05-forecasting-u-s-high-school-football-participation/",

@@ -109,16 +109,16 @@ knitr::include_graphics("./trend_w_outliers.jpg")
 
 # [Modeling](#modeling)
 
-Five models were fit to the data:  ARIMA, ETS, Naive, Drift, and Mean. The models forecast the final 5 years of the test data and were compared to the actual values.  
+Nine models were fit to the data. Some of the model choices like "Mean" were included knowing that it was an unlikely candidate for a good fit.  Other more sophisticated models like ARIMA, ETS, and prophet were included too. The models forecast the final 5 years of the test data and were compared to the actual values.  
 
-```{r, out.width="100%", fig.cap="Actual Data is show in black.  Models are shown in color.  The ARIMA model, shown in red, was the to performing model."}
+```{r, out.width="100%", cache=FALSE, fig.cap="Actual Data is show in black.  Models are shown in color.  The ARIMA model, shown in red, was the to performing model."}
 knitr::include_graphics("./forecast_models_compared.jpg")
 ```
 
-The ARIMA model was the best performing model on several different metrics. When comparing different methods applied to a single time series the mean absolute error (MAE) is "popular as it is easy to both understand and compute. A forecast method that minimises the MAE will lead to forecasts of the median, while minimising the root mean squared error (RMSE) will lead to forecasts of the mean. Consequently, the RMSE is also widely used, despite being more difficult to interpret."[@hyndman_forecasting_2021] Here, the ARIMA model leads all other methods when measured by either RMSE or MAE.  Two other common accuracy metrics are the mean absolute percentage error (MAPE) and mean absolute scaled error (MASE).
+The ARIMA model was the best performing model on several different metrics. When comparing different methods applied to a single time series the mean absolute error (MAE) is "popular as it is easy to both understand and compute. A forecast method that minimises the MAE will lead to forecasts of the median, while minimising the root mean squared error (RMSE) will lead to forecasts of the mean. Consequently, the RMSE is also widely used, despite being more difficult to interpret."[@hyndman_forecasting_2021] Here, the prophet model leads all other methods when measured by either RMSE or MAE.  Two other common accuracy metrics are the mean absolute percentage error (MAPE) and mean absolute scaled error (MASE).
 
 
-```{r}
+```{r, cache=FALSE}
 library(DT)
 library(dplyr)
 tbl_accuracy <- readRDS("./tbl_accuracy.rds")
@@ -130,16 +130,15 @@ tbl_accuracy %>%
 
 # [Forecast](#forecast)
 
-After fitting the model to the data, and then applying to the test set, the model is applied the entire dataset and forecasts the number of players per 100 students for the next five years.  The forecast predicts a slight rebound in participation rates.  The forecasted number of players per 100 students is shown below.  ARIMA modeling it not recommended on small datasets like this one with 30 being the minimum. However, 30 is general advice and deviation may be appropriate depending on the number of parameters and the amount of noise within the data.[@hyndman_forecasting_2021]
+After fitting the model to the data, and then applying to the test set, the model is applied the entire dataset and forecasts the number of players per 100 students for the next five years.  The forecast predicts a continuing negative trend line though perhaps at a less steep decline. The forecasted number of players per 100 students is shown below.
 
 ```{r, out.width="100%", fig.cap="The forecasted number of players per 100 students is shown for the next five years."}
 knitr::include_graphics("./football_participation_forecast.jpg")
 ```
 
-
 # [Conclusion](#conclusion)
 
-High school football participation rates have been in decline since 2005.  The bump up in the data from the 2022 data point had a big influence in the ARIMA-based forecast.  The forecast shows participation rates recovering with a wide range of possible outcomes in the 80th and 95th confidence intervals. The forecast is predicting a slight rebound in participation rates. Some caveats in about the forecast include the following: (1) it is based on 20 observations, (2) outliers were removed, and (3) missing data was interpolated COVID-19 period.  The forecast is provided for discussion purposes only.
+High school football participation rates have been in decline since 2005.  The bump up in the data from the 2022 data point was ambiguous and I thought it would be interesting to see how much influence it would have in forecasting into the future. The median forecast shows participation rates continuing to decline with a wide range of possible outcomes in the 80th and 95th confidence intervals. Some caveats about the forecast include the following: (1) it is based on 20 observations, (2) outliers were removed, and (3) missing data was interpolated for the COVID-19 period.  The forecast is provided for discussion purposes only.
 
 # [Acknowledgements](#acknowledge)
 
