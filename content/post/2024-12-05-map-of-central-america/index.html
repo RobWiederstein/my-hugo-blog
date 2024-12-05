@@ -1,0 +1,237 @@
+---
+title: Map of Central America
+author: Rob Wiederstein
+date: '2024-12-05'
+slug: map-of-central-america
+categories:
+  - R
+tags:
+  - sf
+  - ggplot2
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: ca_mdfd.png
+  alt: ~
+  caption: Map of Central America
+repo: ~
+summary: This blog post shows how to create a map of Central America using ggplot2 and sf. 
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#overview" id="toc-overview">Overview</a></li>
+<li><a href="#load-packages" id="toc-load-packages">Load Packages</a></li>
+<li><a href="#create-layers" id="toc-create-layers">Create Layers</a></li>
+<li><a href="#plot-map" id="toc-plot-map">Plot Map</a></li>
+<li><a href="#save-plot" id="toc-save-plot">Save Plot</a></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
+<li><a href="#acknowledgements" id="toc-acknowledgements">Acknowledgements</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+<li><a href="#disclaimer" id="toc-disclaimer">Disclaimer</a></li>
+<li><a href="#reproducibility" id="toc-reproducibility">Reproducibility</a></li>
+</ul>
+</div>
+
+<div id="overview" class="section level1">
+<h1><a href="#overview">Overview</a></h1>
+<p>This blog post shows how to create a map of Central America using ggplot2 and sf. The coordinate reference system was changed from 4326 to 32611. The <code>crsuggest</code> package was used to find the appropriate CRS for the region. The base polygons were from the <code>rnaturalearth</code> package. After generating the map, the labels were modified in Inkscape.</p>
+<p>I’ve really struggled with understanding the difference between geographic and projected coordinate systems. Geographic systems specify location using latitude and longitude. Longitude is specified in degrees in an East-West direction from the Prime Meridian whereas latitude is specified in degrees in a North-South direction of the equator. Together, the two coordinates specify a unique location on the Earth’s surface. The key point is that the latitude and longitude are anglular distances. Nearly all datasets are specified using the EPSG 4326 coordinate reference system.</p>
+<p>Projected coordinate systems are based on a mathematical model that flattens the Earth’s surface and in the background an <code>sf</code> object’s units are being coverted from degrees to meters. This conversion means that specifying the limits of the bounding box must be adjusted for meters. The <code>crsuggest</code> package was used to find the appropriate CRS for the region. 32611 was chosen and it is a popular projected coordinate system across the world and is known as the Universal Transverse Mercator coordinate system. Wikipedia article <a href="https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system">here</a>.</p>
+<p>In the description, the <code>crsuggest</code> package states “Return the EPSG code or proj4string syntax for the top-ranking projected coordinate reference system returned by suggest_crs(). This function should be used with caution and is recommended for interactive work rather than in production data pipelines.”</p>
+</div>
+<div id="load-packages" class="section level1">
+<h1><a href="#load-packages">Load Packages</a></h1>
+<pre class="r"><code>library(colorspace)
+library(crsuggest)
+library(dplyr)
+library(ggplot2)
+library(ggspatial)
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(sf)</code></pre>
+</div>
+<div id="create-layers" class="section level1">
+<h1><a href="#create-layers">Create Layers</a></h1>
+<pre class="r"><code># world
+world &lt;- ne_countries(country = c(&quot;United States of America&quot;,
+                                  &quot;Colombia&quot;, &quot;Cuba&quot;, &quot;Jamaica&quot;, 
+                                  &quot;The Bahamas&quot;, &quot;Cayman Islands&quot;),
+                      scale = 50) %&gt;% 
+  select(continent, subregion, adm0_a3, mapcolor7, geometry, label_x, label_y) %&gt;% 
+  sf::st_transform(crs = 32611)
+# carribean
+cb &lt;- ne_countries(scale = 50) %&gt;% 
+  select(continent, subregion, adm0_a3, mapcolor7, geometry, label_x, label_y) %&gt;% 
+  filter(continent %in% c(&quot;North America&quot;)) %&gt;% 
+  filter(subregion == &quot;Central America&quot;) %&gt;% 
+  mutate(mapcolor7 = factor(mapcolor7)) %&gt;% 
+  sf::st_transform(crs = 32611)
+#cb labels
+cb_labels &lt;-
+  cb %&gt;% 
+  select(adm0_a3, label_x, label_y) %&gt;% 
+  st_drop_geometry() %&gt;% 
+  mutate(geometry = st_as_sf(., coords = c(&quot;label_x&quot;, &quot;label_y&quot;), 
+                           crs = 4326) %&gt;% st_geometry()) %&gt;% 
+  st_as_sf() %&gt;% 
+  sf::st_transform(crs = 32611)</code></pre>
+<pre class="r"><code># get dimensions
+st_bbox(cb)
+# get best crs
+crs &lt;- suggest_top_crs(cb)</code></pre>
+</div>
+<div id="plot-map" class="section level1">
+<h1><a href="#plot-map">Plot Map</a></h1>
+<pre class="r"><code># plot
+ggplot() +
+geom_sf(data = world) +
+geom_sf(data = cb, mapping = aes(fill = mapcolor7), show.legend = F) +
+geom_sf_label(data = cb_labels, mapping = aes(label = adm0_a3)) +
+coord_sf(expand = TRUE, 
+         crs = crs,
+         xlim = c(5.5e6, .65e6),
+         ylim = c(1e6, 3.5e6)
+) +
+scale_fill_discrete_qualitative(palette = &quot;Pastel 1&quot;) +
+theme_bw() +
+annotation_scale(
+  bar_cols = c(&quot;black&quot;, &quot;white&quot;),
+  line_width = 1,
+  height = unit(0.1, &quot;cm&quot;),
+  pad_x = unit(0.25, &quot;cm&quot;),
+  pad_y = unit(0.25, &quot;cm&quot;),
+  ) +
+annotation_north_arrow(
+  style = north_arrow_minimal(),
+  height = unit(.5, &quot;cm&quot;), 
+  width = unit(.5, &quot;cm&quot;),
+  pad_x = unit(2, &quot;cm&quot;),
+  pad_y = unit(.5, &quot;cm&quot;)
+  ) +
+labs(title = &quot;Central America&quot;, x = &quot;&quot;, y = &quot;&quot;)</code></pre>
+</div>
+<div id="save-plot" class="section level1">
+<h1><a href="#save-plot">Save Plot</a></h1>
+<pre class="r"><code>ggsave(&quot;~/Desktop/a.pdf&quot;, height = 5, width = 8, units = &quot;in&quot;)</code></pre>
+</div>
+<div id="conclusion" class="section level1">
+<h1><a href="#conclusion">Conclusion</a></h1>
+<p>This blog post showed how to create a map of Central America using ggplot2, sf and the <code>crsuggest</code> package.</p>
+</div>
+<div id="acknowledgements" class="section level1">
+<h1><a href="#acknowledge">Acknowledgements</a></h1>
+<p>This blog post was made possible thanks to:</p>
+<ul>
+<li><p>Kyle Walker, the author of the <code>crsuggest</code> package. Find the repo <a href="https://github.com/walkerke/crsuggest">here</a></p></li>
+<li><p>To understand the impact of the 4326 CRS on area distortion, visit this awesome site: <a href="https://www.thetruesize.com">https://www.thetruesize.com</a></p></li>
+<li><p>Vox <a href="https://www.youtube.com/watch?v=kIID5FDi2JQ&amp;ab_channel=Vox">explainer</a> on Mercator projections</p></li>
+</ul>
+</div>
+<div id="references" class="section level1">
+<h1><a href="#reference">References</a></h1>
+<div id="refs" class="references csl-bib-body" entry-spacing="0">
+<div id="ref-R-base" class="csl-entry">
+<div class="csl-left-margin">[1] </div><div class="csl-right-inline">R Core Team, <em>R: A language and environment for statistical computing</em>. Vienna, Austria: R Foundation for Statistical Computing, 2024 [Online]. Available: <a href="https://www.R-project.org/">https://www.R-project.org/</a></div>
+</div>
+<div id="ref-R-blogdown" class="csl-entry">
+<div class="csl-left-margin">[2] </div><div class="csl-right-inline">Y. Xie, C. Dervieux, and A. Presmanes Hill, <em>Blogdown: Create blogs and websites with r markdown</em>. 2024 [Online]. Available: <a href="https://github.com/rstudio/blogdown">https://github.com/rstudio/blogdown</a></div>
+</div>
+</div>
+</div>
+<div id="disclaimer" class="section level1">
+<h1><a href="#disclaimer">Disclaimer</a></h1>
+<p>The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.</p>
+</div>
+<div id="reproducibility" class="section level1">
+<h1><a href="#reproduce">Reproducibility</a></h1>
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value
+ version  R version 4.4.0 (2024-04-24)
+ os       macOS Sonoma 14.4
+ system   aarch64, darwin20
+ ui       X11
+ language (EN)
+ collate  en_US.UTF-8
+ ctype    en_US.UTF-8
+ tz       America/New_York
+ date     2024-12-05
+ pandoc   3.2 @ /Applications/RStudio.app/Contents/Resources/app/quarto/bin/tools/aarch64/ (via rmarkdown)
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package     * version  date (UTC) lib source
+ blogdown    * 1.19     2024-02-01 [1] CRAN (R 4.4.0)
+ bookdown      0.41     2024-10-16 [1] CRAN (R 4.4.1)
+ bslib         0.8.0    2024-07-29 [1] CRAN (R 4.4.0)
+ cachem        1.1.0    2024-05-16 [1] CRAN (R 4.4.0)
+ cli           3.6.3    2024-06-21 [1] CRAN (R 4.4.0)
+ codetools     0.2-20   2024-03-31 [2] CRAN (R 4.4.0)
+ colorspace    2.1-1    2024-07-26 [1] CRAN (R 4.4.0)
+ devtools    * 2.4.5    2022-10-11 [1] CRAN (R 4.4.0)
+ digest        0.6.37   2024-08-19 [1] CRAN (R 4.4.1)
+ ellipsis      0.3.2    2021-04-29 [1] CRAN (R 4.4.0)
+ evaluate      1.0.1    2024-10-10 [1] CRAN (R 4.4.1)
+ fansi         1.0.6    2023-12-08 [1] CRAN (R 4.4.0)
+ farver        2.1.2    2024-05-13 [1] CRAN (R 4.4.0)
+ fastmap       1.2.0    2024-05-15 [1] CRAN (R 4.4.0)
+ fs            1.6.5    2024-10-30 [1] CRAN (R 4.4.1)
+ ggplot2     * 3.5.1    2024-04-23 [1] CRAN (R 4.4.0)
+ ggthemes    * 5.1.0    2024-02-10 [1] CRAN (R 4.4.0)
+ glue          1.8.0    2024-09-30 [1] CRAN (R 4.4.1)
+ gtable        0.3.6    2024-10-25 [1] CRAN (R 4.4.1)
+ htmltools     0.5.8.1  2024-04-04 [1] CRAN (R 4.4.0)
+ htmlwidgets   1.6.4    2023-12-06 [1] CRAN (R 4.4.0)
+ httpuv        1.6.15   2024-03-26 [1] CRAN (R 4.4.0)
+ jquerylib     0.1.4    2021-04-26 [1] CRAN (R 4.4.0)
+ jsonlite      1.8.9    2024-09-20 [1] CRAN (R 4.4.1)
+ knitr         1.49     2024-11-08 [1] CRAN (R 4.4.1)
+ labeling      0.4.3    2023-08-29 [1] CRAN (R 4.4.0)
+ later         1.4.1    2024-11-27 [1] CRAN (R 4.4.1)
+ lifecycle     1.0.4    2023-11-07 [1] CRAN (R 4.4.0)
+ magrittr      2.0.3    2022-03-30 [1] CRAN (R 4.4.0)
+ memoise       2.0.1    2021-11-26 [1] CRAN (R 4.4.0)
+ mime          0.12     2021-09-28 [1] CRAN (R 4.4.0)
+ miniUI        0.1.1.1  2018-05-18 [1] CRAN (R 4.4.0)
+ munsell       0.5.1    2024-04-01 [1] CRAN (R 4.4.0)
+ pillar        1.9.0    2023-03-22 [1] CRAN (R 4.4.0)
+ pkgbuild      1.4.5    2024-10-28 [1] CRAN (R 4.4.1)
+ pkgconfig     2.0.3    2019-09-22 [1] CRAN (R 4.4.0)
+ pkgload       1.4.0    2024-06-28 [1] CRAN (R 4.4.0)
+ profvis       0.4.0    2024-09-20 [1] CRAN (R 4.4.1)
+ promises      1.3.2    2024-11-28 [1] CRAN (R 4.4.1)
+ purrr         1.0.2    2023-08-10 [1] CRAN (R 4.4.0)
+ R6            2.5.1    2021-08-19 [1] CRAN (R 4.4.0)
+ Rcpp          1.0.13-1 2024-11-02 [1] CRAN (R 4.4.1)
+ remotes       2.5.0    2024-03-17 [1] CRAN (R 4.4.0)
+ rlang         1.1.4    2024-06-04 [1] CRAN (R 4.4.0)
+ rmarkdown     2.29     2024-11-04 [1] CRAN (R 4.4.1)
+ rstudioapi    0.17.1   2024-10-22 [1] CRAN (R 4.4.1)
+ sass          0.4.9    2024-03-15 [1] CRAN (R 4.4.0)
+ scales        1.3.0    2023-11-28 [1] CRAN (R 4.4.0)
+ sessioninfo   1.2.2    2021-12-06 [1] CRAN (R 4.4.0)
+ shiny         1.9.1    2024-08-01 [1] CRAN (R 4.4.0)
+ stringi       1.8.4    2024-05-06 [1] CRAN (R 4.4.0)
+ stringr       1.5.1    2023-11-14 [1] CRAN (R 4.4.0)
+ tibble        3.2.1    2023-03-20 [1] CRAN (R 4.4.0)
+ urlchecker    1.0.1    2021-11-30 [1] CRAN (R 4.4.0)
+ usethis     * 3.1.0    2024-11-26 [1] CRAN (R 4.4.1)
+ utf8          1.2.4    2023-10-22 [1] CRAN (R 4.4.0)
+ vctrs         0.6.5    2023-12-01 [1] CRAN (R 4.4.0)
+ withr         3.0.2    2024-10-28 [1] CRAN (R 4.4.1)
+ xfun          0.49     2024-10-31 [1] CRAN (R 4.4.1)
+ xtable        1.8-4    2019-04-21 [1] CRAN (R 4.4.0)
+ yaml          2.3.10   2024-07-26 [1] CRAN (R 4.4.0)
+
+ [1] /Users/rkw/Library/R/arm64/4.4/library
+ [2] /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>

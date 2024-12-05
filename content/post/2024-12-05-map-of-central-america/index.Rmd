@@ -1,0 +1,194 @@
+---
+title: Map of Central America
+author: Rob Wiederstein
+date: '2024-12-05'
+slug: map-of-central-america
+categories:
+  - R
+tags:
+  - sf
+  - ggplot2
+layout: layouts/post/single
+draft: no
+bibliography:
+  - packages.bib
+  - ../blog.bib
+csl: ../ieee-with-url.csl
+link-citations: yes
+nocite: |
+  @R-base, @R-blogdown, @R-tidyverse
+header:
+  image: ca_mdfd.png
+  alt: ~
+  caption: Map of Central America
+repo: ~
+summary: This blog post shows how to create a map of Central America using ggplot2 and sf. 
+---
+
+
+```{r load-packages, include = F}
+## Load frequently used packages for blog posts
+packages <- c(
+      'devtools', #for session info
+      'ggthemes', #for plots
+      'blogdown'
+)
+lapply(packages, function(x) {
+  if (!requireNamespace(x)) install.packages(x)
+  library(x, character.only = TRUE)
+})
+```
+
+```{r set-chunk-options, include = F}
+## Do not break chunk line
+## Do not use spaces or periods "." or underscores "_"
+## set options for knitr
+knitr::opts_chunk$set(
+  comment = '',
+  fig.width = 6,
+  fig.asp = .8,
+  fig.align="center",
+  message=F,
+  error=F,
+  warning=F,
+  tidy=T,
+  comment='',
+  cache=T,
+  dev='svg',
+  echo=F
+)
+```
+
+
+```{r write-package-bib, echo = F}
+# write packages used to bib in current directory
+knitr::write_bib(.packages(), "./packages.bib")
+```
+
+# [Overview](#overview)
+
+This blog post shows how to create a map of Central America using ggplot2 and sf. The coordinate reference system was changed from 4326 to 32611. The `crsuggest` package was used to find the appropriate CRS for the region. The base polygons were from the `rnaturalearth` package.  After generating the map, the labels were modified in Inkscape.
+
+I've really struggled with understanding the difference between geographic and projected coordinate systems.  Geographic systems specify location using latitude and longitude.  Longitude is specified in degrees in an East-West direction from the Prime Meridian whereas latitude is specified in degrees in a  North-South direction of the equator. Together, the two coordinates specify a unique location on the Earth's surface.  The key point is that the latitude and longitude are anglular distances.  Nearly all datasets are specified using the EPSG 4326 coordinate reference system.
+
+Projected coordinate systems are based on a mathematical model that flattens the Earth's surface and in the background an `sf` object's units are being coverted from degrees to meters.  This conversion means that specifying the limits of the bounding box must be adjusted for meters.  The `crsuggest` package was used to find the appropriate CRS for the region. 32611 was chosen and it is a popular projected coordinate system across the world and is known as the Universal Transverse Mercator coordinate system.  Wikipedia article [here](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system). 
+
+In the description, the `crsuggest` package states "Return the EPSG code or proj4string syntax for the top-ranking projected coordinate reference system returned by suggest_crs(). This function should be used with caution and is recommended for interactive work rather than in production data pipelines."
+
+# [Load Packages](#load-packages)
+
+```{r load-proj-packages, echo = T, eval = F}
+library(colorspace)
+library(crsuggest)
+library(dplyr)
+library(ggplot2)
+library(ggspatial)
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(sf)
+
+```
+
+
+# [Create Layers](#create-layers)
+
+```{r create-layers, eval = F, echo = T}
+# world
+world <- ne_countries(country = c("United States of America",
+                                  "Colombia", "Cuba", "Jamaica", 
+                                  "The Bahamas", "Cayman Islands"),
+                      scale = 50) %>% 
+  select(continent, subregion, adm0_a3, mapcolor7, geometry, label_x, label_y) %>% 
+  sf::st_transform(crs = 32611)
+# carribean
+cb <- ne_countries(scale = 50) %>% 
+  select(continent, subregion, adm0_a3, mapcolor7, geometry, label_x, label_y) %>% 
+  filter(continent %in% c("North America")) %>% 
+  filter(subregion == "Central America") %>% 
+  mutate(mapcolor7 = factor(mapcolor7)) %>% 
+  sf::st_transform(crs = 32611)
+#cb labels
+cb_labels <-
+  cb %>% 
+  select(adm0_a3, label_x, label_y) %>% 
+  st_drop_geometry() %>% 
+  mutate(geometry = st_as_sf(., coords = c("label_x", "label_y"), 
+                           crs = 4326) %>% st_geometry()) %>% 
+  st_as_sf() %>% 
+  sf::st_transform(crs = 32611)
+```
+
+```{r find-crs, eval = F, echo = TRUE}
+# get dimensions
+st_bbox(cb)
+# get best crs
+crs <- suggest_top_crs(cb)
+```
+
+# [Plot Map](#plot-map)
+
+```{r plot-map, eval = F, echo = T}
+# plot
+ggplot() +
+geom_sf(data = world) +
+geom_sf(data = cb, mapping = aes(fill = mapcolor7), show.legend = F) +
+geom_sf_label(data = cb_labels, mapping = aes(label = adm0_a3)) +
+coord_sf(expand = TRUE, 
+         crs = crs,
+         xlim = c(5.5e6, .65e6),
+         ylim = c(1e6, 3.5e6)
+) +
+scale_fill_discrete_qualitative(palette = "Pastel 1") +
+theme_bw() +
+annotation_scale(
+  bar_cols = c("black", "white"),
+  line_width = 1,
+  height = unit(0.1, "cm"),
+  pad_x = unit(0.25, "cm"),
+  pad_y = unit(0.25, "cm"),
+  ) +
+annotation_north_arrow(
+  style = north_arrow_minimal(),
+  height = unit(.5, "cm"), 
+  width = unit(.5, "cm"),
+  pad_x = unit(2, "cm"),
+  pad_y = unit(.5, "cm")
+  ) +
+labs(title = "Central America", x = "", y = "")
+```
+
+# [Save Plot](#save-plot)
+
+```{r save-plot, eval = F, echo = T}
+ggsave("~/Desktop/a.pdf", height = 5, width = 8, units = "in")
+```
+
+# [Conclusion](#conclusion)
+
+This blog post showed how to create a map of Central America using ggplot2, sf and the `crsuggest` package.
+
+# [Acknowledgements](#acknowledge)
+
+This blog post was made possible thanks to:
+
+- Kyle Walker, the author of the `crsuggest` package.  Find the repo [here](https://github.com/walkerke/crsuggest)
+
+- To understand the impact of the 4326 CRS on area distortion, visit this awesome site: [https://www.thetruesize.com](https://www.thetruesize.com)
+
+- Vox [explainer](https://www.youtube.com/watch?v=kIID5FDi2JQ&ab_channel=Vox) on Mercator projections
+
+# [References](#reference)
+
+<div id="refs"></div>
+
+# [Disclaimer](#disclaimer)
+
+The views, analysis and conclusions presented within this paper represent the author’s alone and not of any other person, organization or government entity. While I have made every reasonable effort to ensure that the information in this article was correct, it will nonetheless contain errors, inaccuracies and inconsistencies. It is a working paper subject to revision without notice as additional information becomes available. Any liability is disclaimed as to any party for any loss, damage, or disruption caused by errors or omissions, whether such errors or omissions result from negligence, accident, or any other cause. The author(s) received no financial support for the research, authorship, and/or publication of this article.
+
+# [Reproducibility](#reproduce)
+
+```{r reproducibility, echo = FALSE}
+# system & package info
+options(width = 120)
+session_info()
+```
