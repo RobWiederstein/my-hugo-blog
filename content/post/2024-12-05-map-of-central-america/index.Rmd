@@ -16,7 +16,7 @@ bibliography:
 csl: ../ieee-with-url.csl
 link-citations: yes
 nocite: |
-  @R-base, @R-blogdown, @R-tidyverse
+  @R-base, @R-blogdown, @R-tidyverse, @R-ggplot2, @R-sf, @R-ggspatial, @R-rnaturalearth, @R-crsuggest
 header:
   image: ca_mdfd.png
   alt: ~
@@ -31,7 +31,12 @@ summary: This blog post shows how to create a map of Central America using ggplo
 packages <- c(
       'devtools', #for session info
       'ggthemes', #for plots
-      'blogdown'
+      'blogdown',
+      'sf',
+      'ggplot2',
+      'ggspatial',
+      'rnaturalearth',
+      'crsuggest'
 )
 lapply(packages, function(x) {
   if (!requireNamespace(x)) install.packages(x)
@@ -60,7 +65,7 @@ knitr::opts_chunk$set(
 ```
 
 
-```{r write-package-bib, echo = F}
+```{r write-package-bib, echo = F, cache=FALSE}
 # write packages used to bib in current directory
 knitr::write_bib(.packages(), "./packages.bib")
 ```
